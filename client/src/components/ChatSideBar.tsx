@@ -1,7 +1,14 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const ChatSideBarContainer = styled.div`
+  width: inherit;
+  height: inherit;
+  background: yellow;
+`;
 
 const ChatSideBar: React.FC = () => {
-  return <div style={{ width: '100%', height: '100%', background: 'yellow' }} />;
+  return <ChatSideBarContainer />;
 };
 
 export default ChatSideBar;
