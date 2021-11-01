@@ -1,26 +1,24 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import styled from 'styled-components';
+import Greeter from './pages/login/Greeter';
+import LoginBox from './pages/login/LoginBox';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          JDevBook의 위대한 시작
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Content>
+      <Greeter />
+      <LoginBox />
+    </Content>
   );
 }
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  line-height:100vh;
+`;
 
 export default App;
