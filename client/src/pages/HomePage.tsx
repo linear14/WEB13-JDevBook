@@ -16,11 +16,11 @@ const HomePage = () => {
     <HomePageContainer>
       <Gnb />
       <ContentsWrap>
-        <SideBar>
+        <SideBar isLeft={true}>
           <InfoSideBar />
           <GroupSideBar />
         </SideBar>
-        <SideBar>
+        <SideBar isLeft={false}>
           <ChatSideBar />
         </SideBar>
       </ContentsWrap>
