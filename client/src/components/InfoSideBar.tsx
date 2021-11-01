@@ -1,7 +1,14 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const InfoSideBar = () => {
-  return ``;
+const InfoSideBarContainer = styled.div`
+  height: 20%;
+  width: inherit;
+  background-color: cyan;
+`;
+
+const InfoSideBar: React.FC = () => {
+  return <InfoSideBarContainer>InfoSideBar</InfoSideBarContainer>;
 };
 
 export default InfoSideBar;

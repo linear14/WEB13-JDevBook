@@ -1,7 +1,7 @@
 import React from 'react';
 
-const AlertSideBar = () => {
-  return ``;
+const AlertSideBar: React.FC = () => {
+  return null;
 };
 
 export default AlertSideBar;
