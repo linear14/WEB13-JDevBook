@@ -5,13 +5,25 @@ const Greeter = () => {
   const reactArray = "JDevBook".split("");
   
   return (
-    <Content>
-    {reactArray.map((item, index):any => (
-        <span key={index}>{item}</span>
-    ))}
-    </Content>
+    <>
+      <Wrapper>
+        <div>우리들의 공간</div>
+        <Content>
+        {reactArray.map((item, index):any => (
+            <span key={index}>{item}</span>
+        ))}
+        </Content>
+      </Wrapper>
+    </>
   )
 }
+
+const Wrapper = styled.span`
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 50px;
+`;
 
 const Animation = keyframes`
   0% { opacity: 0; transform: translateY(-30px) skewY(10deg) skewX(10deg) rotateZ(30deg); filter: blur(10px); }
@@ -22,9 +34,10 @@ const Animation = keyframes`
 
 const Content = styled.span`
   width: 50vw;
-  font-size:50px;
+  font-size: 50px;
   display: inline-block;
   span {
+      
       display: inline-block;
       opacity: 0;
       animation-name: ${Animation};
