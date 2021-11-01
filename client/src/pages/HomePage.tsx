@@ -1,6 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Gnb, SideBar, InfoSideBar, ChatSideBar, GroupSideBar } from '../components';
+import React from "react";
+import styled from "styled-components";
+import {
+  Gnb,
+  SideBar,
+  InfoSideBar,
+  ChatSideBar,
+  GroupSideBar,
+} from "../components";
 
 const HomePageContainer = styled.div`
   display: flex;
@@ -14,7 +20,7 @@ const ContentsWrap = styled.div`
 const HomePage = () => {
   return (
     <HomePageContainer>
-      <Gnb />
+      <Gnb type="home" />
       <ContentsWrap>
         <SideBar isLeft={true}>
           <InfoSideBar />
