@@ -17,8 +17,11 @@ function App() {
 const Content = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  line-height:100vh;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #53B23B;
 `;
 
 export default App;

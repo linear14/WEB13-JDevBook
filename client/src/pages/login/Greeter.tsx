@@ -21,6 +21,8 @@ const Animation = keyframes`
 `;
 
 const Content = styled.span`
+  width: 50vw;
+  font-size:50px;
   display: inline-block;
   span {
       display: inline-block;
@@ -31,32 +33,17 @@ const Content = styled.span`
       animation-iteration-count: infinite;
   }
 
-  span:nth-child(1) {
-    animation-delay: 0.1s;
-  }
-  span:nth-child(2) {
-    animation-delay: 0.2s;
-  }
-  span:nth-child(3) {
-    animation-delay: 0.3s;
-  }
-  span:nth-child(4) {
-    animation-delay: 0.4s;
-  }
-  span:nth-child(5) {
-    animation-delay: 0.5s;
-  }
-  span:nth-child(6) {
-    animation-delay: 0.6s;
-  }
-  span:nth-child(7) {
-    animation-delay: 0.7s;
-  }
-  span:nth-child(8) {
-    animation-delay: 0.8s;
-  }  
-
-  font-size:50px;
+  ${getAnimaDelay()}
 `;
+
+function getAnimaDelay() {
+    let str = '';
+    for(let i = 1 ; i <= 8 ; i++) {
+        str += `span:nth-child(${i}) {
+            animation-delay: ${i * 0.1}s
+        }`;
+    }
+    return str;
+}
 
 export default Greeter;
