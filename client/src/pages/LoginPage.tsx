@@ -42,13 +42,17 @@ import React from 'react';
 import styled from 'styled-components';
 import Greeter from '../components/LoginPage/Greeter';
 import LoginBox from '../components/LoginPage/LoginBox';
+import Footer from '../components/LoginPage/Footer';
 
 const LoginPage = () => {
   return (
+    <>
     <Content>
       <Greeter />
       <LoginBox />
     </Content>
+    <Footer />
+    </>
   );
 };
 
@@ -59,7 +63,6 @@ const Content = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  // background-color: #53B23B;
 `;
 
 export default LoginPage;
