@@ -14,7 +14,6 @@ router.get('/callback', async (req: any, res, next) => {
     if(!req.query.code) res.redirect(redirectURL);
 
     const accessToken = await githubOauth.getAccessToken(req.query.code);
-    console.log(accessToken.data); 
 
     res.redirect(redirectURL + 'home');
 })

@@ -9,10 +9,11 @@ const githubOauth = {
             method: 'POST',
             url: `https://github.com/login/oauth/access_token?client_id=${github.CLIENT_ID}&client_secret=${github.CLIENT_SECRET}&code=${authcode}&redirect_uri=${github.CALLBACK_URL}`,
             headers: {
-                'content-type': 'application/json'
+                Accept: 'application/json'
             }
-        });
-    }
+        }).then((res: any) => res.data.access_token);
+    },
+
 }
 
 module.exports = githubOauth;
