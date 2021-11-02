@@ -1,15 +1,15 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import mainLogo from "../images/main-logo.png";
-import gnbHome from "../images/gnb-home.svg";
-import gnbGroup from "../images/gnb-group.svg";
-import gnbHomeActive from "../images/gnb-home-active.svg";
-import gnbGroupActive from "../images/gnb-group-active.svg";
-import gnbMyPage from "../images/gnb-mypage.svg";
-import gnbMessage from "../images/gnb-message.svg";
-import gnbAlarm from "../images/gnb-alarm.svg";
-import gnbSelector from "../images/gnb-down-arrow.svg";
-import iconSearch from "../images/icon-search.svg";
+import React from 'react';
+import styled, { css } from 'styled-components';
+import mainLogo from 'images/main-logo.png';
+import gnbHome from 'images/gnb-home.svg';
+import gnbGroup from 'images/gnb-group.svg';
+import gnbHomeActive from 'images/gnb-home-active.svg';
+import gnbGroupActive from 'images/gnb-group-active.svg';
+import gnbMyPage from 'images/gnb-mypage.svg';
+import gnbMessage from 'images/gnb-message.svg';
+import gnbAlarm from 'images/gnb-alarm.svg';
+import gnbSelector from 'images/gnb-down-arrow.svg';
+import iconSearch from 'images/icon-search.svg';
 
 type GnbProps = {
   type: string;
@@ -44,6 +44,7 @@ const GnbContainer = styled.div`
     width: 36px;
     height: 36px;
   }
+  z-index: 1;
 `;
 
 const FlexWrap = styled.div<FlexProps>`
@@ -99,7 +100,7 @@ const GnbTab = styled.div<TabProps>`
   transition: 0.1s ease-in;
 
   &:after {
-    content: "";
+    content: '';
     background-image: url(${({ img }) => img});
     background-size: 28px 28px;
     width: 28px;
@@ -130,7 +131,7 @@ const IconWrap = styled.div<IconProps>`
   align-items: center;
 
   &:after {
-    content: "";
+    content: '';
     background-image: url(${({ img }) => img});
     background-size: 20px 20px;
     width: 20px;
@@ -158,12 +159,12 @@ const Gnb: React.FC<GnbProps> = ({ type }) => {
       </FlexWrap>
       <FlexWrap center>
         <GnbTab
-          img={type === "home" ? gnbHomeActive : gnbHome}
-          current={type === "home"}
+          img={type === 'home' ? gnbHomeActive : gnbHome}
+          current={type === 'home'}
         />
         <GnbTab
-          img={type === "group" ? gnbGroupActive : gnbGroup}
-          current={type === "group"}
+          img={type === 'group' ? gnbGroupActive : gnbGroup}
+          current={type === 'group'}
         />
       </FlexWrap>
       <FlexWrap>
