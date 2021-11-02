@@ -13,6 +13,8 @@ import iconSearch from "../../images/icon-search.svg";
 
 type GnbProps = {
   type: string;
+  rightModalFlag: boolean;
+  setRightModalFlag: any;
 };
 
 type FlexProps = {
@@ -146,7 +148,7 @@ const IconWrap = styled.div<IconProps>`
   }
 `;
 
-const Gnb: React.FC<GnbProps> = ({ type }) => {
+const Gnb: React.FC<GnbProps> = ({ type, rightModalFlag, setRightModalFlag }) => {
   return (
     <GnbContainer>
       <FlexWrap>
@@ -169,7 +171,7 @@ const Gnb: React.FC<GnbProps> = ({ type }) => {
       <FlexWrap>
         <IconWrap img={gnbMyPage} />
         <IconWrap img={gnbMessage} />
-        <IconWrap img={gnbAlarm} />
+        <IconWrap img={gnbAlarm} onClick={() => { setRightModalFlag(rightModalFlag ? false : true); }}/>
         <IconWrap img={gnbSelector} />
       </FlexWrap>
     </GnbContainer>
