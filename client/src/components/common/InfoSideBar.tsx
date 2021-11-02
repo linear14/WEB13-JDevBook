@@ -18,12 +18,12 @@ const ProfileWrap = styled.a`
   margin: 35px 50px 0 50px;
   text-decoration: none;
   color: black;
-`;
 
-const UserName = styled.p`
-  font-size: large;
-  font-weight: bold;
-  margin: 20px 20px;
+  p {
+    font-size: large;
+    font-weight: bold;
+    margin: 20px 20px;
+  }
 `;
 
 const SolvedTitle = styled.div`
@@ -71,8 +71,8 @@ const InfoSideBar: React.FC = () => {
   return (
     <InfoSideBarContainer>
       <ProfileWrap href="/profile">
-        <ProfilePhoto />
-        <UserName>UserName</UserName>
+        <ProfilePhoto src="" />
+        <p>UserName</p>
       </ProfileWrap>
       <SolvedTitle>문제 푼 수</SolvedTitle>
       <SolvedBarGraph>
