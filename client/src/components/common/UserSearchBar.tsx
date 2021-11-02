@@ -4,6 +4,8 @@ import mainLogo from '../../images/main-logo.png';
 import styled, { css } from 'styled-components';
 import iconSearch from '../../images/icon-search.svg';
 import { MdArrowBack } from 'react-icons/md';
+import { useRecoilState } from 'recoil';
+import { modalVisibleStates } from '../../recoil/modal';
 
 const FlexBox = styled.div`
   display: flex;
@@ -92,12 +94,15 @@ const SearchModalBody = styled.div`
 `;
 
 const UserSearchBar: React.FC = () => {
+  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
   return (
     <>
       <Link to="/home">
         <img src={mainLogo} />
       </Link>
-      <UserSearchBarContainer>
+      <UserSearchBarContainer
+        onClick={() => setModalState({ ...modalState, searchUser: true })}
+      >
         <img src={iconSearch} />
         <input type="text" placeholder="Search User" />
       </UserSearchBarContainer>
@@ -106,10 +111,17 @@ const UserSearchBar: React.FC = () => {
 };
 
 const UserSearchModal: React.FC = () => {
+  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+
   return (
     <UserSearchModalContainer>
       <ModalHeader>
-        <HoverRound>
+        <HoverRound
+          onClick={(e) => {
+            e.stopPropagation();
+            setModalState({ ...modalState, searchUser: false });
+          }}
+        >
           <MdArrowBack />
         </HoverRound>
         <SearchBarContainerModal>

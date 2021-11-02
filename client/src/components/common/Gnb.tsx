@@ -10,7 +10,8 @@ import gnbMessage from '../../images/gnb-message.svg';
 import gnbAlarm from '../../images/gnb-alarm.svg';
 import gnbSelector from '../../images/gnb-down-arrow.svg';
 import { UserSearchBar, UserSearchModal } from '..';
-import { atom } from 'recoil';
+import { useRecoilValue } from 'recoil';
+import { modalVisibleStates } from '../../recoil/modal';
 
 type GnbProps = {
   type?: string;
@@ -116,11 +117,12 @@ const IconWrap = styled.div<IconProps>`
 `;
 
 const Gnb: React.FC<GnbProps> = ({ type }) => {
+  const modalState = useRecoilValue(modalVisibleStates);
+
   return (
     <GnbContainer>
       <FlexWrap>
-        {/* <UserSearchBar /> */}
-        <UserSearchModal />
+        {modalState.searchUser ? <UserSearchModal /> : <UserSearchBar />}
       </FlexWrap>
       <FlexWrap center>
         <Link to="/home">
