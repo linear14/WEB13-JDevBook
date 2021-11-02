@@ -5,9 +5,10 @@ import { ProfilePhoto } from '..';
 const InfoSideBarContainer = styled.div`
   height: 200px;
   width: inherit;
-  background: #f0f2f5;
+  background: white;
   display: flex;
   flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.24) 5px 5px 5px;
 `;
 
 const ProfileWrap = styled.div`

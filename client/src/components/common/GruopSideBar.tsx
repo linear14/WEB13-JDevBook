@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import iconSearch from 'images/icon-search.svg';
+import defaultCover from 'images/default-profile.jpg';
 
 const GroupSideBarContainer = styled.div`
   flex: 1;
   width: inherit;
-  background: purple;
+  background: white;
   display: flex;
   flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.24) 5px 5px 5px;
 `;
 
 const SearchBarWrap = styled.div`
@@ -20,7 +22,7 @@ const SearchBarWrap = styled.div`
   img {
     width: 20px;
     height: 20px;
-    margin: 10px 10px 10px 20px;
+    margin: 10px 5px 10px 15px;
   }
 
   input {
@@ -28,7 +30,6 @@ const SearchBarWrap = styled.div`
     outline: none;
     background: none;
     border: none;
-    margin-left: 4px;
     font-size: 1rem;
 
     &::placeholder {
@@ -40,7 +41,22 @@ const SearchBarWrap = styled.div`
 const GroupList = styled.div`
   flex: 1;
   margin: 0 50px 30px 50px;
-  background: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+`;
+
+const GroupItem = styled.a`
+  display: flex;
+  text-decoration: none;
+  color: black;
+  margin: 0 0 20px 0;
+
+  img {
+    width: 50px;
+    height: 50px;
+    margin: 0 20px 0 0;
+    border-radius: 10px;
+  }
 `;
 
 const GroupSideBar: React.FC = () => {
@@ -50,7 +66,16 @@ const GroupSideBar: React.FC = () => {
         <img src={iconSearch} alt="Search 아이콘" />
         <input type="text" placeholder="search group" />
       </SearchBarWrap>
-      <GroupList></GroupList>
+      <GroupList>
+        <GroupItem href="*">
+          <img src={defaultCover} alt="cover 아이콘" />
+          <p>그룹 이름</p>
+        </GroupItem>
+        <GroupItem href="*">
+          <img src={defaultCover} alt="cover 아이콘" />
+          <p>그룹 이름</p>
+        </GroupItem>
+      </GroupList>
     </GroupSideBarContainer>
   );
 };
