@@ -7,7 +7,7 @@ const Greeter = () => {
   return (
     <>
       <Wrapper>
-        <div>우리들의 공간</div>
+        <SubTitle>우리들의 공간</SubTitle>
         <Content>
         {reactArray.map((item, index):any => (
             <span key={index}>{item}</span>
@@ -23,6 +23,10 @@ const Wrapper = styled.span`
   align-items: center;
   text-align: center;
   font-size: 50px;
+`;
+
+const SubTitle = styled.div`
+  color: #fff;
 `;
 
 const Animation = keyframes`

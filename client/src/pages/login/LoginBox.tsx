@@ -3,7 +3,9 @@ import styled from 'styled-components';
 
 const LoginBox = () => {
     return (
-        <Wrapper>로그인 박스 예정</Wrapper>
+        <Wrapper>
+            로그인 박스
+        </Wrapper>
     )
 }
 
@@ -13,6 +15,9 @@ const Wrapper = styled.div`
   align-items: center;
   text-align: center;
   width: 50vw;
+  background-color: #FFF;
+  height: 50%;
+  border-radius: 50px;
 `;
 
 export default LoginBox;
