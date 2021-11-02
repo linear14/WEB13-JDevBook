@@ -1,5 +1,6 @@
 const express = require('express');
-const session = require('express-session')
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -23,8 +24,8 @@ app.use(session({
       httpOnly: true,
       secure: process.env.HTTPS_FALSE ? false : true,
       maxAge: 24000 * 60 * 60
-    }
-    // store:
+    },
+    store: new FileStore({path: path.resolve(__dirname, './sessions/')})
 }))
 
 app.set('port', port);

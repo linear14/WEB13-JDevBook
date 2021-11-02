@@ -2,6 +2,7 @@
 
 # config
 src/config
+src/sessions
 
 # local-build
 build/
