@@ -6,7 +6,7 @@ const oauth = require('../config/oauth.json');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 
-const clientURL = process.env.LOCAL_CLIENT ?? '/';
+const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
 
 router.get('/login', (req, res, next) => {
   res.json(githubOauth.authorizeURL);
@@ -15,8 +15,8 @@ router.get('/login', (req, res, next) => {
 router.get('/callback', async (req: any, res, next) => {
     if(!req.query.code) res.redirect(clientURL);
 
-    const accessToken = await githubOauth.getAccessToken(req.query.code);
-    const username = await githubOauth.getUsername(accessToken);
+    const accessToken: string = await githubOauth.getAccessToken(req.query.code);
+    const username: string = await githubOauth.getUsername(accessToken);
     
     // db에 아이디 저장하고 확인하는 작업
     // 로그인 하면 login 페이지로 갈 수 없게도 해야...
