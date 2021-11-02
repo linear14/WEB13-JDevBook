@@ -61,7 +61,7 @@ const InnerBarGraph = styled.span`
   color: white;
   font-size: small;
   font-weight: 600;
-  animation: ${GraphAnimation} 2s 1;
+  animation: ${GraphAnimation} 1.5s 1;
 `;
 
 const InfoSideBar: React.FC = () => {
