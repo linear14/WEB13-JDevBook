@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 import mainLogo from '../../images/main-logo.png';
 import { ReactComponent as GnbHome } from '../../images/gnb-home.svg';
 import { ReactComponent as GnbGroup } from '../../images/gnb-group.svg';
@@ -12,7 +13,7 @@ import gnbSelector from '../../images/gnb-down-arrow.svg';
 import iconSearch from '../../images/icon-search.svg';
 
 type GnbProps = {
-  type: string;
+  type?: string;
 };
 
 type FlexProps = {
@@ -47,6 +48,17 @@ const GnbContainer = styled.div`
 
 const FlexWrap = styled.div<FlexProps>`
   display: flex;
+  align-items: center;
+
+  img {
+    width: 40px;
+    height: 40px;
+    vertical-align: bottom;
+  }
+
+  & > *:not(:first-child) {
+    margin-left: 8px;
+  }
 
   ${({ center }) =>
     center &&
@@ -102,10 +114,6 @@ const GnbTab = styled.div<TabProps>`
     border-radius: 8px;
   }
 
-  & + div {
-    margin-left: 8px;
-  }
-
   svg path {
     ${({ current }) =>
       current &&
@@ -135,39 +143,36 @@ const IconWrap = styled.div<IconProps>`
   &:hover {
     background: #d8dadf;
   }
-
-  & + div {
-    margin-left: 8px;
-  }
 `;
 
 const Gnb: React.FC<GnbProps> = ({ type }) => {
   return (
     <GnbContainer>
       <FlexWrap>
-        <img src={mainLogo} />
+        <Link to="/home">
+          <img src={mainLogo} />
+        </Link>
         <UserSearchBar>
           <img src={iconSearch} />
           <input type="text" placeholder="Search User" />
         </UserSearchBar>
       </FlexWrap>
       <FlexWrap center>
-        {/* <GnbTab
-          img={type === 'home' ? gnbHomeActive : gnbHome}
-          current={type === 'home'}
-        />
-        <GnbTab
-          img={type === 'group' ? gnbGroupActive : gnbGroup}
-          current={type === 'group'}
-        /> */}
-
-        <GnbTab current>
-          {type === 'home' ? <GnbHomeActive /> : <GnbHome />}
-        </GnbTab>
-        <GnbTab>{type === 'group' ? <GnbGroupActive /> : <GnbGroup />}</GnbTab>
+        <Link to="/home">
+          <GnbTab current={type === 'home'}>
+            {type === 'home' ? <GnbHomeActive /> : <GnbHome />}
+          </GnbTab>
+        </Link>
+        <Link to="/group">
+          <GnbTab current={type === 'group'}>
+            {type === 'group' ? <GnbGroupActive /> : <GnbGroup />}
+          </GnbTab>
+        </Link>
       </FlexWrap>
       <FlexWrap>
-        <IconWrap img={gnbMyPage} />
+        <Link to="/profile/1">
+          <IconWrap img={gnbMyPage} />
+        </Link>
         <IconWrap img={gnbMessage} />
         <IconWrap img={gnbAlarm} />
         <IconWrap img={gnbSelector} />
