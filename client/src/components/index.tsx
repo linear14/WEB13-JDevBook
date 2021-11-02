@@ -5,7 +5,7 @@ import InfoSideBar from './common/InfoSideBar';
 import Gnb from './common/Gnb';
 import SideBar from './common/SideBar';
 import ProfilePhoto from './common/ProfilePhoto';
-import { UserSearchBar, UserSearchModal } from './common/UserSearchBar';
+import { UserSearchBar, UserSearchModal } from './common/UserSearch';
 
 export {
   AlertSideBar,
