@@ -14,7 +14,7 @@ const ContentsWrap = styled.div`
 const HomePage = () => {
   return (
     <HomePageContainer>
-      <Gnb />
+      <Gnb type="home" />
       <ContentsWrap>
         <SideBar isLeft={true}>
           <InfoSideBar />

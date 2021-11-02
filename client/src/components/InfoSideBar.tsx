@@ -6,7 +6,6 @@ const InfoSideBarContainer = styled.div`
   height: 200px;
   width: inherit;
   background-color: #f0f2f5;
-
   display: flex;
   flex-direction: column;
 `;
