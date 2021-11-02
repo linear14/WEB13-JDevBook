@@ -1,5 +1,5 @@
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../config/.env')});
+require('dotenv').config({ path: path.resolve(__dirname, '../config/.env.development')});
 import * as express from 'express';
 const githubOauth = require('../service/githubOauth');
 const router = express.Router();
