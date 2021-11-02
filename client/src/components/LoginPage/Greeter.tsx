@@ -26,7 +26,7 @@ const Wrapper = styled.span`
 `;
 
 const SubTitle = styled.div`
-  color: #fff;
+  color: black;
 `;
 
 const Animation = keyframes`
@@ -39,6 +39,7 @@ const Animation = keyframes`
 const Content = styled.span`
   width: 50vw;
   font-size: 50px;
+  color: #53b23b;
   display: inline-block;
   span {
       
