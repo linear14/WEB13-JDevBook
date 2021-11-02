@@ -10,8 +10,12 @@ router.get('/login', (req, res, next) => {
   res.json(githubOauth.authorizeURL);
 });
 
-router.get('/callback', (req: any, res, next) => {
+router.get('/callback', async (req: any, res, next) => {
     if(!req.query.code) res.redirect(redirectURL);
+
+    const accessToken = await githubOauth.getAccessToken(req.query.code);
+    console.log(accessToken.data); 
+
     res.redirect(redirectURL + 'home');
 })
 
