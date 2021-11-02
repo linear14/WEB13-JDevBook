@@ -49,6 +49,7 @@ const GroupItem = styled.a`
   display: flex;
   text-decoration: none;
   color: black;
+  padding: 5px;
   margin: 0 0 20px 0;
 
   img {
@@ -56,6 +57,12 @@ const GroupItem = styled.a`
     height: 50px;
     margin: 0 20px 0 0;
     border-radius: 10px;
+  }
+
+  &:hover {
+    border-radius: 10px;
+    background: #f0f2f5;
+    transition: all 0.2s;
   }
 `;
 
