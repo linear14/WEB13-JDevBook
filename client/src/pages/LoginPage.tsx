@@ -9,24 +9,18 @@ const StyledButton = styled.button`
 `;
 
 const StyledImg = styled.img`
-  width: 50px;
+  width: 30px;
   height: auto;
 `;
 
-// const Button = ({ children }: any) => {
-//     return <StyledButton>{ children }</StyledButton>
-// }
-
-const LoginPage = () => {
-  const loginGithub = (e: any) => {
+function LoginPage() {
+  const loginGithub = () => {
     fetch('/oauth/login')
       .then((res) => res.json())
       .then((loginLink) => {
         window.location.href = loginLink;
       });
   };
-
-  useEffect(() => {}, []);
 
   return (
     <div>
@@ -36,6 +30,6 @@ const LoginPage = () => {
       </StyledButton>
     </div>
   );
-};
+}
 
 export default LoginPage;
