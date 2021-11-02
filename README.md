@@ -82,8 +82,3 @@ Web13-JDevBook
           ├─service
           └─sockets
 ```
-
-## ERD
-
-![](https://i.imgur.com/hZk3wJb.png)
-
