@@ -1,6 +1,6 @@
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../config/.env.development')});
-import * as express from 'express';
+import express, {Request, Response, NextFunction} from "express";
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
 const jwt = require('jsonwebtoken');
@@ -8,11 +8,18 @@ const router = express.Router();
 
 const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
 
-router.get('/login', (req, res, next) => {
+declare module "express-session" {
+  interface Session {
+    username: string,
+    jwt: string
+  }
+}
+
+router.get('/login', (req: Request, res: Response, next: NextFunction) => {
   res.json(githubOauth.authorizeURL);
 });
 
-router.get('/callback', async (req: any, res, next) => {
+router.get('/callback', async (req: Request, res: Response, next: NextFunction) => {
     if(!req.query.code) res.redirect(clientURL);
 
     const accessToken: string = await githubOauth.getAccessToken(req.query.code);
@@ -38,7 +45,7 @@ router.get('/callback', async (req: any, res, next) => {
     
 });
 
-router.get('/data', (req: any, res, next) => {
+router.get('/data', (req: Request, res: Response, next: NextFunction) => {
   try{
     const verified = jwt.verify(req.session.jwt, oauth.jwtKey);
     if(verified.name === req.session.username) res.json(req.session.username);
@@ -53,7 +60,7 @@ router.get('/data', (req: any, res, next) => {
 
 })
 
-router.get('/logout', (req: any, res, next) => {
+router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
   const username = req.session.username;
   // 삭제는 잘 되는데 client에서 session은 그대로 남아있음
   // 물론 서버에서 검사하면 이미 사라진 세션이라 오류처리 가능
