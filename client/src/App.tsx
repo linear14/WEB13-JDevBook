@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
-import { Route } from 'react-router-dom';
-import './App.css';
-const App = () => {
-  return null;
+import React from 'react';
+import logo from './logo.svg';
+
+function App() {
+  return <div className='App'></div>;
+
 }
 export default App;
