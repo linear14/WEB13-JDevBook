@@ -13,7 +13,15 @@ const githubOauth = {
             }
         }).then((res: any) => res.data.access_token);
     },
-
+    getUserName: (access_token: string) => {
+        return axios({
+            method: 'GET',
+            url: `https://api.github.com/user`,
+            headers: {
+                Authorization: `token ${access_token}`
+            }
+        }).then((res: any) => res.data.name);
+    }
 }
 
 module.exports = githubOauth;
