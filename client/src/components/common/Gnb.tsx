@@ -10,6 +10,7 @@ import gnbMessage from '../../images/gnb-message.svg';
 import gnbAlarm from '../../images/gnb-alarm.svg';
 import gnbSelector from '../../images/gnb-down-arrow.svg';
 import { UserSearchBar, UserSearchModal } from '..';
+import { atom } from 'recoil';
 
 type GnbProps = {
   type?: string;
