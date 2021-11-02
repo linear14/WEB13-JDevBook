@@ -1,10 +1,11 @@
 import express from "express";
 import session from 'express-session';
 import sessionFileStore from 'session-file-store';
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-require('dotenv').config({ path: path.resolve(__dirname, './config/.env.development')});
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import dotenv from 'dotenv';
+dotenv.config({ path: path.resolve(__dirname, './config/.env.development')});
 
 const indexRouter = require('./routes/index');
 const oauthRouter = require('./routes/oauth');

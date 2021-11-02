@@ -1,9 +1,11 @@
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../config/.env.development')});
+import path from 'path';
+import dotenv from 'dotenv';
+dotenv.config({ path: path.resolve(__dirname, './config/.env.development')});
 import express, {Request, Response, NextFunction} from "express";
+import jwt from 'jsonwebtoken';
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
-const jwt = require('jsonwebtoken');
+
 const router = express.Router();
 
 const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
@@ -47,7 +49,7 @@ router.get('/callback', async (req: Request, res: Response, next: NextFunction) 
 
 router.get('/data', (req: Request, res: Response, next: NextFunction) => {
   try{
-    const verified = jwt.verify(req.session.jwt, oauth.jwtKey);
+    const verified = jwt.verify(req.session.jwt, oauth.jwtKey) as {name: string};
     if(verified.name === req.session.username) res.json(req.session.username);
     else {
       console.log(`로그인 정보 비정상 감지: ${req.session.username}`);
