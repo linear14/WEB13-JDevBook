@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ProfilePhoto } from '.';
+import ProfilePhoto from '../common/ProfilePhoto';
 
 const InfoSideBarContainer = styled.div`
   height: 200px;
