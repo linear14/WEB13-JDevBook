@@ -5,13 +5,13 @@ import { ReactComponent as GnbHome } from '../../images/gnb-home.svg';
 import { ReactComponent as GnbGroup } from '../../images/gnb-group.svg';
 import { ReactComponent as GnbHomeActive } from '../../images/gnb-home-active.svg';
 import { ReactComponent as GnbGroupActive } from '../../images/gnb-group-active.svg';
-import gnbMyPage from '../../images/gnb-mypage.svg';
 import gnbMessage from '../../images/gnb-message.svg';
 import gnbAlarm from '../../images/gnb-alarm.svg';
 import gnbSelector from '../../images/gnb-down-arrow.svg';
 import { UserSearchBar, UserSearchModal } from '..';
 import { useRecoilValue } from 'recoil';
 import { modalVisibleStates } from '../../recoil/modal';
+import profileDefault from '../../images/profile-default.png';
 
 type GnbProps = {
   type?: string;
@@ -41,6 +41,10 @@ const GnbContainer = styled.div`
   padding-right: 16px;
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  a {
+    text-decoration: none;
+  }
 
   img {
     width: 36px;
@@ -94,6 +98,33 @@ const GnbTab = styled.div<TabProps>`
   }
 `;
 
+const ProfileWrap = styled.div`
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding-left: 4px;
+  padding-right: 12px;
+
+  &:hover {
+    background: #f0f2f5;
+    border-radius: 24px;
+  }
+
+  img {
+    border: 1px solid #bbbbbb;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+  }
+
+  p {
+    color: black;
+    margin-left: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+`;
+
 const IconWrap = styled.div<IconProps>`
   width: 40px;
   height: 40px;
@@ -138,7 +169,10 @@ const Gnb: React.FC<GnbProps> = ({ type }) => {
       </FlexWrap>
       <FlexWrap>
         <Link to="/profile/1">
-          <IconWrap img={gnbMyPage} />
+          <ProfileWrap>
+            <img src={profileDefault} />
+            <p>이름</p>
+          </ProfileWrap>
         </Link>
         <IconWrap img={gnbMessage} />
         <IconWrap img={gnbAlarm} />
