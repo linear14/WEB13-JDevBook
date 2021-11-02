@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
-import mainLogo from '../../images/main-logo.png';
 import { ReactComponent as GnbHome } from '../../images/gnb-home.svg';
 import { ReactComponent as GnbGroup } from '../../images/gnb-group.svg';
 import { ReactComponent as GnbHomeActive } from '../../images/gnb-home-active.svg';
@@ -10,7 +9,7 @@ import gnbMyPage from '../../images/gnb-mypage.svg';
 import gnbMessage from '../../images/gnb-message.svg';
 import gnbAlarm from '../../images/gnb-alarm.svg';
 import gnbSelector from '../../images/gnb-down-arrow.svg';
-import iconSearch from '../../images/icon-search.svg';
+import { UserSearchBar, UserSearchModal } from '..';
 
 type GnbProps = {
   type?: string;
@@ -32,6 +31,7 @@ const GnbContainer = styled.div`
   width: 100%;
   height: 56px;
   position: fixed;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -68,37 +68,6 @@ const FlexWrap = styled.div<FlexProps>`
       top: 50%;
       transform: translate(-50%, -50%);
     `}
-`;
-
-const UserSearchBar = styled.div`
-  width: 240px;
-  height: 40px;
-  background: #f0f2f5;
-  border-radius: 24px;
-  margin-left: 16px;
-  display: flex;
-  align-items: center;
-  padding-left: 16px;
-  padding-right: 16px;
-  box-sizing: border-box;
-
-  img {
-    width: 24px;
-    height: 24px;
-  }
-
-  input {
-    flex: 1;
-    outline: none;
-    background: none;
-    border: none;
-    margin-left: 4px;
-    font-size: 1rem;
-
-    &::placeholder {
-      font-size: 1rem;
-    }
-  }
 `;
 
 const GnbTab = styled.div<TabProps>`
@@ -149,13 +118,8 @@ const Gnb: React.FC<GnbProps> = ({ type }) => {
   return (
     <GnbContainer>
       <FlexWrap>
-        <Link to="/home">
-          <img src={mainLogo} />
-        </Link>
-        <UserSearchBar>
-          <img src={iconSearch} />
-          <input type="text" placeholder="Search User" />
-        </UserSearchBar>
+        {/* <UserSearchBar /> */}
+        <UserSearchModal />
       </FlexWrap>
       <FlexWrap center>
         <Link to="/home">
