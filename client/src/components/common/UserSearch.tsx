@@ -87,7 +87,7 @@ const HoverRound = styled.div`
 `;
 
 const SearchModalBody = styled.div`
-  width: inherit;
+  width: 100%;
   & > p {
     text-align: center;
     color: #888888;
