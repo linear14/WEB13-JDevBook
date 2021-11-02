@@ -15,9 +15,22 @@ router.get('/callback', async (req: any, res, next) => {
 
     const accessToken = await githubOauth.getAccessToken(req.query.code);
     const username = await githubOauth.getUsername(accessToken);
-    console.log(username);
+    
+    // db에 아이디 저장하고 확인하는 작업
 
-    res.redirect(redirectURL + 'home');
-})
+    req.session.username = username; // session에 jwt 결합해볼까
+    req.session.save((err: any) => {
+      if(err){
+        console.error(err);
+        return res.status(500).send("<h1>500 error</h1>");
+      }
+      res.redirect(redirectURL + 'home');
+    })    
+    
+});
+
+router.get('/logout', (req: any, res, next) => {
+
+});
 
 module.exports = router;

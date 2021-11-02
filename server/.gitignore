@@ -3,6 +3,9 @@
 # config
 src/config
 
+# local-build
+build/
+
 # dependencies
 /node_modules
 /.pnp
