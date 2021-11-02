@@ -73,6 +73,10 @@ const FlexWrap = styled.div<FlexProps>`
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+
+      @media screen and (max-width: 800px) {
+        display: none;
+      }
     `}
 `;
 
