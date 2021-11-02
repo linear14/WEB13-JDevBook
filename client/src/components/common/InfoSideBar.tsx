@@ -11,11 +11,13 @@ const InfoSideBarContainer = styled.div`
   box-shadow: rgba(0, 0, 0, 0.24) 5px 5px 5px;
 `;
 
-const ProfileWrap = styled.div`
+const ProfileWrap = styled.a`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   margin: 35px 50px 0 50px;
+  text-decoration: none;
+  color: black;
 `;
 
 const UserName = styled.p`
@@ -68,7 +70,7 @@ const InnerBarGraph = styled.span`
 const InfoSideBar: React.FC = () => {
   return (
     <InfoSideBarContainer>
-      <ProfileWrap>
+      <ProfileWrap href="/profile">
         <ProfilePhoto />
         <UserName>UserName</UserName>
       </ProfileWrap>

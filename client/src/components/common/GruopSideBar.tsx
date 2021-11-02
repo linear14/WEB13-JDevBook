@@ -67,11 +67,11 @@ const GroupSideBar: React.FC = () => {
         <input type="text" placeholder="search group" />
       </SearchBarWrap>
       <GroupList>
-        <GroupItem href="*">
+        <GroupItem href="/group">
           <img src={defaultCover} alt="cover 아이콘" />
           <p>그룹 이름</p>
         </GroupItem>
-        <GroupItem href="*">
+        <GroupItem href="/group">
           <img src={defaultCover} alt="cover 아이콘" />
           <p>그룹 이름</p>
         </GroupItem>
