@@ -13,14 +13,14 @@ const githubOauth = {
             }
         }).then((res: any) => res.data.access_token);
     },
-    getUserName: (access_token: string) => {
+    getUsername: (access_token: string) => {
         return axios({
             method: 'GET',
             url: `https://api.github.com/user`,
             headers: {
                 Authorization: `token ${access_token}`
             }
-        }).then((res: any) => res.data.name);
+        }).then((res: any) => res.data.login); // 별명(name)이 없는 유저들 존재
     }
 }
 
