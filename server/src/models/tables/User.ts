@@ -5,6 +5,7 @@ import Like from './Like';
 import Post from './Post';
 import UserGroup from './UserGroup';
 import _Comment from './Comment'
+import Alarm from './Alarm';
 
 @Table({
     tableName: 'users',
@@ -48,4 +49,7 @@ export default class User extends Model<User> {
 
     @HasMany(() => _Comment, {foreignKey: 'useridx', sourceKey: 'idx'})
     HMCommentuseridx?: _Comment[]
+
+    @HasMany(() => Alarm, {foreignKey: 'useridx', sourceKey: 'idx'})
+    HMAlarmuseridx?: Alarm[]
 }
