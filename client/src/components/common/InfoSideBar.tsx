@@ -39,7 +39,7 @@ const SolvedBarGraph = styled.div`
   margin: 0 50px;
 `;
 
-const GraphAnimation = keyframes`
+const GraphAnimation = (solvedRate: number) => keyframes`
   0% {
     width: 0;
     color: rgba(255, 255, 255, 0);
@@ -48,13 +48,13 @@ const GraphAnimation = keyframes`
     color: rgba(255, 255, 255, 1);
   }
   100% {
-    width: 75%;
+    width: ${solvedRate}%;
   }
 `;
 
-const InnerBarGraph = styled.span`
+const InnerBarGraph = styled.span<{ solvedRate: number }>`
   display: block;
-  width: 75%;
+  width: ${(props) => props.solvedRate}%;
   height: 25px;
   line-height: 25px;
   text-align: right;
@@ -65,19 +65,25 @@ const InnerBarGraph = styled.span`
   color: white;
   font-size: small;
   font-weight: 600;
-  animation: ${GraphAnimation} 1.5s 1;
+  animation: ${(props) => GraphAnimation(props.solvedRate)} 1.5s 1;
 `;
 
 const InfoSideBar: React.FC = () => {
+  const tmpUser = {
+    userName: 'Shin',
+    solvedNum: 123
+  };
+  const solvedRate = Number(((tmpUser.solvedNum / 155) * 100).toFixed(1));
+
   return (
     <InfoSideBarContainer>
       <ProfileWrap to="/profile/shin">
         <ProfilePhoto src="" />
-        <p>UserName</p>
+        <p>{tmpUser.userName}</p>
       </ProfileWrap>
       <SolvedTitle>문제 푼 수</SolvedTitle>
       <SolvedBarGraph>
-        <InnerBarGraph>75%</InnerBarGraph>
+        <InnerBarGraph solvedRate={solvedRate}>{solvedRate}%</InnerBarGraph>
       </SolvedBarGraph>
     </InfoSideBarContainer>
   );
