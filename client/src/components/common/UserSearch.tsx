@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import mainLogo from '../../images/main-logo.png';
 import styled, { css } from 'styled-components';
@@ -114,13 +114,29 @@ const UserSearchBar: React.FC = () => {
 const UserSearchModal: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
 
+  const modal = React.useRef<HTMLDivElement>(null);
+
+  const closeModal = (e: any, force?: boolean) => {
+    if (!force && modal.current?.contains(e.target)) {
+      return;
+    }
+    setModalState({ ...modalState, searchUser: false });
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', closeModal);
+    return () => {
+      document.removeEventListener('click', closeModal);
+    };
+  });
+
   return (
-    <UserSearchModalContainer>
+    <UserSearchModalContainer ref={modal}>
       <ModalHeader>
         <HoverRound
           onClick={(e) => {
             e.stopPropagation();
-            setModalState({ ...modalState, searchUser: false });
+            closeModal(e, true);
           }}
         >
           <MdArrowBack />
