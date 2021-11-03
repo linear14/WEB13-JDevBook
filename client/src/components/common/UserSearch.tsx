@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import mainLogo from '../../images/main-logo.png';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import iconSearch from '../../images/icon-search.svg';
 import { MdArrowBack } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
@@ -15,6 +15,9 @@ const FlexBox = styled.div`
 `;
 
 const ModalHeader = styled(FlexBox)`
+  display: flex;
+  justify-content: space-between;
+
   svg {
     color: #656565;
   }
@@ -52,9 +55,35 @@ const UserSearchBarContainer = styled.div`
   }
 `;
 
+const ExtendSearchBarAnimation = keyframes`
+  0% {
+    width: 240px;
+  }
+
+  100% {
+    width: 100%;
+  }
+`;
+
 const SearchBarContainerModal = styled(UserSearchBarContainer)`
   margin-left: 8px;
   width: 100%;
+  animation: ${ExtendSearchBarAnimation} 0.5s ease-in-out;
+
+  &::before {
+    content: '';
+    width: 22px;
+    height: 22px;
+    background-image: url(${iconSearch});
+    background-size: 22px 22px;
+    transition: width 0.2s ease-in-out;
+  }
+
+  &:focus-within::before {
+    background-image: none;
+    width: 0px;
+    height: 0px;
+  }
 `;
 
 const UserSearchModalContainer = styled.div`
