@@ -79,3 +79,10 @@ export interface DBGroupChat extends DBCUD {
   useridx: number;
   content: string;
 }
+
+export interface DBProblem extends DBCUD {
+  idx: number;
+  groupidx: number;
+  question: string;
+  answer: boolean;
+}
