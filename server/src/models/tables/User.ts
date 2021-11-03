@@ -6,6 +6,7 @@ import Post from './Post';
 import UserGroup from './UserGroup';
 import _Comment from './Comment'
 import Alarm from './Alarm';
+import GroupChat from './GroupChat';
 
 @Table({
     tableName: 'users',
@@ -52,4 +53,7 @@ export default class User extends Model<User> {
 
     @HasMany(() => Alarm, {foreignKey: 'useridx', sourceKey: 'idx'})
     HMAlarmuseridx?: Alarm[]
+
+    @HasMany(() => GroupChat, {foreignKey: 'useridx', sourceKey: 'idx'})
+    HMGroupChatuseridx?: GroupChat[]
 }
