@@ -17,7 +17,7 @@ export default class Group extends Model<Group> {
     idx!: number;
 
     @Unique
-    @Column({ type: DataType.STRING(32)})
+    @Column({ allowNull: false, type: DataType.STRING(32)})
     title!: string;
 
     @Column({ type: DataType.STRING(1024)})
