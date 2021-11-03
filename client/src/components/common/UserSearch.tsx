@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import mainLogo from '../../images/main-logo.png';
 import styled, { css } from 'styled-components';
@@ -113,6 +113,8 @@ const UserSearchBar: React.FC = () => {
 
 const UserSearchModal: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const [input, setInput] = useState('');
+  const [results, setResults] = useState([]);
 
   const modal = React.useRef<HTMLDivElement>(null);
 
@@ -123,12 +125,25 @@ const UserSearchModal: React.FC = () => {
     setModalState({ ...modalState, searchUser: false });
   };
 
+  const onChangeInput = (e: any) => {
+    setInput(e.target.value);
+  };
+
   useEffect(() => {
     document.addEventListener('click', closeModal);
     return () => {
       document.removeEventListener('click', closeModal);
     };
-  });
+  }, []);
+
+  useEffect(() => {
+    const fetchJob = setTimeout(async () => {
+      const response = await fetchSearchUser(input);
+      console.log(response);
+    }, 1000);
+
+    return () => clearTimeout(fetchJob);
+  }, [input]);
 
   return (
     <UserSearchModalContainer ref={modal}>
@@ -142,7 +157,12 @@ const UserSearchModal: React.FC = () => {
           <MdArrowBack />
         </HoverRound>
         <SearchBarContainerModal>
-          <input type="text" placeholder="Search User" />
+          <input
+            type="text"
+            placeholder="Search User"
+            value={input}
+            onChange={onChangeInput}
+          />
         </SearchBarContainerModal>
       </ModalHeader>
       <SearchModalBody>
@@ -153,3 +173,30 @@ const UserSearchModal: React.FC = () => {
 };
 
 export { UserSearchBar, UserSearchModal };
+
+const testData = [
+  { idx: 1, nickname: '유저1', profile: '' },
+  { idx: 2, nickname: '유저2', profile: '' },
+  { idx: 3, nickname: '유저3', profile: '' },
+  { idx: 4, nickname: '유저4', profile: '' },
+  { idx: 5, nickname: '유저5', profile: '' },
+  { idx: 6, nickname: '유저6', profile: '' },
+  { idx: 7, nickname: '유저7', profile: '' },
+  { idx: 8, nickname: '유저8', profile: '' },
+  { idx: 9, nickname: '유저9', profile: '' },
+  { idx: 10, nickname: '유저10', profile: '' }
+];
+
+interface User {
+  idx: number;
+  nickname: string;
+  profile: string;
+}
+
+const fetchSearchUser = (keyword: string) => {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      res(testData);
+    }, 3000);
+  });
+};
