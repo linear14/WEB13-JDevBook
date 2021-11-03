@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { ProfilePhoto } from '..';
 import { userData } from 'recoil/modal';
 import { useRecoilState } from 'recoil';
+import getData from 'api/fetch';
 
 const InfoSideBarContainer = styled.div`
   height: 200px;
@@ -73,7 +74,7 @@ const InfoSideBar: React.FC = () => {
   const [userdata, setUserdata] = useRecoilState(userData);
   useEffect(() => {
     async function fetchUserdata() {
-      const name = await fetch('/api/data').then(res => res.json());
+      const name = await getData.getusername();
       setUserdata({username: name});
     }
     fetchUserdata();
