@@ -7,7 +7,7 @@ import logger from 'morgan';
 import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, './config/.env.development')});
 
-import { sequelize } from "./models";
+import dbManager from './service/dbManager'
 const indexRouter = require('./routes/index');
 const oauthRouter = require('./routes/oauth');
 const apiRouter = require('./routes/api');
@@ -18,12 +18,7 @@ const app = express();
 const port = 4000;
 const FileStore = sessionFileStore(session);
 
-sequelize.sync({force: true}).then(() => {
-  console.log('Connection has been established successfully.');
-}).catch((error: any) => {
-  console.error('Unable to connect to the database:', error);
-})
-
+dbManager.sync()
 
 app.use(session({
     //HttpOnly: true,
