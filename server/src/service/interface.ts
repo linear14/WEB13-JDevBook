@@ -23,14 +23,14 @@ export interface DBUserGroup {
   groupidx: number;
 }
 
-export interface Group {
+export interface DBGroup {
   idx: number;
   title: string;
   description: string;
   cover: string;
 }
 
-export interface Chat {
+export interface DBChat {
   idx: number;
   senderidx: number;
   receiveridx: number;
