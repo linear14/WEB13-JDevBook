@@ -4,7 +4,7 @@ dotenv.config({ path: path.resolve(__dirname, '../config/.env.development')});
 import express, {Request, Response, NextFunction} from "express";
 import jwt from 'jsonwebtoken';
 import dbManager from '../service/dbManager';
-import { DBuserdata } from '../service/interface';
+import { DBUser } from '../service/interface';
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
 
@@ -22,7 +22,7 @@ router.get('/callback', async (req: Request, res: Response, next: NextFunction) 
     const accessToken: string = await githubOauth.getAccessToken(req.query.code);
     const username: string = await githubOauth.getUsername(accessToken);
     
-    const userdata: DBuserdata = await dbManager.getUserdata(username);
+    const userdata: DBUser = await dbManager.getUserdata(username);
     console.log(userdata);
 
     // 로그인 하면 login 페이지로 갈 수 없게도 해야...

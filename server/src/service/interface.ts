@@ -6,7 +6,7 @@ declare module 'express-session' {
   }
 }
 
-export interface DBuserdata {
+export interface DBUser {
   idx: number;
   nickname: string;
   profile: string;
