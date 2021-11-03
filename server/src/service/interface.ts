@@ -53,3 +53,10 @@ export interface DBLike {
   useridx: number;
   postidx: number;
 }
+
+export interface DBComment {
+  idx: number;
+  postidx: number;
+  useridx: number;
+  comments: string;
+}
