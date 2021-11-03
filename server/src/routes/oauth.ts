@@ -1,6 +1,6 @@
 import path from 'path';
 import dotenv from 'dotenv';
-dotenv.config({ path: path.resolve(__dirname, './config/.env.development')});
+dotenv.config({ path: path.resolve(__dirname, '../config/.env.development')});
 import express, {Request, Response, NextFunction} from "express";
 import jwt from 'jsonwebtoken';
 const githubOauth = require('../service/githubOauth');

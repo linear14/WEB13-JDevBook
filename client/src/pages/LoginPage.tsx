@@ -43,20 +43,7 @@ import Greeter from '../components/LoginPage/Greeter';
 import LoginBox from '../components/LoginPage/LoginBox';
 import Footer from '../components/LoginPage/Footer';
 
-const LoginPage = () => {
-const StyledImg = styled.img`
-  width: 30px;
-  height: auto;
-`;
-
 function LoginPage() {
-  const loginGithub = () => {
-    fetch('/oauth/login')
-      .then((res) => res.json())
-      .then((loginLink) => {
-        window.location.href = loginLink;
-      });
-  };
   return (
     <>
     <Content>
