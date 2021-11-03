@@ -1,4 +1,4 @@
-import { Table, Column, Model, HasMany, BelongsToMany, Length, Unique } from 'sequelize-typescript'
+import { Table, Column, Model, HasMany, BelongsToMany, Length, Unique, DataType } from 'sequelize-typescript'
 import User from './User';
 import UserGroup from './UserGroup'
 
@@ -15,18 +15,15 @@ export default class Group extends Model<Group> {
     idx!: number;
 
     @Unique
-    @Length({ min: 1, max: 32})
-    @Column
+    @Column({ type: DataType.STRING(32)})
     title!: string;
 
-    @Length({ min: 1, max: 1024})
-    @Column
+    @Column({ type: DataType.STRING(1024)})
     description!: string;
 
-    @Length({ min: 1, max: 1024})
-    @Column
+    @Column({ type: DataType.STRING(1024)})
     cover!: string;
 
     @BelongsToMany(() => User, {through: () => UserGroup, foreignKey: 'groupidx'})
-    groupidx?: User[]
+    BTMUserGroupgroupidx?: User[]
 }

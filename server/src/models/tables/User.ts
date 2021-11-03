@@ -1,6 +1,8 @@
-import { Table, Column, Model, HasMany, BelongsToMany, Unique, Length } from 'sequelize-typescript'
+import { Table, Column, Model, HasMany, BelongsToMany, Unique, Length, DataType } from 'sequelize-typescript'
 import Chat from './Chat';
 import Group from './Group'
+import Like from './Like';
+import Post from './Post';
 import UserGroup from './UserGroup';
 
 @Table({
@@ -16,28 +18,30 @@ export default class User extends Model<User> {
     idx!: number;
 
     @Unique
-    @Length({ min: 1, max: 32})
-    @Column
+    @Column({ type: DataType.STRING(32)})
     nickname!: string;
 
-    @Length({ min: 1, max: 1024})
-    @Column
+    @Column({ type: DataType.STRING(1024)})
     profile!: string;
 
-    @Length({ min: 1, max: 1024})
-    @Column
+    @Column({ type: DataType.STRING(1024)})
     cover!: string;
 
-    @Length({ min: 1, max: 100})
-    @Column
+    @Column({ type: DataType.STRING(100)})
     bio!: string;
 
     @BelongsToMany(() => User, {through: () => Chat, foreignKey: 'senderidx'})
-    senderidx?: User[]
+    BTMChatsenderidx?: User[]
 
     @BelongsToMany(() => User, {through: () => Chat, foreignKey: 'receiveridx'})
-    receiveridx?: User[]
+    BTMChatreceiveridx?: User[]
 
     @BelongsToMany(() => Group, {through: () => UserGroup, foreignKey: 'useridx'})
-    useridx?: Group[]
+    BTMUserGroupuseridx?: Group[]
+
+    @HasMany(() => Post, {foreignKey: 'useridx', sourceKey: 'idx'})
+    HMPostuseridx?: Post[]
+
+    @BelongsToMany(() => Post, {through: () => Like, foreignKey: 'useridx'})
+    BTMLikeuseridx?: Post[]
 }

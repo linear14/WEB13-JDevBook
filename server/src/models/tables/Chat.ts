@@ -1,4 +1,4 @@
-import { Table, Column, Model, Length, ForeignKey } from 'sequelize-typescript'
+import { Table, Column, Model, Length, ForeignKey, DataType } from 'sequelize-typescript'
 import User from './User';
 
 @Table({
@@ -21,8 +21,8 @@ export default class Chat extends Model<Chat> {
     @Column
     receiveridx!: number;
 
-    @Length({ min: 1, max: 1024})
     @Column({
+        type: DataType.STRING(1024),
         allowNull: false
     })
     content!: string;
