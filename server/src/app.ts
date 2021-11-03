@@ -7,7 +7,7 @@ import logger from 'morgan';
 import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, './config/.env.development')});
 
-import db from "./sequelize/models";
+// import db from "./sequelize/models";
 const indexRouter = require('./routes/index');
 const oauthRouter = require('./routes/oauth');
 
@@ -17,13 +17,17 @@ const app = express();
 const port = 4000;
 const FileStore = sessionFileStore(session);
 
-db.sequelize.sync({ force: true })
-.then(() => {
-  console.log('db 연결 성공')
-})
-.catch((err) => {
-  console.error(err);
-})
+
+const cors = require('cors');
+app.use(cors());
+
+// db.sequelize.sync({ force: true })
+// .then(() => {
+//   console.log('db 연결 성공')
+// })
+// .catch((err) => {
+//   console.error(err);
+// })
 
 app.use(session({
     //HttpOnly: true,
@@ -45,6 +49,24 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
+
+const io = require('socket.io')(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
+io.on('connection', (socket:any) => {
+  console.log('connected');
+
+  socket.on('send message', (item:any) => {
+    io.emit('receive message', { message : item.message });
+  })
+})
+
+
+
 server.listen(port, () => {
   console.log(`✅ Server Listening on : http://localhost:${port}`);
 });
@@ -56,6 +78,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.use('/', indexRouter);
-app.use('/oauth', oauthRouter);
+// app.use('/oauth', oauthRouter);
 
 module.exports = app;

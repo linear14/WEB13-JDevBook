@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { rightModalStates } from 'recoil/modal';
+import socket from './Socket';
 
 const ChatSideBarContainer = styled.div<any>`
   width: inherit;
@@ -26,7 +27,54 @@ function setColor(props: any) {
 const ChatSideBar: React.FC<any> = () => {
   const rightModalState = useRecoilValue(rightModalStates);
 
-  return <ChatSideBarContainer flagObj={rightModalState} />;
+  const [messageList, setMessageList] = useState<any>([]);
+  const [value, setValue] = useState<any>('');
+
+  const submit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    socket.emit('send message', { message: value });
+  };
+
+  useEffect(() => {
+    socket.on('receive message', (message: { message: string }) => {
+      setMessageList((messageList:any) => messageList.concat(message));
+    })
+  }, []);
+  
+  const chatList = messageList.map((item:any) => 
+    <div className="message">
+      <p className="message-text">{item.message}</p>
+    </div>).reverse();
+
+  return (
+    <ChatSideBarContainer flagObj={rightModalState} >
+      <div>
+          <form className="chat-form" 
+                onSubmit={(e:FormEvent<HTMLFormElement>) => {
+                  if(value){
+                    submit(e);
+                    setValue('');
+                  } else {
+                    e.preventDefault();
+                  }
+                }}>
+              <div className="chat-inputs">
+                  <input
+                    type="text"
+                    autoComplete="off"
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
+                    value={value}
+                    placeholder="메세지입력하기"
+                  />
+              </div>
+              <button type="submit">입력하기</button>
+          </form>
+          <section className="chat-list">
+            {chatList}
+          </section>
+        </div>
+    </ChatSideBarContainer>
+  );
 };
 
 export default ChatSideBar;
