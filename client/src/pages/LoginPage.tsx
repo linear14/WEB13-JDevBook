@@ -43,7 +43,6 @@ import Greeter from '../components/LoginPage/Greeter';
 import LoginBox from '../components/LoginPage/LoginBox';
 import Footer from '../components/LoginPage/Footer';
 
-const LoginPage = () => {
 const StyledImg = styled.img`
   width: 30px;
   height: auto;
@@ -59,11 +58,11 @@ function LoginPage() {
   };
   return (
     <>
-    <Content>
-      <Greeter />
-      <LoginBox />
-    </Content>
-    <Footer />
+      <Content>
+        <Greeter />
+        <LoginBox />
+      </Content>
+      <Footer />
     </>
   );
 }
