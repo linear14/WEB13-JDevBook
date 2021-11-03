@@ -32,9 +32,11 @@ const SearchBarWrap = styled.div`
     background: none;
     border: none;
     font-size: 1rem;
+    font-family: 'Noto Sans KR';
 
     &::placeholder {
       font-size: 1rem;
+      /* font-family: 'Noto Sans KR'; */
     }
   }
 `;
@@ -52,6 +54,7 @@ const GroupItem = styled(Link)`
   color: black;
   padding: 5px;
   margin: 0 0 20px 0;
+  font-weight: bold;
 
   img {
     width: 50px;
@@ -63,7 +66,7 @@ const GroupItem = styled(Link)`
   &:hover {
     border-radius: 10px;
     background: #f0f2f5;
-    transition: all 0.2s;
+    transition: all 0.3s;
   }
 `;
 
