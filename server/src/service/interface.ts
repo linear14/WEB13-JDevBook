@@ -6,7 +6,13 @@ declare module 'express-session' {
   }
 }
 
-export interface DBUser {
+interface DBCUD {
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
+}
+
+export interface DBUser extends DBCUD {
   idx: number;
   nickname: string;
   profile: string;
@@ -17,27 +23,27 @@ export interface DBUser {
   deletedAt: Date;
 }
 
-export interface DBUserGroup {
+export interface DBUserGroup extends DBCUD {
   idx: number;
   useridx: number;
   groupidx: number;
 }
 
-export interface DBGroup {
+export interface DBGroup extends DBCUD {
   idx: number;
   title: string;
   description: string;
   cover: string;
 }
 
-export interface DBChat {
+export interface DBChat extends DBCUD {
   idx: number;
   senderidx: number;
   receiveridx: number;
   content: string;
 }
 
-export interface DBPost {
+export interface DBPost extends DBCUD {
   idx: number;
   useridx: number;
   secret: boolean;
@@ -48,20 +54,20 @@ export interface DBPost {
   picture3: string;
 }
 
-export interface DBLike {
+export interface DBLike extends DBCUD {
   idx: number;
   useridx: number;
   postidx: number;
 }
 
-export interface DBComment {
+export interface DBComment extends DBCUD {
   idx: number;
   postidx: number;
   useridx: number;
   comments: string;
 }
 
-export interface DBAlarm {
+export interface DBAlarm extends DBCUD {
   idx: number;
   useridx: number;
   message: string;
