@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ReactComponent as GnbHome } from 'images/gnb-home.svg';
@@ -30,11 +30,12 @@ type IconProps = {
 };
 
 type RightModalProps = {
+  [key: string]: boolean;
   rightModalFlag: boolean;
   messageFlag: boolean;
   alarmFlag: boolean;
   selectorFlag: boolean;
-}
+};
 
 const GnbContainer = styled.div`
   width: 100%;
@@ -212,8 +213,8 @@ const Gnb: React.FC<any> = ({ type }) => {
 };
 
 function ChangeFlag(
-  rightModalState: any, // 타입설정 RightModalProps로 하려했는데 아래 !rightModalState[e] 에서 오류나는 이유좀.
-  setRightModalState: any,
+  rightModalState: RightModalProps,
+  setRightModalState: Dispatch<RightModalProps>,
   e: string
 ): void {
   if (!rightModalState.rightModalFlag || !rightModalState[e]) {
