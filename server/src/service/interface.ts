@@ -86,3 +86,10 @@ export interface DBProblem extends DBCUD {
   question: string;
   answer: boolean;
 }
+
+export interface DBUserProblem extends DBCUD {
+  idx: number;
+  useridx: number;
+  problemidx: number;
+  correct: boolean;
+}
