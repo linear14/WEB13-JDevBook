@@ -1,18 +1,20 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import mainLogo from 'images/main-logo.png';
-import gnbHome from 'images/gnb-home.svg';
-import gnbGroup from 'images/gnb-group.svg';
-import gnbHomeActive from 'images/gnb-home-active.svg';
-import gnbGroupActive from 'images/gnb-group-active.svg';
-import gnbMyPage from 'images/gnb-mypage.svg';
+import { Link } from 'react-router-dom';
+import { ReactComponent as GnbHome } from 'images/gnb-home.svg';
+import { ReactComponent as GnbGroup } from 'images/gnb-group.svg';
+import { ReactComponent as GnbHomeActive } from 'images/gnb-home-active.svg';
+import { ReactComponent as GnbGroupActive } from 'images/gnb-group-active.svg';
 import gnbMessage from 'images/gnb-message.svg';
 import gnbAlarm from 'images/gnb-alarm.svg';
 import gnbSelector from 'images/gnb-down-arrow.svg';
-import iconSearch from 'images/icon-search.svg';
+import { UserSearchBar, UserSearchModal } from '..';
+import { useRecoilValue } from 'recoil';
+import { modalVisibleStates } from 'recoil/modal';
+import profileDefault from 'images/profile-default.png';
 
 type GnbProps = {
-  type: string;
+  type?: string;
 };
 
 type FlexProps = {
@@ -20,7 +22,6 @@ type FlexProps = {
 };
 
 type TabProps = {
-  img: any;
   current?: boolean;
 };
 
@@ -32,6 +33,7 @@ const GnbContainer = styled.div`
   width: 100%;
   height: 56px;
   position: fixed;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -39,6 +41,10 @@ const GnbContainer = styled.div`
   padding-right: 16px;
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  a {
+    text-decoration: none;
+  }
 
   img {
     width: 36px;
@@ -49,6 +55,17 @@ const GnbContainer = styled.div`
 
 const FlexWrap = styled.div<FlexProps>`
   display: flex;
+  align-items: center;
+
+  img {
+    width: 40px;
+    height: 40px;
+    vertical-align: bottom;
+  }
+
+  & > *:not(:first-child) {
+    margin-left: 8px;
+  }
 
   ${({ center }) =>
     center &&
@@ -57,38 +74,11 @@ const FlexWrap = styled.div<FlexProps>`
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+
+      @media screen and (max-width: 800px) {
+        display: none;
+      }
     `}
-`;
-
-const UserSearchBar = styled.div`
-  width: 240px;
-  height: 40px;
-  background: #f0f2f5;
-  border-radius: 24px;
-  margin-left: 16px;
-  display: flex;
-  align-items: center;
-  padding-left: 16px;
-  padding-right: 16px;
-  box-sizing: border-box;
-
-  img {
-    width: 24px;
-    height: 24px;
-  }
-
-  input {
-    flex: 1;
-    outline: none;
-    background: none;
-    border: none;
-    margin-left: 4px;
-    font-size: 1rem;
-
-    &::placeholder {
-      font-size: 1rem;
-    }
-  }
 `;
 
 const GnbTab = styled.div<TabProps>`
@@ -99,25 +89,44 @@ const GnbTab = styled.div<TabProps>`
   align-items: center;
   transition: 0.1s ease-in;
 
-  &:after {
-    content: '';
-    background-image: url(${({ img }) => img});
-    background-size: 28px 28px;
-    width: 28px;
-    height: 28px;
-  }
-
-  svg {
-    ${({ current }) => current && `color: blue`};
-  }
-
   &:hover {
     background: #f2f2f2;
     border-radius: 8px;
   }
 
-  & + div {
+  svg path {
+    ${({ current }) =>
+      current &&
+      css`
+        fill: #87d474;
+      `}
+  }
+`;
+
+const ProfileWrap = styled.div`
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding-left: 4px;
+  padding-right: 12px;
+
+  &:hover {
+    background: #f0f2f5;
+    border-radius: 24px;
+  }
+
+  img {
+    border: 1px solid #bbbbbb;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+  }
+
+  p {
+    color: black;
     margin-left: 8px;
+    font-size: 1rem;
+    font-weight: bold;
   }
 `;
 
@@ -141,34 +150,35 @@ const IconWrap = styled.div<IconProps>`
   &:hover {
     background: #d8dadf;
   }
-
-  & + div {
-    margin-left: 8px;
-  }
 `;
 
 const Gnb: React.FC<GnbProps> = ({ type }) => {
+  const modalState = useRecoilValue(modalVisibleStates);
+
   return (
     <GnbContainer>
       <FlexWrap>
-        <img src={mainLogo} />
-        <UserSearchBar>
-          <img src={iconSearch} />
-          <input type="text" placeholder="Search User" />
-        </UserSearchBar>
+        {modalState.searchUser ? <UserSearchModal /> : <UserSearchBar />}
       </FlexWrap>
       <FlexWrap center>
-        <GnbTab
-          img={type === 'home' ? gnbHomeActive : gnbHome}
-          current={type === 'home'}
-        />
-        <GnbTab
-          img={type === 'group' ? gnbGroupActive : gnbGroup}
-          current={type === 'group'}
-        />
+        <Link to="/home">
+          <GnbTab current={type === 'home'}>
+            {type === 'home' ? <GnbHomeActive /> : <GnbHome />}
+          </GnbTab>
+        </Link>
+        <Link to="/group">
+          <GnbTab current={type === 'group'}>
+            {type === 'group' ? <GnbGroupActive /> : <GnbGroup />}
+          </GnbTab>
+        </Link>
       </FlexWrap>
       <FlexWrap>
-        <IconWrap img={gnbMyPage} />
+        <Link to="/profile/1">
+          <ProfileWrap>
+            <img src={profileDefault} />
+            <p>이름</p>
+          </ProfileWrap>
+        </Link>
         <IconWrap img={gnbMessage} />
         <IconWrap img={gnbAlarm} />
         <IconWrap img={gnbSelector} />
