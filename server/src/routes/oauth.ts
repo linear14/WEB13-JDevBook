@@ -4,32 +4,13 @@ dotenv.config({ path: path.resolve(__dirname, '../config/.env.development')});
 import express, {Request, Response, NextFunction} from "express";
 import jwt from 'jsonwebtoken';
 import dbManager from '../service/dbManager';
+import { DBuserdata } from '../service/interface';
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
 
 const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
-
-declare module "express-session" {
-  interface Session {
-    username: string,
-    useridx: number,
-    jwt: string
-  }
-}
-
-// DB table 만들때랑 중복느낌 파일 따로 빼는게 좋을듯
-interface DBuserdata {
-  idx: number,
-  nickname: string,
-  profile: string,
-  cover: string,
-  bio: string,
-  createdAt: Date,
-  updatedAt: Date,
-  deletedAt: Date
-}
 
 router.get('/login', (req: Request, res: Response, next: NextFunction) => {
   res.json(githubOauth.authorizeURL);
@@ -43,7 +24,7 @@ router.get('/callback', async (req: Request, res: Response, next: NextFunction) 
     
     const userdata: DBuserdata = await dbManager.getUserdata(username);
     console.log(userdata);
-    
+
     // 로그인 하면 login 페이지로 갈 수 없게도 해야...
     // 반대로 로그인 안했으면 login 페이지를 벗어날 수 없게 해야...
 
