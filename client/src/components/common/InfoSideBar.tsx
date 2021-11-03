@@ -33,7 +33,7 @@ const SolvedTitle = styled.div`
 `;
 
 const SolvedBarGraph = styled.div`
-  height: 20px;
+  height: 25px;
   background: #ccc;
   border-radius: 40px;
   margin: 0 50px;
@@ -55,8 +55,8 @@ const GraphAnimation = keyframes`
 const InnerBarGraph = styled.span`
   display: block;
   width: 75%;
-  height: 20px;
-  line-height: 20px;
+  height: 25px;
+  line-height: 25px;
   text-align: right;
   background: #87d474;
   border-radius: 40px;
