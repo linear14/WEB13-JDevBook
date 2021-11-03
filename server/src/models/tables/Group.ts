@@ -1,5 +1,6 @@
 import { Table, Column, Model, HasMany, BelongsToMany, Length, Unique, DataType } from 'sequelize-typescript'
 import GroupChat from './GroupChat';
+import Problem from './Problem';
 import User from './User';
 import UserGroup from './UserGroup'
 
@@ -29,5 +30,8 @@ export default class Group extends Model<Group> {
     BTMUserGroupgroupidx?: User[]
 
     @HasMany(() => GroupChat, {foreignKey: 'groupidx', sourceKey: 'idx'})
-    HMGroupChatgroupidx?: GroupChat[]    
+    HMGroupChatgroupidx?: GroupChat[]
+
+    @HasMany(() => Problem, {foreignKey: 'groupidx', sourceKey: 'idx'})
+    HMProblemgroupidx?: Problem[]   
 }
