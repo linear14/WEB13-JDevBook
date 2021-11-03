@@ -7,7 +7,6 @@
 //   flex-direction: row;
 //   justify-content: center;
 // `;
-
 // const StyledImg = styled.img`
 //   width: 50px;
 //   height: auto;
@@ -45,6 +44,19 @@ import LoginBox from '../components/LoginPage/LoginBox';
 import Footer from '../components/LoginPage/Footer';
 
 const LoginPage = () => {
+const StyledImg = styled.img`
+  width: 30px;
+  height: auto;
+`;
+
+function LoginPage() {
+  const loginGithub = () => {
+    fetch('/oauth/login')
+      .then((res) => res.json())
+      .then((loginLink) => {
+        window.location.href = loginLink;
+      });
+  };
   return (
     <>
     <Content>
@@ -54,7 +66,7 @@ const LoginPage = () => {
     <Footer />
     </>
   );
-};
+}
 
 const Content = styled.div`
   display: flex;

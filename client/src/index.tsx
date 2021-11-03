@@ -4,10 +4,13 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import Router from './Router';
 import reportWebVitals from './reportWebVitals';
+import { RecoilRoot } from 'recoil';
 
 ReactDOM.render(
-  <Router />,
-  document.getElementById('root'),
+  <RecoilRoot>
+    <Router />
+  </RecoilRoot>,
+  document.getElementById('root')
 );
 
 reportWebVitals();
