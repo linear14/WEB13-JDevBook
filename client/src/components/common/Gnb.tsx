@@ -9,8 +9,8 @@ import gnbMessage from 'images/gnb-message.svg';
 import gnbAlarm from 'images/gnb-alarm.svg';
 import gnbSelector from 'images/gnb-down-arrow.svg';
 import { UserSearchBar, UserSearchModal } from '..';
-import { useRecoilValue } from 'recoil';
-import { modalVisibleStates } from 'recoil/modal';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { modalVisibleStates, rightModalStates } from 'recoil/modal';
 import profileDefault from 'images/profile-default.png';
 
 type GnbProps = {
@@ -152,8 +152,11 @@ const IconWrap = styled.div<IconProps>`
   }
 `;
 
-const Gnb: React.FC<any> = ({ type, flagObj, changeFlag }) => {
+const Gnb: React.FC<any> = ({ type }) => {
   const modalState = useRecoilValue(modalVisibleStates);
+  const [rightModalState, setRightModalState] =
+    useRecoilState(rightModalStates);
+
   return (
     <GnbContainer>
       <FlexWrap>
@@ -181,19 +184,64 @@ const Gnb: React.FC<any> = ({ type, flagObj, changeFlag }) => {
         <IconWrap
           img={gnbMessage}
           onClick={() => {
-            changeFlag(`messageFlag`);
+            if (
+              !rightModalState.rightModalFlag ||
+              !rightModalState.messageFlag
+            ) {
+              setRightModalState({
+                rightModalFlag: true,
+                messageFlag: true,
+                alarmFlag: false,
+                selectorFlag: false
+              });
+            } else {
+              setRightModalState({
+                ...rightModalState,
+                rightModalFlag: false,
+                messageFlag: false
+              });
+            }
           }}
         />
         <IconWrap
           img={gnbAlarm}
           onClick={() => {
-            changeFlag(`alarmFlag`);
+            if (!rightModalState.rightModalFlag || !rightModalState.alarmFlag) {
+              setRightModalState({
+                rightModalFlag: true,
+                alarmFlag: true,
+                messageFlag: false,
+                selectorFlag: false
+              });
+            } else {
+              setRightModalState({
+                ...rightModalState,
+                rightModalFlag: false,
+                alarmFlag: false
+              });
+            }
           }}
         />
         <IconWrap
           img={gnbSelector}
           onClick={() => {
-            changeFlag(`selectorFlag`);
+            if (
+              !rightModalState.rightModalFlag ||
+              !rightModalState.selectorFlag
+            ) {
+              setRightModalState({
+                rightModalFlag: true,
+                selectorFlag: true,
+                alarmFlag: false,
+                messageFlag: false
+              });
+            } else {
+              setRightModalState({
+                ...rightModalState,
+                rightModalFlag: false,
+                selectorFlag: false
+              });
+            }
           }}
         />
       </FlexWrap>
