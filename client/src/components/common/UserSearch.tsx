@@ -132,7 +132,10 @@ const UserSearchBar: React.FC = () => {
 const UserSearchModal: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
   const [input, setInput] = useState('');
-  const [results, setResults] = useState<User[]>([]);
+  const [results, setResults] = useState<{
+    isProgress: boolean;
+    users: User[];
+  }>({ isProgress: false, users: [] });
 
   const modal = React.useRef<HTMLDivElement>(null);
 
@@ -145,6 +148,7 @@ const UserSearchModal: React.FC = () => {
 
   const onChangeInput = (e: any) => {
     setInput(e.target.value);
+    setResults({ isProgress: true, users: [] });
   };
 
   useEffect(() => {
@@ -156,8 +160,10 @@ const UserSearchModal: React.FC = () => {
 
   useEffect(() => {
     const fetchJob = setTimeout(() => {
-      fetchSearchUser(input).then((response: User[]) => setResults(response));
-    }, 1000);
+      fetchSearchUser(input).then((response: User[]) =>
+        setResults({ isProgress: false, users: response })
+      );
+    }, 750);
 
     return () => clearTimeout(fetchJob);
   }, [input]);
@@ -183,9 +189,15 @@ const UserSearchModal: React.FC = () => {
         </SearchBarContainerModal>
       </ModalHeader>
       <SearchModalBody>
-        {results.map((result) => (
-          <UserCard key={result.idx} user={result} />
-        ))}
+        {results.isProgress ? (
+          <p>Searching...</p>
+        ) : results.users.length === 0 ? (
+          <p>No Result</p>
+        ) : (
+          results.users.map((result) => (
+            <UserCard key={result.idx} user={result} />
+          ))
+        )}
       </SearchModalBody>
     </UserSearchModalContainer>
   );
@@ -212,6 +224,6 @@ const fetchSearchUser = (keyword: string) => {
   return new Promise<User[]>((res, rej) => {
     setTimeout(() => {
       res(testData);
-    }, 1000);
+    }, 500);
   });
 };
