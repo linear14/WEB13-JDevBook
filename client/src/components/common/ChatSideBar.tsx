@@ -3,22 +3,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { rightModalStates } from 'recoil/modal';
 import socket from './Socket';
-
-type RightModalProps = {
-  [key: string]: boolean;
-  rightModalFlag: boolean;
-  messageFlag: boolean;
-  alarmFlag: boolean;
-  selectorFlag: boolean;
-};
-
-type Message = {
-  message?: string;
-};
-
-type MessageObj = {
-  string: string;
-};
+import { RightModalProps, Message } from 'utils/types';
 
 const ChatSideBarContainer = styled.div<any>`
   width: inherit;

@@ -15,4 +15,4 @@ export const rightModalStates = atom({
     alarmFlag: false,
     selectorFlag: false
   }
-})
+});
