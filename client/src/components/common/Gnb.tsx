@@ -29,6 +29,13 @@ type IconProps = {
   img: any;
 };
 
+type RightModalProps = {
+  rightModalFlag: boolean;
+  messageFlag: boolean;
+  alarmFlag: boolean;
+  selectorFlag: boolean;
+}
+
 const GnbContainer = styled.div`
   width: 100%;
   height: 56px;
@@ -183,70 +190,47 @@ const Gnb: React.FC<any> = ({ type }) => {
         </Link>
         <IconWrap
           img={gnbMessage}
-          onClick={() => {
-            if (
-              !rightModalState.rightModalFlag ||
-              !rightModalState.messageFlag
-            ) {
-              setRightModalState({
-                rightModalFlag: true,
-                messageFlag: true,
-                alarmFlag: false,
-                selectorFlag: false
-              });
-            } else {
-              setRightModalState({
-                ...rightModalState,
-                rightModalFlag: false,
-                messageFlag: false
-              });
-            }
-          }}
+          onClick={() =>
+            ChangeFlag(rightModalState, setRightModalState, 'messageFlag')
+          }
         />
         <IconWrap
           img={gnbAlarm}
-          onClick={() => {
-            if (!rightModalState.rightModalFlag || !rightModalState.alarmFlag) {
-              setRightModalState({
-                rightModalFlag: true,
-                alarmFlag: true,
-                messageFlag: false,
-                selectorFlag: false
-              });
-            } else {
-              setRightModalState({
-                ...rightModalState,
-                rightModalFlag: false,
-                alarmFlag: false
-              });
-            }
-          }}
+          onClick={() =>
+            ChangeFlag(rightModalState, setRightModalState, 'alarmFlag')
+          }
         />
         <IconWrap
           img={gnbSelector}
-          onClick={() => {
-            if (
-              !rightModalState.rightModalFlag ||
-              !rightModalState.selectorFlag
-            ) {
-              setRightModalState({
-                rightModalFlag: true,
-                selectorFlag: true,
-                alarmFlag: false,
-                messageFlag: false
-              });
-            } else {
-              setRightModalState({
-                ...rightModalState,
-                rightModalFlag: false,
-                selectorFlag: false
-              });
-            }
-          }}
+          onClick={() =>
+            ChangeFlag(rightModalState, setRightModalState, 'selectorFlag')
+          }
         />
       </FlexWrap>
     </GnbContainer>
   );
 };
+
+function ChangeFlag(
+  rightModalState: any, // 타입설정 RightModalProps로 하려했는데 아래 !rightModalState[e] 에서 오류나는 이유좀.
+  setRightModalState: any,
+  e: string
+): void {
+  if (!rightModalState.rightModalFlag || !rightModalState[e]) {
+    setRightModalState({
+      rightModalFlag: true,
+      messageFlag: false,
+      alarmFlag: false,
+      selectorFlag: false,
+      [e]: true
+    });
+  } else {
+    setRightModalState({
+      ...rightModalState,
+      rightModalFlag: false,
+      [e]: false
+    });
+  }
+}
 
 export default Gnb;
