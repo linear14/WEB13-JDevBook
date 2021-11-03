@@ -138,6 +138,7 @@ const UserSearchModal: React.FC = () => {
   }>({ isProgress: false, users: [] });
 
   const modal = React.useRef<HTMLDivElement>(null);
+  const inputBox = React.useRef<HTMLInputElement>(null);
 
   const closeModal = (e: any, force?: boolean) => {
     if (!force && modal.current?.contains(e.target)) {
@@ -153,6 +154,8 @@ const UserSearchModal: React.FC = () => {
 
   useEffect(() => {
     document.addEventListener('click', closeModal);
+    inputBox.current?.focus();
+
     return () => {
       document.removeEventListener('click', closeModal);
     };
@@ -185,6 +188,7 @@ const UserSearchModal: React.FC = () => {
             placeholder="Search User"
             value={input}
             onChange={onChangeInput}
+            ref={inputBox}
           />
         </SearchBarContainerModal>
       </ModalHeader>
