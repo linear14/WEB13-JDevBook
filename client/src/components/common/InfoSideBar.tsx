@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import { Link } from 'react-router-dom';
 import { ProfilePhoto } from '..';
 
 const InfoSideBarContainer = styled.div`
@@ -11,7 +12,7 @@ const InfoSideBarContainer = styled.div`
   box-shadow: rgba(0, 0, 0, 0.24) 5px 5px 5px;
 `;
 
-const ProfileWrap = styled.a`
+const ProfileWrap = styled(Link)`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -70,7 +71,7 @@ const InnerBarGraph = styled.span`
 const InfoSideBar: React.FC = () => {
   return (
     <InfoSideBarContainer>
-      <ProfileWrap href="/profile">
+      <ProfileWrap to="/profile/shin">
         <ProfilePhoto src="" />
         <p>UserName</p>
       </ProfileWrap>

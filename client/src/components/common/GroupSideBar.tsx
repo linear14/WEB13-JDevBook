@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import iconSearch from 'images/icon-search.svg';
 import defaultCover from 'images/default-profile.jpg';
 
@@ -45,7 +46,7 @@ const GroupList = styled.div`
   flex-direction: column;
 `;
 
-const GroupItem = styled.a`
+const GroupItem = styled(Link)`
   display: flex;
   text-decoration: none;
   color: black;
@@ -74,11 +75,11 @@ const GroupSideBar: React.FC = () => {
         <input type="text" placeholder="search group" />
       </SearchBarWrap>
       <GroupList>
-        <GroupItem href="/group">
+        <GroupItem to="/group">
           <img src={defaultCover} alt="cover 아이콘" />
           <p>그룹 이름</p>
         </GroupItem>
-        <GroupItem href="/group">
+        <GroupItem to="/group">
           <img src={defaultCover} alt="cover 아이콘" />
           <p>그룹 이름</p>
         </GroupItem>
