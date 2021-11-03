@@ -36,3 +36,20 @@ export interface DBChat {
   receiveridx: number;
   content: string;
 }
+
+export interface DBPost {
+  idx: number;
+  useridx: number;
+  secret: boolean;
+  likenum: number;
+  contents: string;
+  picture1: string;
+  picture2: string;
+  picture3: string;
+}
+
+export interface DBLike {
+  idx: number;
+  useridx: number;
+  postidx: number;
+}
