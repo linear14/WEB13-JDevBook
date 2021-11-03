@@ -1,17 +1,17 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ReactComponent as GnbHome } from '../../images/gnb-home.svg';
-import { ReactComponent as GnbGroup } from '../../images/gnb-group.svg';
-import { ReactComponent as GnbHomeActive } from '../../images/gnb-home-active.svg';
-import { ReactComponent as GnbGroupActive } from '../../images/gnb-group-active.svg';
-import gnbMessage from '../../images/gnb-message.svg';
-import gnbAlarm from '../../images/gnb-alarm.svg';
-import gnbSelector from '../../images/gnb-down-arrow.svg';
+import { ReactComponent as GnbHome } from 'images/gnb-home.svg';
+import { ReactComponent as GnbGroup } from 'images/gnb-group.svg';
+import { ReactComponent as GnbHomeActive } from 'images/gnb-home-active.svg';
+import { ReactComponent as GnbGroupActive } from 'images/gnb-group-active.svg';
+import gnbMessage from 'images/gnb-message.svg';
+import gnbAlarm from 'images/gnb-alarm.svg';
+import gnbSelector from 'images/gnb-down-arrow.svg';
 import { UserSearchBar, UserSearchModal } from '..';
 import { useRecoilValue } from 'recoil';
-import { modalVisibleStates } from '../../recoil/modal';
-import profileDefault from '../../images/profile-default.png';
+import { modalVisibleStates } from 'recoil/modal';
+import profileDefault from 'images/profile-default.png';
 
 type GnbProps = {
   type?: string;
@@ -50,6 +50,7 @@ const GnbContainer = styled.div`
     width: 36px;
     height: 36px;
   }
+  z-index: 1;
 `;
 
 const FlexWrap = styled.div<FlexProps>`
