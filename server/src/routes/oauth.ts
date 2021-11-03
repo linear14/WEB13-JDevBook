@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '../config/.env.development')});
 import express, {Request, Response, NextFunction} from "express";
 import jwt from 'jsonwebtoken';
+import dbManager from '../service/dbManager';
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
 
@@ -13,8 +14,21 @@ const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
 declare module "express-session" {
   interface Session {
     username: string,
+    useridx: number,
     jwt: string
   }
+}
+
+// DB table 만들때랑 중복느낌 파일 따로 빼는게 좋을듯
+interface DBuserdata {
+  idx: number,
+  nickname: string,
+  profile: string,
+  cover: string,
+  bio: string,
+  createdAt: Date,
+  updatedAt: Date,
+  deletedAt: Date
 }
 
 router.get('/login', (req: Request, res: Response, next: NextFunction) => {
@@ -27,11 +41,14 @@ router.get('/callback', async (req: Request, res: Response, next: NextFunction) 
     const accessToken: string = await githubOauth.getAccessToken(req.query.code);
     const username: string = await githubOauth.getUsername(accessToken);
     
-    // db에 아이디 저장하고 확인하는 작업
+    const userdata: DBuserdata = await dbManager.getUserdata(username);
+    console.log(userdata);
+    
     // 로그인 하면 login 페이지로 갈 수 없게도 해야...
     // 반대로 로그인 안했으면 login 페이지를 벗어날 수 없게 해야...
 
-    req.session.username = username;
+    req.session.username = userdata.nickname;
+    req.session.useridx = userdata.idx; // 자신 idx
     req.session.jwt = jwt.sign({
       name: username,
       exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24) // 24시간

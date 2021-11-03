@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize-typescript'
 const config = require('../config/dbconfig.json');
 
-export const sequelize = new Sequelize({
+const sequelize = new Sequelize({
   database: config.database,
   dialect: config.dialect,
   username: config.username,
@@ -10,3 +10,4 @@ export const sequelize = new Sequelize({
   models: [__dirname + '/tables']
 });
 
+export default sequelize;
