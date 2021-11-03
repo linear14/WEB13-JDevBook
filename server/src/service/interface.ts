@@ -72,3 +72,10 @@ export interface DBAlarm extends DBCUD {
   useridx: number;
   message: string;
 }
+
+export interface DBGroupChat extends DBCUD {
+  idx: number;
+  groupidx: number;
+  useridx: number;
+  content: string;
+}
