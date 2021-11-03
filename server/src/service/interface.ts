@@ -60,3 +60,9 @@ export interface DBComment {
   useridx: number;
   comments: string;
 }
+
+export interface DBAlarm {
+  idx: number;
+  useridx: number;
+  message: string;
+}
