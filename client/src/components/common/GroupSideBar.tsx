@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import iconSearch from 'images/icon-search.svg';
@@ -69,6 +69,11 @@ const GroupItem = styled(Link)`
   }
 `;
 
+type tempGroupType = {
+  groupName: string;
+  imgSrc: string;
+};
+
 const tempGroup = [
   {
     groupName: '운영체제',
@@ -81,6 +86,7 @@ const tempGroup = [
 ];
 
 const GroupSideBar: React.FC = () => {
+  const [group, setGroup] = useState<tempGroupType>();
   return (
     <GroupSideBarContainer>
       <SearchBarWrap>
