@@ -4,6 +4,7 @@
     "lib": ["esnext"], // 컴파일시 사용할 ECMAscript 라이브러리 버전
     "sourceMap": true, //webpack처럼 ts에서 디버깅 할수있게 map 파일 만드는 옵션
     "module": "commonjs",
+    "esModuleInterop": true, // ES6 import ~ from ~ 가능하게
     "strict": true,
     "experimentalDecorators": true, //decorator 사용
     "emitDecoratorMetadata": true,
