@@ -2,7 +2,7 @@ import db from "../models";
 
 const dbManager = {
     sync: async () => {
-        await db.sync({force: true, logging: true}).then(() => {
+        await db.sync({force: false, logging: false}).then(() => {
             console.log('Connection has been established successfully.');
           }).catch((error: any) => {
             console.error('Unable to connect to the database:', error);
