@@ -1,4 +1,5 @@
 import { ProfilePhoto } from 'components';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export interface User {
@@ -21,6 +22,8 @@ const CardWrap = styled.div`
   p {
     margin-left: 16px;
     font-size: 0.875rem;
+    color: black;
+    text-decoration: none;
   }
 
   &:hover {
@@ -39,10 +42,12 @@ const CardWrap = styled.div`
 
 const UserCard: React.FC<UserProps> = ({ user }) => {
   return (
-    <CardWrap>
-      <ProfilePhoto size="36px" />
-      <p>{user.nickname}</p>
-    </CardWrap>
+    <Link to={`/profile/${user.idx}`}>
+      <CardWrap>
+        <ProfilePhoto size="36px" />
+        <p>{user.nickname}</p>
+      </CardWrap>
+    </Link>
   );
 };
 
