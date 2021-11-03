@@ -4,6 +4,7 @@ import Group from './Group'
 import Like from './Like';
 import Post from './Post';
 import UserGroup from './UserGroup';
+import _Comment from './Comment'
 
 @Table({
     tableName: 'users',
@@ -44,4 +45,7 @@ export default class User extends Model<User> {
 
     @BelongsToMany(() => Post, {through: () => Like, foreignKey: 'useridx'})
     BTMLikeuseridx?: Post[]
+
+    @HasMany(() => _Comment, {foreignKey: 'useridx', sourceKey: 'idx'})
+    HMCommentuseridx?: _Comment[]
 }

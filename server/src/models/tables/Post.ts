@@ -1,6 +1,7 @@
-import { Table, Column, Model, HasMany, BelongsToMany, Unique, Length, ForeignKey, BelongsTo, DataType } from 'sequelize-typescript'
+import { Table, Column, Model, HasMany, BelongsToMany, Unique, Length, ForeignKey, BelongsTo, DataType, Comment } from 'sequelize-typescript'
 import Like from './Like';
 import User from './User'
+import _Comment from './Comment';
 
 @Table({
     tableName: 'posts',
@@ -41,4 +42,7 @@ export default class Post extends Model<Post> {
 
     @BelongsToMany(() => User, {through: () => Like, foreignKey: 'postidx'})
     BTMLikepostidx?: User[]
+
+    @HasMany(() => _Comment, {foreignKey: 'postidx', sourceKey: 'idx'})
+    HMCommentpostidx?: _Comment[]
 }
