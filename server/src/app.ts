@@ -7,7 +7,7 @@ import logger from 'morgan';
 import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, './config/.env.development')});
 
-import db from "./sequelize/models";
+import { sequelize } from "./models";
 const indexRouter = require('./routes/index');
 const oauthRouter = require('./routes/oauth');
 const apiRouter = require('./routes/api');
@@ -18,13 +18,12 @@ const app = express();
 const port = 4000;
 const FileStore = sessionFileStore(session);
 
-db.sequelize.sync({ force: true })
-.then(() => {
-  console.log('db 연결 성공')
+sequelize.sync({force: true}).then(() => {
+  console.log('Connection has been established successfully.');
+}).catch((error: any) => {
+  console.error('Unable to connect to the database:', error);
 })
-.catch((err) => {
-  console.error(err);
-})
+
 
 app.use(session({
     //HttpOnly: true,
