@@ -1,6 +1,7 @@
-import { Table, Column, Model, ForeignKey, BelongsTo, DataType } from 'sequelize-typescript'
+import { Table, Column, Model, ForeignKey, BelongsTo, DataType, BelongsToMany } from 'sequelize-typescript'
 import Group from './Group';
 import User from './User'
+import UserProblem from './UserProblem';
 
 @Table({
     tableName: 'problems',
@@ -26,4 +27,7 @@ export default class Problem extends Model<Problem> {
 
     @BelongsTo(() => Group, {foreignKey: 'groupidx', targetKey: 'idx'})
     BTGroupgroupidx?: Group
+
+    @BelongsToMany(() => User, {through: () => UserProblem, foreignKey: 'problemidx'})
+    BTMUserProblemproblemidx?: User[]
 }

@@ -7,6 +7,8 @@ import UserGroup from './UserGroup';
 import _Comment from './Comment'
 import Alarm from './Alarm';
 import GroupChat from './GroupChat';
+import Problem from './Problem';
+import UserProblem from './UserProblem';
 
 @Table({
     tableName: 'users',
@@ -56,4 +58,7 @@ export default class User extends Model<User> {
 
     @HasMany(() => GroupChat, {foreignKey: 'useridx', sourceKey: 'idx'})
     HMGroupChatuseridx?: GroupChat[]
+
+    @BelongsToMany(() => Problem, {through: () => UserProblem, foreignKey: 'useridx'})
+    BTMUserProblemuseridx?: Problem[]
 }
