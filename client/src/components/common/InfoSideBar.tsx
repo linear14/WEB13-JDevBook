@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import ProfilePhoto from './ProfilePhoto';
+import { ProfilePhoto } from '..';
 
 const InfoSideBarContainer = styled.div`
   height: 200px;
@@ -17,7 +17,7 @@ const ProfileWrap = styled.div`
 const InfoSideBar: React.FC = () => {
   return (
     <InfoSideBarContainer>
-      <ProfilePhoto src=''></ProfilePhoto>
+      <ProfilePhoto src=""></ProfilePhoto>
     </InfoSideBarContainer>
   );
 };
