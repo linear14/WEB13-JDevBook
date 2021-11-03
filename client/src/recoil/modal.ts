@@ -6,3 +6,10 @@ export const modalVisibleStates = atom({
     searchUser: false
   }
 });
+
+export const userData = atom({
+  key: 'userData',
+  default: {
+    username: ''
+  }
+})
