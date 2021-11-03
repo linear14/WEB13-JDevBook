@@ -152,9 +152,8 @@ const IconWrap = styled.div<IconProps>`
   }
 `;
 
-const Gnb: React.FC<GnbProps> = ({ type }) => {
+const Gnb: React.FC<any> = ({ type, flagObj, changeFlag }) => {
   const modalState = useRecoilValue(modalVisibleStates);
-
   return (
     <GnbContainer>
       <FlexWrap>
@@ -179,9 +178,24 @@ const Gnb: React.FC<GnbProps> = ({ type }) => {
             <p>이름</p>
           </ProfileWrap>
         </Link>
-        <IconWrap img={gnbMessage} />
-        <IconWrap img={gnbAlarm} />
-        <IconWrap img={gnbSelector} />
+        <IconWrap
+          img={gnbMessage}
+          onClick={() => {
+            changeFlag(`messageFlag`);
+          }}
+        />
+        <IconWrap
+          img={gnbAlarm}
+          onClick={() => {
+            changeFlag(`alarmFlag`);
+          }}
+        />
+        <IconWrap
+          img={gnbSelector}
+          onClick={() => {
+            changeFlag(`selectorFlag`);
+          }}
+        />
       </FlexWrap>
     </GnbContainer>
   );
