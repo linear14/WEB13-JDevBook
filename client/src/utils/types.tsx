@@ -1,36 +1,27 @@
-type GnbProps = {
+export interface GnbProps {
   type?: string;
-};
+}
 
-type FlexProps = {
+export interface FlexProps {
   center?: boolean;
-};
+}
 
-type TabProps = {
+export interface TabProps {
   current?: boolean;
-};
+}
 
-type IconProps = {
+export interface IconProps {
   img: any;
-};
+}
 
-type RightModalProps = {
+export interface RightModalProps {
   [key: string]: boolean;
   rightModalFlag: boolean;
   messageFlag: boolean;
   alarmFlag: boolean;
   selectorFlag: boolean;
-};
+}
 
-type Message = {
+export interface Message {
   message?: string;
-};
-
-export type {
-  GnbProps,
-  FlexProps,
-  TabProps,
-  IconProps,
-  RightModalProps,
-  Message
-};
+}

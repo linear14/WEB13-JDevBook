@@ -12,7 +12,13 @@ import gnbAlarm from 'images/gnb-alarm.svg';
 import gnbSelector from 'images/gnb-down-arrow.svg';
 import profileDefault from 'images/profile-default.png';
 import { UserSearchBar, UserSearchModal } from '..';
-import { GnbProps, FlexProps, TabProps, IconProps, RightModalProps } from 'utils/types';
+import {
+  GnbProps,
+  FlexProps,
+  TabProps,
+  IconProps,
+  RightModalProps
+} from 'utils/types';
 
 const GnbContainer = styled.div`
   width: 100%;
