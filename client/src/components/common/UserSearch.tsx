@@ -6,6 +6,8 @@ import iconSearch from '../../images/icon-search.svg';
 import { MdArrowBack } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
 import { modalVisibleStates } from '../../recoil/modal';
+import { UserCard } from 'components';
+import { User } from './UserCard';
 
 const FlexBox = styled.div`
   display: flex;
@@ -88,6 +90,22 @@ const HoverRound = styled.div`
 
 const SearchModalBody = styled.div`
   width: 100%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  max-height: calc(600px - 56px);
+  box-sizing: border-box;
+
+  overflow-y: scroll;
+
+  /* Hide Scrollbar */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  /* Chrome Safari Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   & > p {
     text-align: center;
     color: #888888;
@@ -114,7 +132,7 @@ const UserSearchBar: React.FC = () => {
 const UserSearchModal: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
   const [input, setInput] = useState('');
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<User[]>([]);
 
   const modal = React.useRef<HTMLDivElement>(null);
 
@@ -137,9 +155,8 @@ const UserSearchModal: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const fetchJob = setTimeout(async () => {
-      const response = await fetchSearchUser(input);
-      console.log(response);
+    const fetchJob = setTimeout(() => {
+      fetchSearchUser(input).then((response: User[]) => setResults(response));
     }, 1000);
 
     return () => clearTimeout(fetchJob);
@@ -166,7 +183,9 @@ const UserSearchModal: React.FC = () => {
         </SearchBarContainerModal>
       </ModalHeader>
       <SearchModalBody>
-        <p>No Result</p>
+        {results.map((result) => (
+          <UserCard key={result.idx} user={result} />
+        ))}
       </SearchModalBody>
     </UserSearchModalContainer>
   );
@@ -174,7 +193,7 @@ const UserSearchModal: React.FC = () => {
 
 export { UserSearchBar, UserSearchModal };
 
-const testData = [
+const testData: User[] = [
   { idx: 1, nickname: '유저1', profile: '' },
   { idx: 2, nickname: '유저2', profile: '' },
   { idx: 3, nickname: '유저3', profile: '' },
@@ -184,19 +203,15 @@ const testData = [
   { idx: 7, nickname: '유저7', profile: '' },
   { idx: 8, nickname: '유저8', profile: '' },
   { idx: 9, nickname: '유저9', profile: '' },
-  { idx: 10, nickname: '유저10', profile: '' }
+  { idx: 10, nickname: '유저10', profile: '' },
+  { idx: 11, nickname: '유저11', profile: '' },
+  { idx: 12, nickname: '유저12', profile: '' }
 ];
 
-interface User {
-  idx: number;
-  nickname: string;
-  profile: string;
-}
-
 const fetchSearchUser = (keyword: string) => {
-  return new Promise((res, rej) => {
+  return new Promise<User[]>((res, rej) => {
     setTimeout(() => {
       res(testData);
-    }, 3000);
+    }, 1000);
   });
 };
