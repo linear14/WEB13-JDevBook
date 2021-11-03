@@ -10,6 +10,7 @@ dotenv.config({ path: path.resolve(__dirname, './config/.env.development')});
 import db from "./sequelize/models";
 const indexRouter = require('./routes/index');
 const oauthRouter = require('./routes/oauth');
+const apiRouter = require('./routes/api');
 
 const debug = require('debug')('server:server');
 const http = require('http');
@@ -57,5 +58,6 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 app.use('/', indexRouter);
 app.use('/oauth', oauthRouter);
+app.use('/api', apiRouter);
 
 module.exports = app;

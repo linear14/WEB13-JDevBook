@@ -47,21 +47,6 @@ router.get('/callback', async (req: Request, res: Response, next: NextFunction) 
     
 });
 
-router.get('/data', (req: Request, res: Response, next: NextFunction) => {
-  try{
-    const verified = jwt.verify(req.session.jwt, oauth.jwtKey) as {name: string};
-    if(verified.name === req.session.username) res.json(req.session.username);
-    else {
-      console.log(`로그인 정보 비정상 감지: ${req.session.username}`);
-      res.redirect('/oauth/logout');
-    }
-  } catch(err){
-    console.error(err);
-    res.redirect('/oauth/logout');
-  }
-
-})
-
 router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
   const username = req.session.username;
   // 삭제는 잘 되는데 client에서 session은 그대로 남아있음
