@@ -23,7 +23,6 @@ const Content = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  font-family: 'NanumSquareExtraBold';
 `;
 
 export default LoginPage;
