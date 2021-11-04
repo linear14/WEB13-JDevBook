@@ -29,9 +29,6 @@ router.get(
     const userdata: DBUser = await dbManager.getUserdata(username);
     console.log(userdata);
 
-    // 로그인 하면 login 페이지로 갈 수 없게도 해야...
-    // 반대로 로그인 안했으면 login 페이지를 벗어날 수 없게 해야...
-
     req.session.username = userdata.nickname;
     req.session.useridx = userdata.idx; // 자신 idx
     req.session.jwt = jwt.sign(
@@ -54,8 +51,6 @@ router.get(
 
 router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
   const username = req.session.username;
-  // 삭제는 잘 되는데 client에서 session은 그대로 남아있음
-  // 물론 서버에서 검사하면 이미 사라진 세션이라 오류처리 가능
   req.session.destroy((err: any) => {
     if (err) console.error(err);
     //console.log(`로그아웃 정상 작동: ${username}`);
