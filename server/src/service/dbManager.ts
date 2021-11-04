@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import db from '../models';
 
 const dbManager = {
@@ -17,9 +18,16 @@ const dbManager = {
       where: { nickname: username },
       defaults: { nickname: username }
     });
-    console.log(user.get());
-
+    
     return user.get();
+  },
+
+  searchUsers: async (keyword: string) => {
+    const users = await db.models.User.findAll({
+      where: { nickname: { [Op.like]: `%${keyword}%` } }
+    });
+
+    return users;
   }
 };
 
