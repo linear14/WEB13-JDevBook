@@ -1,5 +1,5 @@
 import socketClient from 'socket.io-client';
-const host: string = process.env.REACT_APP_HOST ?? 'https://jdevbook.kro.kr/';
+const host: string = 'http://localhost:4000'; //process.env.REACT_APP_HOST ?? 'https://jdevbook.kro.kr/';
 const socket = socketClient(host, {
   transports: ['websocket']
 });
