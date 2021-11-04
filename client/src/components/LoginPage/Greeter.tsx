@@ -2,21 +2,21 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const Greeter = () => {
-  const reactArray = "JDevBook".split("");
-  
+  const reactArray = 'JDevBook'.split('');
+
   return (
     <>
       <Wrapper>
         <SubTitle>우리들의 공간</SubTitle>
         <Content>
-        {reactArray.map((item, index):any => (
+          {reactArray.map((item, index) => (
             <span key={index}>{item}</span>
-        ))}
+          ))}
         </Content>
       </Wrapper>
     </>
-  )
-}
+  );
+};
 
 const Wrapper = styled.span`
   justify-content: center;
@@ -42,26 +42,25 @@ const Content = styled.span`
   color: #53b23b;
   display: inline-block;
   span {
-      
-      display: inline-block;
-      opacity: 0;
-      animation-name: ${Animation};
-      animation-duration: 4s;
-      animation-fill-mode: forwards;
-      animation-iteration-count: infinite;
+    display: inline-block;
+    opacity: 0;
+    animation-name: ${Animation};
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
   }
 
   ${getAnimaDelay()}
 `;
 
 function getAnimaDelay() {
-    let str = '';
-    for(let i = 1 ; i <= 8 ; i++) {
-        str += `span:nth-child(${i}) {
+  let str = '';
+  for (let i = 1; i <= 8; i++) {
+    str += `span:nth-child(${i}) {
             animation-delay: ${i * 0.1}s
         }`;
-    }
-    return str;
+  }
+  return str;
 }
 
 export default Greeter;

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { modalVisibleStates, rightModalStates } from 'recoil/modal';
 import { ReactComponent as GnbHome } from 'images/gnb-home.svg';
 import { ReactComponent as GnbGroup } from 'images/gnb-group.svg';
 import { ReactComponent as GnbHomeActive } from 'images/gnb-home-active.svg';
@@ -8,26 +10,15 @@ import { ReactComponent as GnbGroupActive } from 'images/gnb-group-active.svg';
 import gnbMessage from 'images/gnb-message.svg';
 import gnbAlarm from 'images/gnb-alarm.svg';
 import gnbSelector from 'images/gnb-down-arrow.svg';
-import { UserSearchBar, UserSearchModal } from '..';
-import { useRecoilValue } from 'recoil';
-import { modalVisibleStates } from 'recoil/modal';
 import profileDefault from 'images/profile-default.png';
-
-type GnbProps = {
-  type?: string;
-};
-
-type FlexProps = {
-  center?: boolean;
-};
-
-type TabProps = {
-  current?: boolean;
-};
-
-type IconProps = {
-  img: any;
-};
+import { UserSearchBar, UserSearchModal } from '..';
+import {
+  GnbProps,
+  FlexProps,
+  TabProps,
+  IconProps,
+  RightModalProps
+} from 'utils/types';
 
 const GnbContainer = styled.div`
   width: 100%;
@@ -152,8 +143,11 @@ const IconWrap = styled.div<IconProps>`
   }
 `;
 
-const Gnb: React.FC<any> = ({ type, flagObj, changeFlag }) => {
+const Gnb: React.FC<any> = ({ type }) => {
   const modalState = useRecoilValue(modalVisibleStates);
+  const [rightModalState, setRightModalState] =
+    useRecoilState(rightModalStates);
+
   return (
     <GnbContainer>
       <FlexWrap>
@@ -180,25 +174,47 @@ const Gnb: React.FC<any> = ({ type, flagObj, changeFlag }) => {
         </Link>
         <IconWrap
           img={gnbMessage}
-          onClick={() => {
-            changeFlag(`messageFlag`);
-          }}
+          onClick={() =>
+            ChangeFlag(rightModalState, setRightModalState, 'messageFlag')
+          }
         />
         <IconWrap
           img={gnbAlarm}
-          onClick={() => {
-            changeFlag(`alarmFlag`);
-          }}
+          onClick={() =>
+            ChangeFlag(rightModalState, setRightModalState, 'alarmFlag')
+          }
         />
         <IconWrap
           img={gnbSelector}
-          onClick={() => {
-            changeFlag(`selectorFlag`);
-          }}
+          onClick={() =>
+            ChangeFlag(rightModalState, setRightModalState, 'selectorFlag')
+          }
         />
       </FlexWrap>
     </GnbContainer>
   );
 };
+
+function ChangeFlag(
+  rightModalState: RightModalProps,
+  setRightModalState: Dispatch<RightModalProps>,
+  e: string
+): void {
+  if (!rightModalState.rightModalFlag || !rightModalState[e]) {
+    setRightModalState({
+      rightModalFlag: true,
+      messageFlag: false,
+      alarmFlag: false,
+      selectorFlag: false,
+      [e]: true
+    });
+  } else {
+    setRightModalState({
+      ...rightModalState,
+      rightModalFlag: false,
+      [e]: false
+    });
+  }
+}
 
 export default Gnb;
