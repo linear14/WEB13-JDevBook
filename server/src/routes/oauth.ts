@@ -1,21 +1,16 @@
 import path from 'path';
 import dotenv from 'dotenv';
-dotenv.config({ path: path.resolve(__dirname, './config/.env.development')});
+dotenv.config({ path: path.resolve(__dirname, '../config/.env.development')});
 import express, {Request, Response, NextFunction} from "express";
 import jwt from 'jsonwebtoken';
+import dbManager from '../service/dbManager';
+import { DBUser } from '../service/interface';
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
 
 const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
-
-declare module "express-session" {
-  interface Session {
-    username: string,
-    jwt: string
-  }
-}
 
 router.get('/login', (req: Request, res: Response, next: NextFunction) => {
   res.json(githubOauth.authorizeURL);
@@ -27,11 +22,14 @@ router.get('/callback', async (req: Request, res: Response, next: NextFunction) 
     const accessToken: string = await githubOauth.getAccessToken(req.query.code);
     const username: string = await githubOauth.getUsername(accessToken);
     
-    // db에 아이디 저장하고 확인하는 작업
+    const userdata: DBUser = await dbManager.getUserdata(username);
+    console.log(userdata);
+
     // 로그인 하면 login 페이지로 갈 수 없게도 해야...
     // 반대로 로그인 안했으면 login 페이지를 벗어날 수 없게 해야...
 
-    req.session.username = username;
+    req.session.username = userdata.nickname;
+    req.session.useridx = userdata.idx; // 자신 idx
     req.session.jwt = jwt.sign({
       name: username,
       exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24) // 24시간
@@ -46,21 +44,6 @@ router.get('/callback', async (req: Request, res: Response, next: NextFunction) 
     })    
     
 });
-
-router.get('/data', (req: Request, res: Response, next: NextFunction) => {
-  try{
-    const verified = jwt.verify(req.session.jwt, oauth.jwtKey) as {name: string};
-    if(verified.name === req.session.username) res.json(req.session.username);
-    else {
-      console.log(`로그인 정보 비정상 감지: ${req.session.username}`);
-      res.redirect('/oauth/logout');
-    }
-  } catch(err){
-    console.error(err);
-    res.redirect('/oauth/logout');
-  }
-
-})
 
 router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
   const username = req.session.username;

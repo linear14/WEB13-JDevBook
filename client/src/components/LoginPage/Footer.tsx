@@ -11,6 +11,7 @@ const Text = styled.div`
     bottom: 15px;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-family: 'NanumSquareExtraBold';
 `;
 
 export default Footer;
