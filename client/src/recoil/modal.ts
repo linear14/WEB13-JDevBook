@@ -13,3 +13,13 @@ export const userData = atom({
     username: ''
   }
 })
+
+export const rightModalStates = atom({
+  key: 'rightModalState',
+  default: {
+    rightModalFlag: false,
+    messageFlag: false,
+    alarmFlag: false,
+    selectorFlag: false
+  }
+});
