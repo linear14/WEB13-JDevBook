@@ -25,3 +25,12 @@ export interface RightModalProps {
 export interface Message {
   message?: string;
 }
+
+export interface ProfilePhotoProps {
+  src?: string;
+  size?: string;
+}
+
+export interface SideBarProps {
+  isLeft: boolean;
+}
