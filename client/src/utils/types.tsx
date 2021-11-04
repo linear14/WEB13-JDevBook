@@ -25,3 +25,13 @@ export interface RightModalProps {
 export interface Message {
   message?: string;
 }
+
+export interface SearchedUser {
+  idx: number;
+  nickname: string;
+  profile: string;
+}
+
+export interface SearchedUserProps {
+  user: SearchedUser;
+}

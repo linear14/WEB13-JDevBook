@@ -7,7 +7,7 @@ import { MdArrowBack } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
 import { modalVisibleStates } from '../../recoil/modal';
 import { UserCard } from 'components';
-import { User } from './UserCard';
+import { SearchedUser } from 'utils/types';
 
 const FlexBox = styled.div`
   display: flex;
@@ -163,7 +163,7 @@ const UserSearchModal: React.FC = () => {
   const [input, setInput] = useState('');
   const [results, setResults] = useState<{
     isProgress: boolean;
-    users: User[];
+    users: SearchedUser[];
   }>({ isProgress: false, users: [] });
 
   const modal = React.useRef<HTMLDivElement>(null);
@@ -192,7 +192,7 @@ const UserSearchModal: React.FC = () => {
 
   useEffect(() => {
     const fetchJob = setTimeout(() => {
-      fetchSearchUser(input).then((response: User[]) =>
+      fetchSearchUser(input).then((response: SearchedUser[]) =>
         setResults({ isProgress: false, users: response })
       );
     }, 750);
@@ -238,7 +238,7 @@ const UserSearchModal: React.FC = () => {
 
 export { UserSearchBar, UserSearchModal };
 
-const testData: User[] = [
+const testData: SearchedUser[] = [
   { idx: 1, nickname: '유저1', profile: '' },
   { idx: 2, nickname: '유저2', profile: '' },
   { idx: 3, nickname: '유저3', profile: '' },
@@ -254,7 +254,7 @@ const testData: User[] = [
 ];
 
 const fetchSearchUser = (keyword: string) => {
-  return new Promise<User[]>((res, rej) => {
+  return new Promise<SearchedUser[]>((res, rej) => {
     setTimeout(() => {
       res(testData);
     }, 500);

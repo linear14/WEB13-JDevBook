@@ -1,16 +1,7 @@
 import { ProfilePhoto } from 'components';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
-export interface User {
-  idx: number;
-  nickname: string;
-  profile: string;
-}
-
-type UserProps = {
-  user: User;
-};
+import { SearchedUserProps } from 'utils/types';
 
 const CardWrap = styled.div`
   width: 100%;
@@ -40,7 +31,7 @@ const CardWrap = styled.div`
   }
 `;
 
-const UserCard: React.FC<UserProps> = ({ user }) => {
+const UserCard: React.FC<SearchedUserProps> = ({ user }) => {
   return (
     <Link to={`/profile/${user.idx}`}>
       <CardWrap>
