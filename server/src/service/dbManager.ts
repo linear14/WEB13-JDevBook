@@ -18,7 +18,7 @@ const dbManager = {
       where: { nickname: username },
       defaults: { nickname: username }
     });
-
+    
     return user.get();
   },
 

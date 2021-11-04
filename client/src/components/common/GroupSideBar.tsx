@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import iconSearch from 'images/icon-search.svg';
@@ -80,24 +80,38 @@ const tempGroup = [
     imgSrc: defaultCover
   },
   {
-    groupName: '자료 구조',
+    groupName: '자료구조',
     imgSrc: defaultCover
   }
 ];
 
 const GroupSideBar: React.FC = () => {
-  const [group, setGroup] = useState<tempGroupType>();
+  const [group, setGroup] = useState<tempGroupType[]>(tempGroup);
+
+  const searchHandler = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setGroup(
+        tempGroup.filter((group) => group.groupName.includes(e.target.value))
+      );
+    },
+    []
+  );
+
   return (
     <GroupSideBarContainer>
       <SearchBarWrap>
         <img src={iconSearch} alt="Search 아이콘" />
-        <input type="text" placeholder="search group" />
+        <input
+          type="text"
+          placeholder="search group"
+          onChange={searchHandler}
+        />
       </SearchBarWrap>
       <GroupList>
-        {tempGroup.map((gruop) => (
+        {group.map((group) => (
           <GroupItem to="/group">
-            <img src={gruop.imgSrc} alt="cover 아이콘" />
-            <p>{gruop.groupName}</p>
+            <img src={group.imgSrc} alt="cover 아이콘" />
+            <p>{group.groupName}</p>
           </GroupItem>
         ))}
       </GroupList>

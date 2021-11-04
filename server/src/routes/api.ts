@@ -11,13 +11,6 @@ const router = express.Router();
 
 const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
 
-declare module 'express-session' {
-  interface Session {
-    username: string;
-    jwt: string;
-  }
-}
-
 router.get('/data', (req: Request, res: Response, next: NextFunction) => {
   try {
     const verified = jwt.verify(req.session.jwt, oauth.jwtKey) as {

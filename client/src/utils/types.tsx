@@ -25,7 +25,6 @@ export interface RightModalProps {
 export interface Message {
   message?: string;
 }
-
 export interface SearchedUser {
   idx: number;
   nickname: string;
@@ -34,4 +33,13 @@ export interface SearchedUser {
 
 export interface SearchedUserProps {
   user: SearchedUser;
+}
+  
+export interface ProfilePhotoProps {
+  src?: string;
+  size?: string;
+}
+
+export interface SideBarProps {
+  isLeft: boolean;
 }

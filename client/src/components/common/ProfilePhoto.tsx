@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import defaultProfile from 'images/default-profile.jpg';
+import { ProfilePhotoProps } from 'utils/types';
 
 const StyledProfilePhoto = styled.img<ProfilePhotoProps>`
   width: ${(props) => props.size || '65px'};
@@ -8,11 +9,6 @@ const StyledProfilePhoto = styled.img<ProfilePhotoProps>`
   border-radius: 50%;
   border: 1px solid #bbbbbb;
 `;
-
-type ProfilePhotoProps = {
-  src?: string;
-  size?: string;
-};
 
 const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ src, size, children }) => {
   return (
