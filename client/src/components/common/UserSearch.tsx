@@ -97,7 +97,7 @@ const UserSearchModalContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  padding: 8px;
+  padding: 8px 8px 0px 8px;
   box-sizing: border-box;
 
   svg {
@@ -121,7 +121,7 @@ const HoverRound = styled.div`
 const SearchModalBody = styled.div`
   width: 100%;
   margin-top: 8px;
-  margin-bottom: 8px;
+  padding-bottom: 8px;
   max-height: calc(600px - 56px);
   box-sizing: border-box;
 

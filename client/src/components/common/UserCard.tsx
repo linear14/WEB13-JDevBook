@@ -12,7 +12,7 @@ const CardWrap = styled.div`
 
   p {
     margin-left: 16px;
-    font-size: 0.875rem;
+    font-size: 0.95rem;
     color: black;
     text-decoration: none;
   }
@@ -21,24 +21,23 @@ const CardWrap = styled.div`
     background: #e3e4e5;
     border-radius: 8px;
   }
+`;
 
-  & + div {
-    margin-top: 2px;
-  }
-
-  &:last-child {
-    margin-bottom: 8px;
+const NavLink = styled(Link)`
+  display: block;
+  & + & {
+    margin-top: 4px;
   }
 `;
 
 const UserCard: React.FC<SearchedUserProps> = ({ user }) => {
   return (
-    <Link to={`/profile/${user.idx}`}>
+    <NavLink to={`/profile/${user.idx}`}>
       <CardWrap>
         <ProfilePhoto size="36px" />
         <p>{user.nickname}</p>
       </CardWrap>
-    </Link>
+    </NavLink>
   );
 };
 
