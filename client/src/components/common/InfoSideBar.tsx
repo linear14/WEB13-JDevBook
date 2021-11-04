@@ -80,7 +80,6 @@ const InfoSideBar: React.FC = () => {
       setUserdata({ username: name });
     }
     fetchUserdata();
-    // 로그아웃 할 때 없애던지 vs home 못가게 하던지
   }, []);
 
   return (
