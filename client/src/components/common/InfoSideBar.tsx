@@ -5,6 +5,7 @@ import { ProfilePhoto } from '..';
 import { userData } from 'recoil/modal';
 import { useRecoilState } from 'recoil';
 import getData from 'api/fetch';
+import socket from './Socket';
 
 const InfoSideBarContainer = styled.div`
   height: 200px;
@@ -80,13 +81,14 @@ const InfoSideBar: React.FC = () => {
   const [userdata, setUserdata] = useRecoilState(userData);
   useEffect(() => {
     async function fetchUserdata() {
-      const name = await getData.getusername();
-      setUserdata({username: name});
+      const name: string = await getData.getusername();
+      setUserdata({ username: name });
+      socket.emit('name', name);
     }
     fetchUserdata();
     // 로그아웃 할 때 없애던지 vs home 못가게 하던지
   }, []);
-  
+
   return (
     <InfoSideBarContainer>
       <ProfileWrap to="/profile/shin">
