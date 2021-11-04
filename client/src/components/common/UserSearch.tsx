@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil';
 import { modalVisibleStates } from '../../recoil/modal';
 import { UserCard } from 'components';
 import { SearchedUser } from 'utils/types';
+import getData from 'api/fetch';
 
 const FlexBox = styled.div`
   display: flex;
@@ -191,10 +192,9 @@ const UserSearchModal: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const fetchJob = setTimeout(() => {
-      fetchSearchUser(input).then((response: SearchedUser[]) =>
-        setResults({ isProgress: false, users: response })
-      );
+    const fetchJob = setTimeout(async () => {
+      const users = await getData.searchUsers(input);
+      setResults({ isProgress: false, users });
     }, 750);
 
     return () => clearTimeout(fetchJob);
@@ -237,26 +237,3 @@ const UserSearchModal: React.FC = () => {
 };
 
 export { UserSearchBar, UserSearchModal };
-
-const testData: SearchedUser[] = [
-  { idx: 1, nickname: '유저1', profile: '' },
-  { idx: 2, nickname: '유저2', profile: '' },
-  { idx: 3, nickname: '유저3', profile: '' },
-  { idx: 4, nickname: '유저4', profile: '' },
-  { idx: 5, nickname: '유저5', profile: '' },
-  { idx: 6, nickname: '유저6', profile: '' },
-  { idx: 7, nickname: '유저7', profile: '' },
-  { idx: 8, nickname: '유저8', profile: '' },
-  { idx: 9, nickname: '유저9', profile: '' },
-  { idx: 10, nickname: '유저10', profile: '' },
-  { idx: 11, nickname: '유저11', profile: '' },
-  { idx: 12, nickname: '유저12', profile: '' }
-];
-
-const fetchSearchUser = (keyword: string) => {
-  return new Promise<SearchedUser[]>((res, rej) => {
-    setTimeout(() => {
-      res(testData);
-    }, 500);
-  });
-};
