@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import iconSearch from 'images/icon-search.svg';
 import defaultCover from 'images/default-profile.jpg';
 
@@ -31,6 +32,7 @@ const SearchBarWrap = styled.div`
     background: none;
     border: none;
     font-size: 1rem;
+    font-family: 'Noto Sans KR';
 
     &::placeholder {
       font-size: 1rem;
@@ -38,19 +40,20 @@ const SearchBarWrap = styled.div`
   }
 `;
 
-const GroupList = styled.div`
+const GroupList = styled.ul`
   flex: 1;
-  margin: 0 50px 30px 50px;
+  margin: 0 50px 30px 0;
   display: flex;
   flex-direction: column;
 `;
 
-const GroupItem = styled.a`
+const GroupItem = styled(Link)`
   display: flex;
   text-decoration: none;
   color: black;
   padding: 5px;
   margin: 0 0 20px 0;
+  font-weight: bold;
 
   img {
     width: 50px;
@@ -66,7 +69,24 @@ const GroupItem = styled.a`
   }
 `;
 
+type tempGroupType = {
+  groupName: string;
+  imgSrc: string;
+};
+
+const tempGroup = [
+  {
+    groupName: '운영체제',
+    imgSrc: defaultCover
+  },
+  {
+    groupName: '자료 구조',
+    imgSrc: defaultCover
+  }
+];
+
 const GroupSideBar: React.FC = () => {
+  const [group, setGroup] = useState<tempGroupType>();
   return (
     <GroupSideBarContainer>
       <SearchBarWrap>
@@ -74,14 +94,12 @@ const GroupSideBar: React.FC = () => {
         <input type="text" placeholder="search group" />
       </SearchBarWrap>
       <GroupList>
-        <GroupItem href="/group">
-          <img src={defaultCover} alt="cover 아이콘" />
-          <p>그룹 이름</p>
-        </GroupItem>
-        <GroupItem href="/group">
-          <img src={defaultCover} alt="cover 아이콘" />
-          <p>그룹 이름</p>
-        </GroupItem>
+        {tempGroup.map((gruop) => (
+          <GroupItem to="/group">
+            <img src={gruop.imgSrc} alt="cover 아이콘" />
+            <p>{gruop.groupName}</p>
+          </GroupItem>
+        ))}
       </GroupList>
     </GroupSideBarContainer>
   );
