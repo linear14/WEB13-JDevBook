@@ -6,6 +6,7 @@ const StyledProfilePhoto = styled.img<ProfilePhotoProps>`
   width: ${(props) => props.size || '65px'};
   height: ${(props) => props.size || '65px'};
   border-radius: 50%;
+  border: 1px solid #bbbbbb;
 `;
 
 type ProfilePhotoProps = {

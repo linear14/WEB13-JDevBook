@@ -6,6 +6,7 @@ import Gnb from './common/Gnb';
 import SideBar from './common/SideBar';
 import ProfilePhoto from './common/ProfilePhoto';
 import { UserSearchBar, UserSearchModal } from './common/UserSearch';
+import UserCard from './common/UserCard';
 
 export {
   AlertSideBar,
@@ -16,5 +17,6 @@ export {
   SideBar,
   ProfilePhoto,
   UserSearchBar,
-  UserSearchModal
+  UserSearchModal,
+  UserCard
 };

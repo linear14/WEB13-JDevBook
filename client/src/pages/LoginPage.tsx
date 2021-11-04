@@ -58,11 +58,11 @@ function LoginPage() {
   };
   return (
     <>
-    <Content>
-      <Greeter />
-      <LoginBox />
-    </Content>
-    <Footer />
+      <Content>
+        <Greeter />
+        <LoginBox />
+      </Content>
+      <Footer />
     </>
   );
 }
