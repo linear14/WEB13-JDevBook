@@ -7,6 +7,13 @@ export const modalVisibleStates = atom({
   }
 });
 
+export const userData = atom({
+  key: 'userData',
+  default: {
+    username: ''
+  }
+})
+
 export const rightModalStates = atom({
   key: 'rightModalState',
   default: {

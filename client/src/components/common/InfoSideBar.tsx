@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { ProfilePhoto } from '..';
+import { userData } from 'recoil/modal';
+import { useRecoilState } from 'recoil';
+import getData from 'api/fetch';
 
 const InfoSideBarContainer = styled.div`
   height: 200px;
@@ -68,11 +71,21 @@ const InnerBarGraph = styled.span`
 `;
 
 const InfoSideBar: React.FC = () => {
+  const [userdata, setUserdata] = useRecoilState(userData);
+  useEffect(() => {
+    async function fetchUserdata() {
+      const name = await getData.getusername();
+      setUserdata({username: name});
+    }
+    fetchUserdata();
+    // 로그아웃 할 때 없애던지 vs home 못가게 하던지
+  }, []);
+
   return (
     <InfoSideBarContainer>
       <ProfileWrap href="/profile">
         <ProfilePhoto src="" />
-        <p>UserName</p>
+        <p>{userdata.username}</p>
       </ProfileWrap>
       <SolvedTitle>문제 푼 수</SolvedTitle>
       <SolvedBarGraph>

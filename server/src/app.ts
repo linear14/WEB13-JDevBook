@@ -8,9 +8,11 @@ import dotenv from 'dotenv';
 import { Socket } from 'socket.io';
 dotenv.config({ path: path.resolve(__dirname, './config/.env.development') });
 
-// import db from "./sequelize/models";
+import dbManager from './service/dbManager'
+
 const indexRouter = require('./routes/index');
 const oauthRouter = require('./routes/oauth');
+const apiRouter = require('./routes/api');
 
 const debug = require('debug')('server:server');
 const http = require('http');
@@ -18,16 +20,10 @@ const app = express();
 const port = 4000;
 const FileStore = sessionFileStore(session);
 
+dbManager.sync()
+
 const cors = require('cors');
 app.use(cors());
-
-// db.sequelize.sync({ force: true })
-// .then(() => {
-//   console.log('db 연결 성공')
-// })
-// .catch((err) => {
-//   console.error(err);
-// })
 
 app.use(
   session({
@@ -76,6 +72,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.use('/', indexRouter);
-// app.use('/oauth', oauthRouter);
+app.use('/oauth', oauthRouter);
+app.use('/api', apiRouter);
 
 module.exports = app;

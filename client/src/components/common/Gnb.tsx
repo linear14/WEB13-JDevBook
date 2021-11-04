@@ -10,6 +10,9 @@ import { ReactComponent as GnbGroupActive } from 'images/gnb-group-active.svg';
 import gnbMessage from 'images/gnb-message.svg';
 import gnbAlarm from 'images/gnb-alarm.svg';
 import gnbSelector from 'images/gnb-down-arrow.svg';
+import { UserSearchBar, UserSearchModal } from '..';
+import { useRecoilValue } from 'recoil';
+import { modalVisibleStates, userData } from 'recoil/modal';
 import profileDefault from 'images/profile-default.png';
 import { UserSearchBar, UserSearchModal } from '..';
 import {
@@ -145,9 +148,10 @@ const IconWrap = styled.div<IconProps>`
 
 const Gnb: React.FC<any> = ({ type }) => {
   const modalState = useRecoilValue(modalVisibleStates);
+  const userdata = useRecoilValue(userData);
   const [rightModalState, setRightModalState] =
     useRecoilState(rightModalStates);
-
+  
   return (
     <GnbContainer>
       <FlexWrap>
@@ -169,7 +173,7 @@ const Gnb: React.FC<any> = ({ type }) => {
         <Link to="/profile/1">
           <ProfileWrap>
             <img src={profileDefault} />
-            <p>이름</p>
+            <p>{userdata.username}</p>
           </ProfileWrap>
         </Link>
         <IconWrap

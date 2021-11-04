@@ -11,7 +11,8 @@ const githubOauth = {
             headers: {
                 Accept: 'application/json'
             }
-        }).then((res: any) => res.data.access_token);
+        }).then((res: any) => res.data.access_token)
+        .catch(e => console.error(e));
     },
     getUsername: (access_token: string) => {
         return axios({
@@ -20,7 +21,8 @@ const githubOauth = {
             headers: {
                 Authorization: `token ${access_token}`
             }
-        }).then((res: any) => res.data.login); // 별명(name)이 없는 유저들 존재
+        }).then((res: any) => res.data.login) // 별명(name)이 없는 유저들 존재
+        .catch(e => console.error(e));
     }
 }
 
