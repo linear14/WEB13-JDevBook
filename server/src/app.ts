@@ -5,25 +5,23 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import dotenv from 'dotenv';
-import { Socket } from 'socket.io';
+import socketIO from './sockets/socketIO';
 dotenv.config({ path: path.resolve(__dirname, './config/.env.development') });
 
-import dbManager from './service/dbManager'
+import dbManager from './service/dbManager';
 
 const indexRouter = require('./routes/index');
 const oauthRouter = require('./routes/oauth');
 const apiRouter = require('./routes/api');
 
 const debug = require('debug')('server:server');
-const http = require('http');
+import http from 'http';
+//const http = require('http');
 const app = express();
 const port = 4000;
 const FileStore = sessionFileStore(session);
 
-dbManager.sync()
-
-const cors = require('cors');
-app.use(cors());
+dbManager.sync();
 
 app.use(
   session({
@@ -46,20 +44,7 @@ app.use(
 app.set('port', port);
 
 const server = http.createServer(app);
-const io = require('socket.io')(server, {
-  cors: {
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST']
-  }
-});
-
-io.on('connection', (socket: Socket) => {
-  console.log('✅ Socket connected from "http://localhost:3000"');
-
-  socket.on('send message', (item: { message: string }) => {
-    io.emit('receive message', { message: item.message });
-  });
-});
+socketIO(server);
 
 server.listen(port, () => {
   console.log(`✅ Server Listening on : http://localhost:${port}`);
