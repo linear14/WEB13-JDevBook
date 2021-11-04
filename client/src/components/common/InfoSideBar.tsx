@@ -72,7 +72,7 @@ const InnerBarGraph = styled.span<{ solvedRate: number }>`
 `;
 
 const InfoSideBar: React.FC = () => {
-  const solvedRate = Number(((43 / 155) * 100).toFixed(1));
+  const solvedRate = Number(((123 / 155) * 100).toFixed(1));
   const [userdata, setUserdata] = useRecoilState(userData);
   useEffect(() => {
     async function fetchUserdata() {
