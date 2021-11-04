@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Spoqa Han Sans Neo';
+  src: url('./theme/SpoqaHanSansNeo-Regular.otf');
+}
+
 body {
   margin: 0;
   font-family: 'Spoqa Han Sans Neo', -apple-system, BlinkMacSystemFont,
