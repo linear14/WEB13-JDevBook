@@ -6,6 +6,12 @@ declare module 'express-session' {
   }
 }
 
+declare module 'socket.io' {
+  interface Socket {
+    name: string;
+  }
+}
+
 interface DBCUD {
   createdAt: Date;
   updatedAt: Date;

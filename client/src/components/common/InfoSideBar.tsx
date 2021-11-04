@@ -5,6 +5,7 @@ import { ProfilePhoto } from '..';
 import { userData } from 'recoil/modal';
 import { useRecoilState } from 'recoil';
 import getData from 'api/fetch';
+import socket from './Socket';
 
 const InfoSideBarContainer = styled.div`
   height: 200px;
@@ -76,8 +77,9 @@ const InfoSideBar: React.FC = () => {
   const [userdata, setUserdata] = useRecoilState(userData);
   useEffect(() => {
     async function fetchUserdata() {
-      const name = await getData.getusername();
+      const name: string = await getData.getusername();
       setUserdata({ username: name });
+      socket.emit('name', name);
     }
     fetchUserdata();
   }, []);
