@@ -1,4 +1,4 @@
-import { Socket } from 'socket.io';
+import { Socket, Server } from 'socket.io';
 
 declare module 'socket.io' {
   interface Socket {
@@ -7,8 +7,7 @@ declare module 'socket.io' {
 }
 
 const socketIO = (server: any) => {
-  const io = require('socket.io')(server);
-
+  const io = new Server(server);
   io.on('connection', (socket: Socket) => {
     socket.on('name', (username: string) => {
       socket.name = username;

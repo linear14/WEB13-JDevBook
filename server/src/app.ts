@@ -5,6 +5,7 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import dotenv from 'dotenv';
+import { createServer } from 'http';
 import socketIO from './sockets/socketIO';
 dotenv.config({ path: path.resolve(__dirname, './config/.env.development') });
 
@@ -15,8 +16,7 @@ const oauthRouter = require('./routes/oauth');
 const apiRouter = require('./routes/api');
 
 const debug = require('debug')('server:server');
-import http from 'http';
-//const http = require('http');
+
 const app = express();
 const port = 4000;
 const FileStore = sessionFileStore(session);
@@ -34,7 +34,7 @@ app.use(
     saveUninitialized: true,
     cookie: {
       httpOnly: true,
-      secure: process.env.HTTPS_FALSE ? false : true,
+      secure: false, //process.env.HTTPS_FALSE ? false : true,
       maxAge: 24000 * 60 * 60
     },
     store: new FileStore({ path: path.resolve(__dirname, './sessions/') })
@@ -43,7 +43,7 @@ app.use(
 
 app.set('port', port);
 
-const server = http.createServer(app);
+const server = createServer(app);
 socketIO(server);
 
 server.listen(port, () => {
