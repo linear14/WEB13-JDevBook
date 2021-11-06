@@ -61,18 +61,31 @@ const ChatSideBar: React.FC = () => {
     return (
       <ChatSideBarContainer flagObj={rightModalState}>
         <div>
-          <ChatList>{chatList}</ChatList>
-          <form className="chat-form" onSubmit={(e: FormEvent<HTMLFormElement>) => {
+          <ChatList className="chat-list">{chatList}</ChatList>
+          <form
+            className="chat-form"
+            onSubmit={(e: FormEvent<HTMLFormElement>) => {
               if (value) {
                 submit(e);
                 setValue('');
-              } else { e.preventDefault(); }
+              } else {
+                e.preventDefault();
+              }
+              document
+                .querySelector('.chat-list')
+                ?.scrollBy({ top: 100, behavior: 'smooth' }); // 스크롤 하단 고정 한박자 느림 개선해야함
             }}
           >
             <ChatInputWrapper>
-              <ChatInput type="text" autoComplete="off" onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              <ChatInput
+                type="text"
+                autoComplete="off"
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setValue(e.target.value)
-                } value={value} placeholder="Aa" />
+                }
+                value={value}
+                placeholder="Aa"
+              />
             </ChatInputWrapper>
             {/* <button type="submit">입력하기</button> */}
           </form>
@@ -90,7 +103,7 @@ const ChatList = styled.section`
 
 const ChatInputWrapper = styled.div`
   align-items: center;
-  text-align:center;
+  text-align: center;
 `;
 
 const ChatInput = styled.input`
@@ -100,9 +113,5 @@ const ChatInput = styled.input`
   padding-left: 8px;
   height: 30px;
 `;
-
-
-
-
 
 export default ChatSideBar;
