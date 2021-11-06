@@ -45,53 +45,63 @@ const ChatSideBar: React.FC = () => {
     });
   }, [userdata]);
 
-  const chatList = messageList
-    .map(
-      (
-        msg, idx // 도대체 뭐지
-      ) => (
-        <div key={idx} className="message">
-          <p className="message-text">{msg}</p>
-        </div>
-      )
+  const chatList = messageList.map(
+    (
+      msg,
+      idx // 도대체 뭐지
+    ) => (
+      <div key={idx} className="message">
+        <p className="message-text">{msg}</p>
+      </div>
     )
-    .reverse();
+  );
 
   if (rightModalState.rightModalFlag && rightModalState.messageFlag) {
     return (
       <ChatSideBarContainer flagObj={rightModalState}>
         <div>
-          <form
-            className="chat-form"
-            onSubmit={(e: FormEvent<HTMLFormElement>) => {
+          <ChatList>{chatList}</ChatList>
+          <form className="chat-form" onSubmit={(e: FormEvent<HTMLFormElement>) => {
               if (value) {
                 submit(e);
                 setValue('');
-              } else {
-                e.preventDefault();
-              }
+              } else { e.preventDefault(); }
             }}
           >
-            <div className="chat-inputs">
-              <input
-                type="text"
-                autoComplete="off"
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            <ChatInputWrapper>
+              <ChatInput type="text" autoComplete="off" onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setValue(e.target.value)
-                }
-                value={value}
-                placeholder="메세지입력하기"
-              />
-            </div>
-            <button type="submit">입력하기</button>
+                } value={value} placeholder="Aa" />
+            </ChatInputWrapper>
+            {/* <button type="submit">입력하기</button> */}
           </form>
-          <section className="chat-list">{chatList}</section>
         </div>
       </ChatSideBarContainer>
     );
-  } else return (
-    <div></div>
-  );
+  } else return null;
 };
+
+const ChatList = styled.section`
+  height: 650px;
+  overflow: auto;
+  bottom: 0;
+`;
+
+const ChatInputWrapper = styled.div`
+  align-items: center;
+  text-align:center;
+`;
+
+const ChatInput = styled.input`
+  border-radius: 15px;
+  border: none;
+  background-color: rgb(240, 242, 245);
+  padding-left: 8px;
+  height: 30px;
+`;
+
+
+
+
 
 export default ChatSideBar;
