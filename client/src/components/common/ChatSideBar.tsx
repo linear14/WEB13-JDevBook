@@ -8,6 +8,7 @@ import { RightModalProps, Message } from 'utils/types';
 const ChatSideBarContainer = styled.div<any>`
   width: inherit;
   height: inherit;
+  box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
 `;
 
 const ChatSideBar: React.FC = () => {
