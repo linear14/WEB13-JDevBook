@@ -8,22 +8,7 @@ import { RightModalProps, Message } from 'utils/types';
 const ChatSideBarContainer = styled.div<any>`
   width: inherit;
   height: inherit;
-  ${(props) => `background: ${setColor(props.flagObj)}`}
 `;
-
-function setColor(props: RightModalProps) {
-  if (props.rightModalFlag) {
-    if (props.messageFlag) {
-      return `yellow`;
-    } else if (props.alarmFlag) {
-      return `green`;
-    } else if (props.selectorFlag) {
-      return `blue`;
-    }
-  } else {
-    return `white`;
-  }
-}
 
 const ChatSideBar: React.FC = () => {
   const rightModalState = useRecoilValue(rightModalStates);
@@ -72,36 +57,40 @@ const ChatSideBar: React.FC = () => {
     )
     .reverse();
 
-  return (
-    <ChatSideBarContainer flagObj={rightModalState}>
-      <div>
-        <form
-          className="chat-form"
-          onSubmit={(e: FormEvent<HTMLFormElement>) => {
-            if (value) {
-              submit(e);
-              setValue('');
-            } else {
-              e.preventDefault();
-            }
-          }}
-        >
-          <div className="chat-inputs">
-            <input
-              type="text"
-              autoComplete="off"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setValue(e.target.value)
+  if (rightModalState.rightModalFlag && rightModalState.messageFlag) {
+    return (
+      <ChatSideBarContainer flagObj={rightModalState}>
+        <div>
+          <form
+            className="chat-form"
+            onSubmit={(e: FormEvent<HTMLFormElement>) => {
+              if (value) {
+                submit(e);
+                setValue('');
+              } else {
+                e.preventDefault();
               }
-              value={value}
-              placeholder="메세지입력하기"
-            />
-          </div>
-          <button type="submit">입력하기</button>
-        </form>
-        <section className="chat-list">{chatList}</section>
-      </div>
-    </ChatSideBarContainer>
+            }}
+          >
+            <div className="chat-inputs">
+              <input
+                type="text"
+                autoComplete="off"
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setValue(e.target.value)
+                }
+                value={value}
+                placeholder="메세지입력하기"
+              />
+            </div>
+            <button type="submit">입력하기</button>
+          </form>
+          <section className="chat-list">{chatList}</section>
+        </div>
+      </ChatSideBarContainer>
+    );
+  } else return (
+    <div></div>
   );
 };
 

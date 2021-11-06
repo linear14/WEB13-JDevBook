@@ -5,6 +5,8 @@ import {
   SideBar,
   InfoSideBar,
   ChatSideBar,
+  AlarmSideBar,
+  SelectorSideBar,
   GroupSideBar
 } from '../components';
 
@@ -28,6 +30,8 @@ const HomePage = () => {
         </SideBar>
         <SideBar isLeft={false}>
           <ChatSideBar />
+          <AlarmSideBar />
+          <SelectorSideBar />
         </SideBar>
       </ContentsWrap>
     </HomePageContainer>
