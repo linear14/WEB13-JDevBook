@@ -48,9 +48,9 @@ const ChatSideBar: React.FC = () => {
   const chatList = messageList
     .map(
       (
-        msg // 도대체 뭐지
+        msg, idx // 도대체 뭐지
       ) => (
-        <div className="message">
+        <div key={idx} className="message">
           <p className="message-text">{msg}</p>
         </div>
       )
