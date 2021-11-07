@@ -19,8 +19,8 @@ const ChatSideBar: React.FC = () => {
   const userdata = useRecoilValue(userData);
   // 테스트용. 나중에 클릭해서 상대방 이름 알도록 해야함
   let receiver: string = 'defaultfail';
-  if (userdata.username === 'reservedgithubtest') receiver = 'kitaetest';
-  else if (userdata.username === 'kitaetest') receiver = 'reservedgithubtest';
+  if (userdata.username === 'idiot-kitto') receiver = 'kitaetest';
+  else if (userdata.username === 'kitaetest') receiver = 'idiot-kitto';
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,9 +51,9 @@ const ChatSideBar: React.FC = () => {
       msg,
       idx // 도대체 뭐지
     ) => (
-      <div key={idx} className="message">
-        <p className="message-text">{msg}</p>
-      </div>
+      <MessageWrap key={idx} username={msg.split(':')[0]} sender={userdata.username}>
+        <MessageText username={msg.split(':')[0]} sender={userdata.username}>{msg}</MessageText>
+      </MessageWrap>
     )
   );
 
@@ -95,10 +95,34 @@ const ChatSideBar: React.FC = () => {
   } else return null;
 };
 
-const ChatList = styled.section`
+const MessageWrap = styled.div<any>`
+  width: inherit;
+  // border: 1px solid red;
+  ${props => `text-align: ${props.username === props.sender ? 'right;' : 'left;'}`}
+  `;
+  
+  const MessageText = styled.div<any>`
+  ${props => `background: ${props.username === props.sender ? '#84D474;' : '#e4e6eb;'}`}
+  ${props => `color: ${props.username === props.sender ? 'white;' : 'black;'}`}
+  word-break: break-word;
+  border-radius: 10px;
+  margin-top: 5px;
+  height: auto;
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+  // border: 1px solid blue;
+`;
+
+const ChatList = styled.section<any>`
   height: 650px;
   overflow: auto;
   bottom: 0;
+  width:300px;
+  margin-right: 20px;
+  margin-left: 20px;
+  text-align:right;
+  // border:1px solid gray;
 `;
 
 const ChatInputWrapper = styled.div`
