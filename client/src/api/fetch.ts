@@ -1,14 +1,15 @@
+import socket from 'components/common/Socket';
+
 const getData = {
   getusername: () => {
     return fetch('/api/data').then((res) => res.json());
   },
   logout: () => {
-     fetch('/ouath/logout')
+    fetch('/oauth/logout')
       .then((res) => res.json())
       .then((data) => {
         alert(data.message);
-        //socket.disconnect();
-        //저장 데이터도 다 제거
+        socket.disconnect(); // 제거할 데이터 있으면 제거
         window.location.href = '/';
       });
   },

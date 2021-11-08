@@ -12,6 +12,7 @@ import gnbAlarm from 'images/gnb-alarm.svg';
 import gnbSelector from 'images/gnb-down-arrow.svg';
 import profileDefault from 'images/profile-default.png';
 import { UserSearchBar, UserSearchModal } from '..';
+import fetchApi from '../../api/fetch';
 import {
   GnbProps,
   FlexProps,
@@ -187,8 +188,8 @@ const Gnb: React.FC<GnbProps> = ({ type }) => {
         />
         <IconWrap
           img={gnbSelector}
-          onClick={() =>
-            ChangeFlag(rightModalState, setRightModalState, 'selectorFlag')
+          onClick={
+            () => fetchApi.logout() // async await 안해도 될듯?
           }
         />
       </FlexWrap>
