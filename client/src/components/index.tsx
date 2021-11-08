@@ -7,6 +7,7 @@ import SideBar from './common/SideBar';
 import ProfilePhoto from './common/ProfilePhoto';
 import { UserSearchBar, UserSearchModal } from './common/UserSearch';
 import UserCard from './common/UserCard';
+import Authority from './common/Authority';
 
 export {
   AlertSideBar,
@@ -18,5 +19,6 @@ export {
   ProfilePhoto,
   UserSearchBar,
   UserSearchModal,
-  UserCard
+  UserCard,
+  Authority
 };

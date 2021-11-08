@@ -20,7 +20,6 @@ router.get('/data', async (req: Request, res: Response, next: NextFunction) => {
     if (name === req.session.username) {
       const userdata: DBUser = await dbManager.getUserdata(name);
       res.json({
-        name: req.session.username,
         data: userdata,
         error: false
       });

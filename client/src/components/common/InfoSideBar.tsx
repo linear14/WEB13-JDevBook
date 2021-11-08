@@ -78,7 +78,7 @@ const InfoSideBar: React.FC = () => {
     <InfoSideBarContainer>
       <ProfileWrap to="/profile/shin">
         <ProfilePhoto src="" />
-        <p>{userdata.username}</p>
+        <p>{userdata.name}</p>
       </ProfileWrap>
       <SolvedTitle>문제 푼 수</SolvedTitle>
       <SolvedBarGraph>

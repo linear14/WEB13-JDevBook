@@ -9,11 +9,17 @@ export const modalVisibleStates = atom({
   }
 });
 
+// typescript 답게 타입 설정...
 export const userData = atom({
   key: 'userData',
   default: {
-    username: '',
+    idx: -1,
+    name: '',
+    profile: '' as string,
+    cover: '' as string,
+    bio: '' as string,
     login: false
+    // CUD는 필요할 때 DB에서 쓰자.
   }
 });
 

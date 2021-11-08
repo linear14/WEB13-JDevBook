@@ -171,7 +171,7 @@ const Gnb: React.FC<GnbProps> = ({ type }) => {
         <Link to="/profile/1">
           <ProfileWrap>
             <img src={profileDefault} />
-            <p>{userdata.username}</p>
+            <p>{userdata.name}</p>
           </ProfileWrap>
         </Link>
         <IconWrap

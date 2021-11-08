@@ -32,15 +32,15 @@ const ChatSideBar: React.FC = () => {
   const userdata = useRecoilValue(userData);
   // 테스트용. 나중에 클릭해서 상대방 이름 알도록 해야함
   let receiver: string = 'defaultfail';
-  if (userdata.username === 'reservedgithubtest') receiver = 'kitaetest';
-  else if (userdata.username === 'kitaetest') receiver = 'reservedgithubtest';
+  if (userdata.name === 'reservedgithubtest') receiver = 'kitaetest';
+  else if (userdata.name === 'kitaetest') receiver = 'reservedgithubtest';
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // sernder, receiver, message 보내고
     // 서버에서 채팅 저장하고, 기존 메세지만 추가로 다시 받아
     socket.emit('send message', {
-      sender: userdata.username,
+      sender: userdata.name,
       receiver: receiver,
       message: value
     });
@@ -54,7 +54,7 @@ const ChatSideBar: React.FC = () => {
     // 뭘 진행? 채팅 보낸거 DB에 저장. 그리고 emit('receive message')로 아래 진행
     socket.on('receive message', (data: any) => {
       const { sender, receiver, msg } = data;
-      if (sender === userdata.username || receiver === userdata.username)
+      if (sender === userdata.name || receiver === userdata.name)
         setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
     });
   }, [userdata]);

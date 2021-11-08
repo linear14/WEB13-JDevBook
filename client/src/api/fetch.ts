@@ -3,7 +3,8 @@ import { usersocket } from 'recoil/modal';
 import { Socket } from 'socket.io-client';
 
 const getData = {
-  getusername: () => {
+  getuserData: () => {
+    // { data, error }
     return fetch('/api/data').then((res) => res.json());
   },
   logout: () => {

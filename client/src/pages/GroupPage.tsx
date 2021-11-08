@@ -5,7 +5,8 @@ import {
   SideBar,
   InfoSideBar,
   ChatSideBar,
-  GroupSideBar
+  GroupSideBar,
+  Authority
 } from '../components';
 
 const GroupPageContainer = styled.div`
@@ -20,6 +21,7 @@ const ContentsWrap = styled.div`
 const GroupPage = () => {
   return (
     <GroupPageContainer>
+      <Authority />
       <Gnb type="group" />
       <ContentsWrap>
         <SideBar isLeft={true}>
