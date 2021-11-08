@@ -14,6 +14,7 @@ import {
   PostBodyProps,
   PostFooterProps
 } from 'utils/types';
+import textUtil from 'utils/textUtil';
 
 const PostContainer = styled.div`
   width: 680px;
@@ -73,7 +74,7 @@ const Header: React.FC<PostHeaderProps> = ({
       <HeaderContent>
         <p>{nickname}</p>
         <div>
-          <p>{createdAt}</p>
+          <p>{textUtil.timeToString(createdAt)}</p>
           <p>·</p>
           <IconPublic />
         </div>

@@ -33,7 +33,8 @@ const dbManager = {
 
   getPosts: async () => {
     const postsWithUser = await db.models.Post.findAll({
-      include: [{ model: db.models.User, as: 'BTUseruseridx' }]
+      include: [{ model: db.models.User, as: 'BTUseruseridx' }],
+      order: [['createdAt', 'DESC']]
     });
 
     return postsWithUser;
