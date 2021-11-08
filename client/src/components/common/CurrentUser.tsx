@@ -19,11 +19,11 @@ const CurrentUser = () => {
             setAllUsers(usersInfo);
             // 새로운 유저는 소켓으로 받아오도록
             return () => clearTimeout(fetchJob);
-          }, 0);
+        }, 0);
     }, [])
     
     const UserList = allUsers.map((user, idx) => (
-        <CurrentUserBox key={idx}>
+        <CurrentUserBox key={idx} className="User" onClick={():void => alert(user)} >
             <img src={profileDefault} />
             {user}
         </CurrentUserBox>
