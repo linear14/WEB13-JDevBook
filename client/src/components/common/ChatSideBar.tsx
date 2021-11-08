@@ -115,18 +115,21 @@ const MessageWrap = styled.div<any>`
   display: inline-block;
   padding-left: 10px;
   padding-right: 10px;
-  // border: 1px solid blue;
 `;
 
 const ChatList = styled.section<any>`
   height: 315px;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
   bottom: 0;
   width:300px;
   margin-right: 20px;
   margin-left: 20px;
   text-align:right;
-  // border:1px solid gray;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ChatInputWrapper = styled.div`
