@@ -1,10 +1,13 @@
 import { ProfilePhoto } from 'components';
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { ReactComponent as IconPublic } from 'images/icon-public.svg';
-import likeBadge from 'images/icon-like-badge.svg';
-import { ReactComponent as LikeIcon } from 'images/icon-like.svg';
-import { ReactComponent as CommentIcon } from 'images/icon-comment.svg';
+import {
+  LikeIcon,
+  CommentIcon,
+  IconPublic,
+  IconPrivate,
+  likeBadge
+} from 'images';
 import {
   PostProps,
   PostHeaderProps,
