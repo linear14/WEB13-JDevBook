@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 import { userData } from 'recoil/modal';
 
 import palette from 'theme/palette';
+import { iconPhoto } from 'images';
 
 import { ProfilePhoto } from 'components';
 
@@ -12,7 +13,6 @@ const PostWriterBox = styled.div`
   flex-direction: column;
   align-items: center;
   width: 680px;
-  height: 125px;
   margin: 35px 0;
 
   border-radius: 15px;
@@ -51,16 +51,32 @@ const Line = styled.div`
 const ButtonsWrap = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 95%;
   height: 100%;
 
-  margin: 10px 0px;
+  margin: 10px 0;
 `;
 
 const StyledBtn = styled.div`
-  height: inherit;
-  width: 100px;
-  background-color: beige;
+  display: flex;
+  border-radius: 10px;
+  padding: 0 20px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${palette.gray};
+    transition: all 0.2s;
+  }
+
+  img {
+    width: 30px;
+    margin-right: 10px;
+  }
+
+  p {
+    color: ${palette.darkgray};
+  }
 `;
 
 const PostWriter = () => {
@@ -74,7 +90,10 @@ const PostWriter = () => {
       </InputWrap>
       <Line />
       <ButtonsWrap>
-        <StyledBtn></StyledBtn>
+        <StyledBtn>
+          <img src={iconPhoto} alt="photo 아이콘" />
+          <p>Photo</p>
+        </StyledBtn>
       </ButtonsWrap>
     </PostWriterBox>
   );
