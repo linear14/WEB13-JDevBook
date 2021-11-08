@@ -1,13 +1,14 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled from 'styled-components';
+
 import {
   Gnb,
   SideBar,
   InfoSideBar,
   ChatSideBar,
   GroupSideBar
-} from '../components';
+} from 'components';
 
 const ProfilePageContainer = styled.div`
   display: flex;

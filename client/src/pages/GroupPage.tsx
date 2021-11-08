@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import {
   Gnb,
   SideBar,
   InfoSideBar,
   ChatSideBar,
   GroupSideBar
-} from '../components';
+} from 'components';
 
 const GroupPageContainer = styled.div`
   display: flex;
