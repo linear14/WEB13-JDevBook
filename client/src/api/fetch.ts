@@ -2,7 +2,14 @@ import { useRecoilState } from 'recoil';
 import { usersocket } from 'recoil/modal';
 import { Socket } from 'socket.io-client';
 
-const getData = {
+const fetchApi = {
+  login: () => {
+    fetch('/oauth/login')
+      .then((res) => res.json())
+      .then((loginLink) => {
+        window.location.href = loginLink;
+      });
+  },
   getuserData: () => {
     // { data, error }
     return fetch('/api/data').then((res) => res.json());
@@ -23,4 +30,4 @@ const getData = {
   }
 };
 
-export default getData;
+export default fetchApi;
