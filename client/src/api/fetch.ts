@@ -3,7 +3,7 @@ const getData = {
     return fetch('/api/data').then((res) => res.json());
   },
   logout: () => {
-     fetch('/ouath/logout')
+    fetch('/ouath/logout')
       .then((res) => res.json())
       .then((data) => {
         alert(data.message);
@@ -12,9 +12,8 @@ const getData = {
         window.location.href = '/';
       });
   },
-  searchUsers: async (keyword: string) => {
-    const response = await fetch(`/api/users?keyword=${keyword}`);
-    return await response.json();
+  searchUsers: (keyword: string) => {
+    return fetch(`/api/users?keyword=${keyword}`).then((res) => res.json());
   }
 };
 
