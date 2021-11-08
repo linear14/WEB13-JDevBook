@@ -29,8 +29,6 @@ const Authority = (/*{ history }: RouteComponentProps*/) => {
           login: true
         });
         //history.push('/home');
-        // socket.disconnect(); // 가끔 새로고침 시에 2번씩 채팅쳐짐
-        // socket.connect();
         socket.emit('name', data.nickname);
         //window.location.href = '/home';
       }

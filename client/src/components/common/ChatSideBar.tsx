@@ -52,11 +52,14 @@ const ChatSideBar: React.FC = () => {
     // 위에서 메세지 보낼때 내이름, 상대방이름(아이디), 채팅 보내
     // 서버에서 'send message'에서 자기 이름이 위 2개 이름중에 포함되면 진행
     // 뭘 진행? 채팅 보낸거 DB에 저장. 그리고 emit('receive message')로 아래 진행
-    socket.on('receive message', (data: any) => {
-      const { sender, receiver, msg } = data;
-      if (sender === userdata.name || receiver === userdata.name)
-        setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
-    });
+    if (userdata.login === true) {
+      // 2번 적히는 경우 방지
+      socket.on('receive message', (data: any) => {
+        const { sender, receiver, msg } = data;
+        if (sender === userdata.name || receiver === userdata.name)
+          setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
+      });
+    }
   }, [userdata]);
 
   const chatList = messageList
