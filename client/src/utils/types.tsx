@@ -44,3 +44,7 @@ export interface SideBarProps {
   isLeft: boolean;
   children: React.ReactNode;
 }
+
+export interface PostContainerProps {
+  children: React.ReactNode;
+}
