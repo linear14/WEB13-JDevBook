@@ -118,7 +118,7 @@ const MessageWrap = styled.div<any>`
 `;
 
 const ChatList = styled.section<any>`
-  height: 315px;
+  height: 305px;
   overflow-x: hidden;
   overflow-y: scroll;
   bottom: 0;
@@ -126,6 +126,7 @@ const ChatList = styled.section<any>`
   margin-right: 20px;
   margin-left: 20px;
   text-align:right;
+  margin-bottom: 10px;
 
   &::-webkit-scrollbar {
     display: none;
