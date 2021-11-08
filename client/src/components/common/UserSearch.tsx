@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import mainLogo from '../../images/main-logo.png';
 import styled, { css, keyframes } from 'styled-components';
-import iconSearch from '../../images/icon-search.svg';
 import { MdArrowBack } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
-import { modalVisibleStates } from '../../recoil/modal';
-import { UserCard } from 'components';
+import { modalVisibleStates } from 'recoil/modal';
+
 import { SearchedUser } from 'utils/types';
+
+import { UserCard } from 'components';
 import getData from 'api/fetch';
+
+import mainLogo from 'images/main-logo.png';
+import iconSearch from 'images/icon-search.svg';
 
 const FlexBox = styled.div`
   display: flex;
@@ -142,7 +145,7 @@ const SearchModalBody = styled.div`
   }
 `;
 
-const UserSearchBar: React.FC = () => {
+const UserSearchBar = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
   return (
     <>

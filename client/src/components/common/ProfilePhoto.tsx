@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import defaultProfile from 'images/default-profile.jpg';
+
 import { ProfilePhotoProps } from 'utils/types';
 
 const StyledProfilePhoto = styled.img<ProfilePhotoProps>`

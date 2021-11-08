@@ -1,6 +1,7 @@
 import { ProfilePhoto } from 'components';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { SearchedUserProps } from 'utils/types';
 
 const CardWrap = styled.div`

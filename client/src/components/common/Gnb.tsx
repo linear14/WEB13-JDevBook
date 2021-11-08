@@ -3,6 +3,9 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { modalVisibleStates, rightModalStates, userData } from 'recoil/modal';
+
+import { UserSearchBar, UserSearchModal } from 'components';
+
 import { ReactComponent as GnbHome } from 'images/gnb-home.svg';
 import { ReactComponent as GnbGroup } from 'images/gnb-group.svg';
 import { ReactComponent as GnbHomeActive } from 'images/gnb-home-active.svg';
@@ -11,7 +14,7 @@ import gnbMessage from 'images/gnb-message.svg';
 import gnbAlarm from 'images/gnb-alarm.svg';
 import gnbSelector from 'images/gnb-down-arrow.svg';
 import profileDefault from 'images/profile-default.png';
-import { UserSearchBar, UserSearchModal } from '..';
+
 import {
   GnbProps,
   FlexProps,

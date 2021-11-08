@@ -3,7 +3,7 @@ const getData = {
     return fetch('/api/data').then((res) => res.json());
   },
   logout: () => {
-     fetch('/ouath/logout')
+    fetch('/ouath/logout')
       .then((res) => res.json())
       .then((data) => {
         alert(data.message);

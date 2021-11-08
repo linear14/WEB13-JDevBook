@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
 import iconSearch from 'images/icon-search.svg';
 import defaultCover from 'images/default-profile.jpg';
 

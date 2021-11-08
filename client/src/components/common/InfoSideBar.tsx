@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ProfilePhoto } from '..';
 import { userData } from 'recoil/modal';
 import { useRecoilState } from 'recoil';
+
 import getData from 'api/fetch';
-import socket from './Socket';
+import { socket } from 'components';
+import { ProfilePhoto } from 'components';
 
 const InfoSideBarContainer = styled.div`
   height: 200px;
