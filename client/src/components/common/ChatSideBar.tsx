@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { rightModalStates, userData } from 'recoil/modal';
 import socket from './Socket';
 import { RightModalProps, Message } from 'utils/types';
+import getData from 'api/fetch';
 
 const ChatSideBarContainer = styled.div<any>`
   width: inherit;
@@ -34,6 +35,11 @@ const ChatSideBar: React.FC = () => {
   };
 
   useEffect(() => {
+    const fetchJob = setTimeout(async () => {
+      const users = await getData.getAllUsers();
+      console.log(users);
+      return () => clearTimeout(fetchJob);
+    }, 750);
     // 지금은 이름인데 idx로 해줘!!!!!!!!!!!!!!!!!!!!!!! 그래야 DB에서 편해져
     // 처음에 이름 서버소켓에 등록해둬
     // 위에서 메세지 보낼때 내이름, 상대방이름(아이디), 채팅 보내
@@ -43,6 +49,9 @@ const ChatSideBar: React.FC = () => {
       const { sender, receiver, msg } = data;
       if (sender === userdata.username || receiver === userdata.username)
         setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
+        document
+        .querySelector('.chat-list')
+        ?.scrollBy({ top: 100, behavior: 'smooth' });
     });
   }, [userdata]);
 
@@ -71,9 +80,6 @@ const ChatSideBar: React.FC = () => {
               } else {
                 e.preventDefault();
               }
-              document
-                .querySelector('.chat-list')
-                ?.scrollBy({ top: 100, behavior: 'smooth' }); // 스크롤 하단 고정 한박자 느림 개선해야함
             }}
           >
             <ChatInputWrapper>

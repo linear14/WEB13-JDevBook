@@ -15,6 +15,10 @@ const getData = {
   searchUsers: async (keyword: string) => {
     const response = await fetch(`/api/users?keyword=${keyword}`);
     return await response.json();
+  },
+
+  getAllUsers: async () => {
+    return fetch('/api/allUsers').then((res) => res.json());
   }
 };
 
