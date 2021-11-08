@@ -178,14 +178,14 @@ const Footer: React.FC<PostFooterProps> = ({ likenum }) => {
 const ButtonsWrap = styled.div`
   width: calc(100% - 24px);
   box-sizing: inherit;
-  margin: 4px 12px;
+  margin: 4px 12px 0px;
   display: flex;
   align-items: center;
 `;
 
 const Button = styled.div`
   flex: 1;
-  margin: 0px 2px;
+  margin: 0px 2px 4px;
   height: 36px;
   display: flex;
   align-items: center;
