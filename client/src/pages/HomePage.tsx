@@ -22,7 +22,7 @@ const ContentsWrap = styled.div`
 const HomePage = () => {
   return (
     <HomePageContainer>
-      <Gnb type="home" />
+      <Gnb type="home" rightModalType="" />
       <ContentsWrap>
         <SideBar isLeft={true}>
           <InfoSideBar />

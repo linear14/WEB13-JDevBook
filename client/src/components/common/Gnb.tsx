@@ -143,7 +143,7 @@ const IconWrap = styled.div<IconProps>`
   }
 `;
 
-const Gnb: React.FC<GnbProps> = ({ type }) => {
+const Gnb: React.FC<GnbProps> = ({ type, rightModalType }) => {
   const modalState = useRecoilValue(modalVisibleStates);
   const userdata = useRecoilValue(userData);
   const [rightModalState, setRightModalState] =
@@ -174,7 +174,7 @@ const Gnb: React.FC<GnbProps> = ({ type }) => {
           </ProfileWrap>
         </Link>
         <IconWrap
-          img={gnbMessage}
+          img={rightModalType === 'message' ? gnbMessage : gnbMessage}
           onClick={() =>
             ChangeFlag(rightModalState, setRightModalState, 'messageFlag')
           }
