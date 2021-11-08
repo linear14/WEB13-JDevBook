@@ -15,6 +15,7 @@ import {
   PostFooterProps
 } from 'utils/types';
 import textUtil from 'utils/textUtil';
+import PostImageBox from './PostImageBox';
 
 const PostContainer = styled.div`
   width: 680px;
@@ -101,6 +102,7 @@ const ImagesWrap = styled.div`
   width: 680px;
   height: 680px;
   background: #eeeeee;
+  position: relative;
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
   margin-top: 8px;
@@ -115,7 +117,17 @@ const Body: React.FC<PostBodyProps> = ({
   return (
     <BodyContainer>
       <p>{contents}</p>
-      <ImagesWrap />
+      {picture1 && (
+        <ImagesWrap>
+          <PostImageBox
+            images={
+              [picture1, picture2, picture3].filter(
+                (picture) => picture !== null
+              ) as string[]
+            }
+          />
+        </ImagesWrap>
+      )}
     </BodyContainer>
   );
 };

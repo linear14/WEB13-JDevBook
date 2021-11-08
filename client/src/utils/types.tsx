@@ -82,3 +82,11 @@ export interface PostBodyProps {
 export interface PostFooterProps {
   likenum: number;
 }
+
+export interface PostImageBoxProps {
+  images: string[];
+}
+
+export interface PostImageBoxUrl {
+  imageUrl: string;
+}
