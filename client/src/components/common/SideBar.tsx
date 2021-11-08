@@ -12,7 +12,7 @@ const SideBarContainer = styled.div<SideBarProps>`
   flex-direction: column;
 `;
 
-const SideBar: React.FC<SideBarProps> = ({ isLeft, children }) => {
+const SideBar = ({ isLeft, children }: SideBarProps) => {
   return <SideBarContainer isLeft={isLeft}>{children}</SideBarContainer>;
 };
 

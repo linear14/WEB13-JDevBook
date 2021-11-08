@@ -30,7 +30,7 @@ const NavLink = styled(Link)`
   }
 `;
 
-const UserCard: React.FC<SearchedUserProps> = ({ user }) => {
+const UserCard = ({ user }: SearchedUserProps) => {
   return (
     <NavLink to={`/profile/${user.idx}`}>
       <CardWrap>

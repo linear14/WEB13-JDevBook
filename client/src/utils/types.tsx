@@ -34,7 +34,7 @@ export interface SearchedUser {
 export interface SearchedUserProps {
   user: SearchedUser;
 }
-  
+
 export interface ProfilePhotoProps {
   src?: string;
   size?: string;
@@ -42,4 +42,5 @@ export interface ProfilePhotoProps {
 
 export interface SideBarProps {
   isLeft: boolean;
+  children: React.ReactNode;
 }

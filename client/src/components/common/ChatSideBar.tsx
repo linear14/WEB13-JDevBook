@@ -25,7 +25,7 @@ function setColor(props: RightModalProps) {
   }
 }
 
-const ChatSideBar: React.FC = () => {
+const ChatSideBar = () => {
   const rightModalState = useRecoilValue(rightModalStates);
 
   const [messageList, setMessageList] = useState<string[]>([]);

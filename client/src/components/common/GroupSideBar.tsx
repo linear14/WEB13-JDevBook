@@ -85,7 +85,7 @@ const tempGroup = [
   }
 ];
 
-const GroupSideBar: React.FC = () => {
+const GroupSideBar = () => {
   const [group, setGroup] = useState<tempGroupType[]>(tempGroup);
 
   const searchHandler = useCallback(

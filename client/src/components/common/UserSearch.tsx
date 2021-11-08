@@ -159,7 +159,7 @@ const UserSearchBar: React.FC = () => {
   );
 };
 
-const UserSearchModal: React.FC = () => {
+const UserSearchModal = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
   const [input, setInput] = useState('');
   const [results, setResults] = useState<{

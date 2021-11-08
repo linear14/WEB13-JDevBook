@@ -143,7 +143,7 @@ const IconWrap = styled.div<IconProps>`
   }
 `;
 
-const Gnb: React.FC<GnbProps> = ({ type }) => {
+const Gnb = ({ type }: GnbProps) => {
   const modalState = useRecoilValue(modalVisibleStates);
   const userdata = useRecoilValue(userData);
   const [rightModalState, setRightModalState] =

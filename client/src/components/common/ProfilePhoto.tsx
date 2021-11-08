@@ -10,7 +10,7 @@ const StyledProfilePhoto = styled.img<ProfilePhotoProps>`
   border: 1px solid #bbbbbb;
 `;
 
-const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ src, size, children }) => {
+const ProfilePhoto = ({ src, size }: ProfilePhotoProps) => {
   return (
     <StyledProfilePhoto
       src={src || defaultProfile}

@@ -72,7 +72,7 @@ const InnerBarGraph = styled.span<{ solvedRate: number }>`
   animation: ${(props) => GraphAnimation(props.solvedRate)} 1.5s 1;
 `;
 
-const InfoSideBar: React.FC = () => {
+const InfoSideBar = () => {
   const solvedRate = Number(((123 / 155) * 100).toFixed(1));
   const [userdata, setUserdata] = useRecoilState(userData);
   useEffect(() => {
