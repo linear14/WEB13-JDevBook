@@ -68,6 +68,7 @@ const ChatSideBar = () => {
         <div>
           <CurrentUser />
           <hr />
+          <ChatTitle>{receiver} 와의 채팅</ChatTitle>
           <ChatList className="chat-list">{chatList}</ChatList>
           <form
             className="chat-form"
@@ -99,6 +100,13 @@ const ChatSideBar = () => {
   } else return null;
 };
 
+const ChatTitle = styled.div`
+  color: gray;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 10px;
+`;
+
 const MessageWrap = styled.div<any>`
   width: inherit;
   // border: 1px solid red;
@@ -118,7 +126,7 @@ const MessageWrap = styled.div<any>`
 `;
 
 const ChatList = styled.section<any>`
-  height: 305px;
+  height: 277px;
   overflow-x: hidden;
   overflow-y: scroll;
   bottom: 0;
