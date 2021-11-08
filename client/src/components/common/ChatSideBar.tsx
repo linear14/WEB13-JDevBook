@@ -1,8 +1,7 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { rightModalStates, userData } from 'recoil/modal';
-import socket from './Socket';
+import { rightModalStates, userData, usersocket } from 'recoil/modal';
 import { RightModalProps, Message } from 'utils/types';
 
 const ChatSideBarContainer = styled.div<any>`
@@ -27,7 +26,7 @@ function setColor(props: RightModalProps) {
 
 const ChatSideBar: React.FC = () => {
   const rightModalState = useRecoilValue(rightModalStates);
-
+  const socket = useRecoilValue(usersocket);
   const [messageList, setMessageList] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
   const userdata = useRecoilValue(userData);

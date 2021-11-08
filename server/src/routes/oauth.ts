@@ -44,7 +44,7 @@ router.get(
         console.error(err);
         return res.status(500).send('<h1>500 error</h1>');
       }
-      res.redirect(clientURL + 'home');
+      res.redirect(clientURL + 'authority');
     });
   }
 );

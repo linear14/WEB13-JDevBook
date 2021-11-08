@@ -3,9 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ProfilePhoto } from '..';
 import { userData } from 'recoil/modal';
-import { useRecoilState } from 'recoil';
-import getData from 'api/fetch';
-import socket from './Socket';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 const InfoSideBarContainer = styled.div`
   height: 200px;
@@ -74,15 +72,7 @@ const InnerBarGraph = styled.span<{ solvedRate: number }>`
 
 const InfoSideBar: React.FC = () => {
   const solvedRate = Number(((123 / 155) * 100).toFixed(1));
-  const [userdata, setUserdata] = useRecoilState(userData);
-  useEffect(() => {
-    async function fetchUserdata() {
-      const name: string = await getData.getusername();
-      setUserdata({ username: name });
-      socket.emit('name', name);
-    }
-    fetchUserdata();
-  }, []);
+  const userdata = useRecoilValue(userData);
 
   return (
     <InfoSideBarContainer>
