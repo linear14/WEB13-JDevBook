@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { rightModalStates, userData } from 'recoil/modal';
 import socket from './Socket';
-import { RightModalProps, Message } from 'utils/types';
-import getData from 'api/fetch';
+import CurrentUser from './CurrentUser';
+
 
 const ChatSideBarContainer = styled.div<any>`
   width: inherit;
@@ -12,7 +12,7 @@ const ChatSideBarContainer = styled.div<any>`
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
 `;
 
-const ChatSideBar: React.FC = () => {
+const ChatSideBar = () => {
   const rightModalState = useRecoilValue(rightModalStates);
 
   const [messageList, setMessageList] = useState<string[]>([]);
@@ -35,11 +35,7 @@ const ChatSideBar: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchJob = setTimeout(async () => {
-      const users = await getData.getAllUsers();
-      console.log(users);
-      return () => clearTimeout(fetchJob);
-    }, 750);
+
     // 지금은 이름인데 idx로 해줘!!!!!!!!!!!!!!!!!!!!!!! 그래야 DB에서 편해져
     // 처음에 이름 서버소켓에 등록해둬
     // 위에서 메세지 보낼때 내이름, 상대방이름(아이디), 채팅 보내
@@ -70,6 +66,8 @@ const ChatSideBar: React.FC = () => {
     return (
       <ChatSideBarContainer flagObj={rightModalState}>
         <div>
+          <CurrentUser />
+          <hr />
           <ChatList className="chat-list">{chatList}</ChatList>
           <form
             className="chat-form"
@@ -121,7 +119,7 @@ const MessageWrap = styled.div<any>`
 `;
 
 const ChatList = styled.section<any>`
-  height: 650px;
+  height: 315px;
   overflow: auto;
   bottom: 0;
   width:300px;
