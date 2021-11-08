@@ -5,6 +5,7 @@ import { ReactComponent as IconPublic } from 'images/icon-public.svg';
 import likeBadge from 'images/icon-like-badge.svg';
 import { ReactComponent as LikeIcon } from 'images/icon-like.svg';
 import { ReactComponent as CommentIcon } from 'images/icon-comment.svg';
+import { PostProps } from 'utils/types';
 
 const PostContainer = styled.div`
   width: 680px;
@@ -13,7 +14,7 @@ const PostContainer = styled.div`
   border-radius: 8px;
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  margin: 100px auto;
+  margin-top: 24px;
 
   p {
     margin: 0;
@@ -194,7 +195,7 @@ const Divider = styled.div`
 `;
 
 // Export Default
-const Post = () => {
+const Post: React.FC<PostProps> = ({ post }) => {
   return (
     <PostContainer>
       <Header />

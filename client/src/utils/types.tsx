@@ -34,7 +34,7 @@ export interface SearchedUser {
 export interface SearchedUserProps {
   user: SearchedUser;
 }
-  
+
 export interface ProfilePhotoProps {
   src?: string;
   size?: string;
@@ -42,4 +42,19 @@ export interface ProfilePhotoProps {
 
 export interface SideBarProps {
   isLeft: boolean;
+}
+
+export interface HomePost {
+  idx: number;
+  useridx: number;
+  secret: number;
+  likenum: number;
+  contents: string;
+  picture1: string | null;
+  picture2: string | null;
+  picture3: string | null;
+}
+
+export interface PostProps {
+  post: HomePost;
 }
