@@ -53,15 +53,15 @@ const ButtonsWrap = styled.div`
   justify-content: center;
   align-items: center;
   width: 95%;
-  height: 100%;
 
   margin: 10px 0;
 `;
 
 const StyledBtn = styled.div`
   display: flex;
+  align-items: center;
   border-radius: 10px;
-  padding: 0 20px;
+  padding: 5px 15px;
 
   &:hover {
     cursor: pointer;
@@ -70,11 +70,12 @@ const StyledBtn = styled.div`
   }
 
   img {
+    height: 30px;
     width: 30px;
     margin-right: 10px;
   }
 
-  p {
+  div {
     color: ${palette.darkgray};
   }
 `;
@@ -92,7 +93,7 @@ const PostWriter = () => {
       <ButtonsWrap>
         <StyledBtn>
           <img src={iconPhoto} alt="photo 아이콘" />
-          <p>Photo</p>
+          <div>Photo</div>
         </StyledBtn>
       </ButtonsWrap>
     </PostWriterBox>
