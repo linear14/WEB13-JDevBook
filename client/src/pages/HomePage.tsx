@@ -1,4 +1,4 @@
-import Post from 'components/home/Post';
+import Post from 'components/HomePage/Post';
 import React from 'react';
 import styled from 'styled-components';
 import {
