@@ -4,7 +4,8 @@ const palette = {
   green: '#87d474',
   darkgreen: '#7cc669',
   black: '#000',
-  white: '#FAFAFA'
+  white: '#FAFAFA',
+  blue: '#166FE5'
 };
 
 export default palette;
