@@ -9,14 +9,16 @@ const Authority = (/*{ history }: RouteComponentProps*/) => {
   const [socket, setSocket] = useRecoilState(usersocket);
   useEffect(() => {
     (async () => {
-      // if (userdata.login) {
-      //   history.push('/home'); // 왜 back이 없지. login 페이지로도 못가게...
+      // if (!userdata.login) {
+      //   alert('로그인되어있지 않습니다.');
+      //   window.location.href = '/';
       //   return;
       // }
       const { data, error } = await fetchApi.getuserData();
       if (error) {
         alert('비정상 접근');
         window.location.href = '/';
+        return;
       } else {
         setUserdata({
           name: data.nickname,
@@ -27,6 +29,8 @@ const Authority = (/*{ history }: RouteComponentProps*/) => {
           login: true
         });
         //history.push('/home');
+        // socket.disconnect(); // 가끔 새로고침 시에 2번씩 채팅쳐짐
+        // socket.connect();
         socket.emit('name', data.nickname);
         //window.location.href = '/home';
       }
