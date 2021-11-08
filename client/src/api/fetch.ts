@@ -1,3 +1,5 @@
+import { HomePost } from 'utils/types';
+
 const getData = {
   getusername: () => {
     return fetch('/api/data').then((res) => res.json());
@@ -14,6 +16,9 @@ const getData = {
   },
   searchUsers: (keyword: string) => {
     return fetch(`/api/users?keyword=${keyword}`).then((res) => res.json());
+  },
+  getPosts: (): Promise<HomePost[]> => {
+    return fetch(`/api/posts`).then((res) => res.json());
   }
 };
 

@@ -53,8 +53,32 @@ export interface HomePost {
   picture1: string | null;
   picture2: string | null;
   picture3: string | null;
+  createdAt: Date;
+  BTUseruseridx: {
+    bio: string | null;
+    idx: number;
+    nickname: string;
+    profile: string | null;
+  };
 }
 
 export interface PostProps {
   post: HomePost;
+}
+
+export interface PostHeaderProps {
+  nickname: string;
+  profile: string | null;
+  createdAt: Date;
+}
+
+export interface PostBodyProps {
+  contents: string;
+  picture1: string | null;
+  picture2: string | null;
+  picture3: string | null;
+}
+
+export interface PostFooterProps {
+  likenum: number;
 }

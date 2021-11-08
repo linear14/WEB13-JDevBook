@@ -5,7 +5,12 @@ import { ReactComponent as IconPublic } from 'images/icon-public.svg';
 import likeBadge from 'images/icon-like-badge.svg';
 import { ReactComponent as LikeIcon } from 'images/icon-like.svg';
 import { ReactComponent as CommentIcon } from 'images/icon-comment.svg';
-import { PostProps } from 'utils/types';
+import {
+  PostProps,
+  PostHeaderProps,
+  PostBodyProps,
+  PostFooterProps
+} from 'utils/types';
 
 const PostContainer = styled.div`
   width: 680px;
@@ -54,14 +59,18 @@ const HeaderContent = styled.div`
   }
 `;
 
-const Header = () => {
+const Header: React.FC<PostHeaderProps> = ({
+  nickname,
+  profile,
+  createdAt
+}) => {
   return (
     <HeaderContainer>
       <ClickableProfileImage size={'40px'} />
       <HeaderContent>
-        <p>대학내일</p>
+        <p>{nickname}</p>
         <div>
-          <p>November 5 at 11:23 PM</p>
+          <p>{createdAt}</p>
           <p>·</p>
           <IconPublic />
         </div>
@@ -93,14 +102,15 @@ const ImagesWrap = styled.div`
   margin-top: 8px;
 `;
 
-const Body = () => {
+const Body: React.FC<PostBodyProps> = ({
+  contents,
+  picture1,
+  picture2,
+  picture3
+}) => {
   return (
     <BodyContainer>
-      <p>
-        쫄깃달달🤎떡츄러스 빼빼로🤎레시피 벌써 빼빼로데이..아니
-        가래떡데이라구요...! 가래떡츄러스에 초코범벅 벌써 맛있따;;;; @@올해는
-        이걸루 해주기로 해(●'◡'●)ㅎㅎ
-      </p>
+      <p>{contents}</p>
       <ImagesWrap />
     </BodyContainer>
   );
@@ -134,12 +144,12 @@ const FooterContainer = styled.div`
   }
 `;
 
-const Footer = () => {
+const Footer: React.FC<PostFooterProps> = ({ likenum }) => {
   return (
     <FooterContainer>
       <div>
         <img src={likeBadge} />
-        <p>770</p>
+        <p>{likenum.toString()}</p>
       </div>
       <p>777 Comments</p>
     </FooterContainer>
@@ -196,11 +206,26 @@ const Divider = styled.div`
 
 // Export Default
 const Post: React.FC<PostProps> = ({ post }) => {
+  const {
+    createdAt,
+    contents,
+    picture1,
+    picture2,
+    picture3,
+    likenum,
+    BTUseruseridx
+  } = post;
+  const { nickname, profile } = BTUseruseridx;
   return (
     <PostContainer>
-      <Header />
-      <Body />
-      <Footer />
+      <Header nickname={nickname} profile={profile} createdAt={createdAt} />
+      <Body
+        contents={contents}
+        picture1={picture1}
+        picture2={picture2}
+        picture3={picture3}
+      />
+      <Footer likenum={likenum} />
       <Divider />
       <ButtonsWrap>
         <Button>

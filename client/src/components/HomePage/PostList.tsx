@@ -1,3 +1,4 @@
+import getData from 'api/fetch';
 import { postMock } from 'mock';
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
@@ -15,20 +16,13 @@ const PostListContainer = styled.div`
 const PostList = () => {
   const [posts, setPosts] = useState<HomePost[]>([]);
 
-  const fetchInitPosts = async () => {
-    return new Promise<HomePost[]>((res) => {
-      setTimeout(() => {
-        res(postMock);
-      }, 1000);
-    });
-  };
-
   useEffect(() => {
-    async function getPosts() {
-      const posts = await fetchInitPosts();
-      setPosts(posts);
+    function getPosts() {
+      setTimeout(async () => {
+        const posts = await getData.getPosts();
+        setPosts(posts);
+      }, 1000);
     }
-
     getPosts();
   }, []);
 
