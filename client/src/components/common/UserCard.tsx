@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { SearchedUserProps } from 'utils/types';
+import palette from 'theme/palette';
 
 const CardWrap = styled.div`
   width: 100%;
@@ -14,12 +15,12 @@ const CardWrap = styled.div`
   p {
     margin-left: 16px;
     font-size: 0.95rem;
-    color: black;
+    color: ${palette.black};
     text-decoration: none;
   }
 
   &:hover {
-    background: #e3e4e5;
+    background: ${palette.gray};
     border-radius: 8px;
   }
 `;

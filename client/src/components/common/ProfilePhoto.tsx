@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import defaultProfile from 'images/default-profile.jpg';
 
 import { ProfilePhotoProps } from 'utils/types';
+import palette from 'theme/palette';
 
 const StyledProfilePhoto = styled.img<ProfilePhotoProps>`
   width: ${(props) => props.size || '65px'};
   height: ${(props) => props.size || '65px'};
   border-radius: 50%;
-  border: 1px solid #bbbbbb;
+  border: 1px solid ${palette.darkgray};
 `;
 
 const ProfilePhoto = ({ src, size }: ProfilePhotoProps) => {

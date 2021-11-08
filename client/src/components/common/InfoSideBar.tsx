@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { userData } from 'recoil/modal';
 import { useRecoilState } from 'recoil';
 
+import palette from 'theme/palette';
+
 import getData from 'api/fetch';
 import { socket } from 'components';
 import { ProfilePhoto } from 'components';
@@ -11,7 +13,7 @@ import { ProfilePhoto } from 'components';
 const InfoSideBarContainer = styled.div`
   height: 200px;
   width: inherit;
-  background: white;
+  background: ${palette.white};
   display: flex;
   flex-direction: column;
   box-shadow: rgba(0, 0, 0, 0.24) 5px 5px 5px;
@@ -23,7 +25,7 @@ const ProfileWrap = styled(Link)`
   justify-content: flex-start;
   margin: 35px 50px 0 50px;
   text-decoration: none;
-  color: black;
+  color: ${palette.black};
 
   p {
     font-size: large;
@@ -39,7 +41,7 @@ const SolvedTitle = styled.div`
 
 const SolvedBarGraph = styled.div`
   height: 25px;
-  background: #ccc;
+  background: ${palette.gray};
   border-radius: 40px;
   margin: 0 50px;
 `;
@@ -63,11 +65,11 @@ const InnerBarGraph = styled.span<{ solvedRate: number }>`
   height: 25px;
   line-height: 25px;
   text-align: right;
-  background: #87d474;
+  background: ${palette.green};
   border-radius: 40px;
   padding: 0 10px;
   box-sizing: border-box;
-  color: white;
+  color: ${palette.white};
   font-size: small;
   font-weight: 600;
   animation: ${(props) => GraphAnimation(props.solvedRate)} 1.5s 1;

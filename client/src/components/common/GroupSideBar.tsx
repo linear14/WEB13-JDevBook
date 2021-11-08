@@ -2,13 +2,15 @@ import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import palette from 'theme/palette';
+
 import iconSearch from 'images/icon-search.svg';
 import defaultCover from 'images/default-profile.jpg';
 
 const GroupSideBarContainer = styled.div`
   flex: 1;
   width: inherit;
-  background: white;
+  background: ${palette.white};
   display: flex;
   flex-direction: column;
   box-shadow: rgba(0, 0, 0, 0.24) 5px 5px 5px;
@@ -18,7 +20,7 @@ const SearchBarWrap = styled.div`
   height: 40px;
   margin: 30px 50px;
   display: flex;
-  background: #f0f2f5;
+  background: ${palette.gray};
   border-radius: 24px;
 
   img {
@@ -51,7 +53,7 @@ const GroupList = styled.ul`
 const GroupItem = styled(Link)`
   display: flex;
   text-decoration: none;
-  color: black;
+  color: ${palette.black};
   padding: 5px;
   margin: 0 0 20px 0;
   font-weight: bold;
@@ -65,7 +67,7 @@ const GroupItem = styled(Link)`
 
   &:hover {
     border-radius: 10px;
-    background: #f0f2f5;
+    background: ${palette.gray};
     transition: all 0.2s;
   }
 `;

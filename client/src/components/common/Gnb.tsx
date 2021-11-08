@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { modalVisibleStates, rightModalStates, userData } from 'recoil/modal';
 
+import palette from 'theme/palette';
+
 import { UserSearchBar, UserSearchModal } from 'components';
 
 import { ReactComponent as GnbHome } from 'images/gnb-home.svg';
@@ -84,7 +86,7 @@ const GnbTab = styled.div<TabProps>`
   transition: 0.1s ease-in;
 
   &:hover {
-    background: #f2f2f2;
+    background: ${palette.gray};
     border-radius: 8px;
   }
 
@@ -92,7 +94,7 @@ const GnbTab = styled.div<TabProps>`
     ${({ current }) =>
       current &&
       css`
-        fill: #87d474;
+        fill: ${palette.green};
       `}
   }
 `;
@@ -105,19 +107,19 @@ const ProfileWrap = styled.div`
   padding-right: 12px;
 
   &:hover {
-    background: #f0f2f5;
+    background: ${palette.gray};
     border-radius: 24px;
   }
 
   img {
-    border: 1px solid #bbbbbb;
+    border: 1px solid ${palette.darkgray};
     border-radius: 50%;
     width: 28px;
     height: 28px;
   }
 
   p {
-    color: black;
+    color: ${palette.black};
     margin-left: 8px;
     font-size: 1rem;
     font-weight: bold;
@@ -127,7 +129,7 @@ const ProfileWrap = styled.div`
 const IconWrap = styled.div<IconProps>`
   width: 40px;
   height: 40px;
-  background: #e4e6eb;
+  background: ${palette.gray};
   border-radius: 100%;
   display: flex;
   justify-content: center;
@@ -142,7 +144,7 @@ const IconWrap = styled.div<IconProps>`
   }
 
   &:hover {
-    background: #d8dadf;
+    background: ${palette.gray};
   }
 `;
 
