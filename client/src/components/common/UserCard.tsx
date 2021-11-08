@@ -1,9 +1,10 @@
-import { ProfilePhoto } from 'components';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { SearchedUserProps } from 'utils/types';
 import palette from 'theme/palette';
+
+import { ProfilePhoto } from 'components';
 
 const CardWrap = styled.div`
   width: 100%;

@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import palette from 'theme/palette';
-
-import iconSearch from 'images/icon-search.svg';
-import defaultCover from 'images/default-profile.jpg';
+import { iconSearch, defaultCover } from 'images';
 
 const GroupSideBarContainer = styled.div`
   flex: 1;
