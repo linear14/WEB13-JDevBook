@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { PostWriter } from 'components/HomePage';
+
 import {
   Gnb,
   SideBar,
@@ -19,8 +21,6 @@ const PostContainer = styled.div`
   top: 56px;
   width: 680px;
   height: 200vh; // 테스트용 height
-  z-index: -1;
-  background-color: beige;
 
   display: flex;
   flex-direction: column;
@@ -34,7 +34,9 @@ const HomePage = () => {
         <InfoSideBar />
         <GroupSideBar />
       </SideBar>
-      <PostContainer></PostContainer>
+      <PostContainer>
+        <PostWriter></PostWriter>
+      </PostContainer>
       <SideBar isLeft={false}>
         <ChatSideBar />
       </SideBar>
