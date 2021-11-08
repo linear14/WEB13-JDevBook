@@ -37,7 +37,7 @@ const GnbContainer = styled.div`
   padding-right: 16px;
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
+  background-color: ${palette.white};
   a {
     text-decoration: none;
   }

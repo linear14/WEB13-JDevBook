@@ -32,7 +32,7 @@ const ModalHeader = styled(FlexBox)`
 const UserSearchBarContainer = styled.div`
   width: 240px;
   height: 40px;
-  background: ${palette.white};
+  background: ${palette.gray};
   border-radius: 24px;
   margin-left: 16px;
   display: flex;

@@ -8,34 +8,36 @@ import {
   ChatSideBar,
   GroupSideBar
 } from 'components';
-import { PostContainer } from 'components/HomePage';
 
 const HomePageContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 `;
-const ContentsWrap = styled.div`
+
+const PostContainer = styled.div`
   position: relative;
   top: 56px;
+  width: 680px;
+  height: 200vh; // 테스트용 height
+  z-index: -1;
+  background-color: beige;
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 `;
 
 const HomePage = () => {
   return (
     <HomePageContainer>
       <Gnb type="home" />
-      <ContentsWrap>
-        <SideBar isLeft={true}>
-          <InfoSideBar />
-          <GroupSideBar />
-        </SideBar>
-        <PostContainer>PostContainer</PostContainer>
-        <SideBar isLeft={false}>
-          <ChatSideBar />
-        </SideBar>
-      </ContentsWrap>
+      <SideBar isLeft={true}>
+        <InfoSideBar />
+        <GroupSideBar />
+      </SideBar>
+      <PostContainer></PostContainer>
+      <SideBar isLeft={false}>
+        <ChatSideBar />
+      </SideBar>
     </HomePageContainer>
   );
 };
