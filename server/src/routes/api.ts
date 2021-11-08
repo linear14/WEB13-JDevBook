@@ -45,4 +45,17 @@ router.get(
   }
 );
 
+router.get(
+  '/posts',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const posts = await dbManager.getPosts();
+      res.json(posts);
+    } catch (err) {
+      console.error(err);
+      res.json([]);
+    }
+  }
+);
+
 module.exports = router;
