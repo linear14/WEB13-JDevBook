@@ -1,3 +1,5 @@
+import { HomePost } from 'utils/types';
+
 const fetchApi = {
   login: () => {
     fetch('/oauth/login')
@@ -27,6 +29,9 @@ const fetchApi = {
 
   getAllUsers: async () => {
     return fetch('/api/allUsers').then((res) => res.json());
+  },
+  getPosts: (): Promise<HomePost[]> => {
+    return fetch(`/api/posts`).then((res) => res.json());
   }
 };
 

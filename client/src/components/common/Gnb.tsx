@@ -8,15 +8,16 @@ import fetchApi from 'api/fetch';
 import palette from 'theme/palette';
 
 import { UserSearchBar, UserSearchModal } from 'components';
-
-import { ReactComponent as GnbHome } from 'images/gnb-home.svg';
-import { ReactComponent as GnbGroup } from 'images/gnb-group.svg';
-import { ReactComponent as GnbHomeActive } from 'images/gnb-home-active.svg';
-import { ReactComponent as GnbGroupActive } from 'images/gnb-group-active.svg';
-import gnbMessage from 'images/gnb-message.svg';
-import gnbAlarm from 'images/gnb-alarm.svg';
-import gnbSelector from 'images/gnb-down-arrow.svg';
-import profileDefault from 'images/profile-default.png';
+import {
+  GnbHome,
+  GnbGroup,
+  GnbHomeActive,
+  GnbGroupActive,
+  gnbMessage,
+  gnbAlarm,
+  gnbSelector,
+  profileDefault
+} from 'images';
 import {
   GnbProps,
   FlexProps,

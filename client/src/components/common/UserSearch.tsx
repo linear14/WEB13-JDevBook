@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css, keyframes } from 'styled-components';
+import { mainLogo, iconSearch } from 'images';
 import { MdArrowBack } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
 import { modalVisibleStates } from 'recoil/modal';
@@ -9,10 +10,7 @@ import { SearchedUser } from 'utils/types';
 import palette from 'theme/palette';
 
 import { UserCard } from 'components';
-import getData from 'api/fetch';
-
-import mainLogo from 'images/main-logo.png';
-import iconSearch from 'images/icon-search.svg';
+import fetchApi from 'api/fetch';
 
 const FlexBox = styled.div`
   display: flex;
@@ -195,7 +193,7 @@ const UserSearchModal = () => {
 
   useEffect(() => {
     const fetchJob = setTimeout(async () => {
-      const users = await getData.searchUsers(input);
+      const users = await fetchApi.searchUsers(input);
       setResults({ isProgress: false, users });
     }, 750);
 

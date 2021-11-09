@@ -1,3 +1,5 @@
+import Post from 'components/HomePage/Post';
+import PostList from 'components/HomePage/PostList';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -40,6 +42,7 @@ const HomePage = () => {
       </SideBar>
       <PostContainer>
         <PostWriter></PostWriter>
+        <PostList />
       </PostContainer>
       <SideBar isLeft={false}>
         <ChatSideBar />
