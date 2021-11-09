@@ -85,8 +85,15 @@ export interface PostFooterProps {
   likenum: number;
 }
 
+export interface PostImageInfo {
+  url: string;
+  originalWidth: number;
+  originalHeight: number;
+}
+
 export interface PostImageBoxProps {
-  images: string[];
+  imageCount: number;
+  images: PostImageInfo[] | null;
 }
 
 export interface PostImageBoxStyle {
