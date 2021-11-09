@@ -87,7 +87,7 @@ const PostWriter = () => {
     <PostWriterBox>
       <InputWrap>
         <ProfilePhoto size="40px" src="" />
-        <ModalCallBtn>What's on your mind, {userdata.username}?</ModalCallBtn>
+        <ModalCallBtn>What's on your mind, {userdata.name}?</ModalCallBtn>
       </InputWrap>
       <Line />
       <ButtonsWrap>
