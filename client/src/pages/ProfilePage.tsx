@@ -1,6 +1,7 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled from 'styled-components';
+
 import {
   Gnb,
   SideBar,
@@ -8,7 +9,7 @@ import {
   ChatSideBar,
   GroupSideBar,
   Authority
-} from '../components';
+} from 'components';
 
 const ProfilePageContainer = styled.div`
   display: flex;

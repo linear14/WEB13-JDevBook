@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AlertSideBar: React.FC = () => {
+const AlertSideBar = () => {
   return null;
 };
 

@@ -1,5 +1,6 @@
-import AlertSideBar from './common/AlertSideBar';
+import AlarmSideBar from './common/AlarmSideBar';
 import ChatSideBar from './common/ChatSideBar';
+import SelectorSideBar from './common/SelectorSideBar';
 import GroupSideBar from './common/GroupSideBar';
 import InfoSideBar from './common/InfoSideBar';
 import Gnb from './common/Gnb';
@@ -10,8 +11,9 @@ import UserCard from './common/UserCard';
 import Authority from './common/Authority';
 
 export {
-  AlertSideBar,
+  AlarmSideBar,
   ChatSideBar,
+  SelectorSideBar,
   GroupSideBar,
   InfoSideBar,
   Gnb,

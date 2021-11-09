@@ -1,7 +1,3 @@
-import { useRecoilState } from 'recoil';
-import { usersocket } from 'recoil/modal';
-import { Socket } from 'socket.io-client';
-
 const fetchApi = {
   login: () => {
     fetch('/oauth/login')
@@ -27,6 +23,10 @@ const fetchApi = {
   searchUsers: async (keyword: string) => {
     const response = await fetch(`/api/users?keyword=${keyword}`);
     return await response.json();
+  },
+
+  getAllUsers: async () => {
+    return fetch('/api/allUsers').then((res) => res.json());
   }
 };
 

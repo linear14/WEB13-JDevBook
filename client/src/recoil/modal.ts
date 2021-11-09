@@ -9,7 +9,6 @@ export const modalVisibleStates = atom({
   }
 });
 
-// typescript 답게 타입 설정...
 export const userData = atom({
   key: 'userData',
   default: {
@@ -36,4 +35,9 @@ export const rightModalStates = atom({
 export const usersocket = atom({
   key: 'socket',
   default: socket as Socket
+});
+
+export const chatWith = atom({
+  key: 'getReceiver',
+  default: '' as string
 });
