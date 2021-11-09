@@ -129,7 +129,7 @@ const MessageWrap = styled.div<any>`
 
 const MessageText = styled.div<any>`
   ${(props) =>
-    `background: ${props.name === props.sender ? '#84D474;' : '#e4e6eb;'}`}
+    `background-color: ${props.name === props.sender ? `${palette.green};` : `${palette.lightgray};`}`}
   ${(props) => `color: ${props.name === props.sender ? 'white;' : 'black;'}`}
   word-break: break-word;
   border-radius: 10px;
