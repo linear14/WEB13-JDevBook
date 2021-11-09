@@ -57,32 +57,29 @@ const dbManager = {
     const senderidx: number = await this.getUseridx(sender);
     const receiveridx: number = await this.getUseridx(receiver);
 
-    const all = await db.models.Chat.findAll({
+    const allChats = await db.models.Chat.findAll({
       where: {
         [Op.or]: [
           { senderidx: senderidx, receiveridx: receiveridx },
-          { receiveridx: senderidx, senderidx: receiveridx }
+          { senderidx: receiveridx, receiveridx: senderidx }
         ]
       }
     });
-    const all_map = all.map((data: any) => data.get());
+    const allChatsArray = allChats.map((data: any) => data.get());
 
-    //console.log(all_map); // 없거나 오류여도 []나옴 ㅎ
-
-    // mysql 시간 한국시간으로 좀 바꾸자
+    return {
+      senderidx: senderidx,
+      receiveridx: receiveridx,
+      previousMsg: allChatsArray
+    };
+    //console.log(allChatsArray); // 없거나 오류여도 [] 나옴
 
     /*
       { senderdix: ?
         receiveridx: ?
         chat: ?}, 
-        줄줄히
+        줄줄이
     */
-
-    return {
-      senderidx: senderidx,
-      receiveridx: receiveridx,
-      previousMsg: all_map
-    };
   },
 
   setChatList: async function (sender: string, receiver: string, msg: string) {

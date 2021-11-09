@@ -50,43 +50,43 @@ const ChatSideBar = () => {
         sender: userdata.name,
         receiver: chatReceiver
       });
-      socket.on('get previous chats', (strmap: string[]) => {
-        setMessageList((messageList: any) => messageList.concat(strmap));
+
+      socket.on('get previous chats', (filteredMsgs: string[]) => {
+        setMessageList((messageList: string[]) =>
+          messageList.concat(filteredMsgs)
+        );
         socket.off('get previous chats');
       });
+
       socket.off('send chat initial');
 
       socket.off('receive message');
-      socket.on('receive message', (data: any) => {
-        const { sender, receiver, msg } = data;
-        if (sender === userdata.name) {
-          setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
-        } else if (receiver === userdata.name && sender === chatReceiver)
-          setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
+      socket.on(
+        'receive message',
+        (data: { sender: string; receiver: string; msg: string }) => {
+          const { sender, receiver, msg } = data;
+          if (
+            sender === userdata.name ||
+            (receiver === userdata.name && sender === chatReceiver)
+          ) {
+            setMessageList((messageList: string[]) => messageList.concat(msg));
+          }
 
-        document
-          .querySelector('.chat-list')
-          ?.scrollBy({ top: 100, behavior: 'smooth' });
-      });
+          document
+            .querySelector('.chat-list')
+            ?.scrollBy({ top: 100, behavior: 'smooth' });
+        }
+      );
     }
   }, [chatReceiver]);
 
-  const chatList = messageList.map(
-    (
-      msg,
-      idx // 도대체 뭐지
-    ) => (
-      <MessageWrap
-        key={idx}
-        name={msg.split(':')[0]}
-        sender={userdata.name}
-      >
-        <MessageText name={msg.split(':')[0]} sender={userdata.name}>
-          {msg}
-        </MessageText>
-      </MessageWrap>
-    )
-  );
+  const chatList = messageList.map((msg, idx) => (
+    <MessageWrap key={idx} name={msg.split(':')[0]} sender={userdata.name}>
+      <MessageText name={msg.split(':')[0]} sender={userdata.name}>
+        {msg}
+      </MessageText>
+    </MessageWrap>
+  ));
 
   if (rightModalState.rightModalFlag && rightModalState.messageFlag) {
     return (
@@ -94,7 +94,11 @@ const ChatSideBar = () => {
         <div>
           <CurrentUser />
           <hr />
-          <ChatTitle>{chatReceiver ? chatReceiver + ' 에게 보내는 편지' : '채팅할 상대 선택'}</ChatTitle>
+          <ChatTitle>
+            {chatReceiver
+              ? chatReceiver + ' 에게 보내는 편지'
+              : '채팅할 상대 선택'}
+          </ChatTitle>
           <ChatList className="chat-list">{chatList}</ChatList>
           <form
             className="chat-form"
@@ -142,7 +146,11 @@ const MessageWrap = styled.div<any>`
 
 const MessageText = styled.div<any>`
   ${(props) =>
-    `background-color: ${props.name === props.sender ? `${palette.green};` : `${palette.lightgray};`}`}
+    `background-color: ${
+      props.name === props.sender
+        ? `${palette.green};`
+        : `${palette.lightgray};`
+    }`}
   ${(props) => `color: ${props.name === props.sender ? 'white;' : 'black;'}`}
   word-break: break-word;
   border-radius: 10px;
