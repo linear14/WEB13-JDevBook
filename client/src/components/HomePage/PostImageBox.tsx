@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import palette from 'theme/palette';
 import imageUtil from 'utils/imageUtil';
@@ -7,6 +7,7 @@ import {
   PostImageBoxStyle,
   PostImageInfo
 } from 'utils/types';
+import { errorImage } from 'images';
 
 const FlexWrap = styled.div`
   display: flex;
@@ -33,83 +34,82 @@ const SkeletonBox = styled.div`
   background: ${palette.lightgray};
 `;
 
+const TwoImages = ({ urls }: { urls: string[] }) => {
+  return (
+    <FlexWrap>
+      <ImageBox src={urls[0]} width={340} height={340} rightBorder />
+      <ImageBox src={urls[1]} width={340} height={340} leftBorder />
+    </FlexWrap>
+  );
+};
+
+const ThreeImagesHorizontal = ({ urls }: { urls: string[] }) => {
+  return (
+    <div>
+      <ImageBox src={urls[0]} width={680} height={340} bottomBorder />
+      <FlexWrap>
+        <ImageBox
+          src={urls[1]}
+          width={340}
+          height={340}
+          topBorder
+          rightBorder
+        />
+        <ImageBox src={urls[2]} width={340} height={340} topBorder leftBorder />
+      </FlexWrap>
+    </div>
+  );
+};
+
+const ThreeImagesVertical = ({ urls }: { urls: string[] }) => {
+  return (
+    <FlexWrap>
+      <ImageBox src={urls[0]} width={340} height={680} rightBorder />
+      <div>
+        <ImageBox
+          src={urls[1]}
+          width={340}
+          height={340}
+          leftBorder
+          bottomBorder
+        />
+        <ImageBox src={urls[2]} width={340} height={340} leftBorder topBorder />
+      </div>
+    </FlexWrap>
+  );
+};
+
 const PostImageBox = ({ imageCount, images }: PostImageBoxProps) => {
-  if (imageCount >= 1 && images === null) {
+  const isLoading = useCallback(() => {
+    return imageCount >= 1 && images === null;
+  }, [imageCount, images]);
+
+  if (isLoading()) {
     return <SkeletonBox />;
   }
 
   const postImages = images as PostImageInfo[];
+  const { url, originalWidth, originalHeight } = postImages[0];
+  const { url: url2 } = imageCount >= 2 ? postImages[1] : { url: errorImage };
+  const { url: url3 } = imageCount >= 3 ? postImages[2] : { url: errorImage };
 
-  if (imageCount === 1) {
-    const { url, originalWidth, originalHeight } = postImages[0];
-    const [width, height] = imageUtil.getImageFitSize(
-      680,
-      originalWidth,
-      originalHeight
-    );
-    return <ImageBox src={url} width={width} height={height} />;
-  }
-  if (imageCount === 2) {
-    const { url: url1 } = postImages[0];
-    const { url: url2 } = postImages[1];
-    return (
-      <FlexWrap>
-        <ImageBox src={url1} width={340} height={340} rightBorder />
-        <ImageBox src={url2} width={340} height={340} leftBorder />
-      </FlexWrap>
-    );
-  }
-  if (imageCount === 3) {
-    const { url: url1, originalWidth, originalHeight } = postImages[0];
-    const { url: url2 } = postImages[1];
-    const { url: url3 } = postImages[2];
-    if (originalWidth >= originalHeight) {
-      return (
-        <div>
-          <ImageBox src={url1} width={680} height={340} bottomBorder />
-          <FlexWrap>
-            <ImageBox
-              src={url2}
-              width={340}
-              height={340}
-              topBorder
-              rightBorder
-            />
-            <ImageBox
-              src={url3}
-              width={340}
-              height={340}
-              topBorder
-              leftBorder
-            />
-          </FlexWrap>
-        </div>
-      );
-    } else {
-      return (
-        <FlexWrap>
-          <ImageBox src={url1} width={340} height={680} rightBorder />
-          <div>
-            <ImageBox
-              src={url2}
-              width={340}
-              height={340}
-              leftBorder
-              bottomBorder
-            />
-            <ImageBox
-              src={url3}
-              width={340}
-              height={340}
-              leftBorder
-              topBorder
-            />
-          </div>
-        </FlexWrap>
-      );
-    }
-  }
-  return <div></div>;
+  const [width, height] = imageUtil.getImageFitSize(
+    680,
+    originalWidth,
+    originalHeight
+  );
+
+  return imageCount === 1 ? (
+    <ImageBox src={url} width={width} height={height} />
+  ) : imageCount === 2 ? (
+    <TwoImages urls={[url, url2]} />
+  ) : imageCount === 3 && originalWidth >= originalHeight ? (
+    <ThreeImagesHorizontal urls={[url, url2, url3]} />
+  ) : imageCount === 3 && originalWidth < originalHeight ? (
+    <ThreeImagesVertical urls={[url, url2, url3]} />
+  ) : (
+    <div></div>
+  );
 };
 
 export default PostImageBox;
