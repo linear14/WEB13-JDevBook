@@ -6,7 +6,7 @@ import { userData } from 'recoil/store';
 import palette from 'theme/palette';
 
 const ModalContentsContainer = styled.div`
-  width: 95%;
+  width: 100%;
   height: 200px;
   margin: 16px 0;
 

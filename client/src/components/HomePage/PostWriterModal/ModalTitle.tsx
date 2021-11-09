@@ -7,7 +7,7 @@ import palette from 'theme/palette';
 import { modalVisibleStates } from 'recoil/store';
 
 const ModalTitleWrap = styled.div`
-  width: 95%;
+  width: 100%;
   height: 48px;
 
   display: flex;

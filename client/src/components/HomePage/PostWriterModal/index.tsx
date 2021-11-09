@@ -9,6 +9,7 @@ import { modalVisibleStates, userData } from 'recoil/store';
 import ModalTitle from 'components/HomePage/PostWriterModal/ModalTitle';
 import PostInfo from 'components/HomePage/PostWriterModal/PostInfo';
 import ModalContents from 'components/HomePage/PostWriterModal/ModalContents';
+import AddContentsBar from 'components/HomePage/PostWriterModal/AddContentsBar';
 
 const PostWriterModalOverlay = styled.div<{ modalState: boolean }>`
   position: fixed;
@@ -26,7 +27,8 @@ const PostWriterModalInner = styled.div<{ modalState: boolean }>`
   position: fixed;
   top: 160px;
   width: 600px;
-  padding: 12px;
+  box-sizing: border-box;
+  padding: 20px;
   z-index: 6;
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 8px;
@@ -38,11 +40,31 @@ const PostWriterModalInner = styled.div<{ modalState: boolean }>`
 `;
 
 const Line = styled.div`
-  width: 95%;
+  width: 100%;
   border-color: ${palette.gray};
   border-width: 1px;
   border-style: solid;
   margin: 12px 0;
+`;
+
+const PostBtn = styled.div`
+  width: 95%;
+  height: 40px;
+  margin-top: 16px;
+
+  border-radius: 8px;
+  background-color: ${palette.green};
+  color: ${palette.white};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${palette.darkgreen};
+    transition: all 0.1s;
+  }
 `;
 
 const PostWriterModal = () => {
@@ -63,6 +85,10 @@ const PostWriterModal = () => {
         <Line />
         <PostInfo />
         <ModalContents />
+        <AddContentsBar />
+        <PostBtn>
+          <div>게시</div>
+        </PostBtn>
       </PostWriterModalInner>
     </>
   );
