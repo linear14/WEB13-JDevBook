@@ -9,7 +9,6 @@ const PostListContainer = styled.div`
   min-width: 680px;
   position: relative;
   box-sizing: border-box;
-  margin: 100px auto;
 `;
 
 const PostList = () => {

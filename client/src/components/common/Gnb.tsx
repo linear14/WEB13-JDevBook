@@ -46,23 +46,11 @@ const GnbContainer = styled.div`
   a {
     text-decoration: none;
   }
-
-  img {
-    width: 36px;
-    height: 36px;
-  }
-  z-index: 1;
 `;
 
 const FlexWrap = styled.div<FlexProps>`
   display: flex;
   align-items: center;
-
-  img {
-    width: 40px;
-    height: 40px;
-    vertical-align: bottom;
-  }
 
   & > *:not(:first-child) {
     margin-left: 8px;

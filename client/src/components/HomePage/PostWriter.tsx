@@ -13,10 +13,10 @@ const PostWriterBox = styled.div`
   flex-direction: column;
   align-items: center;
   width: 680px;
-  margin: 35px 0;
+  margin: 35px 0 0 0;
 
-  border-radius: 15px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 5px;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 5px;
   background-color: ${palette.white};
 `;
 

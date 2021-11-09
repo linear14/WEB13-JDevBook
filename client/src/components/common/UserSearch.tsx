@@ -116,7 +116,7 @@ const HoverRound = styled.div`
   align-items: center;
 
   &:hover {
-    background: ${palette.darkgray};
+    background: ${palette.gray};
     border-radius: 100%;
   }
 `;

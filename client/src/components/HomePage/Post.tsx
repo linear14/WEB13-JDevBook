@@ -1,6 +1,7 @@
 import { ProfilePhoto } from 'components/common';
 import React from 'react';
 import styled, { css } from 'styled-components';
+
 import {
   LikeIcon,
   CommentIcon,
@@ -15,7 +16,9 @@ import {
   PostFooterProps
 } from 'utils/types';
 import textUtil from 'utils/textUtil';
-import PostImageBox from './PostImageBox';
+import palette from 'theme/palette';
+
+import PostImageBox from 'components/HomePage/PostImageBox';
 
 const PostContainer = styled.div`
   width: 680px;
@@ -23,8 +26,9 @@ const PostContainer = styled.div`
   position: relative;
   border-radius: 8px;
   box-sizing: border-box;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 5px;
   margin-top: 24px;
+  background-color: ${palette.white};
 
   p {
     margin: 0;
