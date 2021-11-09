@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { userData } from 'recoil/store';
 
 import palette from 'theme/palette';
-import { iconPhoto } from 'images';
+import { iconPhoto } from 'images/icons';
 
 import { ProfilePhoto } from 'components/common';
 

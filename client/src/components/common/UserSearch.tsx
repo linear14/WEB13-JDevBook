@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css, keyframes } from 'styled-components';
-import { mainLogo, iconSearch } from 'images';
+import { mainLogo } from 'images';
+import { iconSearch } from 'images/icons';
 import { MdArrowBack } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
 import { modalVisibleStates } from 'recoil/store';

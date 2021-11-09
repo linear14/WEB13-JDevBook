@@ -5,19 +5,6 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import { modalVisibleStates, rightModalStates, userData } from 'recoil/store';
 import fetchApi from 'api/fetch';
 
-import palette from 'theme/palette';
-
-import { UserSearchBar, UserSearchModal } from 'components/common';
-import {
-  GnbHome,
-  GnbGroup,
-  GnbHomeActive,
-  GnbGroupActive,
-  gnbMessage,
-  gnbAlarm,
-  gnbSelector,
-  profileDefault
-} from 'images';
 import {
   GnbProps,
   FlexProps,
@@ -25,6 +12,23 @@ import {
   IconProps,
   RightModalProps
 } from 'utils/types';
+import palette from 'theme/palette';
+import { defaultProfile } from 'images';
+import {
+  GnbHome,
+  GnbGroup,
+  GnbHomeActive,
+  GnbGroupActive,
+  gnbMessage,
+  gnbAlarm,
+  gnbSelector
+} from 'images/icons';
+
+import {
+  UserSearchBar,
+  UserSearchModal,
+  ProfilePhoto
+} from 'components/common';
 
 const GnbContainer = styled.div`
   width: 100%;
@@ -112,13 +116,6 @@ const ProfileWrap = styled.div`
     border-radius: 24px;
   }
 
-  img {
-    border: 1px solid ${palette.darkgray};
-    border-radius: 50%;
-    width: 28px;
-    height: 28px;
-  }
-
   p {
     color: ${palette.black};
     margin-left: 8px;
@@ -175,7 +172,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
       <FlexWrap>
         <Link to="/profile/1">
           <ProfileWrap>
-            <img src={profileDefault} />
+            <ProfilePhoto size="28px" />
             <p>{userdata.name}</p>
           </ProfileWrap>
         </Link>

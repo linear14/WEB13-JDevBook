@@ -7,7 +7,7 @@ import {
   IconPublic,
   IconPrivate,
   likeBadge
-} from 'images';
+} from 'images/icons';
 import {
   PostProps,
   PostHeaderProps,
