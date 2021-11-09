@@ -42,7 +42,12 @@ export const chatWith = atom({
   default: '' as string
 });
 
-export const imageViewerState = atom({
+export const imageViewerState = atom<{
+  isOpen: boolean;
+  imageCount: number;
+  currentIdx: number;
+  images: (string | never)[];
+}>({
   key: 'imageViewerState',
   default: {
     isOpen: false,

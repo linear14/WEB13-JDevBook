@@ -58,23 +58,29 @@ const ImageBox = styled.img<PostImageBoxStyle>`
 const ActiveImageBox = (props: PostImageBoxStyleWithSource) => {
   const [imageViewerState, setImageViewerState] = useRecoilState(ivState);
   const {
-    src,
+    index,
     width,
     height,
     leftBorder,
     rightBorder,
     topBorder,
-    bottomBorder
+    bottomBorder,
+    urls
   } = props;
   return (
     <HoverBox
       onClick={() => {
-        console.log(1);
-        setImageViewerState({ ...imageViewerState, isOpen: true });
+        setImageViewerState({
+          ...imageViewerState,
+          imageCount: urls.length,
+          currentIdx: index,
+          images: urls,
+          isOpen: true
+        });
       }}
     >
       <ImageBox
-        src={src}
+        src={urls[index]}
         width={width}
         height={height}
         leftBorder={leftBorder}
@@ -91,14 +97,14 @@ const TwoImages = ({ urls }: { urls: string[] }) => {
   return (
     <FlexWrap>
       <ActiveImageBox
-        src={urls[0]}
+        index={0}
         width={340}
         height={340}
         urls={urls}
         rightBorder
       />
       <ActiveImageBox
-        src={urls[1]}
+        index={1}
         width={340}
         height={340}
         urls={urls}
@@ -112,7 +118,7 @@ const ThreeImagesHorizontal = ({ urls }: { urls: string[] }) => {
   return (
     <div>
       <ActiveImageBox
-        src={urls[0]}
+        index={0}
         width={680}
         height={340}
         urls={urls}
@@ -120,7 +126,7 @@ const ThreeImagesHorizontal = ({ urls }: { urls: string[] }) => {
       />
       <FlexWrap>
         <ActiveImageBox
-          src={urls[1]}
+          index={1}
           width={340}
           height={340}
           urls={urls}
@@ -128,7 +134,7 @@ const ThreeImagesHorizontal = ({ urls }: { urls: string[] }) => {
           rightBorder
         />
         <ActiveImageBox
-          src={urls[2]}
+          index={2}
           width={340}
           height={340}
           urls={urls}
@@ -144,7 +150,7 @@ const ThreeImagesVertical = ({ urls }: { urls: string[] }) => {
   return (
     <FlexWrap>
       <ActiveImageBox
-        src={urls[0]}
+        index={0}
         width={340}
         height={680}
         urls={urls}
@@ -152,7 +158,7 @@ const ThreeImagesVertical = ({ urls }: { urls: string[] }) => {
       />
       <div>
         <ActiveImageBox
-          src={urls[1]}
+          index={1}
           width={340}
           height={340}
           urls={urls}
@@ -160,7 +166,7 @@ const ThreeImagesVertical = ({ urls }: { urls: string[] }) => {
           bottomBorder
         />
         <ActiveImageBox
-          src={urls[2]}
+          index={2}
           width={340}
           height={340}
           urls={urls}
@@ -193,7 +199,7 @@ const PostImageBox = ({ imageCount, images }: PostImageBoxProps) => {
   );
 
   return imageCount === 1 ? (
-    <ActiveImageBox src={url} width={width} height={height} urls={[url]} />
+    <ActiveImageBox index={0} width={width} height={height} urls={[url]} />
   ) : imageCount === 2 ? (
     <TwoImages urls={[url, url2]} />
   ) : imageCount === 3 && originalWidth >= originalHeight ? (

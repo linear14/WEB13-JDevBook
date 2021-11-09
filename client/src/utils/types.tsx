@@ -106,6 +106,6 @@ export interface PostImageBoxStyle {
 }
 
 export interface PostImageBoxStyleWithSource extends PostImageBoxStyle {
-  src: string;
+  index: number;
   urls: string[];
 }
