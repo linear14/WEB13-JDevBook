@@ -41,14 +41,14 @@ const ChatSideBar = () => {
   }, [userdata]);
 
   useEffect(() => {
-    setMessageList([]);
-    // DB에서 받아온 데이터로 바꿔줘야함
+    setMessageList([]); // DB에서 받아온 데이터로 바꿔줘야함
+
+    socket.off('receive message');
     socket.on('receive message', (data: any) => {
       const { sender, receiver, msg } = data;
-      if (sender === userdata.name) {
+      if (sender === userdata.name || (receiver === userdata.name && sender === chatReceiver)) {
         setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
-      } else if (receiver === userdata.name && sender === chatReceiver)
-        setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
+      }
 
       document
         .querySelector('.chat-list')
