@@ -89,6 +89,7 @@ export interface PostImageBoxProps {
   images: string[];
 }
 
-export interface PostImageBoxUrl {
-  imageUrl: string;
+export interface PostImageBoxSize {
+  width: number;
+  height: number;
 }

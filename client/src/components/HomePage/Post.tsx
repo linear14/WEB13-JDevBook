@@ -100,12 +100,14 @@ const BodyContainer = styled.div`
 
 const ImagesWrap = styled.div`
   width: 680px;
-  height: 680px;
-  background: #eeeeee;
+  background: ${palette.white};
   position: relative;
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
   margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Body = ({ contents, picture1, picture2, picture3 }: PostBodyProps) => {
