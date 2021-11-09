@@ -89,7 +89,22 @@ const ImageViewer = () => {
     return currentIdx === imageCount - 1;
   }, [currentIdx, imageCount]);
 
-  console.log(imageCount, currentIdx);
+  const goPrevious = useCallback(() => {
+    setImageViewerState((prev) => ({
+      ...prev,
+      currentIdx: prev.currentIdx !== 0 ? prev.currentIdx - 1 : 0
+    }));
+  }, [setImageViewerState]);
+
+  const goNext = useCallback(() => {
+    setImageViewerState((prev) => ({
+      ...prev,
+      currentIdx:
+        prev.currentIdx !== prev.imageCount - 1
+          ? prev.currentIdx + 1
+          : prev.imageCount - 1
+    }));
+  }, [setImageViewerState]);
 
   return (
     <Container>
@@ -101,11 +116,11 @@ const ImageViewer = () => {
         <MdClose />
       </ButtonWrap>
       <Body>
-        <AnimationIcon isLeft hidden={isFirst()}>
+        <AnimationIcon isLeft hidden={isFirst()} onClick={goPrevious}>
           <MdArrowBackIosNew />
         </AnimationIcon>
         <OriginalImage src={images[currentIdx]} />
-        <AnimationIcon hidden={isLast()}>
+        <AnimationIcon hidden={isLast()} onClick={goNext}>
           <MdArrowForwardIos />
         </AnimationIcon>
       </Body>
