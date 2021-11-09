@@ -1,10 +1,9 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { rightModalStates, userData } from 'recoil/modal';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { rightModalStates, userData, chatWith } from 'recoil/modal';
 import socket from './Socket';
 import CurrentUser from './CurrentUser';
-
 
 const ChatSideBarContainer = styled.div<any>`
   width: inherit;
@@ -19,9 +18,7 @@ const ChatSideBar = () => {
   const [value, setValue] = useState<string>('');
   const userdata = useRecoilValue(userData);
   // 테스트용. 나중에 클릭해서 상대방 이름 알도록 해야함
-  let receiver: string = 'defaultfail';
-  if (userdata.username === 'idiot-kitto') receiver = 'kitaetest';
-  else if (userdata.username === 'kitaetest') receiver = 'idiot-kitto';
+  const [chatReceiver, setChatWith] = useRecoilState(chatWith);
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,35 +26,51 @@ const ChatSideBar = () => {
     // 서버에서 채팅 저장하고, 기존 메세지만 추가로 다시 받아
     socket.emit('send message', {
       sender: userdata.username,
-      receiver: receiver,
+      receiver: chatReceiver,
       message: value
     });
   };
-
   useEffect(() => {
+    
 
     // 지금은 이름인데 idx로 해줘!!!!!!!!!!!!!!!!!!!!!!! 그래야 DB에서 편해져
     // 처음에 이름 서버소켓에 등록해둬
     // 위에서 메세지 보낼때 내이름, 상대방이름(아이디), 채팅 보내
     // 서버에서 'send message'에서 자기 이름이 위 2개 이름중에 포함되면 진행
     // 뭘 진행? 채팅 보낸거 DB에 저장. 그리고 emit('receive message')로 아래 진행
+
+  }, [userdata]);
+
+  useEffect(() => {
+    setMessageList([]);
+    // DB에서 받아온 데이터로 바꿔줘야함
     socket.on('receive message', (data: any) => {
       const { sender, receiver, msg } = data;
-      if (sender === userdata.username || receiver === userdata.username)
+      if(sender === userdata.username) {
         setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
-        document
+      }
+      else if (receiver === userdata.username && sender === chatReceiver)
+        setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
+            
+      document
         .querySelector('.chat-list')
         ?.scrollBy({ top: 100, behavior: 'smooth' });
     });
-  }, [userdata]);
+  }, [chatReceiver]);
 
   const chatList = messageList.map(
     (
       msg,
       idx // 도대체 뭐지
     ) => (
-      <MessageWrap key={idx} username={msg.split(':')[0]} sender={userdata.username}>
-        <MessageText username={msg.split(':')[0]} sender={userdata.username}>{msg}</MessageText>
+      <MessageWrap
+        key={idx}
+        username={msg.split(':')[0]}
+        sender={userdata.username}
+      >
+        <MessageText username={msg.split(':')[0]} sender={userdata.username}>
+          {msg}
+        </MessageText>
       </MessageWrap>
     )
   );
@@ -68,7 +81,7 @@ const ChatSideBar = () => {
         <div>
           <CurrentUser />
           <hr />
-          <ChatTitle>{receiver} 와의 채팅</ChatTitle>
+          <ChatTitle>{chatReceiver} 와의 채팅</ChatTitle>
           <ChatList className="chat-list">{chatList}</ChatList>
           <form
             className="chat-form"
@@ -110,12 +123,15 @@ const ChatTitle = styled.div`
 const MessageWrap = styled.div<any>`
   width: inherit;
   // border: 1px solid red;
-  ${props => `text-align: ${props.username === props.sender ? 'right;' : 'left;'}`}
-  `;
-  
-  const MessageText = styled.div<any>`
-  ${props => `background: ${props.username === props.sender ? '#84D474;' : '#e4e6eb;'}`}
-  ${props => `color: ${props.username === props.sender ? 'white;' : 'black;'}`}
+  ${(props) =>
+    `text-align: ${props.username === props.sender ? 'right;' : 'left;'}`}
+`;
+
+const MessageText = styled.div<any>`
+  ${(props) =>
+    `background: ${props.username === props.sender ? '#84D474;' : '#e4e6eb;'}`}
+  ${(props) =>
+    `color: ${props.username === props.sender ? 'white;' : 'black;'}`}
   word-break: break-word;
   border-radius: 10px;
   margin-top: 5px;
@@ -130,10 +146,10 @@ const ChatList = styled.section<any>`
   overflow-x: hidden;
   overflow-y: scroll;
   bottom: 0;
-  width:300px;
+  width: 300px;
   margin-right: 20px;
   margin-left: 20px;
-  text-align:right;
+  text-align: right;
   margin-bottom: 10px;
 
   &::-webkit-scrollbar {
