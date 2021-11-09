@@ -23,7 +23,6 @@ const PostContainer = styled.div`
   position: relative;
   top: 56px;
   width: 680px;
-  height: 200vh; // 테스트용 height
 
   display: flex;
   flex-direction: column;
