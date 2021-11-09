@@ -1,21 +1,38 @@
-const getData = {
-  getusername: () => {
+import { HomePost } from 'utils/types';
+
+const fetchApi = {
+  login: () => {
+    fetch('/oauth/login')
+      .then((res) => res.json())
+      .then((loginLink) => {
+        window.location.href = loginLink;
+      });
+  },
+  getuserData: () => {
+    // { data, error }
     return fetch('/api/data').then((res) => res.json());
   },
   logout: () => {
-     fetch('/ouath/logout')
+    fetch('/oauth/logout')
       .then((res) => res.json())
       .then((data) => {
         alert(data.message);
-        //socket.disconnect();
-        //저장 데이터도 다 제거
-        window.location.href = '/';
+        // 제거할 데이터 있으면 제거
+        // recoil 데이터들 다 제거해야 하지 않나
+        window.location.href = '/'; // href쓰면 소켓 disconnect 알아서 된다.
       });
   },
   searchUsers: async (keyword: string) => {
     const response = await fetch(`/api/users?keyword=${keyword}`);
     return await response.json();
+  },
+
+  getAllUsers: async () => {
+    return fetch('/api/allUsers').then((res) => res.json());
+  },
+  getPosts: (): Promise<HomePost[]> => {
+    return fetch(`/api/posts`).then((res) => res.json());
   }
 };
 
-export default getData;
+export default fetchApi;

@@ -1,5 +1,6 @@
 export interface GnbProps {
   type?: string;
+  rightModalType?: string;
 }
 
 export interface FlexProps {
@@ -34,7 +35,7 @@ export interface SearchedUser {
 export interface SearchedUserProps {
   user: SearchedUser;
 }
-  
+
 export interface ProfilePhotoProps {
   src?: string;
   size?: string;
@@ -42,4 +43,52 @@ export interface ProfilePhotoProps {
 
 export interface SideBarProps {
   isLeft: boolean;
+  children: React.ReactNode;
+}
+
+export interface HomePost {
+  idx: number;
+  useridx: number;
+  secret: number;
+  likenum: number;
+  contents: string;
+  picture1: string | null;
+  picture2: string | null;
+  picture3: string | null;
+  createdAt: Date;
+  BTUseruseridx: {
+    bio: string | null;
+    idx: number;
+    nickname: string;
+    profile: string | null;
+  };
+}
+
+export interface PostProps {
+  post: HomePost;
+}
+
+export interface PostHeaderProps {
+  nickname: string;
+  profile: string | null;
+  createdAt: Date;
+}
+
+export interface PostBodyProps {
+  contents: string;
+  picture1: string | null;
+  picture2: string | null;
+  picture3: string | null;
+}
+
+export interface PostFooterProps {
+  likenum: number;
+}
+
+export interface PostImageBoxProps {
+  images: string[];
+}
+
+export interface PostImageBoxUrl {
+  imageUrl: string;
 }

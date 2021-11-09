@@ -1,4 +1,5 @@
-import { Op } from 'sequelize';
+import sequelize from 'sequelize';
+import { Op, fn, col } from 'sequelize';
 import db from '../models';
 
 const dbManager = {
@@ -18,7 +19,7 @@ const dbManager = {
       where: { nickname: username },
       defaults: { nickname: username }
     });
-    
+
     return user.get();
   },
 
@@ -28,7 +29,23 @@ const dbManager = {
     });
 
     return users;
+  },
+
+  getPosts: async () => {
+    const postsWithUser = await db.models.Post.findAll({
+      include: [{ model: db.models.User, as: 'BTUseruseridx' }],
+      order: [['createdAt', 'DESC']]
+    });
+
+    return postsWithUser;
+  },
+
+  getAllUsers: async () => {
+    const users = await db.models.User.findAll({});
+    return users;
   }
 };
+
+// fn('COUNT', col('Comments.idx'))
 
 export default dbManager;

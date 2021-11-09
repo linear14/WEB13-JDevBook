@@ -1,35 +1,50 @@
 import React from 'react';
 import styled from 'styled-components';
+
+import { PostWriter, PostList } from 'components/HomePage';
+
 import {
   Gnb,
   SideBar,
   InfoSideBar,
   ChatSideBar,
-  GroupSideBar
-} from '../components';
+  AlarmSideBar,
+  SelectorSideBar,
+  GroupSideBar,
+  InitUserData
+} from 'components/common';
 
 const HomePageContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 `;
-const ContentsWrap = styled.div`
+
+const PostContainer = styled.div`
+  position: relative;
+  top: 56px;
+  width: 680px;
+  height: 200vh; // 테스트용 height
+
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 `;
 
 const HomePage = () => {
   return (
     <HomePageContainer>
-      <Gnb type="home" />
-      <ContentsWrap>
-        <SideBar isLeft={true}>
-          <InfoSideBar />
-          <GroupSideBar />
-        </SideBar>
-        <SideBar isLeft={false}>
-          <ChatSideBar />
-        </SideBar>
-      </ContentsWrap>
+      <InitUserData />
+      <Gnb type="home" rightModalType="" />
+      <SideBar isLeft={true}>
+        <InfoSideBar />
+        <GroupSideBar />
+      </SideBar>
+      <PostContainer>
+        <PostWriter></PostWriter>
+        <PostList />
+      </PostContainer>
+      <SideBar isLeft={false}>
+        <ChatSideBar />
+      </SideBar>
     </HomePageContainer>
   );
 };

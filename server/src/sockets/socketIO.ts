@@ -24,6 +24,9 @@ const socketIO = (server: any) => {
         });
       }
     });
+    socket.on('disconnect', () => {
+      console.log(`${socket.name}:${socket.id} disconnected`);
+    });
   });
 
   //io.on("forceDisconnect")
