@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { MdClose, MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
@@ -41,7 +41,7 @@ const OriginalImage = styled.img`
   box-sizing: border-box;
 `;
 
-const AnimationIcon = styled.div<{ isLeft?: boolean }>`
+const AnimationIcon = styled.div<{ isLeft?: boolean; hidden: boolean }>`
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -50,6 +50,11 @@ const AnimationIcon = styled.div<{ isLeft?: boolean }>`
   align-items: center;
   justify-content: center;
   transition: 0.2s ease-in-out;
+  ${({ hidden }) =>
+    hidden &&
+    css`
+      visibility: hidden;
+    `}
 
   &:hover {
     background-color: ${palette.lightgray};
@@ -76,6 +81,16 @@ const ImageViewer = () => {
     };
   }, []);
 
+  const isFirst = useCallback(() => {
+    return currentIdx === 0;
+  }, [currentIdx]);
+
+  const isLast = useCallback(() => {
+    return currentIdx === imageCount - 1;
+  }, [currentIdx, imageCount]);
+
+  console.log(imageCount, currentIdx);
+
   return (
     <Container>
       <ButtonWrap
@@ -86,11 +101,11 @@ const ImageViewer = () => {
         <MdClose />
       </ButtonWrap>
       <Body>
-        <AnimationIcon isLeft>
+        <AnimationIcon isLeft hidden={isFirst()}>
           <MdArrowBackIosNew />
         </AnimationIcon>
         <OriginalImage src={images[currentIdx]} />
-        <AnimationIcon>
+        <AnimationIcon hidden={isLast()}>
           <MdArrowForwardIos />
         </AnimationIcon>
       </Body>
