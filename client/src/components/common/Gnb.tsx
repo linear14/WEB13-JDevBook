@@ -135,6 +135,7 @@ const IconWrap = styled.div<IconProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   &:after {
     content: '';
