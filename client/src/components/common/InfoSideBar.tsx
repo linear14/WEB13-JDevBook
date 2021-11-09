@@ -2,12 +2,10 @@ import React, { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { userData } from 'recoil/modal';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import palette from 'theme/palette';
 
-import getData from 'api/fetch';
-import { socket } from 'components';
 import { ProfilePhoto } from 'components';
 
 const InfoSideBarContainer = styled.div`
@@ -77,21 +75,13 @@ const InnerBarGraph = styled.span<{ solvedRate: number }>`
 
 const InfoSideBar = () => {
   const solvedRate = Number(((123 / 155) * 100).toFixed(1));
-  const [userdata, setUserdata] = useRecoilState(userData);
-  useEffect(() => {
-    async function fetchUserdata() {
-      const name: string = await getData.getusername();
-      setUserdata({ username: name });
-      socket.emit('name', name);
-    }
-    fetchUserdata();
-  }, []);
+  const userdata = useRecoilValue(userData);
 
   return (
     <InfoSideBarContainer>
       <ProfileWrap to="/profile/shin">
         <ProfilePhoto src="" />
-        <p>{userdata.username}</p>
+        <p>{userdata.name}</p>
       </ProfileWrap>
       <SolvedTitle>문제 푼 수</SolvedTitle>
       <SolvedBarGraph>

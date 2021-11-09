@@ -2,21 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import mainLogo from '../../images/main-logo.png';
 import { GithubLoginButton } from 'react-social-login-buttons';
+import fetchApi from 'api/fetch';
 
 const LoginBox = () => {
-  const loginGithub = () => {
-    fetch('/oauth/login')
-      .then((res) => res.json())
-      .then((loginLink) => {
-        window.location.href = loginLink;
-      });
-  };
   return (
     <Box>
       <Wrapper>
         <MainLogoElement />
         <Text>개발자라면 Github 아이디는 가지고 계시죠?</Text>
-        <GithubLoginButton onClick={loginGithub} />
+        <GithubLoginButton onClick={fetchApi.login} />
       </Wrapper>
     </Box>
   );

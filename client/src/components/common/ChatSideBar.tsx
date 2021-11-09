@@ -1,8 +1,9 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
+
+import { RightModalProps, Message } from 'utils/types';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { rightModalStates, userData, chatWith } from 'recoil/modal';
-import socket from './Socket';
+import { rightModalStates, userData, usersocket, chatWith } from 'recoil/modal';
 import CurrentUser from './CurrentUser';
 
 const ChatSideBarContainer = styled.div<any>`
@@ -13,11 +14,12 @@ const ChatSideBarContainer = styled.div<any>`
 
 const ChatSideBar = () => {
   const rightModalState = useRecoilValue(rightModalStates);
-
+  const socket = useRecoilValue(usersocket);
   const [messageList, setMessageList] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
   const userdata = useRecoilValue(userData);
   // 테스트용. 나중에 클릭해서 상대방 이름 알도록 해야함
+
   const [chatReceiver, setChatWith] = useRecoilState(chatWith);
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
@@ -25,7 +27,7 @@ const ChatSideBar = () => {
     // sernder, receiver, message 보내고
     // 서버에서 채팅 저장하고, 기존 메세지만 추가로 다시 받아
     socket.emit('send message', {
-      sender: userdata.username,
+      sender: userdata.name,
       receiver: chatReceiver,
       message: value
     });
@@ -43,9 +45,9 @@ const ChatSideBar = () => {
     // DB에서 받아온 데이터로 바꿔줘야함
     socket.on('receive message', (data: any) => {
       const { sender, receiver, msg } = data;
-      if (sender === userdata.username) {
+      if (sender === userdata.name) {
         setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
-      } else if (receiver === userdata.username && sender === chatReceiver)
+      } else if (receiver === userdata.name && sender === chatReceiver)
         setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
 
       document
@@ -62,9 +64,9 @@ const ChatSideBar = () => {
       <MessageWrap
         key={idx}
         username={msg.split(':')[0]}
-        sender={userdata.username}
+        sender={userdata.name}
       >
-        <MessageText username={msg.split(':')[0]} sender={userdata.username}>
+        <MessageText name={msg.split(':')[0]} sender={userdata.name}>
           {msg}
         </MessageText>
       </MessageWrap>
@@ -120,14 +122,13 @@ const MessageWrap = styled.div<any>`
   width: inherit;
   // border: 1px solid red;
   ${(props) =>
-    `text-align: ${props.username === props.sender ? 'right;' : 'left;'}`}
+    `text-align: ${props.name === props.sender ? 'right;' : 'left;'}`}
 `;
 
 const MessageText = styled.div<any>`
   ${(props) =>
-    `background: ${props.username === props.sender ? '#84D474;' : '#e4e6eb;'}`}
-  ${(props) =>
-    `color: ${props.username === props.sender ? 'white;' : 'black;'}`}
+    `background: ${props.name === props.sender ? '#84D474;' : '#e4e6eb;'}`}
+  ${(props) => `color: ${props.name === props.sender ? 'white;' : 'black;'}`}
   word-break: break-word;
   border-radius: 10px;
   margin-top: 5px;

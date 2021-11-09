@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { modalVisibleStates, rightModalStates, userData } from 'recoil/modal';
+import fetchApi from 'api/fetch';
 
 import palette from 'theme/palette';
 
@@ -16,7 +17,6 @@ import gnbMessage from 'images/gnb-message.svg';
 import gnbAlarm from 'images/gnb-alarm.svg';
 import gnbSelector from 'images/gnb-down-arrow.svg';
 import profileDefault from 'images/profile-default.png';
-
 import {
   GnbProps,
   FlexProps,
@@ -148,11 +148,7 @@ const IconWrap = styled.div<IconProps>`
   }
 `;
 
-<<<<<<< HEAD
-const Gnb = ({ type }: GnbProps) => {
-=======
 const Gnb: React.FC<GnbProps> = ({ type, rightModalType }) => {
->>>>>>> 204dc1157694fa605450a49b67f19b937d5c3c8f
   const modalState = useRecoilValue(modalVisibleStates);
   const userdata = useRecoilValue(userData);
   const [rightModalState, setRightModalState] =
@@ -179,7 +175,7 @@ const Gnb: React.FC<GnbProps> = ({ type, rightModalType }) => {
         <Link to="/profile/1">
           <ProfileWrap>
             <img src={profileDefault} />
-            <p>{userdata.username}</p>
+            <p>{userdata.name}</p>
           </ProfileWrap>
         </Link>
         <IconWrap
@@ -196,8 +192,8 @@ const Gnb: React.FC<GnbProps> = ({ type, rightModalType }) => {
         />
         <IconWrap
           img={gnbSelector}
-          onClick={() =>
-            ChangeFlag(rightModalState, setRightModalState, 'selectorFlag')
+          onClick={
+            () => fetchApi.logout() // async await 안해도 될듯?
           }
         />
       </FlexWrap>

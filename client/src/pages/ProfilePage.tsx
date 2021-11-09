@@ -7,7 +7,8 @@ import {
   SideBar,
   InfoSideBar,
   ChatSideBar,
-  GroupSideBar
+  GroupSideBar,
+  Authority
 } from 'components';
 
 const ProfilePageContainer = styled.div`
@@ -26,6 +27,7 @@ interface MatchParams {
 const ProfilePage: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => {
   return (
     <ProfilePageContainer>
+      <Authority />
       <Gnb />
       <ContentsWrap>
         <SideBar isLeft={true}>

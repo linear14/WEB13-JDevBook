@@ -8,7 +8,7 @@ import SideBar from './common/SideBar';
 import ProfilePhoto from './common/ProfilePhoto';
 import { UserSearchBar, UserSearchModal } from './common/UserSearch';
 import UserCard from './common/UserCard';
-import socket from './common/Socket';
+import Authority from './common/Authority';
 
 export {
   AlarmSideBar,
@@ -22,5 +22,5 @@ export {
   UserSearchBar,
   UserSearchModal,
   UserCard,
-  socket
+  Authority
 };
