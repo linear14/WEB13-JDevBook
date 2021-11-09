@@ -5,11 +5,13 @@ import { RightModalProps, Message } from 'utils/types';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { rightModalStates, userData, usersocket, chatWith } from 'recoil/store';
 import CurrentUser from './CurrentUser';
+import palette from 'theme/palette';
 
 const ChatSideBarContainer = styled.div<any>`
   width: inherit;
   height: inherit;
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
+  background-color: ${palette.white};
 `;
 
 const ChatSideBar = () => {
@@ -79,7 +81,7 @@ const ChatSideBar = () => {
         <div>
           <CurrentUser />
           <hr />
-          <ChatTitle>{chatReceiver} 와의 채팅</ChatTitle>
+          <ChatTitle>{chatReceiver ? chatReceiver + ' 에게 보내는 편지' : '채팅할 상대 선택'}</ChatTitle>
           <ChatList className="chat-list">{chatList}</ChatList>
           <form
             className="chat-form"
