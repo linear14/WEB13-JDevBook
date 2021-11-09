@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { userData } from 'recoil/store';
 
+import { userData, modalVisibleStates } from 'recoil/store';
 import palette from 'theme/palette';
 import { iconPhoto } from 'images/icons';
 
 import { ProfilePhoto } from 'components/common';
+import { PostWriterModal } from 'components/HomePage';
 
 const PostWriterBox = styled.div`
   display: flex;
@@ -81,22 +82,32 @@ const StyledBtn = styled.div`
 `;
 
 const PostWriter = () => {
-  const [userdata, setUserdata] = useRecoilState(userData);
+  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const [userdata, setUserData] = useRecoilState(userData);
+
+  const PostWriterModalToggle = (e: React.MouseEvent<HTMLDivElement>) => {
+    setModalState({ ...modalState, postWriter: !modalState.postWriter });
+  };
 
   return (
-    <PostWriterBox>
-      <InputWrap>
-        <ProfilePhoto size="40px" src="" />
-        <ModalCallBtn>What's on your mind, {userdata.name}?</ModalCallBtn>
-      </InputWrap>
-      <Line />
-      <ButtonsWrap>
-        <StyledBtn>
-          <img src={iconPhoto} alt="photo 아이콘" />
-          <div>Photo</div>
-        </StyledBtn>
-      </ButtonsWrap>
-    </PostWriterBox>
+    <>
+      <PostWriterBox>
+        <InputWrap>
+          <ProfilePhoto size="40px" src="" />
+          <ModalCallBtn onClick={PostWriterModalToggle}>
+            What's on your mind, {userdata.name}?
+          </ModalCallBtn>
+        </InputWrap>
+        <Line />
+        <ButtonsWrap>
+          <StyledBtn>
+            <img src={iconPhoto} alt="photo 아이콘" />
+            <div>Photo</div>
+          </StyledBtn>
+        </ButtonsWrap>
+      </PostWriterBox>
+      <PostWriterModal />
+    </>
   );
 };
 

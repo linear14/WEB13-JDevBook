@@ -5,7 +5,8 @@ import { Socket } from 'socket.io-client';
 export const modalVisibleStates = atom({
   key: 'modalVisibleState',
   default: {
-    searchUser: false
+    searchUser: false,
+    postWriter: false
   }
 });
 
