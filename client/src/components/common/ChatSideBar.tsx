@@ -43,19 +43,32 @@ const ChatSideBar = () => {
   }, [userdata]);
 
   useEffect(() => {
-    setMessageList([]); // DB에서 받아온 데이터로 바꿔줘야함
+    // DB에서 받아온 데이터로 바꿔줘야함
+    if (chatReceiver !== '') {
+      setMessageList([]);
+      socket.emit('send chat initial', {
+        sender: userdata.name,
+        receiver: chatReceiver
+      });
+      socket.on('get previous chats', (strmap: string[]) => {
+        setMessageList((messageList: any) => messageList.concat(strmap));
+        socket.off('get previous chats');
+      });
+      socket.off('send chat initial');
 
-    socket.off('receive message');
-    socket.on('receive message', (data: any) => {
-      const { sender, receiver, msg } = data;
-      if (sender === userdata.name || (receiver === userdata.name && sender === chatReceiver)) {
-        setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
-      }
+      socket.off('receive message');
+      socket.on('receive message', (data: any) => {
+        const { sender, receiver, msg } = data;
+        if (sender === userdata.name) {
+          setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
+        } else if (receiver === userdata.name && sender === chatReceiver)
+          setMessageList((messageList: any) => messageList.concat(msg)); // 도저히 모르겠음
 
-      document
-        .querySelector('.chat-list')
-        ?.scrollBy({ top: 100, behavior: 'smooth' });
-    });
+        document
+          .querySelector('.chat-list')
+          ?.scrollBy({ top: 100, behavior: 'smooth' });
+      });
+    }
   }, [chatReceiver]);
 
   const chatList = messageList.map(
