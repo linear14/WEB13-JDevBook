@@ -5,6 +5,7 @@ import imageUtil from 'utils/imageUtil';
 import {
   PostImageBoxProps,
   PostImageBoxStyle,
+  PostImageBoxStyleWithSource,
   PostImageInfo
 } from 'utils/types';
 import { errorImage } from 'images';
@@ -12,6 +13,30 @@ import { errorImage } from 'images';
 const FlexWrap = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const HoverBox = styled.div`
+  position: relative;
+
+  div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+  }
+
+  &:active div {
+    opacity: 0.25;
+  }
+`;
+
+const SkeletonBox = styled.div`
+  width: 680px;
+  height: 680px;
+  background: ${palette.lightgray};
 `;
 
 const ImageBox = styled.img<PostImageBoxStyle>`
@@ -28,17 +53,37 @@ const ImageBox = styled.img<PostImageBoxStyle>`
   `}
 `;
 
-const SkeletonBox = styled.div`
-  width: 680px;
-  height: 680px;
-  background: ${palette.lightgray};
-`;
+const ActiveImageBox = (props: PostImageBoxStyleWithSource) => {
+  const {
+    src,
+    width,
+    height,
+    leftBorder,
+    rightBorder,
+    topBorder,
+    bottomBorder
+  } = props;
+  return (
+    <HoverBox>
+      <ImageBox
+        src={src}
+        width={width}
+        height={height}
+        leftBorder={leftBorder}
+        rightBorder={rightBorder}
+        topBorder={topBorder}
+        bottomBorder={bottomBorder}
+      />
+      <div />
+    </HoverBox>
+  );
+};
 
 const TwoImages = ({ urls }: { urls: string[] }) => {
   return (
     <FlexWrap>
-      <ImageBox src={urls[0]} width={340} height={340} rightBorder />
-      <ImageBox src={urls[1]} width={340} height={340} leftBorder />
+      <ActiveImageBox src={urls[0]} width={340} height={340} rightBorder />
+      <ActiveImageBox src={urls[1]} width={340} height={340} leftBorder />
     </FlexWrap>
   );
 };
@@ -46,16 +91,22 @@ const TwoImages = ({ urls }: { urls: string[] }) => {
 const ThreeImagesHorizontal = ({ urls }: { urls: string[] }) => {
   return (
     <div>
-      <ImageBox src={urls[0]} width={680} height={340} bottomBorder />
+      <ActiveImageBox src={urls[0]} width={680} height={340} bottomBorder />
       <FlexWrap>
-        <ImageBox
+        <ActiveImageBox
           src={urls[1]}
           width={340}
           height={340}
           topBorder
           rightBorder
         />
-        <ImageBox src={urls[2]} width={340} height={340} topBorder leftBorder />
+        <ActiveImageBox
+          src={urls[2]}
+          width={340}
+          height={340}
+          topBorder
+          leftBorder
+        />
       </FlexWrap>
     </div>
   );
@@ -64,16 +115,22 @@ const ThreeImagesHorizontal = ({ urls }: { urls: string[] }) => {
 const ThreeImagesVertical = ({ urls }: { urls: string[] }) => {
   return (
     <FlexWrap>
-      <ImageBox src={urls[0]} width={340} height={680} rightBorder />
+      <ActiveImageBox src={urls[0]} width={340} height={680} rightBorder />
       <div>
-        <ImageBox
+        <ActiveImageBox
           src={urls[1]}
           width={340}
           height={340}
           leftBorder
           bottomBorder
         />
-        <ImageBox src={urls[2]} width={340} height={340} leftBorder topBorder />
+        <ActiveImageBox
+          src={urls[2]}
+          width={340}
+          height={340}
+          leftBorder
+          topBorder
+        />
       </div>
     </FlexWrap>
   );
@@ -100,7 +157,7 @@ const PostImageBox = ({ imageCount, images }: PostImageBoxProps) => {
   );
 
   return imageCount === 1 ? (
-    <ImageBox src={url} width={width} height={height} />
+    <ActiveImageBox src={url} width={width} height={height} />
   ) : imageCount === 2 ? (
     <TwoImages urls={[url, url2]} />
   ) : imageCount === 3 && originalWidth >= originalHeight ? (

@@ -104,3 +104,7 @@ export interface PostImageBoxStyle {
   topBorder?: boolean;
   bottomBorder?: boolean;
 }
+
+export interface PostImageBoxStyleWithSource extends PostImageBoxStyle {
+  src: string;
+}
