@@ -1,5 +1,6 @@
-import AlertSideBar from './common/AlertSideBar';
+import AlarmSideBar from './common/AlarmSideBar';
 import ChatSideBar from './common/ChatSideBar';
+import SelectorSideBar from './common/SelectorSideBar';
 import GroupSideBar from './common/GroupSideBar';
 import InfoSideBar from './common/InfoSideBar';
 import Gnb from './common/Gnb';
@@ -9,8 +10,9 @@ import { UserSearchBar, UserSearchModal } from './common/UserSearch';
 import UserCard from './common/UserCard';
 
 export {
-  AlertSideBar,
+  AlarmSideBar,
   ChatSideBar,
+  SelectorSideBar,
   GroupSideBar,
   InfoSideBar,
   Gnb,

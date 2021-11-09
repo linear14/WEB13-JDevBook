@@ -5,6 +5,8 @@ import {
   SideBar,
   InfoSideBar,
   ChatSideBar,
+  AlarmSideBar,
+  SelectorSideBar,
   GroupSideBar
 } from '../components';
 
@@ -20,7 +22,7 @@ const ContentsWrap = styled.div`
 const HomePage = () => {
   return (
     <HomePageContainer>
-      <Gnb type="home" />
+      <Gnb type="home" rightModalType="" />
       <ContentsWrap>
         <SideBar isLeft={true}>
           <InfoSideBar />
@@ -28,6 +30,8 @@ const HomePage = () => {
         </SideBar>
         <SideBar isLeft={false}>
           <ChatSideBar />
+          <AlarmSideBar />
+          <SelectorSideBar />
         </SideBar>
       </ContentsWrap>
     </HomePageContainer>
