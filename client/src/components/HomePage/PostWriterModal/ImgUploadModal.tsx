@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { IoClose } from 'react-icons/io5';
+import { FiUpload } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
 
 import { modalVisibleStates } from 'recoil/store';
@@ -59,6 +60,37 @@ const CloseBtn = styled.div`
   }
 `;
 
+const WhatWorkModal = styled.div`
+  width: 150px;
+  height: 100px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  div.icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+
+    border-radius: 50%;
+    background-color: ${palette.gray};
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  div.title {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  div.subtitle {
+    font-size: 12px;
+    font-weight: bold;
+  }
+`;
+
 const ImgUploadModal = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
 
@@ -72,6 +104,13 @@ const ImgUploadModal = () => {
         <CloseBtn onClick={imgUploadModalToggle}>
           <IoClose size="28px" />
         </CloseBtn>
+        <WhatWorkModal>
+          <div className="icon">
+            <FiUpload size="20px" />
+          </div>
+          <div className="title">사진 추가</div>
+          <div className="subtitle">또는 끌어서 놓습니다</div>
+        </WhatWorkModal>
       </ImgUploadWrap>
     </ImgUploadContainer>
   );
