@@ -41,3 +41,13 @@ export const chatWith = atom({
   key: 'getReceiver',
   default: '' as string
 });
+
+export const imageViewerState = atom({
+  key: 'imageViewerState',
+  default: {
+    isOpen: false,
+    imageCount: 0,
+    currentIdx: 0,
+    images: []
+  }
+});

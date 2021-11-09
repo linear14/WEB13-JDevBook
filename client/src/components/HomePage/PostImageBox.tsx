@@ -9,6 +9,8 @@ import {
   PostImageInfo
 } from 'utils/types';
 import { errorImage } from 'images';
+import { useRecoilState } from 'recoil';
+import { imageViewerState as ivState } from 'recoil/store';
 
 const FlexWrap = styled.div`
   display: flex;
@@ -54,6 +56,7 @@ const ImageBox = styled.img<PostImageBoxStyle>`
 `;
 
 const ActiveImageBox = (props: PostImageBoxStyleWithSource) => {
+  const [imageViewerState, setImageViewerState] = useRecoilState(ivState);
   const {
     src,
     width,
@@ -64,7 +67,12 @@ const ActiveImageBox = (props: PostImageBoxStyleWithSource) => {
     bottomBorder
   } = props;
   return (
-    <HoverBox>
+    <HoverBox
+      onClick={() => {
+        console.log(1);
+        setImageViewerState({ ...imageViewerState, isOpen: true });
+      }}
+    >
       <ImageBox
         src={src}
         width={width}
@@ -82,8 +90,20 @@ const ActiveImageBox = (props: PostImageBoxStyleWithSource) => {
 const TwoImages = ({ urls }: { urls: string[] }) => {
   return (
     <FlexWrap>
-      <ActiveImageBox src={urls[0]} width={340} height={340} rightBorder />
-      <ActiveImageBox src={urls[1]} width={340} height={340} leftBorder />
+      <ActiveImageBox
+        src={urls[0]}
+        width={340}
+        height={340}
+        urls={urls}
+        rightBorder
+      />
+      <ActiveImageBox
+        src={urls[1]}
+        width={340}
+        height={340}
+        urls={urls}
+        leftBorder
+      />
     </FlexWrap>
   );
 };
@@ -91,12 +111,19 @@ const TwoImages = ({ urls }: { urls: string[] }) => {
 const ThreeImagesHorizontal = ({ urls }: { urls: string[] }) => {
   return (
     <div>
-      <ActiveImageBox src={urls[0]} width={680} height={340} bottomBorder />
+      <ActiveImageBox
+        src={urls[0]}
+        width={680}
+        height={340}
+        urls={urls}
+        bottomBorder
+      />
       <FlexWrap>
         <ActiveImageBox
           src={urls[1]}
           width={340}
           height={340}
+          urls={urls}
           topBorder
           rightBorder
         />
@@ -104,6 +131,7 @@ const ThreeImagesHorizontal = ({ urls }: { urls: string[] }) => {
           src={urls[2]}
           width={340}
           height={340}
+          urls={urls}
           topBorder
           leftBorder
         />
@@ -115,12 +143,19 @@ const ThreeImagesHorizontal = ({ urls }: { urls: string[] }) => {
 const ThreeImagesVertical = ({ urls }: { urls: string[] }) => {
   return (
     <FlexWrap>
-      <ActiveImageBox src={urls[0]} width={340} height={680} rightBorder />
+      <ActiveImageBox
+        src={urls[0]}
+        width={340}
+        height={680}
+        urls={urls}
+        rightBorder
+      />
       <div>
         <ActiveImageBox
           src={urls[1]}
           width={340}
           height={340}
+          urls={urls}
           leftBorder
           bottomBorder
         />
@@ -128,6 +163,7 @@ const ThreeImagesVertical = ({ urls }: { urls: string[] }) => {
           src={urls[2]}
           width={340}
           height={340}
+          urls={urls}
           leftBorder
           topBorder
         />
@@ -157,7 +193,7 @@ const PostImageBox = ({ imageCount, images }: PostImageBoxProps) => {
   );
 
   return imageCount === 1 ? (
-    <ActiveImageBox src={url} width={width} height={height} />
+    <ActiveImageBox src={url} width={width} height={height} urls={[url]} />
   ) : imageCount === 2 ? (
     <TwoImages urls={[url, url2]} />
   ) : imageCount === 3 && originalWidth >= originalHeight ? (
