@@ -7,8 +7,8 @@ import {
   InfoSideBar,
   ChatSideBar,
   GroupSideBar,
-  Authority
-} from '../components';
+  InitUserData
+} from '../components/common';
 
 const GroupPageContainer = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ const ContentsWrap = styled.div`
 const GroupPage = () => {
   return (
     <GroupPageContainer>
-      <Authority />
+      <InitUserData />
       <Gnb type="group" />
       <ContentsWrap>
         <SideBar isLeft={true}>

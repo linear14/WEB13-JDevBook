@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { rightModalStates, userData } from 'recoil/modal';
+import { rightModalStates, userData } from 'recoil/store';
 
 const AlarmSideBarContainer = styled.div<any>`
   width: inherit;
@@ -9,13 +9,11 @@ const AlarmSideBarContainer = styled.div<any>`
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
 `;
 
-const AlarmSideBar: React.FC = () => {
+const AlarmSideBar = () => {
   const rightModalState = useRecoilValue(rightModalStates);
 
   if (rightModalState.rightModalFlag && rightModalState.alarmFlag) {
-    return (
-      <AlarmSideBarContainer>This is AlarmSideBar</AlarmSideBarContainer>
-    );
+    return <AlarmSideBarContainer>This is AlarmSideBar</AlarmSideBarContainer>;
   } else return null;
 };
 

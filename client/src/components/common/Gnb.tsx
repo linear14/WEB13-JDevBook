@@ -2,12 +2,12 @@ import React, { Dispatch } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { modalVisibleStates, rightModalStates, userData } from 'recoil/modal';
+import { modalVisibleStates, rightModalStates, userData } from 'recoil/store';
 import fetchApi from 'api/fetch';
 
 import palette from 'theme/palette';
 
-import { UserSearchBar, UserSearchModal } from 'components';
+import { UserSearchBar, UserSearchModal } from 'components/common';
 import {
   GnbHome,
   GnbGroup,
@@ -149,7 +149,7 @@ const IconWrap = styled.div<IconProps>`
   }
 `;
 
-const Gnb: React.FC<GnbProps> = ({ type, rightModalType }) => {
+const Gnb = ({ type, rightModalType }: GnbProps) => {
   const modalState = useRecoilValue(modalVisibleStates);
   const userdata = useRecoilValue(userData);
   const [rightModalState, setRightModalState] =

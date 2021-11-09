@@ -1,4 +1,4 @@
-import { ProfilePhoto } from 'components';
+import { ProfilePhoto } from 'components/common';
 import React from 'react';
 import styled, { css } from 'styled-components';
 import {
@@ -64,11 +64,7 @@ const HeaderContent = styled.div`
   }
 `;
 
-const Header: React.FC<PostHeaderProps> = ({
-  nickname,
-  profile,
-  createdAt
-}) => {
+const Header = ({ nickname, profile, createdAt }: PostHeaderProps) => {
   return (
     <HeaderContainer>
       <ClickableProfileImage size={'40px'} />
@@ -108,12 +104,7 @@ const ImagesWrap = styled.div`
   margin-top: 8px;
 `;
 
-const Body: React.FC<PostBodyProps> = ({
-  contents,
-  picture1,
-  picture2,
-  picture3
-}) => {
+const Body = ({ contents, picture1, picture2, picture3 }: PostBodyProps) => {
   return (
     <BodyContainer>
       <p>{contents}</p>
@@ -160,7 +151,7 @@ const FooterContainer = styled.div`
   }
 `;
 
-const Footer: React.FC<PostFooterProps> = ({ likenum }) => {
+const Footer = ({ likenum }: PostFooterProps) => {
   return (
     <FooterContainer>
       <div>
@@ -221,7 +212,7 @@ const Divider = styled.div`
 `;
 
 // Export Default
-const Post: React.FC<PostProps> = ({ post }) => {
+const Post = ({ post }: PostProps) => {
   const {
     createdAt,
     contents,

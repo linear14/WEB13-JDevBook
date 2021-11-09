@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import fetchApi from 'api/fetch';
-import { userData, usersocket } from 'recoil/modal';
+import { userData, usersocket } from 'recoil/store';
 import { RouteComponentProps } from 'react-router-dom';
 
-const Authority = (/*{ history }: RouteComponentProps*/) => {
+const InitUserData = (/*{ history }: RouteComponentProps*/) => {
   const [userdata, setUserdata] = useRecoilState(userData);
   const [socket, setSocket] = useRecoilState(usersocket);
   useEffect(() => {
@@ -38,4 +38,4 @@ const Authority = (/*{ history }: RouteComponentProps*/) => {
   return <></>;
 };
 
-export default Authority;
+export default InitUserData;

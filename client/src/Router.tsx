@@ -7,7 +7,7 @@ import {
   RouteComponentProps
 } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { userData, usersocket } from 'recoil/modal';
+import { userData, usersocket } from 'recoil/store';
 import { GroupPage, HomePage, LoginPage, ProfilePage } from './pages';
 
 // interface AuthorityRouteType {

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { SearchedUserProps } from 'utils/types';
 import palette from 'theme/palette';
 
-import { ProfilePhoto } from 'components';
+import { ProfilePhoto } from 'components/common';
 
 const CardWrap = styled.div`
   width: 100%;

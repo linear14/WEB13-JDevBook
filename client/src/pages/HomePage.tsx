@@ -1,9 +1,7 @@
-import Post from 'components/HomePage/Post';
-import PostList from 'components/HomePage/PostList';
 import React from 'react';
 import styled from 'styled-components';
 
-import { PostWriter } from 'components/HomePage';
+import { PostWriter, PostList } from 'components/HomePage';
 
 import {
   Gnb,
@@ -13,8 +11,8 @@ import {
   AlarmSideBar,
   SelectorSideBar,
   GroupSideBar,
-  Authority
-} from 'components';
+  InitUserData
+} from 'components/common';
 
 const HomePageContainer = styled.div`
   display: flex;
@@ -34,7 +32,7 @@ const PostContainer = styled.div`
 const HomePage = () => {
   return (
     <HomePageContainer>
-      <Authority />
+      <InitUserData />
       <Gnb type="home" rightModalType="" />
       <SideBar isLeft={true}>
         <InfoSideBar />

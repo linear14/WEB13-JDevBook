@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { RightModalProps, Message } from 'utils/types';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { rightModalStates, userData, usersocket, chatWith } from 'recoil/modal';
+import { rightModalStates, userData, usersocket, chatWith } from 'recoil/store';
 import CurrentUser from './CurrentUser';
 
 const ChatSideBarContainer = styled.div<any>`

@@ -4,12 +4,12 @@ import styled, { css, keyframes } from 'styled-components';
 import { mainLogo, iconSearch } from 'images';
 import { MdArrowBack } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
-import { modalVisibleStates } from 'recoil/modal';
+import { modalVisibleStates } from 'recoil/store';
 
 import { SearchedUser } from 'utils/types';
 import palette from 'theme/palette';
 
-import { UserCard } from 'components';
+import { UserCard } from 'components/common';
 import fetchApi from 'api/fetch';
 
 const FlexBox = styled.div`

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import getData from 'api/fetch';
 import profileDefault from 'images/profile-default.png';
 import { useRecoilState } from 'recoil';
-import { chatWith } from 'recoil/modal';
+import { chatWith } from 'recoil/store';
 // import { UserProps } from 'utils/types';
 
 interface UserProps {

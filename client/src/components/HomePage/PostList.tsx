@@ -1,5 +1,4 @@
 import getData from 'api/fetch';
-import { postMock } from 'mock';
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { HomePost } from 'utils/types';

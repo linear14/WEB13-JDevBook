@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { userData } from 'recoil/modal';
+import { userData } from 'recoil/store';
 
 import palette from 'theme/palette';
 import { iconPhoto } from 'images';
 
-import { ProfilePhoto } from 'components';
+import { ProfilePhoto } from 'components/common';
 
 const PostWriterBox = styled.div`
   display: flex;

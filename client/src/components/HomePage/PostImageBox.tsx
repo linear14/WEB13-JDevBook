@@ -9,7 +9,7 @@ const FullImageBox = styled.div<PostImageBoxUrl>`
   background: url(${({ imageUrl }) => imageUrl});
 `;
 
-const PostImageBox: React.FC<PostImageBoxProps> = ({ images }) => {
+const PostImageBox = ({ images }: PostImageBoxProps) => {
   const imageLength = images.length;
 
   if (imageLength === 1) {
