@@ -27,7 +27,7 @@ router.get('/data', async (req: Request, res: Response, next: NextFunction) => {
       console.log(`로그인 정보 비정상 감지: ${req.session.username}`);
       req.session.destroy((err) => {
         // 세션이 하나 생성되어서 지워줘야..
-        res.json({ name: '', error: true });
+        res.json({ data: '', error: true });
       });
     }
   } catch (err) {
@@ -35,7 +35,7 @@ router.get('/data', async (req: Request, res: Response, next: NextFunction) => {
     //console.error(err);
     req.session.destroy((err) => {
       // 세션이 하나 생성되어서 지워줘야..
-      res.json({ name: '', error: true });
+      res.json({ data: '', error: true });
     });
   }
 });
