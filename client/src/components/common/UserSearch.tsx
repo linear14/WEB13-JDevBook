@@ -148,12 +148,12 @@ const UserSearchBar = () => {
   return (
     <>
       <Link to="/home">
-        <img src={mainLogo} />
+        <img src={mainLogo} alt="mainLogo" />
       </Link>
       <UserSearchBarContainer
         onClick={() => setModalState({ ...modalState, searchUser: true })}
       >
-        <img src={iconSearch} />
+        <img src={iconSearch} alt="iconSearch" />
         <input type="text" placeholder="Search User" readOnly />
       </UserSearchBarContainer>
     </>
