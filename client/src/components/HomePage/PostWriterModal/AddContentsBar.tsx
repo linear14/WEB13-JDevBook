@@ -38,6 +38,7 @@ const ContentsBtn = styled.div`
   &:hover {
     cursor: pointer;
     background-color: ${palette.gray};
+    transition: all 0.1s;
   }
 
   img {

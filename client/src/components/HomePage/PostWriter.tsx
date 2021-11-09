@@ -14,6 +14,7 @@ const PostWriterBox = styled.div`
   flex-direction: column;
   align-items: center;
   width: 680px;
+  box-sizing: border-box;
   margin: 35px 0 0 0;
 
   border-radius: 8px;
@@ -25,7 +26,7 @@ const InputWrap = styled.div`
   display: flex;
   width: 95%;
 
-  margin: 10px 0px;
+  margin: 12px 0px;
 `;
 
 const ModalCallBtn = styled.div`
@@ -43,7 +44,7 @@ const ModalCallBtn = styled.div`
 `;
 
 const Line = styled.div`
-  width: 95%;
+  width: 100%;
   border-color: ${palette.gray};
   border-width: 1px;
   border-style: solid;
