@@ -43,14 +43,14 @@ const CloseBtn = styled.div`
 const ModalTitle = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
 
-  const PostWriterModalToggle = (e: React.MouseEvent<HTMLDivElement>) => {
-    setModalState({ ...modalState, postWriter: !modalState.postWriter });
+  const postWriterCancel = (e: React.MouseEvent<HTMLDivElement>) => {
+    setModalState({ ...modalState, postWriter: false, postInPhoto: false });
   };
 
   return (
     <ModalTitleWrap>
       <div>게시물 만들기</div>
-      <CloseBtn onClick={PostWriterModalToggle}>
+      <CloseBtn onClick={postWriterCancel}>
         <IoClose size="28px" />
       </CloseBtn>
     </ModalTitleWrap>

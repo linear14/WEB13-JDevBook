@@ -86,8 +86,12 @@ const PostWriter = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
   const userdata = useRecoilValue(userData);
 
-  const PostWriterModalToggle = (e: React.MouseEvent<HTMLDivElement>) => {
-    setModalState({ ...modalState, postWriter: !modalState.postWriter });
+  const postWriterModalOn = (e: React.MouseEvent<HTMLDivElement>) => {
+    setModalState({ ...modalState, postWriter: true });
+  };
+
+  const withImgUploadModalOn = (e: React.MouseEvent<HTMLDivElement>) => {
+    setModalState({ ...modalState, postWriter: true, postInPhoto: true });
   };
 
   return (
@@ -95,13 +99,13 @@ const PostWriter = () => {
       <PostWriterBox>
         <InputWrap>
           <ProfilePhoto size="40px" src="" />
-          <ModalCallBtn onClick={PostWriterModalToggle}>
+          <ModalCallBtn onClick={postWriterModalOn}>
             {userdata.name}님, 무슨 생각을 하고 계신가요?
           </ModalCallBtn>
         </InputWrap>
         <Line />
         <ButtonsWrap>
-          <StyledBtn>
+          <StyledBtn onClick={withImgUploadModalOn}>
             <img src={iconPhoto} alt="photo 아이콘" />
             <div>Photo</div>
           </StyledBtn>

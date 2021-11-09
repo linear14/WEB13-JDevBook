@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
-import { IoClose } from 'react-icons/io5';
+import { useRecoilValue } from 'recoil';
 
 import palette from 'theme/palette';
-import { modalVisibleStates, userData } from 'recoil/store';
+import { modalVisibleStates } from 'recoil/store';
 
 import ModalTitle from 'components/HomePage/PostWriterModal/ModalTitle';
 import PostInfo from 'components/HomePage/PostWriterModal/PostInfo';
 import ModalContents from 'components/HomePage/PostWriterModal/ModalContents';
 import AddContentsBar from 'components/HomePage/PostWriterModal/AddContentsBar';
+import ImgUploadModal from './ImgUploadModal';
 
 const PostWriterModalOverlay = styled.div<{ modalState: boolean }>`
   position: fixed;
@@ -68,18 +68,11 @@ const PostBtn = styled.div`
 `;
 
 const PostWriterModal = () => {
-  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
-
-  const PostWriterModalToggle = (e: React.MouseEvent<HTMLDivElement>) => {
-    setModalState({ ...modalState, postWriter: !modalState.postWriter });
-  };
+  const modalState = useRecoilValue(modalVisibleStates);
 
   return (
     <>
-      <PostWriterModalOverlay
-        modalState={modalState.postWriter}
-        onClick={PostWriterModalToggle}
-      />
+      <PostWriterModalOverlay modalState={modalState.postWriter} />
       <PostWriterModalInner modalState={modalState.postWriter}>
         <ModalTitle />
         <Line />
@@ -89,6 +82,7 @@ const PostWriterModal = () => {
         <PostBtn>
           <div>게시</div>
         </PostBtn>
+        <ImgUploadModal />
       </PostWriterModalInner>
     </>
   );

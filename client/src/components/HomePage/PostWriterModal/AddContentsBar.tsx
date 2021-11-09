@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 
+import { modalVisibleStates } from 'recoil/store';
 import palette from 'theme/palette';
 import { iconPhoto } from 'images/icons';
 
@@ -25,11 +27,13 @@ const AddContentsBtnWrap = styled.div`
   display: flex;
 `;
 
-const ContentsBtn = styled.div`
+const ContentsBtn = styled.div<{ modalState: boolean }>`
   width: 45px;
   height: 45px;
 
   border-radius: 50%;
+  background-color: ${(props) =>
+    props.modalState ? `${palette.gray}` : `${palette.white}`};
 
   display: flex;
   justify-content: center;
@@ -48,11 +52,20 @@ const ContentsBtn = styled.div`
 `;
 
 const AddContentsBar = () => {
+  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+
+  const imgUploadModalToggle = (e: React.MouseEvent<HTMLDivElement>) => {
+    setModalState({ ...modalState, postInPhoto: !modalState.postInPhoto });
+  };
+
   return (
     <AddContentsBarWrap>
       <p>게시물에 추가</p>
       <AddContentsBtnWrap>
-        <ContentsBtn>
+        <ContentsBtn
+          modalState={modalState.postInPhoto}
+          onClick={imgUploadModalToggle}
+        >
           <img src={iconPhoto} alt="사진 아이콘" />
         </ContentsBtn>
       </AddContentsBtnWrap>
