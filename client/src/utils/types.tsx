@@ -102,3 +102,8 @@ export interface PostData {
   picture2: string | null;
   picture3: string | null;
 }
+
+export interface ImgUploadModalProps {
+  modalState: boolean;
+  writerModalState: boolean;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
 import palette from 'theme/palette';
@@ -23,6 +23,15 @@ const PostWriterModalOverlay = styled.div<{ modalState: boolean }>`
   display: ${(props) => (props.modalState ? 'flex' : 'none')};
 `;
 
+const ModalAnimation = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 const PostWriterModalInner = styled.div<{ modalState: boolean }>`
   position: fixed;
   top: 160px;
@@ -33,6 +42,7 @@ const PostWriterModalInner = styled.div<{ modalState: boolean }>`
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 8px;
   background-color: ${palette.white};
+  animation: ${ModalAnimation} 0.5s 1;
 
   display: ${(props) => (props.modalState ? 'flex' : 'none')};
   flex-direction: column;

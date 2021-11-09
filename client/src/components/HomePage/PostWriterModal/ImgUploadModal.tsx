@@ -1,13 +1,23 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { FiUpload } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
 
 import { modalVisibleStates } from 'recoil/store';
 import palette from 'theme/palette';
+import { ImgUploadModalProps } from 'utils/types';
 
-const ImgUploadContainer = styled.div<{ modalState: boolean }>`
+const ModalAnimation = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const ImgUploadContainer = styled.div<ImgUploadModalProps>`
   position: fixed;
   top: 408px;
   width: 532px;
@@ -19,6 +29,7 @@ const ImgUploadContainer = styled.div<{ modalState: boolean }>`
   border-width: 1px;
   border-radius: 8px;
   border-color: ${palette.darkgray};
+  animation: ${ModalAnimation} 0.5s 1;
 
   display: ${(props) => (props.modalState ? 'block' : 'none')};
 `;
@@ -99,7 +110,10 @@ const ImgUploadModal = () => {
   };
 
   return (
-    <ImgUploadContainer modalState={modalState.postInPhoto}>
+    <ImgUploadContainer
+      modalState={modalState.postInPhoto}
+      writerModalState={modalState.postWriter}
+    >
       <ImgUploadWrap>
         <CloseBtn onClick={imgUploadModalToggle}>
           <IoClose size="28px" />
