@@ -12,7 +12,7 @@ export const userData = atom({
   default: {
     username: ''
   }
-})
+});
 
 export const rightModalStates = atom({
   key: 'rightModalState',
@@ -22,4 +22,9 @@ export const rightModalStates = atom({
     alarmFlag: false,
     selectorFlag: false
   }
+});
+
+export const chatWith = atom({
+  key: 'getReceiver',
+  default: '' as string
 });

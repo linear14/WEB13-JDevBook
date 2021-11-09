@@ -8,6 +8,8 @@ import {
   SideBar,
   InfoSideBar,
   ChatSideBar,
+  AlarmSideBar,
+  SelectorSideBar,
   GroupSideBar
 } from 'components';
 
@@ -29,7 +31,7 @@ const PostContainer = styled.div`
 const HomePage = () => {
   return (
     <HomePageContainer>
-      <Gnb type="home" />
+      <Gnb type="home" rightModalType="" />
       <SideBar isLeft={true}>
         <InfoSideBar />
         <GroupSideBar />

@@ -45,4 +45,14 @@ router.get(
   }
 );
 
+router.get('/allUsers', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const allUsers = await dbManager.getAllUsers();
+    res.json(allUsers);
+  } catch(err) {
+    console.error(err);
+    res.json([]);
+  }
+})
+
 module.exports = router;

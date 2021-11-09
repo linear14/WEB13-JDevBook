@@ -109,8 +109,8 @@ const GroupSideBar = () => {
         />
       </SearchBarWrap>
       <GroupList>
-        {group.map((group) => (
-          <GroupItem to="/group">
+        {group.map((group, idx) => (
+          <GroupItem key={idx} to="/group">
             <img src={group.imgSrc} alt="cover 아이콘" />
             <p>{group.groupName}</p>
           </GroupItem>

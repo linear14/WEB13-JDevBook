@@ -28,7 +28,13 @@ const dbManager = {
     });
 
     return users;
+  },
+
+  getAllUsers: async () => {
+    const users = await db.models.User.findAll({});
+    return users;
   }
+  
 };
 
 export default dbManager;
