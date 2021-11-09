@@ -42,6 +42,12 @@ const CurrentUser = () => {
 const CurrentUserWrapper = styled.div`
   width: inherit;
   height: 320px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   img {
     border-radius: 50%;
