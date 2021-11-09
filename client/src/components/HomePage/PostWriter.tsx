@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { userData, modalVisibleStates } from 'recoil/store';
 import palette from 'theme/palette';
@@ -83,7 +83,7 @@ const StyledBtn = styled.div`
 
 const PostWriter = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
-  const [userdata, setUserData] = useRecoilState(userData);
+  const userdata = useRecoilValue(userData);
 
   const PostWriterModalToggle = (e: React.MouseEvent<HTMLDivElement>) => {
     setModalState({ ...modalState, postWriter: !modalState.postWriter });
@@ -95,7 +95,7 @@ const PostWriter = () => {
         <InputWrap>
           <ProfilePhoto size="40px" src="" />
           <ModalCallBtn onClick={PostWriterModalToggle}>
-            What's on your mind, {userdata.name}?
+            {userdata.name}님, 무슨 생각을 하고 계신가요?
           </ModalCallBtn>
         </InputWrap>
         <Line />

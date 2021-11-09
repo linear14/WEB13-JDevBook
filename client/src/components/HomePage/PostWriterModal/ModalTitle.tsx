@@ -7,8 +7,8 @@ import palette from 'theme/palette';
 import { modalVisibleStates } from 'recoil/store';
 
 const ModalTitleWrap = styled.div`
-  width: 600px;
-  height: 60px;
+  width: 95%;
+  height: 48px;
 
   display: flex;
   justify-content: center;
@@ -22,7 +22,7 @@ const ModalTitleWrap = styled.div`
 
 const CloseBtn = styled.div`
   position: absolute;
-  right: 0;
+  right: 12px;
   width: 36px;
   height: 36px;
   box-sizing: border-box;
