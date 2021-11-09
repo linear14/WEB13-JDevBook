@@ -89,7 +89,11 @@ export interface PostImageBoxProps {
   images: string[];
 }
 
-export interface PostImageBoxSize {
+export interface PostImageBoxStyle {
   width: number;
   height: number;
+  leftBorder?: boolean;
+  rightBorder?: boolean;
+  topBorder?: boolean;
+  bottomBorder?: boolean;
 }
