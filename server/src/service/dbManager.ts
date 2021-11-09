@@ -38,6 +38,11 @@ const dbManager = {
     });
 
     return postsWithUser;
+  },
+
+  getAllUsers: async () => {
+    const users = await db.models.User.findAll({});
+    return users;
   }
 };
 

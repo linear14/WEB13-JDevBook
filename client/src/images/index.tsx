@@ -10,6 +10,10 @@ import profileDefault from 'images/profile-default.png';
 import mainLogo from 'images/main-logo.png';
 import iconSearch from 'images/icon-search.svg';
 
+import defaultProfile from 'images/default-profile.jpg';
+import defaultCover from 'images/default-profile.jpg';
+import iconPhoto from 'images/icon-photo.svg';
+
 import { ReactComponent as LikeIcon } from 'images/icon-like.svg';
 import { ReactComponent as CommentIcon } from 'images/icon-comment.svg';
 import { ReactComponent as IconPublic } from 'images/icon-public.svg';
@@ -26,6 +30,9 @@ export {
   gnbSelector,
   profileDefault,
   mainLogo,
+  defaultProfile,
+  defaultCover,
+  iconPhoto,
   iconSearch,
   LikeIcon,
   CommentIcon,

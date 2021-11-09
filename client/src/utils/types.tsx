@@ -1,5 +1,6 @@
 export interface GnbProps {
   type?: string;
+  rightModalType?: string;
 }
 
 export interface FlexProps {
@@ -42,6 +43,7 @@ export interface ProfilePhotoProps {
 
 export interface SideBarProps {
   isLeft: boolean;
+  children: React.ReactNode;
 }
 
 export interface HomePost {

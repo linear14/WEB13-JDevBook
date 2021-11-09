@@ -1,4 +1,4 @@
-import { io } from "socket.io-client";
+import { io, Socket } from 'socket.io-client';
 const host: string = '/';
-const socket = io(host);
+const socket: Socket = io(host);
 export default socket;
