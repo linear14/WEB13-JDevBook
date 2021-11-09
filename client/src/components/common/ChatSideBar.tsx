@@ -63,7 +63,7 @@ const ChatSideBar = () => {
     ) => (
       <MessageWrap
         key={idx}
-        username={msg.split(':')[0]}
+        name={msg.split(':')[0]}
         sender={userdata.name}
       >
         <MessageText name={msg.split(':')[0]} sender={userdata.name}>
