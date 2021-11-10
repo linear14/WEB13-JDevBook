@@ -101,7 +101,7 @@ export interface DBUserProblem extends DBCUD {
 }
 
 export interface PostData {
-  userId: number;
+  useridx: number;
   secret: number;
   likenum: number;
   contents: string;

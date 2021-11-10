@@ -44,22 +44,7 @@ const dbManager = {
   },
 
   addPost: async (postData: PostData) => {
-    try {
-      await db.models.Post.create({
-        userIdx: postData.userId,
-        secret: postData.secret,
-        likenum: postData.likenum,
-        contents: postData.contents,
-        picture1: postData.picture1,
-        picture2: postData.picture2,
-        picture3: postData.picture3
-      });
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-
-    return true;
+    await db.models.Post.create(postData);
   },
 
   getAllUsers: async () => {
