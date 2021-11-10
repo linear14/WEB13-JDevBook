@@ -1,11 +1,14 @@
 import sequelize from 'sequelize';
 import { Op, fn, col } from 'sequelize';
+
+import { PostData } from 'service/interface';
+
 import db from '../models';
 
 const dbManager = {
   sync: async () => {
     await db
-      .sync({ force: true, logging: false })
+      .sync({ force: false, logging: false })
       .then(() => {
         console.log('Connection has been established successfully.');
       })
@@ -38,6 +41,25 @@ const dbManager = {
     });
 
     return postsWithUser;
+  },
+
+  addPost: async (postData: PostData) => {
+    try {
+      await db.models.Post.create({
+        userIdx: postData.userId,
+        secret: postData.secret,
+        likenum: postData.likenum,
+        contents: postData.contents,
+        picture1: postData.picture1,
+        picture2: postData.picture2,
+        picture3: postData.picture3
+      });
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+
+    return true;
   },
 
   getAllUsers: async () => {
