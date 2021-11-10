@@ -5,7 +5,7 @@ import db from '../models';
 const dbManager = {
   sync: async () => {
     await db
-      .sync({ force: false, logging: false })
+      .sync({ force: true, logging: false })
       .then(() => {
         console.log('Connection has been established successfully.');
       })
