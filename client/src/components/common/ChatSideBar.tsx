@@ -34,13 +34,6 @@ const ChatSideBar = () => {
       message: value
     });
   };
-  useEffect(() => {
-    // 지금은 이름인데 idx로 해줘!!!!!!!!!!!!!!!!!!!!!!! 그래야 DB에서 편해져
-    // 처음에 이름 서버소켓에 등록해둬
-    // 위에서 메세지 보낼때 내이름, 상대방이름(아이디), 채팅 보내
-    // 서버에서 'send message'에서 자기 이름이 위 2개 이름중에 포함되면 진행
-    // 뭘 진행? 채팅 보낸거 DB에 저장. 그리고 emit('receive message')로 아래 진행
-  }, [userdata]);
 
   useEffect(() => {
     // DB에서 받아온 데이터로 바꿔줘야함

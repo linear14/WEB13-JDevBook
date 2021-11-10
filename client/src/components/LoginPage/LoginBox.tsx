@@ -14,8 +14,9 @@ const LoginBox = (): JSX.Element => {
         <MainLogoElement />
         <Text>개발자라면 Github 아이디는 가지고 계시죠?</Text>
         <GithubLoginButton
-          onClick={async () =>
-            (window.location.href = await fetchApi.getLoginlink())
+          onClick={
+            async () => (window.location.href = await fetchApi.getLoginlink())
+            // https://github.~~로 가는거라 history가 안되는거 같은데 의견부탁
           }
         />
       </Wrapper>

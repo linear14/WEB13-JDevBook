@@ -1,4 +1,4 @@
-import socket from '../components/common/Socket';
+import socket from 'components/common/Socket';
 import { atom } from 'recoil';
 import { Socket } from 'socket.io-client';
 
@@ -46,7 +46,6 @@ export const chatWith = atom({
   default: '' as string
 });
 
-
 export const imageViewerState = atom<{
   isOpen: boolean;
   imageCount: number;
@@ -72,6 +71,5 @@ export const postWriterData = atom<PostData>({
     picture1: null,
     picture2: null,
     picture3: null
-
   }
 });
