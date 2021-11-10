@@ -9,7 +9,8 @@ export const modalVisibleStates = atom({
   default: {
     searchUser: false,
     postWriter: false,
-    postInPhoto: false
+    postInPhoto: false,
+    postOption: -1
   }
 });
 
@@ -46,7 +47,6 @@ export const chatWith = atom({
   default: '' as string
 });
 
-
 export const imageViewerState = atom<{
   isOpen: boolean;
   imageCount: number;
@@ -72,6 +72,5 @@ export const postWriterData = atom<PostData>({
     picture1: null,
     picture2: null,
     picture3: null
-
   }
 });

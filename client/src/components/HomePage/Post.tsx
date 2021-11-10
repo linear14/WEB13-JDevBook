@@ -23,8 +23,8 @@ import palette from 'theme/palette';
 
 import PostImageBox from 'components/HomePage/PostImageBox';
 import imageUtil from 'utils/imageUtil';
-import { useRecoilValue } from 'recoil';
-import { userData } from 'recoil/store';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { modalVisibleStates, userData } from 'recoil/store';
 
 const PostContainer = styled.div`
   width: 680px;
@@ -274,9 +274,63 @@ const Divider = styled.div`
   margin-right: 16px;
 `;
 
+// OptionModal Start
+const OptionModalContainer = styled.div`
+  width: 240px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background: ${palette.white};
+  border-radius: 8px;
+  position: absolute;
+  top: 48px;
+  right: 16px;
+  box-sizing: border-box;
+  padding: 8px;
+
+  div {
+    padding: 12px;
+    transition: 0.2s ease-in;
+
+    &:hover {
+      background: ${palette.gray};
+      border-radius: 8px;
+    }
+  }
+`;
+
+const OptionModal = () => {
+  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+
+  const modal = React.useRef<HTMLDivElement>(null);
+  const closeModal = (e: any, force?: boolean) => {
+    if (!force && modal.current?.contains(e.target)) {
+      return;
+    }
+    setModalState({ ...modalState, postOption: -1 });
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', closeModal);
+
+    return () => {
+      document.removeEventListener('click', closeModal);
+    };
+  }, []);
+
+  return (
+    <OptionModalContainer ref={modal}>
+      <div>게시글 수정</div>
+      <div style={{ color: palette.alert }}>게시글 삭제</div>
+    </OptionModalContainer>
+  );
+};
+
+// OptionModal End
+
 // Export Default
 const Post = ({ post }: PostProps) => {
+  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
   const {
+    idx: postIdx,
     secret,
     createdAt,
     contents,
@@ -291,10 +345,13 @@ const Post = ({ post }: PostProps) => {
   return (
     <PostContainer>
       {postUserIdx === myIdx && (
-        <IconHover>
+        <IconHover
+          onClick={() => setModalState({ ...modalState, postOption: postIdx })}
+        >
           <MdMoreHoriz />
         </IconHover>
       )}
+      {modalState.postOption === postIdx && <OptionModal />}
       <Header
         nickname={nickname}
         profile={profile}
