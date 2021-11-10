@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import { useRecoilValue } from 'recoil';
 import { rightModalStates, userData, usersocket, chatWith } from 'recoil/store';
@@ -7,11 +7,19 @@ import CurrentUser from './CurrentUser';
 import palette from 'theme/palette';
 import { iconSubmit } from 'images/icons';
 
+const Animation = keyframes`
+  0% { opacity: 0; transform: translateX(100px); filter: blur(10px); }
+  100% { opacity: 1; filter: translateX(0px); blur(0px); }
+`;
+
 const ChatSideBarContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: inherit;
   height: inherit;
+
+  animation-name: ${Animation};
+  animation-duration: .75s;
 
   background-color: ${palette.white};
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
