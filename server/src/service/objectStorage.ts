@@ -27,6 +27,11 @@ const objectStorage = {
     // { Name: ~, CreationDate: ~}
     const { Buckets } = await S3.listBuckets().promise();
     return Buckets;
+  },
+  deleteBucket: async (bucket_name: string) => {
+    await S3.deleteBucket({
+      Bucket: bucket_name
+    }).promise();
   }
 };
 
@@ -34,3 +39,4 @@ export default objectStorage;
 
 //(async () => await objectStorage.makeBucket('jdevbook2'))();
 //(async () => console.log(await objectStorage.getBucketlist()))();
+(async () => await objectStorage.deleteBucket('jdevbook2'))();
