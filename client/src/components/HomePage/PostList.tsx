@@ -2,7 +2,7 @@ import getData from 'api/fetch';
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { HomePost } from 'utils/types';
-import Post, { Skeleton } from './Post';
+import { Post, Skeleton } from './index';
 
 const PostListContainer = styled.div`
   width: 680px;
