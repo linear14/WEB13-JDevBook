@@ -26,6 +26,11 @@ export const userData = atom({
   }
 });
 
+export const isLoginfail = atom({
+  key: 'isLoginfail',
+  default: false as boolean
+});
+
 export const rightModalStates = atom({
   key: 'rightModalState',
   default: {
