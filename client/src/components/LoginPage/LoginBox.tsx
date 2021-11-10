@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import mainLogo from '../../images/main-logo.png';
 import { GithubLoginButton } from 'react-social-login-buttons';
 import fetchApi from 'api/fetch';
+import palette from 'theme/palette';
 
 const LoginBox = () => {
   return (
@@ -34,7 +35,7 @@ const Box = styled.div`
   justify-content: center;
   text-align: center;
   width: 35vw;
-  background-color: #fff;
+  background-color: ${palette.white};
   height: 50%;
   border-radius: 50px;
   margin-right: 5vw;
