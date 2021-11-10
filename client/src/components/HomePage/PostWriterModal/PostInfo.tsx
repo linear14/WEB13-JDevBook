@@ -21,7 +21,7 @@ const PostInfoWrap = styled.div`
 `;
 
 const SecretSelector = styled.div`
-  width: 100px;
+  width: 112px;
   height: 30px;
 
   background-color: ${palette.gray};
@@ -48,7 +48,7 @@ const PostInfo = () => {
   useEffect(() => {
     postData.secret
       ? setSecretStr('🔒 나만 보기')
-      : setSecretStr('🔓 전체 공개');
+      : setSecretStr('👨‍👩‍👧‍👧 전체 공개');
   }, [postData.secret]);
 
   return (
