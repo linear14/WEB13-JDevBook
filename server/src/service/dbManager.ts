@@ -1,4 +1,4 @@
-import sequelize from 'sequelize';
+import sequelize, { INTEGER } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 import db from '../models';
 
@@ -31,10 +31,17 @@ const dbManager = {
     return users;
   },
 
-  getPosts: async () => {
+  getPosts: async (lastIdx: number, count: number) => {
     const postsWithUser = await db.models.Post.findAll({
       include: [{ model: db.models.User, as: 'BTUseruseridx' }],
-      order: [['createdAt', 'DESC']]
+      order: [
+        ['createdAt', 'DESC'],
+        ['idx', 'DESC']
+      ],
+      where: {
+        idx: { [Op.lt]: lastIdx === -1 ? 1000000000 : lastIdx }
+      },
+      limit: count
     });
 
     return postsWithUser;

@@ -25,7 +25,6 @@ const Router: React.FC = () => {
     (async () => {
       const islogin = await fetch('api/islogin').then((res) => res.json());
       setLogin(islogin);
-      console.log(login);
     })();
   }, [login]);
   // 단점 첨에 false였다가 true가 되어서 로그인 화면 잠깐 보였다가 HomePage가짐
