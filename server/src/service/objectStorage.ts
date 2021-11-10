@@ -1,4 +1,5 @@
 import AWS from 'aws-sdk';
+import fs from 'fs';
 const storage = require('../config/objectstorage.json');
 
 //const endpoint: AWS.Endpoint = new AWS.Endpoint(storage.url);
@@ -32,6 +33,31 @@ const objectStorage = {
     await S3.deleteBucket({
       Bucket: bucket_name
     }).promise();
+  },
+  uploadObjectfolder: async (object_name: string, bucket_name = 'jdevbook') => {
+    // object_name = 'sample-folder/'
+    if (object_name[object_name.length - 1] !== '/')
+      object_name = object_name + '/';
+
+    await S3.putObject({
+      Bucket: bucket_name,
+      Key: object_name
+    }).promise();
+  },
+  uploadObjectfile: async (
+    object_name: string,
+    local_file_path: string,
+    bucket_name = 'jdevbook'
+  ) => {
+    // object_name = 'sample-object'
+    // local_file_path = '/tmp/test.txt'
+    // 덮어쓰기 가능
+    await S3.putObject({
+      Bucket: bucket_name,
+      Key: object_name,
+      ACL: 'public-read', // console.ncloud에서 보기 가능
+      Body: fs.createReadStream(local_file_path)
+    }).promise();
   }
 };
 
@@ -39,4 +65,10 @@ export default objectStorage;
 
 //(async () => await objectStorage.makeBucket('jdevbook2'))();
 //(async () => console.log(await objectStorage.getBucketlist()))();
-(async () => await objectStorage.deleteBucket('jdevbook2'))();
+//(async () => await objectStorage.deleteBucket('jdevbook2'))();
+//(async () => await objectStorage.uploadObjectfolder('test4'))();
+// (async () =>
+//   await objectStorage.uploadObjectfile(
+//     'testfile.png',
+//     '../models/erd-workbench.png'
+//   ))();
