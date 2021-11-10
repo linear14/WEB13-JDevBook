@@ -85,8 +85,13 @@ router.get(
     next: NextFunction
   ) => {
     try {
+      const myIdx = req.session.useridx;
       const { lastIdx, count } = req.query;
-      const posts = await dbManager.getPosts(Number(lastIdx), Number(count));
+      const posts = await dbManager.getPosts(
+        myIdx,
+        Number(lastIdx),
+        Number(count)
+      );
       res.json(posts);
     } catch (err) {
       console.error(err);
