@@ -12,6 +12,7 @@ import gnbMessageActive from 'images/icons/gnb-message-active.svg';
 import gnbAlarm from 'images/icons/gnb-alarm.svg';
 import gnbAlarmActive from 'images/icons/gnb-alarm-active.svg';
 import gnbSelector from 'images/icons/gnb-down-arrow.svg';
+import gnbSelectorActive from 'images/icons/gnb-down-arrow-active.svg';
 import iconSearch from 'images/icons/icon-search.svg';
 import iconPhoto from 'images/icons/icon-photo.svg';
 import likeBadge from 'images/icons/icon-like-badge.svg';
@@ -27,6 +28,7 @@ export {
   gnbAlarm,
   gnbAlarmActive,
   gnbSelector,
+  gnbSelectorActive,
   iconPhoto,
   iconSearch,
   LikeIcon,
