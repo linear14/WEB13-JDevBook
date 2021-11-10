@@ -9,11 +9,6 @@ const InitUserData = (/*{ history }: RouteComponentProps*/) => {
   const [socket, setSocket] = useRecoilState(usersocket);
   useEffect(() => {
     (async () => {
-      // if (!userdata.login) {
-      //   alert('로그인되어있지 않습니다.');
-      //   window.location.href = '/';
-      //   return;
-      // }
       const { data, error } = await fetchApi.getuserData();
       if (error) {
         alert('비정상 접근');
@@ -28,9 +23,7 @@ const InitUserData = (/*{ history }: RouteComponentProps*/) => {
           bio: data.bio,
           login: true
         });
-        //history.push('/home');
         socket.emit('name', data.nickname);
-        //window.location.href = '/home';
       }
     })();
   }, []);
