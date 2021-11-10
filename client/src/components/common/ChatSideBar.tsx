@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { rightModalStates, userData, usersocket, chatWith } from 'recoil/store';
 import CurrentUser from './CurrentUser';
 import palette from 'theme/palette';
+import { iconSubmit } from 'images/icons';
 
 const ChatSideBarContainer = styled.div`
   display: flex;
@@ -86,7 +87,15 @@ const ChatInput = styled.input`
 `;
 
 const SubmitBtn = styled.button`
-margin-left: 16px;
+  border: none;
+  background-color: ${palette.white};
+  transform: translateY(2px);
+  margin-left: 16px;
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 const ChatSideBar = () => {
@@ -182,7 +191,9 @@ const ChatSideBar = () => {
               value={value}
               placeholder="Aa"
             />
-          <SubmitBtn type="submit">전송</SubmitBtn>
+            <SubmitBtn type="submit">
+              <img src={iconSubmit} alt="submit-button-image" />
+            </SubmitBtn>
           </ChatInputWrapper>
         </form>
       </ChatSideBarContainer>

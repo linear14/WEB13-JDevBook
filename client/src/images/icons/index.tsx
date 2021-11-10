@@ -13,6 +13,7 @@ import gnbSelector from 'images/icons/gnb-down-arrow.svg';
 import iconSearch from 'images/icons/icon-search.svg';
 import iconPhoto from 'images/icons/icon-photo.svg';
 import likeBadge from 'images/icons/icon-like-badge.svg';
+import iconSubmit from 'images/icons/icon-submit.svg';
 
 export {
   GnbGroup,
@@ -28,5 +29,6 @@ export {
   CommentIcon,
   IconPublic,
   IconPrivate,
+  iconSubmit,
   likeBadge
 };
