@@ -2,10 +2,14 @@ import socket from '../components/common/Socket';
 import { atom } from 'recoil';
 import { Socket } from 'socket.io-client';
 
+import { PostData } from 'utils/types';
+
 export const modalVisibleStates = atom({
   key: 'modalVisibleState',
   default: {
-    searchUser: false
+    searchUser: false,
+    postWriter: false,
+    postInPhoto: false
   }
 });
 
@@ -42,6 +46,7 @@ export const chatWith = atom({
   default: '' as string
 });
 
+
 export const imageViewerState = atom<{
   isOpen: boolean;
   imageCount: number;
@@ -54,5 +59,19 @@ export const imageViewerState = atom<{
     imageCount: 0,
     currentIdx: 0,
     images: []
+  }
+});
+
+export const postWriterData = atom<PostData>({
+  key: 'postWriterData',
+  default: {
+    userId: -1,
+    secret: 0,
+    likenum: 0,
+    contents: '',
+    picture1: null,
+    picture2: null,
+    picture3: null
+
   }
 });

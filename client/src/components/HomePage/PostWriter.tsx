@@ -1,18 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
-import { userData } from 'recoil/store';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { userData, modalVisibleStates } from 'recoil/store';
 import palette from 'theme/palette';
 import { iconPhoto } from 'images/icons';
 
 import { ProfilePhoto } from 'components/common';
+import { PostWriterModal } from 'components/HomePage';
 
 const PostWriterBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 680px;
+  box-sizing: border-box;
   margin: 35px 0 0 0;
 
   border-radius: 8px;
@@ -24,7 +26,7 @@ const InputWrap = styled.div`
   display: flex;
   width: 95%;
 
-  margin: 10px 0px;
+  margin: 12px 0px;
 `;
 
 const ModalCallBtn = styled.div`
@@ -42,7 +44,7 @@ const ModalCallBtn = styled.div`
 `;
 
 const Line = styled.div`
-  width: 95%;
+  width: 100%;
   border-color: ${palette.gray};
   border-width: 1px;
   border-style: solid;
@@ -81,22 +83,36 @@ const StyledBtn = styled.div`
 `;
 
 const PostWriter = () => {
-  const [userdata, setUserdata] = useRecoilState(userData);
+  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const userdata = useRecoilValue(userData);
+
+  const postWriterModalOn = (e: React.MouseEvent<HTMLDivElement>) => {
+    setModalState({ ...modalState, postWriter: true });
+  };
+
+  const withImgUploadModalOn = (e: React.MouseEvent<HTMLDivElement>) => {
+    setModalState({ ...modalState, postWriter: true, postInPhoto: true });
+  };
 
   return (
-    <PostWriterBox>
-      <InputWrap>
-        <ProfilePhoto size="40px" src="" />
-        <ModalCallBtn>What's on your mind, {userdata.name}?</ModalCallBtn>
-      </InputWrap>
-      <Line />
-      <ButtonsWrap>
-        <StyledBtn>
-          <img src={iconPhoto} alt="photo 아이콘" />
-          <div>Photo</div>
-        </StyledBtn>
-      </ButtonsWrap>
-    </PostWriterBox>
+    <>
+      <PostWriterBox>
+        <InputWrap>
+          <ProfilePhoto size="40px" src="" />
+          <ModalCallBtn onClick={postWriterModalOn}>
+            {userdata.name}님, 무슨 생각을 하고 계신가요?
+          </ModalCallBtn>
+        </InputWrap>
+        <Line />
+        <ButtonsWrap>
+          <StyledBtn onClick={withImgUploadModalOn}>
+            <img src={iconPhoto} alt="photo 아이콘" />
+            <div>Photo</div>
+          </StyledBtn>
+        </ButtonsWrap>
+      </PostWriterBox>
+      <PostWriterModal />
+    </>
   );
 };
 

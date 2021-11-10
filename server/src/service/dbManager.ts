@@ -43,6 +43,53 @@ const dbManager = {
   getAllUsers: async () => {
     const users = await db.models.User.findAll({});
     return users;
+  },
+
+  getUseridx: async function (name: string) {
+    const user = await db.models.User.findOne({
+      where: { nickname: name }
+    });
+
+    return user?.get().idx ? user?.get().idx : -1;
+  },
+
+  getChatList: async function (sender: string, receiver: string) {
+    const senderidx: number = await this.getUseridx(sender);
+    const receiveridx: number = await this.getUseridx(receiver);
+
+    const allChats = await db.models.Chat.findAll({
+      where: {
+        [Op.or]: [
+          { senderidx: senderidx, receiveridx: receiveridx },
+          { senderidx: receiveridx, receiveridx: senderidx }
+        ]
+      }
+    });
+    const allChatsArray = allChats.map((data: any) => data.get());
+
+    return {
+      senderidx: senderidx,
+      receiveridx: receiveridx,
+      previousMsg: allChatsArray
+    };
+    //console.log(allChatsArray); // 없거나 오류여도 [] 나옴
+
+    /*
+      { senderdix: ?
+        receiveridx: ?
+        chat: ?}, 
+        줄줄이
+    */
+  },
+
+  setChatList: async function (sender: string, receiver: string, msg: string) {
+    const senderidx: number = await this.getUseridx(sender);
+    const receiveridx: number = await this.getUseridx(receiver);
+    await db.models.Chat.create({
+      senderidx: senderidx,
+      receiveridx: receiveridx,
+      content: msg
+    });
   }
 };
 
