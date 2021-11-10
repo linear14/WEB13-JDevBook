@@ -2,7 +2,7 @@ import getData from 'api/fetch';
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { HomePost } from 'utils/types';
-import Post from './Post';
+import Post, { Skeleton } from './Post';
 
 const PostListContainer = styled.div`
   width: 680px;
@@ -52,6 +52,14 @@ const PostList = () => {
     setFetching(false);
   };
 
+  const getSkeletions = (count: number) => {
+    return Array(count)
+      .fill(undefined)
+      .map((v, i) => {
+        return <Skeleton key={`s${i}`} />;
+      });
+  };
+
   useEffect(() => {
     setTimeout(async () => {
       fetchPosts();
@@ -63,6 +71,7 @@ const PostList = () => {
       {posts.map((post) => (
         <Post key={post.idx} post={post} />
       ))}
+      {isFetching && getSkeletions(3)}
       <Observer ref={observer} />
     </PostListContainer>
   );

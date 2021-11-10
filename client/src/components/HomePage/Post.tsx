@@ -326,6 +326,86 @@ const OptionModal = () => {
 
 // OptionModal End
 
+const SkeletonContainer = styled(PostContainer)`
+  padding-bottom: 32px;
+`;
+
+const FakeImage = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: ${palette.skeleton};
+`;
+
+const FakeHeaderContent = styled.div`
+  flex: 1;
+  margin-left: 12px;
+
+  div {
+    border-radius: 12px;
+    background: ${palette.skeleton};
+
+    &:last-child {
+      margin-top: 2px;
+    }
+  }
+`;
+
+const FakeHeader = () => {
+  return (
+    <HeaderContainer>
+      <FakeImage />
+      <FakeHeaderContent>
+        <div style={{ width: 64, height: 18 }}></div>
+        <div style={{ width: 120, height: 16 }}></div>
+      </FakeHeaderContent>
+    </HeaderContainer>
+  );
+};
+
+const FakeBodyContainer = styled.div`
+  width: 100%;
+  padding: 0px 16px;
+  box-sizing: border-box;
+
+  div {
+    border-radius: 12px;
+    background: ${palette.skeleton};
+
+    &:last-child {
+      margin-top: 2px;
+    }
+  }
+`;
+
+const FakeImageBox = styled.div`
+  width: 100%;
+  height: 320px;
+  background: ${palette.skeleton};
+  margin-top: 16px;
+`;
+
+const FakeBody = () => {
+  return (
+    <>
+      <FakeBodyContainer>
+        <div style={{ width: 300, height: 18 }}></div>
+        <div style={{ width: 480, height: 18 }}></div>
+      </FakeBodyContainer>
+      <FakeImageBox />
+    </>
+  );
+};
+
+export const Skeleton = () => {
+  return (
+    <SkeletonContainer>
+      <FakeHeader />
+      <FakeBody />
+    </SkeletonContainer>
+  );
+};
+
 // Export Default
 const Post = ({ post }: PostProps) => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
