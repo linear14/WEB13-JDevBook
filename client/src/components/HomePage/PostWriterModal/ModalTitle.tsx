@@ -28,7 +28,7 @@ const CloseBtn = styled.div`
   box-sizing: border-box;
   margin-right: 20px;
   border-radius: 50%;
-  background-color: ${palette.gray};
+  background-color: ${palette.lightgray};
   color: ${palette.darkgray};
 
   display: flex;

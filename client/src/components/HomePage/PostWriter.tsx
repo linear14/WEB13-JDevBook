@@ -17,6 +17,7 @@ const PostWriterBox = styled.div`
   box-sizing: border-box;
   margin: 35px 0 0 0;
 
+  padding: 0 12px;
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 5px;
   background-color: ${palette.white};
@@ -24,7 +25,7 @@ const PostWriterBox = styled.div`
 
 const InputWrap = styled.div`
   display: flex;
-  width: 95%;
+  width: 100%;
 
   margin: 12px 0px;
 `;
@@ -33,7 +34,7 @@ const ModalCallBtn = styled.div`
   width: 100%;
   margin: 0 0 0 10px;
   padding: 10px 15px;
-  background-color: ${palette.gray};
+  background-color: ${palette.lightgray};
   border-radius: 25px;
 
   color: ${palette.darkgray};
@@ -45,16 +46,15 @@ const ModalCallBtn = styled.div`
 
 const Line = styled.div`
   width: 100%;
-  border-color: ${palette.gray};
-  border-width: 1px;
-  border-style: solid;
+  height: 1px;
+  background-color: ${palette.gray};
 `;
 
 const ButtonsWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 95%;
+  width: 100%;
 
   margin: 10px 0;
 `;
@@ -67,7 +67,7 @@ const StyledBtn = styled.div`
 
   &:hover {
     cursor: pointer;
-    background-color: ${palette.gray};
+    background-color: ${palette.lightgray};
     transition: all 0.2s;
   }
 

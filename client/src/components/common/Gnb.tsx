@@ -79,7 +79,7 @@ const GnbTab = styled.div<TabProps>`
   transition: 0.1s ease-in;
 
   &:hover {
-    background: ${palette.gray};
+    background: ${palette.lightgray};
     border-radius: 8px;
   }
 
@@ -100,7 +100,7 @@ const ProfileWrap = styled.div`
   padding-right: 12px;
 
   &:hover {
-    background: ${palette.gray};
+    background: ${palette.lightgray};
     border-radius: 24px;
   }
 
@@ -115,7 +115,7 @@ const ProfileWrap = styled.div`
 const IconWrap = styled.div<IconProps>`
   width: 40px;
   height: 40px;
-  background: ${palette.gray};
+  background: ${palette.lightgray};
   border-radius: 100%;
   display: flex;
   justify-content: center;
@@ -131,7 +131,7 @@ const IconWrap = styled.div<IconProps>`
   }
 
   &:hover {
-    background: ${palette.gray};
+    background: ${palette.lightgray};
   }
 `;
 

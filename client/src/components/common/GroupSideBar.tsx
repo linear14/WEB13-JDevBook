@@ -19,7 +19,7 @@ const SearchBarWrap = styled.div`
   height: 40px;
   margin: 30px 50px;
   display: flex;
-  background: ${palette.gray};
+  background: ${palette.lightgray};
   border-radius: 24px;
 
   img {
@@ -34,11 +34,7 @@ const SearchBarWrap = styled.div`
     background: none;
     border: none;
     font-size: 1rem;
-    font-family: 'Noto Sans KR';
-
-    &::placeholder {
-      font-size: 1rem;
-    }
+    font-family: 'Spoqa Han Sans Neo';
   }
 `;
 
@@ -66,7 +62,7 @@ const GroupItem = styled(Link)`
 
   &:hover {
     border-radius: 10px;
-    background: ${palette.gray};
+    background: ${palette.lightgray};
     transition: all 0.2s;
   }
 `;

@@ -24,7 +24,7 @@ const SecretSelector = styled.div`
   width: 112px;
   height: 30px;
 
-  background-color: ${palette.gray};
+  background-color: ${palette.lightgray};
   border-radius: 5px;
 
   display: flex;
