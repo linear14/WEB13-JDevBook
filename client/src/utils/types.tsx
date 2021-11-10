@@ -92,3 +92,18 @@ export interface PostImageBoxProps {
 export interface PostImageBoxUrl {
   imageUrl: string;
 }
+
+export interface PostData {
+  userId: number;
+  secret: number;
+  likenum: number;
+  contents: string;
+  picture1: string | null;
+  picture2: string | null;
+  picture3: string | null;
+}
+
+export interface ImgUploadModalProps {
+  modalState: boolean;
+  writerModalState: boolean;
+}
