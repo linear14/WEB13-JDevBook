@@ -1,11 +1,10 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import palette from 'theme/palette';
 import { modalVisibleStates, postWriterData } from 'recoil/store';
 import fetchApi from 'api/fetch';
-// import { PostData } from 'utils/types';
 
 import ModalTitle from 'components/HomePage/PostWriterModal/ModalTitle';
 import PostInfo from 'components/HomePage/PostWriterModal/PostInfo';
