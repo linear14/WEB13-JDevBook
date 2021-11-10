@@ -49,7 +49,7 @@ export interface SideBarProps {
 export interface HomePost {
   idx: number;
   useridx: number;
-  secret: number;
+  secret: boolean;
   likenum: number;
   contents: string;
   picture1: string | null;
@@ -72,6 +72,7 @@ export interface PostHeaderProps {
   nickname: string;
   profile: string | null;
   createdAt: Date;
+  secret: boolean;
 }
 
 export interface PostBodyProps {

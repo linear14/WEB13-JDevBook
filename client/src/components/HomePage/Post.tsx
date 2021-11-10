@@ -1,6 +1,7 @@
 import { ProfilePhoto } from 'components/common';
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
+import { MdMoreHoriz } from 'react-icons/md';
 
 import {
   LikeIcon,
@@ -22,6 +23,8 @@ import palette from 'theme/palette';
 
 import PostImageBox from 'components/HomePage/PostImageBox';
 import imageUtil from 'utils/imageUtil';
+import { useRecoilValue } from 'recoil';
+import { userData } from 'recoil/store';
 
 const PostContainer = styled.div`
   width: 680px;
@@ -71,7 +74,7 @@ const HeaderContent = styled.div`
   }
 `;
 
-const Header = ({ nickname, profile, createdAt }: PostHeaderProps) => {
+const Header = ({ nickname, profile, createdAt, secret }: PostHeaderProps) => {
   return (
     <HeaderContainer>
       <ClickableProfileImage size={'40px'} />
@@ -80,7 +83,7 @@ const Header = ({ nickname, profile, createdAt }: PostHeaderProps) => {
         <div>
           <p>{textUtil.timeToString(createdAt)}</p>
           <p>·</p>
-          <IconPublic />
+          {secret ? <IconPrivate /> : <IconPublic />}
         </div>
       </HeaderContent>
     </HeaderContainer>
@@ -243,6 +246,26 @@ const Button = styled.div`
   }
 `;
 
+const IconHover = styled.div`
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: ${palette.lightgray};
+  }
+
+  svg {
+    font-size: 24px;
+  }
+`;
+
 const Divider = styled.div`
   width: calc(100% - 32px);
   height: 1px;
@@ -254,6 +277,7 @@ const Divider = styled.div`
 // Export Default
 const Post = ({ post }: PostProps) => {
   const {
+    secret,
     createdAt,
     contents,
     picture1,
@@ -262,10 +286,21 @@ const Post = ({ post }: PostProps) => {
     likenum,
     BTUseruseridx
   } = post;
-  const { nickname, profile } = BTUseruseridx;
+  const { idx: postUserIdx, nickname, profile } = BTUseruseridx;
+  const { idx: myIdx } = useRecoilValue(userData);
   return (
     <PostContainer>
-      <Header nickname={nickname} profile={profile} createdAt={createdAt} />
+      {postUserIdx === myIdx && (
+        <IconHover>
+          <MdMoreHoriz />
+        </IconHover>
+      )}
+      <Header
+        nickname={nickname}
+        profile={profile}
+        createdAt={createdAt}
+        secret={secret}
+      />
       <Body
         contents={contents}
         picture1={picture1}
