@@ -1,5 +1,4 @@
 import getData from 'api/fetch';
-import { mockPost } from 'mock/post';
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { HomePost } from 'utils/types';
@@ -29,12 +28,17 @@ const PostList = () => {
     if (isFetching) return;
     if (observerRef.current) observerRef.current.disconnect();
 
-    observerRef.current = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !isFetching && hasMore) {
-        const lastIdx = posts[posts.length - 1].idx;
-        fetchPosts(lastIdx);
+    observerRef.current = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isFetching && hasMore) {
+          const lastIdx = posts[posts.length - 1].idx;
+          fetchPosts(lastIdx);
+        }
+      },
+      {
+        rootMargin: '840px 0px'
       }
-    });
+    );
     element && observerRef.current.observe(element);
   };
 
