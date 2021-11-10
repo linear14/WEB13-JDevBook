@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 
 import { useRecoilValue } from 'recoil';
 import { rightModalStates, userData, usersocket, chatWith } from 'recoil/store';
+
 import CurrentUser from './CurrentUser';
 import palette from 'theme/palette';
 import { iconSubmit } from 'images/icons';
