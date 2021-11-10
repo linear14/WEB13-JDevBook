@@ -78,6 +78,7 @@ const StyledBtn = styled.div`
   }
 
   div {
+    font-weight: bold;
     color: ${palette.darkgray};
   }
 `;
@@ -107,7 +108,7 @@ const PostWriter = () => {
         <ButtonsWrap>
           <StyledBtn onClick={withImgUploadModalOn}>
             <img src={iconPhoto} alt="photo 아이콘" />
-            <div>Photo</div>
+            <div>사진</div>
           </StyledBtn>
         </ButtonsWrap>
       </PostWriterBox>

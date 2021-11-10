@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { IoClose } from 'react-icons/io5';
 
 import palette from 'theme/palette';
-import { modalVisibleStates } from 'recoil/store';
+import { modalVisibleStates, postWriterData } from 'recoil/store';
 
 const ModalTitleWrap = styled.div`
   width: 100%;
@@ -42,9 +42,17 @@ const CloseBtn = styled.div`
 
 const ModalTitle = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const [postData, setPostData] = useRecoilState(postWriterData);
 
   const postWriterCancel = (e: React.MouseEvent<HTMLDivElement>) => {
     setModalState({ ...modalState, postWriter: false, postInPhoto: false });
+    setPostData({
+      ...postData,
+      contents: '',
+      picture1: null,
+      picture2: null,
+      picture3: null
+    });
   };
 
   return (

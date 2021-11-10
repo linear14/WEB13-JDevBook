@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { modalVisibleStates, userData } from 'recoil/store';
+import { modalVisibleStates, userData, postWriterData } from 'recoil/store';
 import palette from 'theme/palette';
 
 const ModalContentsContainer = styled.div`
@@ -30,12 +30,19 @@ const ContentsInput = styled.textarea<{ modalState: boolean }>`
 const ModalContents = () => {
   const modalState = useRecoilValue(modalVisibleStates);
   const userdata = useRecoilValue(userData);
+  const [postData, setPostData] = useRecoilState(postWriterData);
+
+  const inputContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setPostData({ ...postData, contents: e.target.value });
+  };
 
   return (
     <ModalContentsContainer>
       <ContentsInput
         placeholder={`${userdata.name}님, 무슨 생각을 하고 계신가요?`}
         modalState={modalState.postInPhoto}
+        onChange={inputContents}
+        value={postData.contents}
       />
     </ModalContentsContainer>
   );

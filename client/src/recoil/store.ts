@@ -46,7 +46,6 @@ export const chatWith = atom({
   default: '' as string
 });
 
-
 export const imageViewerState = atom<{
   isOpen: boolean;
   imageCount: number;
@@ -65,13 +64,12 @@ export const imageViewerState = atom<{
 export const postWriterData = atom<PostData>({
   key: 'postWriterData',
   default: {
-    userId: -1,
+    useridx: -1,
     secret: 0,
     likenum: 0,
     contents: '',
     picture1: null,
     picture2: null,
     picture3: null
-
   }
 });

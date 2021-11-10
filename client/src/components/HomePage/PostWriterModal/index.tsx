@@ -1,9 +1,11 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import palette from 'theme/palette';
-import { modalVisibleStates } from 'recoil/store';
+import { modalVisibleStates, postWriterData } from 'recoil/store';
+import fetchApi from 'api/fetch';
+// import { PostData } from 'utils/types';
 
 import ModalTitle from 'components/HomePage/PostWriterModal/ModalTitle';
 import PostInfo from 'components/HomePage/PostWriterModal/PostInfo';
@@ -78,7 +80,20 @@ const PostBtn = styled.div`
 `;
 
 const PostWriterModal = () => {
-  const modalState = useRecoilValue(modalVisibleStates);
+  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const [postData, setPostWriterData] = useRecoilState(postWriterData);
+
+  const postDataToAPI = async (e: React.MouseEvent<HTMLDivElement>) => {
+    if (postData.contents === '')
+      return alert('내용이 없습니다. 내용을 입력하세요.');
+
+    const result = await fetchApi.addPosts(postData);
+
+    if (result) {
+      alert('게시글이 성공적으로 게시되었습니다!');
+      setModalState({ ...modalState, postWriter: false, postInPhoto: false });
+    } else alert('게시글이 알수없는 이유로 게시되지 않았습니다.');
+  };
 
   return (
     <>
@@ -89,7 +104,7 @@ const PostWriterModal = () => {
         <PostInfo />
         <ModalContents />
         <AddContentsBar />
-        <PostBtn>
+        <PostBtn onClick={postDataToAPI}>
           <div>게시</div>
         </PostBtn>
         <ImgUploadModal />

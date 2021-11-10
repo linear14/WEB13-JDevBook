@@ -90,24 +90,17 @@ const tempGroup = [
 const GroupSideBar = () => {
   const [group, setGroup] = useState<tempGroupType[]>(tempGroup);
 
-  const searchHandler = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setGroup(
-        tempGroup.filter((group) => group.groupName.includes(e.target.value))
-      );
-    },
-    []
-  );
+  const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setGroup(
+      tempGroup.filter((group) => group.groupName.includes(e.target.value))
+    );
+  };
 
   return (
     <GroupSideBarContainer>
       <SearchBarWrap>
         <img src={iconSearch} alt="Search 아이콘" />
-        <input
-          type="text"
-          placeholder="search group"
-          onChange={searchHandler}
-        />
+        <input type="text" placeholder="그룹 검색" onChange={searchHandler} />
       </SearchBarWrap>
       <GroupList>
         {group.map((group, idx) => (

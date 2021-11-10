@@ -94,17 +94,8 @@ router.post(
   '/posts',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // const postData: PostData = {
-      //   userId: req.body.userId,
-      //   secret: req.body.secret,
-      //   likenum: req.body.likenum,
-      //   contents: req.body.contents,
-      //   picture1: req.body.picture1,
-      //   picture2: req.body.picture2,
-      //   picture3: req.body.picture3
-      // };
       const postData: PostData = req.body;
-      console.log(`add ${JSON.stringify(postData)}`);
+      console.log(`insert ${JSON.stringify(postData)}`);
       await dbManager.addPost(postData);
       res.json(true);
     } catch (err) {
