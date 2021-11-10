@@ -154,12 +154,10 @@ const ChatSideBar = () => {
             setMessageList((messageList: string[]) => messageList.concat(msg));
           }
 
-          document
-            .querySelector('.chat-list')
-            ?.scrollBy({
-              top: document.querySelector('.chat-list')?.scrollHeight,
-              behavior: 'smooth'
-            });
+          document.querySelector('.chat-list')?.scrollBy({
+            top: document.querySelector('.chat-list')?.scrollHeight,
+            behavior: 'smooth'
+          });
         }
       );
     }
@@ -177,6 +175,9 @@ const ChatSideBar = () => {
     return (
       <ChatSideBarContainer>
         <CurrentUser />
+        <div>
+          <hr />
+        </div>
         <ChatTitle>
           {chatReceiver
             ? chatReceiver + ' 에게 보내는 편지'
