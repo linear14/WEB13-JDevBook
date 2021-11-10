@@ -30,8 +30,11 @@ const fetchApi = {
   getAllUsers: async () => {
     return fetch('/api/allUsers').then((res) => res.json());
   },
-  getPosts: (): Promise<HomePost[]> => {
-    return fetch(`/api/posts`).then((res) => res.json());
+  getPosts: async (lastIdx: number, count: number): Promise<HomePost[]> => {
+    const response = await fetch(
+      `/api/posts?lastIdx=${lastIdx}&count=${count}`
+    );
+    return await response.json();
   }
 };
 
