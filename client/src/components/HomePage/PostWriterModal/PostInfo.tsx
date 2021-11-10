@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { userData } from 'recoil/store';
+import { userData, postWriterData } from 'recoil/store';
 import palette from 'theme/palette';
 
 import { ProfilePhoto } from 'components/common';
@@ -20,13 +20,42 @@ const PostInfoWrap = styled.div`
   }
 `;
 
+const SecretSelector = styled.div`
+  width: 100px;
+  height: 30px;
+
+  background-color: ${palette.gray};
+  border-radius: 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const PostInfo = () => {
-  const [userdata, setUserData] = useRecoilState(userData);
+  const userdata = useRecoilValue(userData);
+  const [postData, setPostData] = useRecoilState(postWriterData);
+  const [secretStr, setSecretStr] = useState('');
+
+  const secretToggleHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    setPostData({ ...postData, secret: postData.secret ^ 1 });
+  };
+
+  useEffect(() => {
+    postData.secret
+      ? setSecretStr('🔒 나만 보기')
+      : setSecretStr('🔓 전체 공개');
+  }, [postData.secret]);
 
   return (
     <PostInfoWrap>
       <ProfilePhoto src="" size="44px" />
       <div>{userdata.name}</div>
+      <SecretSelector onClick={secretToggleHandler}>{secretStr}</SecretSelector>
     </PostInfoWrap>
   );
 };

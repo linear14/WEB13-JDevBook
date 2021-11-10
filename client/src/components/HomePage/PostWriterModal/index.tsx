@@ -94,6 +94,7 @@ const PostWriterModal = () => {
       setModalState({ ...modalState, postWriter: false, postInPhoto: false });
       setPostData({
         ...postData,
+        secret: 0,
         contents: '',
         picture1: null,
         picture2: null,
