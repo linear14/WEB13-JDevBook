@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { modalVisibleStates, rightModalStates, userData } from 'recoil/store';
 import fetchApi from 'api/fetch';
@@ -137,9 +137,10 @@ const IconWrap = styled.div<IconProps>`
 
 const Gnb = ({ type, rightModalType }: GnbProps) => {
   const modalState = useRecoilValue(modalVisibleStates);
-  const userdata = useRecoilValue(userData);
+  const [userdata, setUserdata] = useRecoilState(userData);
   const [rightModalState, setRightModalState] =
     useRecoilState(rightModalStates);
+  const history = useHistory();
 
   return (
     <GnbContainer>
@@ -179,9 +180,18 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
         />
         <IconWrap
           img={gnbSelector}
-          onClick={
-            () => fetchApi.logout() // async await 안해도 될듯?
-          }
+          onClick={async () => {
+            await fetchApi.logout();
+            setUserdata({
+              idx: -1,
+              name: '',
+              profile: '' as string,
+              cover: '' as string,
+              bio: '' as string,
+              login: false
+            });
+            history.push('/');
+          }}
         />
       </FlexWrap>
     </GnbContainer>
