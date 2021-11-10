@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import palette from 'theme/palette';
 
-import { PostWriter, PostList } from 'components/HomePage';
+import { PostWriter, PostList, ImageViewer } from 'components/HomePage';
 import {
   Gnb,
   SideBar,
@@ -14,6 +14,8 @@ import {
   GroupSideBar,
   InitUserData
 } from 'components/common';
+import { useRecoilState } from 'recoil';
+import { imageViewerState as ivState } from 'recoil/store';
 
 const HomePageContainer = styled.div`
   display: flex;
@@ -34,6 +36,7 @@ const PostContainer = styled.div`
 `;
 
 const HomePage = () => {
+  const [imageViewerState, setImageViewerState] = useRecoilState(ivState);
   return (
     <HomePageContainer>
       <InitUserData />
@@ -49,6 +52,7 @@ const HomePage = () => {
       <SideBar isLeft={false}>
         <ChatSideBar />
       </SideBar>
+      {imageViewerState.isOpen && <ImageViewer />}
     </HomePageContainer>
   );
 };
