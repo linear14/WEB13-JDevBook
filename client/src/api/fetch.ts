@@ -1,13 +1,14 @@
 import { HomePost } from 'utils/types';
 
 const fetchApi = {
-  getLoginlink: async () => {
+  getLoginlink: async (): Promise<string> => {
     const loginLinkRes: Response = await fetch('/oauth/login');
     return await loginLinkRes.json();
   },
-  getuserData: () => {
+  getuserData: async () => {
     // { data, error }
-    return fetch('/api/data').then((res) => res.json());
+    const userDataRes: Response = await fetch('/api/data');
+    return await userDataRes.json();
   },
   logout: () => {
     fetch('/oauth/logout')
@@ -20,15 +21,17 @@ const fetchApi = {
       });
   },
   searchUsers: async (keyword: string) => {
-    const response = await fetch(`/api/users?keyword=${keyword}`);
-    return await response.json();
+    const usersRes: Response = await fetch(`/api/users?keyword=${keyword}`);
+    return await usersRes.json();
   },
 
   getAllUsers: async () => {
-    return fetch('/api/allUsers').then((res) => res.json());
+    const allusersRes: Response = await fetch('/api/allUsers');
+    return await allusersRes.json();
   },
-  getPosts: (): Promise<HomePost[]> => {
-    return fetch(`/api/posts`).then((res) => res.json());
+  getPosts: async (): Promise<HomePost[]> => {
+    const postsRes: Response = await fetch('/api/posts');
+    return await postsRes.json();
   }
 };
 
