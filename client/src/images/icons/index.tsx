@@ -8,7 +8,9 @@ import { ReactComponent as IconPublic } from 'images/icons/icon-public.svg';
 import { ReactComponent as IconPrivate } from 'images/icons/icon-private.svg';
 
 import gnbMessage from 'images/icons/gnb-message.svg';
+import gnbMessageActive from 'images/icons/gnb-message-active.svg';
 import gnbAlarm from 'images/icons/gnb-alarm.svg';
+import gnbAlarmActive from 'images/icons/gnb-alarm-active.svg';
 import gnbSelector from 'images/icons/gnb-down-arrow.svg';
 import iconSearch from 'images/icons/icon-search.svg';
 import iconPhoto from 'images/icons/icon-photo.svg';
@@ -21,7 +23,9 @@ export {
   GnbHome,
   GnbHomeActive,
   gnbMessage,
+  gnbMessageActive,
   gnbAlarm,
+  gnbAlarmActive,
   gnbSelector,
   iconPhoto,
   iconSearch,

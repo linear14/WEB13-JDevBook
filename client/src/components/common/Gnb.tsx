@@ -20,7 +20,9 @@ import {
   GnbHomeActive,
   GnbGroupActive,
   gnbMessage,
+  gnbMessageActive,
   gnbAlarm,
+  gnbAlarmActive,
   gnbSelector
 } from 'images/icons';
 
@@ -166,13 +168,13 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           </ProfileWrap>
         </Link>
         <IconWrap
-          img={rightModalType === 'message' ? gnbMessage : gnbMessage}
+          img={rightModalState.messageFlag ? gnbMessageActive : gnbMessage}
           onClick={() =>
             ChangeFlag(rightModalState, setRightModalState, 'messageFlag')
           }
         />
         <IconWrap
-          img={gnbAlarm}
+          img={rightModalState.alarmFlag ? gnbAlarmActive : gnbAlarm}
           onClick={() =>
             ChangeFlag(rightModalState, setRightModalState, 'alarmFlag')
           }
