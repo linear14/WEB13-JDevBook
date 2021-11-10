@@ -20,7 +20,7 @@ const ChatSideBarContainer = styled.div`
   height: inherit;
 
   animation-name: ${Animation};
-  animation-duration: .75s;
+  animation-duration: 0.75s;
 
   background-color: ${palette.white};
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
@@ -156,7 +156,10 @@ const ChatSideBar = () => {
 
           document
             .querySelector('.chat-list')
-            ?.scrollBy({ top: 1000, behavior: 'smooth' });
+            ?.scrollBy({
+              top: document.querySelector('.chat-list')?.scrollHeight,
+              behavior: 'smooth'
+            });
         }
       );
     }
