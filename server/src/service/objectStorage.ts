@@ -77,6 +77,7 @@ const objectStorage = {
     const data = await S3.listObjectsV2(params).promise();
     console.log(data);
 
+    // https://guide.ncloud-docs.com/docs/storage-storage-8-4
     // // List All Objects
     // console.log('List All In The Bucket');
     // console.log('==========================');
