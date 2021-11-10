@@ -4,14 +4,20 @@ import mainLogo from '../../images/main-logo.png';
 import { GithubLoginButton } from 'react-social-login-buttons';
 import fetchApi from 'api/fetch';
 import palette from 'theme/palette';
+import { useHistory } from 'react-router-dom';
 
-const LoginBox = () => {
+const LoginBox = (): JSX.Element => {
+  //const history = useHistory();
   return (
     <Box>
       <Wrapper>
         <MainLogoElement />
         <Text>개발자라면 Github 아이디는 가지고 계시죠?</Text>
-        <GithubLoginButton onClick={fetchApi.login} />
+        <GithubLoginButton
+          onClick={async () =>
+            (window.location.href = await fetchApi.getLoginlink())
+          }
+        />
       </Wrapper>
     </Box>
   );

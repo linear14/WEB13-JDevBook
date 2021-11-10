@@ -1,12 +1,9 @@
 import { HomePost } from 'utils/types';
 
 const fetchApi = {
-  login: () => {
-    fetch('/oauth/login')
-      .then((res) => res.json())
-      .then((loginLink) => {
-        window.location.href = loginLink;
-      });
+  getLoginlink: async () => {
+    const loginLinkRes: Response = await fetch('/oauth/login');
+    return await loginLinkRes.json();
   },
   getuserData: () => {
     // { data, error }
