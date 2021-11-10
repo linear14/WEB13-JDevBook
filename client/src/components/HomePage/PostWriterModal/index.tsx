@@ -81,7 +81,7 @@ const PostBtn = styled.div`
 
 const PostWriterModal = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
-  const [postData, setPostWriterData] = useRecoilState(postWriterData);
+  const [postData, setPostData] = useRecoilState(postWriterData);
 
   const postDataToAPI = async (e: React.MouseEvent<HTMLDivElement>) => {
     if (postData.contents === '')
@@ -92,6 +92,13 @@ const PostWriterModal = () => {
     if (result) {
       alert('게시글이 성공적으로 게시되었습니다!');
       setModalState({ ...modalState, postWriter: false, postInPhoto: false });
+      setPostData({
+        ...postData,
+        contents: '',
+        picture1: null,
+        picture2: null,
+        picture3: null
+      });
     } else alert('게시글이 알수없는 이유로 게시되지 않았습니다.');
   };
 
