@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import palette from 'theme/palette';
 
 const Greeter = () => {
   const reactArray = 'JDevBook'.split('');
@@ -39,7 +40,7 @@ const Animation = keyframes`
 const Content = styled.span`
   width: 50vw;
   font-size: 50px;
-  color: #53b23b;
+  color: ${palette.green};
   display: inline-block;
   span {
     display: inline-block;

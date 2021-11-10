@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { PostWriter, PostList } from 'components/HomePage';
+import palette from 'theme/palette';
 
+import { PostWriter, PostList, ImageViewer } from 'components/HomePage';
 import {
   Gnb,
   SideBar,
@@ -13,23 +14,29 @@ import {
   GroupSideBar,
   InitUserData
 } from 'components/common';
+import { useRecoilState } from 'recoil';
+import { imageViewerState as ivState } from 'recoil/store';
 
 const HomePageContainer = styled.div`
   display: flex;
   justify-content: center;
+  padding-bottom: 56px;
+
+  background-color: ${palette.lightgray};
 `;
 
 const PostContainer = styled.div`
   position: relative;
   top: 56px;
   width: 680px;
-  height: 200vh; // 테스트용 height
 
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const HomePage = () => {
+  const [imageViewerState, setImageViewerState] = useRecoilState(ivState);
   return (
     <HomePageContainer>
       <InitUserData />
@@ -39,12 +46,13 @@ const HomePage = () => {
         <GroupSideBar />
       </SideBar>
       <PostContainer>
-        <PostWriter></PostWriter>
+        <PostWriter />
         <PostList />
       </PostContainer>
       <SideBar isLeft={false}>
         <ChatSideBar />
       </SideBar>
+      {imageViewerState.isOpen && <ImageViewer />}
     </HomePageContainer>
   );
 };

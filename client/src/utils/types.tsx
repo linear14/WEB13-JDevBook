@@ -85,10 +85,42 @@ export interface PostFooterProps {
   likenum: number;
 }
 
-export interface PostImageBoxProps {
-  images: string[];
+export interface PostImageInfo {
+  url: string;
+  originalWidth: number;
+  originalHeight: number;
 }
 
-export interface PostImageBoxUrl {
-  imageUrl: string;
+export interface PostImageBoxProps {
+  imageCount: number;
+  images: PostImageInfo[] | null;
+}
+
+export interface PostImageBoxStyle {
+  width: number;
+  height: number;
+  leftBorder?: boolean;
+  rightBorder?: boolean;
+  topBorder?: boolean;
+  bottomBorder?: boolean;
+}
+
+export interface PostImageBoxStyleWithSource extends PostImageBoxStyle {
+  index: number;
+  urls: string[];
+}
+
+export interface PostData {
+  userId: number;
+  secret: number;
+  likenum: number;
+  contents: string;
+  picture1: string | null;
+  picture2: string | null;
+  picture3: string | null;
+}
+
+export interface ImgUploadModalProps {
+  modalState: boolean;
+  writerModalState: boolean;
 }
