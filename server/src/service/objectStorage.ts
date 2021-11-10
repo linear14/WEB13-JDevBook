@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk';
 const storage = require('../config/objectstorage.json');
 
-const endpoint: AWS.Endpoint = new AWS.Endpoint(storage.url);
+//const endpoint: AWS.Endpoint = new AWS.Endpoint(storage.url);
 const url: string = storage.url;
 const region: string = storage.region;
 const access_key: string = storage.access_key;
@@ -22,9 +22,15 @@ const objectStorage = {
       Bucket: bucket_name,
       CreateBucketConfiguration: {}
     }).promise();
+  },
+  getBucketlist: async () => {
+    // { Name: ~, CreationDate: ~}
+    const { Buckets } = await S3.listBuckets().promise();
+    return Buckets;
   }
 };
 
 export default objectStorage;
 
 //(async () => await objectStorage.makeBucket('jdevbook2'))();
+//(async () => console.log(await objectStorage.getBucketlist()))();
