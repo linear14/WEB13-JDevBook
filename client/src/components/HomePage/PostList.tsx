@@ -1,4 +1,5 @@
 import getData from 'api/fetch';
+import { mockPost } from 'mock/post';
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { HomePost } from 'utils/types';
@@ -15,14 +16,16 @@ const PostListContainer = styled.div`
 const PostList = () => {
   const [posts, setPosts] = useState<HomePost[]>([]);
 
+  const fetchPosts = async (start: number = 0, count: number = 10) => {
+    setPosts(mockPost);
+    // const result = await getData.getPosts();
+    // setPosts(result);
+  };
+
   useEffect(() => {
-    function getPosts() {
-      setTimeout(async () => {
-        const posts = await getData.getPosts();
-        setPosts(posts);
-      }, 1000);
-    }
-    getPosts();
+    setTimeout(async () => {
+      fetchPosts();
+    }, 1000);
   }, []);
 
   return (
