@@ -137,6 +137,7 @@ router.delete(
   '/posts/:postidx',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
+      console.log(req.params.postidx);
       const postIdx = Number(req.params.postidx);
       console.log(`Delete idx=${postIdx}`);
       await dbManager.deletePost(postIdx);

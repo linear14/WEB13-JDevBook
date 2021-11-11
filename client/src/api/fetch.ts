@@ -44,7 +44,7 @@ const fetchApi = {
   },
 
   updatePosts: async (postIdx: number, postUpdateData: PostUpdateData) => {
-    const response = await fetch(`/api/posts/:${postIdx}`, {
+    const response = await fetch(`/api/posts/${postIdx}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ const fetchApi = {
   },
 
   deletePosts: async (postIdx: number) => {
-    const response = await fetch(`/api/posts/:${postIdx}`, {
+    const response = await fetch(`/api/posts/${postIdx}`, {
       method: 'DELETE'
     });
     return await response.json();
