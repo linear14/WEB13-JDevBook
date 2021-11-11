@@ -2,20 +2,22 @@ import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 import fetchApi from 'api/fetch';
+
 import { userData, usersocket, postWriterData } from 'recoil/store';
+import { RouteComponentProps, useHistory } from 'react-router-dom';
 
 const InitUserData = (/*{ history }: RouteComponentProps*/) => {
   const [userdata, setUserdata] = useRecoilState(userData);
-  const [socket, setSocket] = useRecoilState(usersocket);
   const [postData, setPostData] = useRecoilState(postWriterData);
+  const socket = useRecoilValue(usersocket);
+  const history = useHistory();
 
   useEffect(() => {
     (async () => {
       const { data, error } = await fetchApi.getuserData();
       if (error) {
         alert('비정상 접근');
-        window.location.href = '/';
-        return;
+        history.push('/');
       } else {
         setUserdata({
           name: data.nickname,
