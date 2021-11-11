@@ -79,9 +79,19 @@ router.get(
 
 router.get(
   '/posts',
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (
+    req: Request<{}, {}, {}, { lastIdx: number; count: number }>,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
-      const posts = await dbManager.getPosts();
+      const myIdx = req.session.useridx;
+      const { lastIdx, count } = req.query;
+      const posts = await dbManager.getPosts(
+        myIdx,
+        Number(lastIdx),
+        Number(count)
+      );
       res.json(posts);
     } catch (err) {
       console.error(err);

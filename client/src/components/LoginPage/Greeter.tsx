@@ -2,32 +2,16 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import palette from 'theme/palette';
 
-const Greeter = () => {
-  const reactArray = 'JDevBook'.split('');
-
-  return (
-    <>
-      <Wrapper>
-        <SubTitle>우리들의 공간</SubTitle>
-        <Content>
-          {reactArray.map((item, index) => (
-            <span key={index}>{item}</span>
-          ))}
-        </Content>
-      </Wrapper>
-    </>
-  );
-};
-
 const Wrapper = styled.span`
   justify-content: center;
   align-items: center;
   text-align: center;
+
   font-size: 50px;
 `;
 
 const SubTitle = styled.div`
-  color: black;
+  color: ${palette.black};
 `;
 
 const Animation = keyframes`
@@ -63,5 +47,22 @@ function getAnimaDelay() {
   }
   return str;
 }
+
+const Greeter = () => {
+  const textArray = 'JDevBook'.split('');
+
+  return (
+    <>
+      <Wrapper>
+        <SubTitle>우리들의 공간</SubTitle>
+        <Content>
+          {textArray.map((item, index) => (
+            <span key={index}>{item}</span>
+          ))}
+        </Content>
+      </Wrapper>
+    </>
+  );
+};
 
 export default Greeter;

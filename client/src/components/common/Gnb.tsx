@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { modalVisibleStates, rightModalStates, userData } from 'recoil/store';
 import fetchApi from 'api/fetch';
@@ -20,8 +20,11 @@ import {
   GnbHomeActive,
   GnbGroupActive,
   gnbMessage,
+  gnbMessageActive,
   gnbAlarm,
-  gnbSelector
+  gnbAlarmActive,
+  gnbSelector,
+  gnbSelectorActive
 } from 'images/icons';
 
 import {
@@ -137,9 +140,10 @@ const IconWrap = styled.div<IconProps>`
 
 const Gnb = ({ type, rightModalType }: GnbProps) => {
   const modalState = useRecoilValue(modalVisibleStates);
-  const userdata = useRecoilValue(userData);
+  const [userdata, setUserdata] = useRecoilState(userData);
   const [rightModalState, setRightModalState] =
     useRecoilState(rightModalStates);
+  const history = useHistory();
 
   return (
     <GnbContainer>
@@ -166,22 +170,31 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           </ProfileWrap>
         </Link>
         <IconWrap
-          img={rightModalType === 'message' ? gnbMessage : gnbMessage}
+          img={rightModalState.messageFlag ? gnbMessageActive : gnbMessage}
           onClick={() =>
             ChangeFlag(rightModalState, setRightModalState, 'messageFlag')
           }
         />
         <IconWrap
-          img={gnbAlarm}
+          img={rightModalState.alarmFlag ? gnbAlarmActive : gnbAlarm}
           onClick={() =>
             ChangeFlag(rightModalState, setRightModalState, 'alarmFlag')
           }
         />
         <IconWrap
-          img={gnbSelector}
-          onClick={
-            () => fetchApi.logout() // async await 안해도 될듯?
-          }
+          img={rightModalState.selectorFlag ? gnbSelectorActive : gnbSelector}
+          onClick={async () => {
+            await fetchApi.logout();
+            setUserdata({
+              idx: -1,
+              name: '',
+              profile: '' as string,
+              cover: '' as string,
+              bio: '' as string,
+              login: false
+            });
+            history.push('/');
+          }}
         />
       </FlexWrap>
     </GnbContainer>
