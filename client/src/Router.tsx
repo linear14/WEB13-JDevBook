@@ -27,7 +27,6 @@ const Router: React.FC = () => {
     }
   }, [userdata]);
 
-
   return (
     <BrowserRouter>
       <Switch>
@@ -42,8 +41,15 @@ const Router: React.FC = () => {
           exact
           render={() => (login ? <GroupPage /> : <IsLoginPage />)}
         />
-        /* 위처럼 하면 ProfilePage에 match? 때문에 오류나는듯? */
-        <Route path="/profile/:userId" exact component={ProfilePage} />
+        /* 위처럼 하면 ProfilePage에 match? 때문에 오류나는듯? */ /*
+        ProfilePage에서 타입 바꿨는데 작동이 이상함 */
+        <Route
+          path="/profile/:userId"
+          exact
+          render={(props) =>
+            login ? <ProfilePage {...props} /> : <IsLoginPage />
+          }
+        />
         <Route path="/*" component={NotFoundPage} />
       </Switch>
     </BrowserRouter>
