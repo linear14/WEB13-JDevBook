@@ -111,7 +111,7 @@ export interface PostImageBoxStyleWithSource extends PostImageBoxStyle {
 }
 
 export interface PostData {
-  userId: number;
+  useridx: number;
   secret: number;
   likenum: number;
   contents: string;

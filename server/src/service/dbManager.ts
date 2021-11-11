@@ -1,11 +1,14 @@
 import sequelize from 'sequelize';
 import { Op, fn, col } from 'sequelize';
+
+import { PostData } from 'service/interface';
+
 import db from '../models';
 
 const dbManager = {
   sync: async () => {
     await db
-      .sync({ force: true, logging: false })
+      .sync({ force: false, logging: false })
       .then(() => {
         console.log('Connection has been established successfully.');
       })
@@ -38,6 +41,10 @@ const dbManager = {
     });
 
     return postsWithUser;
+  },
+
+  addPost: async (postData: PostData) => {
+    await db.models.Post.create(postData);
   },
 
   getAllUsers: async () => {

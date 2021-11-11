@@ -1,4 +1,4 @@
-import { HomePost } from 'utils/types';
+import { HomePost, PostData } from 'utils/types';
 
 const fetchApi = {
   login: () => {
@@ -30,8 +30,20 @@ const fetchApi = {
   getAllUsers: async () => {
     return fetch('/api/allUsers').then((res) => res.json());
   },
+
   getPosts: (): Promise<HomePost[]> => {
     return fetch(`/api/posts`).then((res) => res.json());
+  },
+
+  addPosts: async (postData: PostData) => {
+    const response = await fetch(`/api/posts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postData)
+    });
+    return response.json();
   }
 };
 
