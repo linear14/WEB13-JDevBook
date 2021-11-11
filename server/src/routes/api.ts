@@ -128,4 +128,10 @@ router.get(
   }
 );
 
+router.post('/uploadimg', (req: Request, res: Response, next: NextFunction) => {
+  console.log('오냐고');
+  console.log(req.body);
+  res.end();
+});
+
 module.exports = router;
