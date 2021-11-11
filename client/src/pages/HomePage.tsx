@@ -20,13 +20,13 @@ import { imageViewerState as ivState } from 'recoil/store';
 const GlobalStyle = createGlobalStyle`
   * {
     font-weight: bold;
-
+    
     ::placeholder,
     ::-webkit-input-placeholder {
-      font-family: 'Spoqa Han Sans Neo';
+      font-family: 'Noto Sans KR';
     }
     :-ms-input-placeholder {
-      font-family: 'Spoqa Han Sans Neo';
+      font-family: 'Noto Sans KR';
     }
   }
 

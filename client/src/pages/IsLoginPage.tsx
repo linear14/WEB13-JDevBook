@@ -12,6 +12,7 @@ const IsLoginPage = () => {
 
   useEffect(() => {
     if (loginfail === true) {
+      alert('비정상적인 접근입니다.');
       history.push('/');
       //setMessage('로그인이 되어있지 않습니다.');
       //setLink(<button onClick={() => history.push('/')}>돌아가기</button>);

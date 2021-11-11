@@ -42,7 +42,7 @@ const PostInfo = () => {
   const [secretStr, setSecretStr] = useState('');
 
   const secretToggleHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-    setPostData({ ...postData, secret: postData.secret ^ 1 });
+    setPostData({ ...postData, secret: !postData.secret });
   };
 
   useEffect(() => {

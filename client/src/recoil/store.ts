@@ -71,7 +71,7 @@ export const postWriterData = atom<PostData>({
   key: 'postWriterData',
   default: {
     useridx: -1,
-    secret: 0,
+    secret: false,
     likenum: 0,
     contents: '',
     picture1: null,

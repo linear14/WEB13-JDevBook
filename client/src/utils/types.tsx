@@ -46,8 +46,14 @@ export interface SideBarProps {
   children: React.ReactNode;
 }
 
-export interface HomePost {
-  idx: number;
+export interface PostBodyProps {
+  contents: string;
+  picture1: string | null;
+  picture2: string | null;
+  picture3: string | null;
+}
+
+export interface PostData {
   useridx: number;
   secret: boolean;
   likenum: number;
@@ -55,6 +61,10 @@ export interface HomePost {
   picture1: string | null;
   picture2: string | null;
   picture3: string | null;
+}
+
+export interface HomePost extends PostData {
+  idx: number;
   createdAt: Date;
   BTUseruseridx: {
     bio: string | null;
@@ -73,13 +83,6 @@ export interface PostHeaderProps {
   profile: string | null;
   createdAt: Date;
   secret: boolean;
-}
-
-export interface PostBodyProps {
-  contents: string;
-  picture1: string | null;
-  picture2: string | null;
-  picture3: string | null;
 }
 
 export interface PostFooterProps {
@@ -109,16 +112,6 @@ export interface PostImageBoxStyle {
 export interface PostImageBoxStyleWithSource extends PostImageBoxStyle {
   index: number;
   urls: string[];
-}
-
-export interface PostData {
-  useridx: number;
-  secret: number;
-  likenum: number;
-  contents: string;
-  picture1: string | null;
-  picture2: string | null;
-  picture3: string | null;
 }
 
 export interface ImgUploadModalProps {
