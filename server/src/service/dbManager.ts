@@ -57,7 +57,8 @@ const dbManager = {
   },
 
   addPost: async (PostAddData: PostAddData) => {
-    await db.models.Post.create(PostAddData);
+    const result = await db.models.Post.create(PostAddData);
+    return result.get();
   },
 
   updatePost: async (postUpdateData: PostUpdateData, postIdx: number) => {

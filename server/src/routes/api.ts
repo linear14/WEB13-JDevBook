@@ -106,11 +106,11 @@ router.post(
     try {
       const PostAddData: PostAddData = req.body;
       console.log(`Insert ${JSON.stringify(PostAddData)}`);
-      await dbManager.addPost(PostAddData);
-      res.json(true);
+      const postData = await dbManager.addPost(PostAddData);
+      res.json({ result: postData, check: true });
     } catch (err) {
       console.error(err);
-      res.json(false);
+      res.json({ result: {}, check: false });
     }
   }
 );
