@@ -80,10 +80,18 @@ const objectStorage = {
     // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#listObjectsV2-property
     const data = await S3.listObjectsV2(params).promise();
     return data.Contents;
-  }
+  },
 
   //https://kr.object.ncloudstorage.com/jdevbook/test5/5-1/testfile.png
   //ACL설정 추가는 https://guide.ncloud-docs.com/docs/storage-storage-8-4 참고
+
+  deleteObject: async (object_name: string, bucket_name = default_bucket) => {
+    // 폴더 삭제일 경우 마지막에 '/' 붙어야 한다.
+    await S3.deleteObject({
+      Bucket: bucket_name,
+      Key: object_name
+    }).promise();
+  }
 };
 
 export default objectStorage;
@@ -98,3 +106,6 @@ export default objectStorage;
 //     '../models/erd-workbench.png'
 //   ))();
 // (async () => console.log(await objectStorage.getObjectlist(10)))();
+
+// (async () => await objectStorage.deleteObject('test5/5-3/testfile.png'))();
+// (async () => await objectStorage.deleteObject('test3/'))();
