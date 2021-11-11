@@ -63,8 +63,8 @@ const socketIO = (server: any) => {
 
     socket.on('send comments initial', async (receivedData) => {
       const { postidx } = receivedData;
-      const prevComments = await dbManager.getComments(postidx);
-      const filteredComments: IComment[] = prevComments.map((data) => {
+      const prevComments: any = await dbManager.getComments(postidx);
+      const filteredComments: IComment[] = prevComments.map((data: any) => {
         return {
           writer: data.username,
           text: data.comments

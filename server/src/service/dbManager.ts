@@ -1,7 +1,7 @@
 import sequelize, { INTEGER } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 
-import { PostAddData, PostUpdateData, PostData, CommentData } from 'service/interface';
+import { PostAddData, PostUpdateData, CommentData } from 'service/interface';
 
 import db from '../models';
 
@@ -67,12 +67,18 @@ const dbManager = {
   },
 
   addPost: async (postAddData: PostAddData) => {
-    await db.models.Post.create({ ...postAddData, logging: false });
+    const result = await db.models.Post.create({
+      ...postAddData,
+      logging: false
+    });
     return result.get();
   },
 
   updatePost: async (postUpdateData: PostUpdateData, postIdx: number) => {
-    await db.models.Post.update(postUpdateData, { where: { idx: postIdx }, logging: false });
+    await db.models.Post.update(postUpdateData, {
+      where: { idx: postIdx },
+      logging: false
+    });
   },
 
   deletePost: async (postIdx: number) => {
@@ -86,7 +92,8 @@ const dbManager = {
 
   getUserName: async function (idx: number) {
     const username = await db.models.User.findOne({
-      where: { idx: idx }, logging: false
+      where: { idx: idx },
+      logging: false
     });
     return username?.get().nickname;
   },
@@ -154,12 +161,6 @@ const dbManager = {
     });
   },
 
-  getComments: async function (postidx: number) {
-    const prevComments = await db.models.Comment.findAll({
-      where: { postidx: postidx }
-    });
-  },
-
   getLikePosts: async function (useridx: number) {
     const ilike = await db.models.Like.findAll({
       where: { useridx: useridx }
@@ -173,6 +174,12 @@ const dbManager = {
       { likenum: likeNum },
       { where: { idx: postIdx } }
     );
+  },
+
+  getComments: async function (postidx: number) {
+    const prevComments = await db.models.Comment.findAll({
+      where: { postidx: postidx }
+    });
     const prevCommentsArray = prevComments.map((data: any) => data.get());
     for (let i = 0; i < prevCommentsArray.length; i++) {
       prevCommentsArray[i].username = await this.getUserName(

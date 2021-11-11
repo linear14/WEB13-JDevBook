@@ -124,7 +124,7 @@ router.put(
       console.log(
         `Update ${JSON.stringify(postUpdateData)} where idx=${postIdx}`
       );
-      await dbManager.updatePost(postIdx, postUpdateData);
+      await dbManager.updatePost(postUpdateData, postIdx);
       res.json(true);
     } catch (err) {
       console.error(err);
@@ -185,6 +185,5 @@ router.post('/uploadimg', (req: Request, res: Response, next: NextFunction) => {
   console.log(req.body);
   res.end();
 });
-
 
 module.exports = router;

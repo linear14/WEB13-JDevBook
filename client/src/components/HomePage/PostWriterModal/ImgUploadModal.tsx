@@ -8,7 +8,7 @@ import { modalVisibleStates } from 'recoil/store';
 import palette from 'theme/palette';
 import { ImgUploadModalProps } from 'utils/types';
 import fetchApi from 'api/fetch';
-import objectStorage from 'api/objectStorage';
+// import objectStorage from 'api/objectStorage';
 
 const ModalAnimation = keyframes`
   0% {

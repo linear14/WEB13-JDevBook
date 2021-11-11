@@ -1,5 +1,5 @@
 import { PostData, PostAddData, PostUpdateData } from 'utils/types';
-import objectStorage from './objectStorage';
+// import objectStorage from './objectStorage';
 
 const fetchApi = {
   getLoginlink: async (): Promise<string> => {
@@ -77,7 +77,7 @@ const fetchApi = {
     });
     return await response.json();
   },
-  
+
   uploadImg: async (imglist: FileList) => {
     console.log(imglist);
     console.log(imglist[0]);

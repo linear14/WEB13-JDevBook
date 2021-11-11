@@ -119,7 +119,6 @@ const Post = ({ post }: PostProps) => {
   } = post;
   const { idx: postUserIdx, nickname, profile } = BTUseruseridx;
 
-  
   const likeToggle = (e: React.MouseEvent<HTMLDivElement>) => {
     likeFlag
       ? fetchApi.updateLikeNum(postIdx, likeNum - 1)
@@ -155,14 +154,22 @@ const Post = ({ post }: PostProps) => {
         picture2={picture2}
         picture3={picture3}
       />
-      <Footer likenum={likenum} commentFlag={commentFlag} setCommentFlag={setCommentFlag}/>
+      <Footer
+        likenum={likeNum}
+        commentFlag={commentFlag}
+        setCommentFlag={setCommentFlag}
+      />
       <Divider />
       <ButtonsWrap>
         <Button onClick={likeToggle}>
           {likeFlag ? <LikeIconActive /> : <LikeIcon />}
           <p>좋아요</p>
         </Button>
-        <Button onClick={() => commentFlag? setCommentFlag(false) : setCommentFlag(true)}>
+        <Button
+          onClick={() =>
+            commentFlag ? setCommentFlag(false) : setCommentFlag(true)
+          }
+        >
           <CommentIcon />
           <p>댓글 달기</p>
         </Button>
