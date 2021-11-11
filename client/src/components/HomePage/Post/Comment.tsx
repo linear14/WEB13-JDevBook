@@ -1,18 +1,24 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import { ProfilePhoto } from 'components/common';
 import palette from 'theme/palette';
 
-const ClickableProfileImage = styled(ProfilePhoto)`
-  margin-left: 20px;
+const Animation = keyframes`
+  0% { opacity: 0; filter: blur(10px); }
+  100% { opacity: 1; filter: blur(0px); }
 `;
 
 const CommentsWrap = styled.div`
   display: flex;
   align-items: center;
-  padding:10px;
+  padding: 10px;
+
+  animation-name: ${Animation};
+  animation-duration: 0.5s;
 `;
+
+const ClickableProfileImage = styled(ProfilePhoto)``;
 
 const CommentBox = styled.div`
   margin-left: 10px;
@@ -22,13 +28,13 @@ const CommentBox = styled.div`
 `;
 
 const CommentContent = styled.div`
-    margin: 5px;
-    word-break: break-word;
+  margin: 5px;
+  word-break: break-word;
 `;
 
 const CommentTitle = styled.div``;
 const CommentText = styled.div`
-    font-weight: normal;
+  font-weight: normal;
 `;
 
 const Comment = () => {
@@ -38,8 +44,11 @@ const Comment = () => {
         <ClickableProfileImage size={'30px'} />
         <CommentBox>
           <CommentContent>
-            <CommentTitle>CommentWriter</CommentTitle>
-            <CommentText>asdasdaskjdnanskjdnkjasndkjsandjkasndkjasndkjskjd</CommentText>
+            <CommentTitle>CommentWriter</CommentTitle> {/* 댓글 작성자 */}
+            <CommentText>
+              asdasdaskjdnanskjdnkjasndkjsandjkasndkjasndkjskjd
+            </CommentText>{' '}
+            {/* 댓글 내용 */}
           </CommentContent>
         </CommentBox>
       </CommentsWrap>

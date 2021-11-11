@@ -4,6 +4,9 @@ import styled, { css } from 'styled-components';
 import { likeBadge } from 'images/icons';
 import { PostFooterProps } from 'utils/types';
 
+import { useRecoilState } from 'recoil';
+import { CommentState } from 'recoil/store';
+
 const FooterContainer = styled.div`
   width: 100%;
   box-sizing: inherit;
@@ -36,13 +39,21 @@ const Comments = styled.p`
 `;
 
 const Footer = ({ likenum }: PostFooterProps) => {
+  const [commentFlag, setCommentFlag] = useRecoilState(CommentState);
+
   return (
     <FooterContainer>
       <div>
         <img src={likeBadge} alt="likeBadge" />
         <p>{likenum.toString()}</p>
       </div>
-      <Comments>777 Comments</Comments>
+      <Comments
+        onClick={() =>
+          commentFlag ? setCommentFlag(false) : setCommentFlag(true)
+        }
+      >
+        777 Comments
+      </Comments>
     </FooterContainer>
   );
 };

@@ -116,7 +116,7 @@ const Post = ({ post }: PostProps) => {
   const { idx: postUserIdx, nickname, profile } = BTUseruseridx;
   const { idx: myIdx } = useRecoilValue(userData);
 
-  const commentFlag = useRecoilValue(CommentState);
+  const [commentFlag, setCommentFlag] = useRecoilState(CommentState);
 
   return (
     <PostContainer>
@@ -147,13 +147,13 @@ const Post = ({ post }: PostProps) => {
           <LikeIcon />
           <p>Like</p>
         </Button>
-        <Button>
+        <Button onClick={() => commentFlag? setCommentFlag(false) : setCommentFlag(true)}>
           <CommentIcon />
           <p>Comment</p>
         </Button>
       </ButtonsWrap>
       <Divider />
-      <Comment />
+      {commentFlag && <Comment />}
     </PostContainer>
   );
 };
