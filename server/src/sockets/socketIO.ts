@@ -49,11 +49,16 @@ const socketIO = (server: any) => {
       const { sender, postidx, comments } = receivedData;
       dbManager.addComment(sender, postidx, comments);
 
+      io.emit('receive comment', {
+        sender: sender,
+        postidx: postidx,
+        comments: comments
+      })
     })
 
-    // socket.on('send comments initial', async (receivedData) => {
-    //   const { postidx } = receivedData;
-    // })
+    socket.on('send comments initial', async (receivedData) => {
+      const { postidx } = receivedData;
+    })
 
 
 

@@ -54,46 +54,67 @@ const CommentInput = styled.input`
   height: 35px;
   border: none;
   border-radius: 15px;
-  
+
   background-color: ${palette.lightgray};
   margin-left: 10px;
   padding-left: 10px;
 `;
 
+interface IComment {
+  writer: string;
+  text: string;
+}
+
 const Comment = ({ postIdx }: { postIdx: number }) => {
   const [value, setValue] = useState<string>('');
-  const [commentList, setCommentList] = useState<string[]>([]);
+  const [commentList, setCommentList] = useState<IComment[]>([]);
   const socket = useRecoilValue(usersocket);
   const userdata = useRecoilValue(userData);
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     socket.emit('add comment', {
-        sender: userdata.name,
-        postidx: postIdx,
-        comments: value
-    })
+      sender: userdata.name,
+      postidx: postIdx,
+      comments: value
+    });
   };
 
   useEffect(() => {
+    setCommentList([]);
+    socket.emit('send comments initial', {
+        postidx: postIdx
+    });
+  }, [postIdx])
 
-  }, [commentList])
+  useEffect(() => {
+    socket.off('receive comment');
+    socket.on(
+      'receive comment',
+      (data: { sender: string; postidx: number; comments: string }) => {
+        const { sender, postidx, comments } = data;
+        setCommentList((commentList: IComment[]) =>
+          commentList.concat({ writer: sender, text: comments })
+        );
+      }
+    );
+  }, [commentList]);
+
+  const comments = commentList.map((comment: IComment, idx: number) => (
+    <CommentsWrap key={idx}>
+      <ClickableProfileImage size={'30px'} />
+      <CommentBox>
+        <CommentContent>
+          <CommentTitle>{comment.writer}</CommentTitle>
+          <CommentText>{comment.text}</CommentText>
+        </CommentContent>
+      </CommentBox>
+    </CommentsWrap>
+  ));
 
   return (
     <>
-      <CommentsWrap>
-        {/* CommentList */}
-        <ClickableProfileImage size={'30px'} />
-        <CommentBox>
-          <CommentContent>
-            <CommentTitle>CommentWriter</CommentTitle> {/* 댓글 작성자 */}
-            <CommentText>
-              asdasdaskjdnanskjdnkjasndkjsandjkasndkjasndkjskjd
-            </CommentText>{' '}
-            {/* 댓글 내용 */}
-          </CommentContent>
-        </CommentBox>
-      </CommentsWrap>
+      {comments}
 
       <CommentInputWrap>
         <form
