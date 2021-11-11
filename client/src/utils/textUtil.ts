@@ -39,8 +39,7 @@ const textUtil = {
 
     const [targetTime, nowTime] = [target.getTime(), now.getTime()];
 
-    // DB 문제로 인해 임시조치.. DB에 들어가는 값이 정확하면 해결됨!
-    const diff = nowTime - targetTime + 9 * HOUR;
+    const diff = nowTime - targetTime;
 
     if (diff < 0) {
       return 'Something wrong';
