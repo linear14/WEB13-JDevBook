@@ -9,6 +9,11 @@ declare module 'socket.io' {
   }
 }
 
+interface IComment {
+  writer: string;
+  text: string;
+}
+
 const socketIO = (server: any) => {
   const io = new Server(server);
   io.on('connection', (socket: Socket) => {
@@ -53,15 +58,20 @@ const socketIO = (server: any) => {
         sender: sender,
         postidx: postidx,
         comments: comments
-      })
-    })
+      });
+    });
 
     socket.on('send comments initial', async (receivedData) => {
       const { postidx } = receivedData;
-    })
-
-
-
+      const prevComments = await dbManager.getComments(postidx);
+      const filteredComments: IComment[] = prevComments.map((data) => {
+        return {
+          writer: data.username,
+          text: data.comments
+        };
+      });
+      io.emit('get previous comments', filteredComments);
+    });
 
     socket.on('disconnect', () => {
       socket.get = false;

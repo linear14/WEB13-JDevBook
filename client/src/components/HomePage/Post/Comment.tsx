@@ -83,9 +83,14 @@ const Comment = ({ postIdx }: { postIdx: number }) => {
   useEffect(() => {
     setCommentList([]);
     socket.emit('send comments initial', {
-        postidx: postIdx
+      postidx: postIdx
     });
-  }, [postIdx])
+
+    socket.on('get previous comments', (comment: IComment[]) => {
+      setCommentList((commentList: IComment[]) => commentList.concat(comment));
+      socket.off('get previous comments');
+    });
+  }, [postIdx]);
 
   useEffect(() => {
     socket.off('receive comment');
@@ -115,7 +120,6 @@ const Comment = ({ postIdx }: { postIdx: number }) => {
   return (
     <>
       {comments}
-
       <CommentInputWrap>
         <form
           onSubmit={(e: FormEvent<HTMLFormElement>) => {
@@ -132,6 +136,11 @@ const Comment = ({ postIdx }: { postIdx: number }) => {
             <CommentInput
               type="text"
               autoComplete="off"
+              onFocus={(e: any) => {
+                setCommentList((commentList: IComment[]) =>
+                  commentList.concat()
+                );
+              }}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setValue(e.target.value)
               }
