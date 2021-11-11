@@ -3,7 +3,12 @@ import styled, { keyframes } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import palette from 'theme/palette';
-import { modalVisibleStates, postWriterData, userData } from 'recoil/store';
+import {
+  modalVisibleStates,
+  postWriterData,
+  userData,
+  postListStore
+} from 'recoil/store';
 import fetchApi from 'api/fetch';
 import { PostData } from 'utils/types';
 
@@ -87,7 +92,7 @@ const PostBtn = styled.div`
 const PostWriterModal = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
   const [postData, setPostData] = useRecoilState(postWriterData);
-  // const [postList, setPostList] = useRecoilState(postList);
+  const [postList, setPostList] = useRecoilState(postListStore);
   const userdata = useRecoilValue(userData);
 
   const postDataToAPI = async (e: React.MouseEvent<HTMLDivElement>) => {
@@ -108,6 +113,7 @@ const PostWriterModal = () => {
           profile: userdata.profile
         }
       };
+      setPostList([newPostData, ...postList]);
       setPostData({
         ...postData,
         secret: false,

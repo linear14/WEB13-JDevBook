@@ -2,7 +2,7 @@ import socket from 'components/common/Socket';
 import { atom } from 'recoil';
 import { Socket } from 'socket.io-client';
 
-import { PostAddData } from 'utils/types';
+import { PostAddData, PostData } from 'utils/types';
 
 export const modalVisibleStates = atom({
   key: 'modalVisibleState',
@@ -78,4 +78,9 @@ export const postWriterData = atom<PostAddData>({
     picture2: null,
     picture3: null
   }
+});
+
+export const postListStore = atom<PostData[]>({
+  key: 'postList',
+  default: []
 });

@@ -36,7 +36,7 @@ const Footer = ({ likenum }: PostFooterProps) => {
         <img src={likeBadge} alt="likeBadge" />
         <p>{likenum.toString()}</p>
       </div>
-      <p>777 Comments</p>
+      {/* <p>777 Comments</p> */}
     </FooterContainer>
   );
 };
