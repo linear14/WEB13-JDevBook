@@ -9,7 +9,8 @@ export const modalVisibleStates = atom({
   default: {
     searchUser: false,
     postWriter: false,
-    postInPhoto: false
+    postInPhoto: false,
+    postOption: -1
   }
 });
 

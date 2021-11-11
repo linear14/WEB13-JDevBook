@@ -25,9 +25,11 @@ const fetchApi = {
     return await allusersRes.json();
   },
 
-  getPosts: async (): Promise<HomePost[]> => {
-    const postsRes: Response = await fetch('/api/posts');
-    return await postsRes.json();
+  getPosts: async (lastIdx: number, count: number): Promise<HomePost[]> => {
+    const response = await fetch(
+      `/api/posts?lastIdx=${lastIdx}&count=${count}`
+    );
+    return await response.json();
   },
 
   addPosts: async (postData: PostData) => {
@@ -38,7 +40,7 @@ const fetchApi = {
       },
       body: JSON.stringify(postData)
     });
-    return response.json();
+    return await response.json();
   }
 };
 
