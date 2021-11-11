@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdMoreHoriz } from 'react-icons/md';
 
@@ -8,11 +8,12 @@ import { PostProps } from 'utils/types';
 import palette from 'theme/palette';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { modalVisibleStates, userData } from 'recoil/store';
+import { modalVisibleStates, userData, CommentState } from 'recoil/store';
 import Header from './Header';
 import OptionModal from './OptionModal';
 import Body from './Body';
 import Footer from './Footer';
+import Comment from './Comment';
 
 const PostContainer = styled.div`
   width: 680px;
@@ -45,6 +46,7 @@ const Button = styled.div`
   align-items: center;
   justify-content: center;
   transition: 0.1s ease-in-out;
+  cursor: pointer;
 
   p {
     margin-left: 4px;
@@ -110,6 +112,8 @@ const Post = ({ post }: PostProps) => {
   const { idx: postUserIdx, nickname, profile } = BTUseruseridx;
   const { idx: myIdx } = useRecoilValue(userData);
 
+  const [commentFlag, setCommentFlag] = useState<boolean>(false);
+
   return (
     <PostContainer>
       {postUserIdx === myIdx && (
@@ -132,18 +136,20 @@ const Post = ({ post }: PostProps) => {
         picture2={picture2}
         picture3={picture3}
       />
-      <Footer likenum={likenum} />
+      <Footer likenum={likenum} commentFlag={commentFlag} setCommentFlag={setCommentFlag}/>
       <Divider />
       <ButtonsWrap>
         <Button>
           <LikeIcon />
           <p>Like</p>
         </Button>
-        <Button>
+        <Button onClick={() => commentFlag? setCommentFlag(false) : setCommentFlag(true)}>
           <CommentIcon />
           <p>Comment</p>
         </Button>
       </ButtonsWrap>
+      <Divider />
+      {commentFlag && <Comment postIdx={postIdx} />}
     </PostContainer>
   );
 };

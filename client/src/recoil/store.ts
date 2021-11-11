@@ -84,3 +84,8 @@ export const postListStore = atom<PostData[]>({
   key: 'postList',
   default: []
 });
+
+export const CommentState = atom({
+  key: 'commentsFlag',
+  default: false as boolean
+})

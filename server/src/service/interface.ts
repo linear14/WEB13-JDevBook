@@ -112,3 +112,9 @@ export interface PostAddData extends PostUpdateData {
   useridx: number;
   likenum: number;
 }
+
+export interface CommentData {
+  postidx: number;
+  useridx: number;
+  comments: string;
+}

@@ -10,6 +10,7 @@ import socketIO from './sockets/socketIO';
 dotenv.config({ path: path.resolve(__dirname, './config/.env.development') });
 
 import dbManager from './service/dbManager';
+//import cors from 'cors';
 
 const indexRouter = require('./routes/index');
 const oauthRouter = require('./routes/oauth');
@@ -20,6 +21,13 @@ const debug = require('debug')('server:server');
 const app = express();
 const port = 4000;
 const FileStore = sessionFileStore(session);
+
+// app.use(
+//   cors({
+//     origin: 'http://localhost:3000',
+//     credentials: true
+//   })
+// );
 
 dbManager.sync();
 
