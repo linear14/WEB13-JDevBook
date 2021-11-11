@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdMoreHoriz } from 'react-icons/md';
 
@@ -96,10 +96,6 @@ const Divider = styled.div`
   margin-right: 16px;
 `;
 
-const CommentsWrap = styled.div`
-
-`;
-
 const Post = ({ post }: PostProps) => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
   const {
@@ -116,7 +112,7 @@ const Post = ({ post }: PostProps) => {
   const { idx: postUserIdx, nickname, profile } = BTUseruseridx;
   const { idx: myIdx } = useRecoilValue(userData);
 
-  const [commentFlag, setCommentFlag] = useRecoilState(CommentState);
+  const [commentFlag, setCommentFlag] = useState<boolean>(false);
 
   return (
     <PostContainer>
@@ -140,7 +136,7 @@ const Post = ({ post }: PostProps) => {
         picture2={picture2}
         picture3={picture3}
       />
-      <Footer likenum={likenum} />
+      <Footer likenum={likenum} commentFlag={commentFlag} setCommentFlag={setCommentFlag}/>
       <Divider />
       <ButtonsWrap>
         <Button>

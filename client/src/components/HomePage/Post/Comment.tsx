@@ -3,6 +3,8 @@ import styled, { keyframes } from 'styled-components';
 
 import { ProfilePhoto } from 'components/common';
 import palette from 'theme/palette';
+import { useRecoilValue } from 'recoil';
+import { usersocket } from 'recoil/store';
 
 const Animation = keyframes`
   0% { opacity: 0; filter: blur(10px); }
@@ -21,10 +23,10 @@ const CommentsWrap = styled.div`
 const ClickableProfileImage = styled(ProfilePhoto)``;
 
 const CommentBox = styled.div`
-  margin-left: 10px;
   display: inline-block;
-  background-color: ${palette.lightgray};
   border-radius: 15px;
+  background-color: ${palette.lightgray};
+  margin-left: 10px;
 `;
 
 const CommentContent = styled.div`
@@ -46,19 +48,22 @@ const CommentInputWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
+
 const CommentInput = styled.input`
-  margin-left: 10px;
+  width: 600px;
+  height: 35px;
   border: none;
   border-radius: 15px;
+  
   background-color: ${palette.lightgray};
-  height: 35px;
-  width: 600px;
+  margin-left: 10px;
   padding-left: 10px;
 `;
 
 const Comment = () => {
   const [value, setValue] = useState<string>('');
   const [commentList, setCommentList] = useState<string[]>([]);
+  const socket = useRecoilValue(usersocket);
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

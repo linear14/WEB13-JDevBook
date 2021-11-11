@@ -38,9 +38,7 @@ const Comments = styled.p`
   color: #999999;
 `;
 
-const Footer = ({ likenum }: PostFooterProps) => {
-  const [commentFlag, setCommentFlag] = useRecoilState(CommentState);
-
+const Footer = ({ likenum, commentFlag, setCommentFlag }: PostFooterProps) => {
   return (
     <FooterContainer>
       <div>
