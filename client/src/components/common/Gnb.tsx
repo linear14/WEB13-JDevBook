@@ -20,8 +20,11 @@ import {
   GnbHomeActive,
   GnbGroupActive,
   gnbMessage,
+  gnbMessageActive,
   gnbAlarm,
-  gnbSelector
+  gnbAlarmActive,
+  gnbSelector,
+  gnbSelectorActive
 } from 'images/icons';
 
 import {
@@ -79,7 +82,7 @@ const GnbTab = styled.div<TabProps>`
   transition: 0.1s ease-in;
 
   &:hover {
-    background: ${palette.gray};
+    background: ${palette.lightgray};
     border-radius: 8px;
   }
 
@@ -100,7 +103,7 @@ const ProfileWrap = styled.div`
   padding-right: 12px;
 
   &:hover {
-    background: ${palette.gray};
+    background: ${palette.lightgray};
     border-radius: 24px;
   }
 
@@ -115,7 +118,7 @@ const ProfileWrap = styled.div`
 const IconWrap = styled.div<IconProps>`
   width: 40px;
   height: 40px;
-  background: ${palette.gray};
+  background: ${palette.lightgray};
   border-radius: 100%;
   display: flex;
   justify-content: center;
@@ -131,7 +134,7 @@ const IconWrap = styled.div<IconProps>`
   }
 
   &:hover {
-    background: ${palette.gray};
+    background: ${palette.lightgray};
   }
 `;
 
@@ -167,19 +170,19 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           </ProfileWrap>
         </Link>
         <IconWrap
-          img={rightModalType === 'message' ? gnbMessage : gnbMessage}
+          img={rightModalState.messageFlag ? gnbMessageActive : gnbMessage}
           onClick={() =>
             ChangeFlag(rightModalState, setRightModalState, 'messageFlag')
           }
         />
         <IconWrap
-          img={gnbAlarm}
+          img={rightModalState.alarmFlag ? gnbAlarmActive : gnbAlarm}
           onClick={() =>
             ChangeFlag(rightModalState, setRightModalState, 'alarmFlag')
           }
         />
         <IconWrap
-          img={gnbSelector}
+          img={rightModalState.selectorFlag ? gnbSelectorActive : gnbSelector}
           onClick={async () => {
             await fetchApi.logout();
             setUserdata({

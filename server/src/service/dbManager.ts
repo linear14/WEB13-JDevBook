@@ -1,5 +1,8 @@
 import sequelize from 'sequelize';
 import { Op, fn, col } from 'sequelize';
+
+import { PostData } from 'service/interface';
+
 import db from '../models';
 
 const dbManager = {
@@ -38,6 +41,10 @@ const dbManager = {
     });
 
     return postsWithUser;
+  },
+
+  addPost: async (postData: PostData) => {
+    await db.models.Post.create(postData);
   },
 
   getAllUsers: async () => {

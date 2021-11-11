@@ -1,5 +1,5 @@
 const palette = {
-  gray: '#eaeaea',
+  gray: '#dbdde0',
   darkgray: '#898989',
   lightgray: '#e4e6eb',
   green: '#87d474',

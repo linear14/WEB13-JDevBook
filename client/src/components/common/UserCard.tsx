@@ -21,7 +21,7 @@ const CardWrap = styled.div`
   }
 
   &:hover {
-    background: ${palette.gray};
+    background: ${palette.lightgray};
     border-radius: 8px;
   }
 `;

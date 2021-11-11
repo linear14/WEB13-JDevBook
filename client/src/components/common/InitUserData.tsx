@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
+
 import fetchApi from 'api/fetch';
-import { userData, usersocket } from 'recoil/store';
+
+import { userData, usersocket, postWriterData } from 'recoil/store';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 
 const InitUserData = (/*{ history }: RouteComponentProps*/) => {
   const [userdata, setUserdata] = useRecoilState(userData);
+  const [postData, setPostData] = useRecoilState(postWriterData);
   const socket = useRecoilValue(usersocket);
   const history = useHistory();
+
   useEffect(() => {
     (async () => {
       const { data, error } = await fetchApi.getuserData();
@@ -23,6 +27,7 @@ const InitUserData = (/*{ history }: RouteComponentProps*/) => {
           bio: data.bio,
           login: true
         });
+        setPostData({ ...postData, useridx: data.idx });
         socket.emit('name', data.nickname);
       }
     })();

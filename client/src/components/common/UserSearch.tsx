@@ -31,7 +31,7 @@ const ModalHeader = styled(FlexBox)`
 const UserSearchBarContainer = styled.div`
   width: 240px;
   height: 40px;
-  background: ${palette.gray};
+  background: ${palette.lightgray};
   border-radius: 24px;
   margin-left: 16px;
   display: flex;
@@ -116,7 +116,7 @@ const HoverRound = styled.div`
   align-items: center;
 
   &:hover {
-    background: ${palette.gray};
+    background: ${palette.lightgray};
     border-radius: 100%;
   }
 `;
