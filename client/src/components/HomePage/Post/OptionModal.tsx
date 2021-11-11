@@ -22,6 +22,7 @@ const OptionModalContainer = styled.div`
     transition: 0.2s ease-in;
 
     &:hover {
+      cursor: pointer;
       background: ${palette.gray};
       border-radius: 8px;
     }
