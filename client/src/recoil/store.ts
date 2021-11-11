@@ -79,3 +79,8 @@ export const postWriterData = atom<PostData>({
     picture3: null
   }
 });
+
+export const CommentState = atom({
+  key: 'commentsFlag',
+  default: false as boolean
+})

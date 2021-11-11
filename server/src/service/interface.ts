@@ -109,3 +109,9 @@ export interface PostData {
   picture2: string | null;
   picture3: string | null;
 }
+
+export interface CommentData {
+  postidx: number;
+  useridx: number;
+  comments: string;
+}

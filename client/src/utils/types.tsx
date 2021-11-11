@@ -87,6 +87,8 @@ export interface PostHeaderProps {
 
 export interface PostFooterProps {
   likenum: number;
+  commentFlag: boolean;
+  setCommentFlag: React.Dispatch<boolean>;
 }
 
 export interface PostImageInfo {

@@ -1,7 +1,7 @@
 import sequelize, { INTEGER } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 
-import { PostData } from 'service/interface';
+import { PostData, CommentData } from 'service/interface';
 
 import db from '../models';
 
@@ -65,6 +65,13 @@ const dbManager = {
     return users;
   },
 
+  getUserName: async function (idx: number) {
+    const username = await db.models.User.findOne({
+      where: { idx: idx }
+    });
+    return username?.get().nickname;
+  },
+
   getUseridx: async function (name: string) {
     const user = await db.models.User.findOne({
       where: { nickname: name }
@@ -110,6 +117,32 @@ const dbManager = {
       receiveridx: receiveridx,
       content: msg
     });
+  },
+
+  addComment: async function (
+    sender: string,
+    postidx: number,
+    comments: string
+  ) {
+    const useridx: number = await this.getUseridx(sender);
+    await db.models.Comment.create({
+      postidx: postidx,
+      useridx: useridx,
+      comments: comments
+    });
+  },
+
+  getComments: async function (postidx: number) {
+    const prevComments = await db.models.Comment.findAll({
+      where: { postidx: postidx }
+    });
+    const prevCommentsArray = prevComments.map((data: any) => data.get());
+    for (let i = 0; i < prevCommentsArray.length; i++) {
+      prevCommentsArray[i].username = await this.getUserName(
+        prevCommentsArray[i].useridx
+      );
+    }
+    return prevCommentsArray;
   }
 };
 
