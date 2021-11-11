@@ -2,7 +2,7 @@ import socket from 'components/common/Socket';
 import { atom } from 'recoil';
 import { Socket } from 'socket.io-client';
 
-import { PostData } from 'utils/types';
+import { PostAddData, PostData } from 'utils/types';
 
 export const modalVisibleStates = atom({
   key: 'modalVisibleState',
@@ -67,7 +67,7 @@ export const imageViewerState = atom<{
   }
 });
 
-export const postWriterData = atom<PostData>({
+export const postWriterData = atom<PostAddData>({
   key: 'postWriterData',
   default: {
     useridx: -1,
@@ -78,6 +78,11 @@ export const postWriterData = atom<PostData>({
     picture2: null,
     picture3: null
   }
+});
+
+export const postListStore = atom<PostData[]>({
+  key: 'postList',
+  default: []
 });
 
 export const CommentState = atom({

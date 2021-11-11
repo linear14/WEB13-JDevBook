@@ -45,6 +45,7 @@ const Footer = ({ likenum, commentFlag, setCommentFlag }: PostFooterProps) => {
         <img src={likeBadge} alt="likeBadge" />
         <p>{likenum.toString()}</p>
       </div>
+      {/* <p>777 Comments</p> */}
       <Comments
         onClick={() =>
           commentFlag ? setCommentFlag(false) : setCommentFlag(true)
