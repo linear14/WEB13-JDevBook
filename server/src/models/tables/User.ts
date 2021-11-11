@@ -22,7 +22,8 @@ import UserProblem from './UserProblem';
 @Table({
   tableName: 'users',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
+  charset: 'utf8mb4'
 })
 export default class User extends Model<User> {
   @Column({
