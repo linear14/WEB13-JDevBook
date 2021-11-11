@@ -44,6 +44,20 @@ const socketIO = (server: any) => {
         });
       }
     });
+
+    socket.on('add comment', (receivedData) => {
+      const { sender, postidx, comments } = receivedData;
+      dbManager.addComment(sender, postidx, comments);
+
+    })
+
+    // socket.on('send comments initial', async (receivedData) => {
+    //   const { postidx } = receivedData;
+    // })
+
+
+
+
     socket.on('disconnect', () => {
       socket.get = false;
       console.log(`${socket.name}:${socket.id} disconnected`);

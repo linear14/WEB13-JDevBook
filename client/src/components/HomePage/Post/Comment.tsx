@@ -1,10 +1,10 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { ProfilePhoto } from 'components/common';
 import palette from 'theme/palette';
 import { useRecoilValue } from 'recoil';
-import { usersocket } from 'recoil/store';
+import { userData, usersocket } from 'recoil/store';
 
 const Animation = keyframes`
   0% { opacity: 0; filter: blur(10px); }
@@ -60,18 +60,29 @@ const CommentInput = styled.input`
   padding-left: 10px;
 `;
 
-const Comment = () => {
+const Comment = ({ postIdx }: { postIdx: number }) => {
   const [value, setValue] = useState<string>('');
   const [commentList, setCommentList] = useState<string[]>([]);
   const socket = useRecoilValue(usersocket);
+  const userdata = useRecoilValue(userData);
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    socket.emit('add comment', {
+        sender: userdata.name,
+        postidx: postIdx,
+        comments: value
+    })
   };
+
+  useEffect(() => {
+
+  }, [commentList])
 
   return (
     <>
       <CommentsWrap>
+        {/* CommentList */}
         <ClickableProfileImage size={'30px'} />
         <CommentBox>
           <CommentContent>

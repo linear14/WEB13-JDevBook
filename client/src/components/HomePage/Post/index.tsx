@@ -149,7 +149,7 @@ const Post = ({ post }: PostProps) => {
         </Button>
       </ButtonsWrap>
       <Divider />
-      {commentFlag && <Comment />}
+      {commentFlag && <Comment postIdx={postIdx} />}
     </PostContainer>
   );
 };

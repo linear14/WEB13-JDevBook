@@ -1,7 +1,7 @@
 import sequelize, { INTEGER } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 
-import { PostData } from 'service/interface';
+import { PostData, CommentData } from 'service/interface';
 
 import db from '../models';
 
@@ -110,6 +110,15 @@ const dbManager = {
       receiveridx: receiveridx,
       content: msg
     });
+  },
+
+  addComment: async function(sender: string, postidx: number, comments: string) {
+    const useridx: number = await this.getUseridx(sender);
+    await db.models.Comment.create({
+      postidx: postidx,
+      useridx: useridx,
+      comments: comments
+    })
   }
 };
 
