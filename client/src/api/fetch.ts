@@ -1,39 +1,45 @@
-import { HomePost } from 'utils/types';
+import { HomePost, PostData } from 'utils/types';
 
 const fetchApi = {
-  login: () => {
-    fetch('/oauth/login')
-      .then((res) => res.json())
-      .then((loginLink) => {
-        window.location.href = loginLink;
-      });
+  getLoginlink: async (): Promise<string> => {
+    const loginLinkRes: Response = await fetch('/oauth/login');
+    return await loginLinkRes.json();
   },
-  getuserData: () => {
+  getuserData: async () => {
     // { data, error }
-    return fetch('/api/data').then((res) => res.json());
+    const userDataRes: Response = await fetch('/api/data');
+    return await userDataRes.json();
   },
-  logout: () => {
-    fetch('/oauth/logout')
-      .then((res) => res.json())
-      .then((data) => {
-        alert(data.message);
-        // 제거할 데이터 있으면 제거
-        // recoil 데이터들 다 제거해야 하지 않나
-        window.location.href = '/'; // href쓰면 소켓 disconnect 알아서 된다.
-      });
+  logout: async () => {
+    const logoutRes: Response = await fetch('/oauth/logout');
+    const { message } = await logoutRes.json();
+    alert(message);
   },
   searchUsers: async (keyword: string) => {
-    const response = await fetch(`/api/users?keyword=${keyword}`);
-    return await response.json();
+    const usersRes: Response = await fetch(`/api/users?keyword=${keyword}`);
+    return await usersRes.json();
   },
 
   getAllUsers: async () => {
-    return fetch('/api/allUsers').then((res) => res.json());
+    const allusersRes: Response = await fetch('/api/allUsers');
+    return await allusersRes.json();
   },
+
   getPosts: async (lastIdx: number, count: number): Promise<HomePost[]> => {
     const response = await fetch(
       `/api/posts?lastIdx=${lastIdx}&count=${count}`
     );
+    return await response.json();
+  },
+
+  addPosts: async (postData: PostData) => {
+    const response = await fetch(`/api/posts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postData)
+    });
     return await response.json();
   }
 };

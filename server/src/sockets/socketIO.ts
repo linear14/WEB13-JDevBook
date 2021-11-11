@@ -24,7 +24,7 @@ const socketIO = (server: any) => {
 
       const filteredMsgs: string[] = previousMsg.map((msg) => {
         if (msg.senderidx === senderidx) return `${sender}: ${msg.content}`;
-        else return `${receiver}: ${msg.content}`;
+        else return `${receiver}: ${msg.content}`; // msg.senderidx === receiveridx
       });
 
       io.to(socket.id).emit('get previous chats', filteredMsgs);

@@ -70,6 +70,15 @@ const textUtil = {
         target.getHours() < 12 ? 'AM' : 'PM'
       }`;
     }
+  },
+
+  getByteLength: (s: string) => {
+    let b = 0;
+    let i = 0;
+    let c = 0;
+
+    for (b = i = 0; (c = s.charCodeAt(i++)); b += c >> 11 ? 3 : c >> 7 ? 2 : 1);
+    return b;
   }
 };
 

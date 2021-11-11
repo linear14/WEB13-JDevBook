@@ -4,7 +4,7 @@ dotenv.config({ path: path.resolve(__dirname, '../config/.env.development') });
 import express, { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import dbManager from '../service/dbManager';
-import { DBUser } from 'service/interface';
+import { DBUser, PostData } from 'service/interface';
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
 
@@ -96,6 +96,21 @@ router.get(
     } catch (err) {
       console.error(err);
       res.json([]);
+    }
+  }
+);
+
+router.post(
+  '/posts',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const postData: PostData = req.body;
+      console.log(`insert ${JSON.stringify(postData)}`);
+      await dbManager.addPost(postData);
+      res.json(true);
+    } catch (err) {
+      console.error(err);
+      res.json(false);
     }
   }
 );
