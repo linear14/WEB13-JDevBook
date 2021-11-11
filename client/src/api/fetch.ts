@@ -29,7 +29,12 @@ const fetchApi = {
     const response = await fetch(
       `/api/posts?lastIdx=${lastIdx}&count=${count}`
     );
-    return await response.json();
+    const getPostsList = await response.json();
+    return getPostsList.map((cur: any) =>
+      cur.BTMLikepostidx.length === 0
+        ? { ...cur, likeFlag: false }
+        : { ...cur, likeFlag: true }
+    );
   },
 
   addPosts: async (postData: PostAddData) => {
@@ -57,6 +62,17 @@ const fetchApi = {
   deletePosts: async (postIdx: number) => {
     const response = await fetch(`/api/posts/:${postIdx}`, {
       method: 'DELETE'
+    });
+    return await response.json();
+  },
+
+  updateLikeNum: async (postIdx: number, likeNum: number) => {
+    const response = await fetch(`/api/posts/like/:${postIdx}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ likeNum: likeNum })
     });
     return await response.json();
   }

@@ -40,6 +40,13 @@ const dbManager = {
         {
           model: db.models.User,
           as: 'BTUseruseridx'
+        },
+        {
+          model: db.models.User,
+          as: 'BTMLikepostidx',
+          through: {
+            where: { useridx: myIdx }
+          }
         }
       ],
       order: [
@@ -61,7 +68,7 @@ const dbManager = {
     return result.get();
   },
 
-  updatePost: async (postUpdateData: PostUpdateData, postIdx: number) => {
+  updatePost: async (postIdx: number, postUpdateData: PostUpdateData) => {
     await db.models.Post.update(postUpdateData, { where: { idx: postIdx } });
   },
 
@@ -119,6 +126,21 @@ const dbManager = {
       receiveridx: receiveridx,
       content: msg
     });
+  },
+
+  getLikePosts: async function (useridx: number) {
+    const ilike = await db.models.Like.findAll({
+      where: { useridx: useridx }
+    });
+    const ilikeArray = ilike.map((data: any) => data.get());
+    return ilikeArray;
+  },
+
+  updateLikeNum: async (postIdx: number, likeNum: number) => {
+    await db.models.Post.update(
+      { likenum: likeNum },
+      { where: { idx: postIdx } }
+    );
   }
 };
 

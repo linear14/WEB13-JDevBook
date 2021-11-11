@@ -71,6 +71,7 @@ export interface PostData extends PostAddData {
     nickname: string;
     profile: string | null;
   };
+  likeFlag: boolean;
 }
 
 export interface PostProps {
