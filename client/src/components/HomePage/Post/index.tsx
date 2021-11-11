@@ -109,6 +109,7 @@ const Post = ({ post }: PostProps) => {
   } = post;
   const { idx: postUserIdx, nickname, profile } = BTUseruseridx;
   const { idx: myIdx } = useRecoilValue(userData);
+
   return (
     <PostContainer>
       {postUserIdx === myIdx && (

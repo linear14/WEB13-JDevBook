@@ -1,7 +1,7 @@
 import sequelize, { INTEGER } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 
-import { PostData } from 'service/interface';
+import { PostAddData, PostUpdateData } from 'service/interface';
 
 import db from '../models';
 
@@ -56,8 +56,16 @@ const dbManager = {
     return postsWithUser;
   },
 
-  addPost: async (postData: PostData) => {
-    await db.models.Post.create(postData);
+  addPost: async (PostAddData: PostAddData) => {
+    await db.models.Post.create(PostAddData);
+  },
+
+  updatePost: async (postUpdateData: PostUpdateData, postIdx: number) => {
+    await db.models.Post.update(postUpdateData, { where: { idx: postIdx } });
+  },
+
+  deletePost: async (postIdx: number) => {
+    await db.models.Post.destroy({ where: { idx: postIdx } });
   },
 
   getAllUsers: async () => {

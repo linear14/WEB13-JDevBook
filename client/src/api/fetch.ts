@@ -1,4 +1,4 @@
-import { HomePost, PostData } from 'utils/types';
+import { PostData, PostAddData, PostUpdateData } from 'utils/types';
 
 const fetchApi = {
   getLoginlink: async (): Promise<string> => {
@@ -25,20 +25,38 @@ const fetchApi = {
     return await allusersRes.json();
   },
 
-  getPosts: async (lastIdx: number, count: number): Promise<HomePost[]> => {
+  getPosts: async (lastIdx: number, count: number): Promise<PostData[]> => {
     const response = await fetch(
       `/api/posts?lastIdx=${lastIdx}&count=${count}`
     );
     return await response.json();
   },
 
-  addPosts: async (postData: PostData) => {
+  addPosts: async (postData: PostAddData) => {
     const response = await fetch(`/api/posts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(postData)
+    });
+    return await response.json();
+  },
+
+  updatePosts: async (postIdx: number, postUpdateData: PostUpdateData) => {
+    const response = await fetch(`/api/posts/:${postIdx}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postUpdateData)
+    });
+    return await response.json();
+  },
+
+  deletePosts: async (postIdx: number) => {
+    const response = await fetch(`/api/posts/:${postIdx}`, {
+      method: 'DELETE'
     });
     return await response.json();
   }

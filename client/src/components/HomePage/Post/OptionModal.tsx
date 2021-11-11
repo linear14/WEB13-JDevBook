@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { MouseEventHandler, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 

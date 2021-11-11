@@ -1,7 +1,7 @@
 import getData from 'api/fetch';
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { HomePost } from 'utils/types';
+import { PostData } from 'utils/types';
 import { Post, Skeleton } from './index';
 
 const PostListContainer = styled.div`
@@ -19,7 +19,7 @@ const Observer = styled.div`
 `;
 
 const PostList = () => {
-  const [posts, setPosts] = useState<HomePost[]>([]);
+  const [posts, setPosts] = useState<PostData[]>([]);
   const [isFetching, setFetching] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const observerRef = useRef<IntersectionObserver>();

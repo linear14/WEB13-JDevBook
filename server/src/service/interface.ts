@@ -100,12 +100,15 @@ export interface DBUserProblem extends DBCUD {
   correct: boolean;
 }
 
-export interface PostData {
-  useridx: number;
+export interface PostUpdateData {
   secret: number;
-  likenum: number;
   contents: string;
   picture1: string | null;
   picture2: string | null;
   picture3: string | null;
+}
+
+export interface PostAddData extends PostUpdateData {
+  useridx: number;
+  likenum: number;
 }
