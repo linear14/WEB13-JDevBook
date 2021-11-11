@@ -1,5 +1,5 @@
-import React from 'react';
-import styled, { css, keyframes } from 'styled-components';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import styled, { keyframes } from 'styled-components';
 
 import { ProfilePhoto } from 'components/common';
 import palette from 'theme/palette';
@@ -37,7 +37,33 @@ const CommentText = styled.div`
   font-weight: normal;
 `;
 
+const CommentInputWrap = styled.div`
+  animation-name: ${Animation};
+  animation-duration: 0.5s;
+  padding: 10px;
+`;
+const CommentInputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const CommentInput = styled.input`
+  margin-left: 10px;
+  border: none;
+  border-radius: 15px;
+  background-color: ${palette.lightgray};
+  height: 35px;
+  width: 600px;
+  padding-left: 10px;
+`;
+
 const Comment = () => {
+  const [value, setValue] = useState<string>('');
+  const [commentList, setCommentList] = useState<string[]>([]);
+
+  const submit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <>
       <CommentsWrap>
@@ -52,6 +78,32 @@ const Comment = () => {
           </CommentContent>
         </CommentBox>
       </CommentsWrap>
+
+      <CommentInputWrap>
+        <form
+          onSubmit={(e: FormEvent<HTMLFormElement>) => {
+            if (value) {
+              submit(e);
+              setValue('');
+            } else {
+              e.preventDefault();
+            }
+          }}
+        >
+          <CommentInputWrapper>
+            <ClickableProfileImage size={'30px'} />
+            <CommentInput
+              type="text"
+              autoComplete="off"
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setValue(e.target.value)
+              }
+              value={value}
+              placeholder="댓글을 입력하세요..."
+            />
+          </CommentInputWrapper>
+        </form>
+      </CommentInputWrap>
     </>
   );
 };
