@@ -20,7 +20,8 @@ const dbManager = {
   getUserdata: async (username: string) => {
     const [user, created] = await db.models.User.findOrCreate({
       where: { nickname: username },
-      defaults: { nickname: username }
+      defaults: { nickname: username },
+      logging: false
     });
 
     return user.get();
@@ -28,7 +29,8 @@ const dbManager = {
 
   searchUsers: async (keyword: string) => {
     const users = await db.models.User.findAll({
-      where: { nickname: { [Op.like]: `%${keyword}%` } }
+      where: { nickname: { [Op.like]: `%${keyword}%` } },
+      logging: false
     });
 
     return users;
@@ -50,24 +52,26 @@ const dbManager = {
         idx: { [Op.lt]: lastIdx === -1 ? 1000000000 : lastIdx },
         [Op.or]: [{ useridx: myIdx }, { secret: false }]
       },
-      limit: count
+      limit: count,
+      logging: false
     });
 
     return postsWithUser;
   },
 
   addPost: async (postData: PostData) => {
-    await db.models.Post.create(postData);
+    await db.models.Post.create({ ...postData, logging: false });
   },
 
   getAllUsers: async () => {
-    const users = await db.models.User.findAll({});
+    const users = await db.models.User.findAll({ logging: false });
     return users;
   },
 
   getUseridx: async function (name: string) {
     const user = await db.models.User.findOne({
-      where: { nickname: name }
+      where: { nickname: name },
+      logging: false
     });
 
     return user?.get().idx ? user?.get().idx : -1;
@@ -83,7 +87,8 @@ const dbManager = {
           { senderidx: senderidx, receiveridx: receiveridx },
           { senderidx: receiveridx, receiveridx: senderidx }
         ]
-      }
+      },
+      logging: false
     });
     const allChatsArray = allChats.map((data: any) => data.get());
 
@@ -108,7 +113,8 @@ const dbManager = {
     await db.models.Chat.create({
       senderidx: senderidx,
       receiveridx: receiveridx,
-      content: msg
+      content: msg,
+      logging: false
     });
   }
 };
