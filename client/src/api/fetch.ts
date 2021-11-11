@@ -1,4 +1,5 @@
-import { HomePost, PostData } from 'utils/types';
+import { PostData, PostAddData, PostUpdateData } from 'utils/types';
+// import objectStorage from './objectStorage';
 
 const fetchApi = {
   getLoginlink: async (): Promise<string> => {
@@ -25,14 +26,19 @@ const fetchApi = {
     return await allusersRes.json();
   },
 
-  getPosts: async (lastIdx: number, count: number): Promise<HomePost[]> => {
+  getPosts: async (lastIdx: number, count: number): Promise<PostData[]> => {
     const response = await fetch(
       `/api/posts?lastIdx=${lastIdx}&count=${count}`
     );
-    return await response.json();
+    const getPostsList = await response.json();
+    return getPostsList.map((cur: any) =>
+      cur.BTMLikepostidx.length === 0
+        ? { ...cur, likeFlag: false }
+        : { ...cur, likeFlag: true }
+    );
   },
 
-  addPosts: async (postData: PostData) => {
+  addPosts: async (postData: PostAddData) => {
     const response = await fetch(`/api/posts`, {
       method: 'POST',
       headers: {
@@ -41,6 +47,51 @@ const fetchApi = {
       body: JSON.stringify(postData)
     });
     return await response.json();
+  },
+
+  updatePosts: async (postIdx: number, postUpdateData: PostUpdateData) => {
+    const response = await fetch(`/api/posts/${postIdx}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postUpdateData)
+    });
+    return await response.json();
+  },
+
+  deletePosts: async (postIdx: number) => {
+    const response = await fetch(`/api/posts/${postIdx}`, {
+      method: 'DELETE'
+    });
+    return await response.json();
+  },
+
+  updateLikeNum: async (postIdx: number, likeNum: number) => {
+    const response = await fetch(`/api/posts/like/:${postIdx}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ likeNum: likeNum })
+    });
+    return await response.json();
+  },
+
+  uploadImg: async (imglist: FileList) => {
+    console.log(imglist);
+    console.log(imglist[0]);
+    const formData = new FormData();
+    formData.append('imgfile', imglist[0]);
+    //await objectStorage.uploadObjectfile('canupload.png', imglist[0]);
+    await fetch('/api/uploadimg', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json'
+      },
+      body: formData
+    });
   }
 };
 

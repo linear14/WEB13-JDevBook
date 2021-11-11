@@ -46,24 +46,23 @@ export interface SideBarProps {
   children: React.ReactNode;
 }
 
-export interface PostBodyProps {
+export interface PostBody {
   contents: string;
   picture1: string | null;
   picture2: string | null;
   picture3: string | null;
 }
 
-export interface PostData {
-  useridx: number;
+export interface PostUpdateData extends PostBody {
   secret: boolean;
-  likenum: number;
-  contents: string;
-  picture1: string | null;
-  picture2: string | null;
-  picture3: string | null;
 }
 
-export interface HomePost extends PostData {
+export interface PostAddData extends PostUpdateData {
+  useridx: number;
+  likenum: number;
+}
+
+export interface PostData extends PostAddData {
   idx: number;
   createdAt: Date;
   BTUseruseridx: {
@@ -72,10 +71,11 @@ export interface HomePost extends PostData {
     nickname: string;
     profile: string | null;
   };
+  likeFlag: boolean;
 }
 
 export interface PostProps {
-  post: HomePost;
+  post: PostData;
 }
 
 export interface PostHeaderProps {
@@ -87,6 +87,8 @@ export interface PostHeaderProps {
 
 export interface PostFooterProps {
   likenum: number;
+  commentFlag: boolean;
+  setCommentFlag: React.Dispatch<boolean>;
 }
 
 export interface PostImageInfo {

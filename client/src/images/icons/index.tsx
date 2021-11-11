@@ -3,6 +3,7 @@ import { ReactComponent as GnbGroup } from 'images/icons/gnb-group.svg';
 import { ReactComponent as GnbHomeActive } from 'images/icons/gnb-home-active.svg';
 import { ReactComponent as GnbGroupActive } from 'images/icons/gnb-group-active.svg';
 import { ReactComponent as LikeIcon } from 'images/icons/icon-like.svg';
+import { ReactComponent as LikeIconActive } from 'images/icons/icon-like-active.svg';
 import { ReactComponent as CommentIcon } from 'images/icons/icon-comment.svg';
 import { ReactComponent as IconPublic } from 'images/icons/icon-public.svg';
 import { ReactComponent as IconPrivate } from 'images/icons/icon-private.svg';
@@ -32,6 +33,7 @@ export {
   iconPhoto,
   iconSearch,
   LikeIcon,
+  LikeIconActive,
   CommentIcon,
   IconPublic,
   IconPrivate,

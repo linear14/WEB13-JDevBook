@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdMoreHoriz } from 'react-icons/md';
 
-import { LikeIcon, CommentIcon } from 'images/icons';
+import { LikeIcon, LikeIconActive, CommentIcon } from 'images/icons';
 import { PostProps } from 'utils/types';
 
 import palette from 'theme/palette';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { modalVisibleStates, userData } from 'recoil/store';
+import { modalVisibleStates, userData, CommentState } from 'recoil/store';
 import Header from './Header';
 import OptionModal from './OptionModal';
 import Body from './Body';
 import Footer from './Footer';
+import fetchApi from 'api/fetch';
+import Comment from './Comment';
 
 const PostContainer = styled.div`
   width: 680px;
@@ -45,9 +47,10 @@ const Button = styled.div`
   align-items: center;
   justify-content: center;
   transition: 0.1s ease-in-out;
+  cursor: pointer;
 
   p {
-    margin-left: 4px;
+    margin-left: 8px;
     color: #666666;
   }
 
@@ -61,6 +64,7 @@ const Button = styled.div`
   }
 
   &:hover {
+    cursor: pointer;
     background: #f2f2f2;
     border-radius: 4px;
   }
@@ -78,6 +82,7 @@ const IconHover = styled.div`
   justify-content: center;
 
   &:hover {
+    cursor: pointer;
     background-color: ${palette.lightgray};
   }
 
@@ -96,6 +101,11 @@ const Divider = styled.div`
 
 const Post = ({ post }: PostProps) => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const { idx: myIdx } = useRecoilValue(userData);
+  const [likeFlag, setLikeFlag] = useState<boolean>(false);
+  const [likeNum, setLikeNum] = useState<number>(0);
+  const [commentFlag, setCommentFlag] = useState<boolean>(false);
+
   const {
     idx: postIdx,
     secret,
@@ -108,7 +118,20 @@ const Post = ({ post }: PostProps) => {
     BTUseruseridx
   } = post;
   const { idx: postUserIdx, nickname, profile } = BTUseruseridx;
-  const { idx: myIdx } = useRecoilValue(userData);
+
+  const likeToggle = (e: React.MouseEvent<HTMLDivElement>) => {
+    likeFlag
+      ? fetchApi.updateLikeNum(postIdx, likeNum - 1)
+      : fetchApi.updateLikeNum(postIdx, likeNum + 1);
+    likeFlag ? setLikeNum(likeNum - 1) : setLikeNum(likeNum + 1);
+    setLikeFlag(!likeFlag);
+  };
+
+  useEffect(() => {
+    post.likeFlag ? setLikeFlag(true) : setLikeFlag(false);
+    setLikeNum(post.likenum);
+  }, []);
+
   return (
     <PostContainer>
       {postUserIdx === myIdx && (
@@ -131,18 +154,28 @@ const Post = ({ post }: PostProps) => {
         picture2={picture2}
         picture3={picture3}
       />
-      <Footer likenum={likenum} />
+      <Footer
+        likenum={likeNum}
+        commentFlag={commentFlag}
+        setCommentFlag={setCommentFlag}
+      />
       <Divider />
       <ButtonsWrap>
-        <Button>
-          <LikeIcon />
-          <p>Like</p>
+        <Button onClick={likeToggle}>
+          {likeFlag ? <LikeIconActive /> : <LikeIcon />}
+          <p>좋아요</p>
         </Button>
-        <Button>
+        <Button
+          onClick={() =>
+            commentFlag ? setCommentFlag(false) : setCommentFlag(true)
+          }
+        >
           <CommentIcon />
-          <p>Comment</p>
+          <p>댓글 달기</p>
         </Button>
       </ButtonsWrap>
+      <Divider />
+      {commentFlag && <Comment postIdx={postIdx} />}
     </PostContainer>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { FiUpload } from 'react-icons/fi';
@@ -7,6 +7,8 @@ import { useRecoilState } from 'recoil';
 import { modalVisibleStates } from 'recoil/store';
 import palette from 'theme/palette';
 import { ImgUploadModalProps } from 'utils/types';
+import fetchApi from 'api/fetch';
+// import objectStorage from 'api/objectStorage';
 
 const ModalAnimation = keyframes`
   0% {
@@ -104,9 +106,33 @@ const WhatWorkModal = styled.div`
 
 const ImgUploadModal = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const [img, setImg] = useState(null) as any;
 
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
     setModalState({ ...modalState, postInPhoto: false });
+  };
+  const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
+    inputfile.current.click();
+  };
+  const getFilename = async () => {
+    if (inputfile.current.files) {
+      // console.log(inputfile.current.value);
+      // const imglist: FileList = inputfile.current.files;
+      // // type에서 혹은 이름에서 확장자 찾기 가능.
+      // await fetchApi.uploadImg(imglist);
+      // await objectStorage.uploadObjectfile(
+      //   '되나요.png',
+      //   inputfile.current.files[0]
+      // );
+      // const fReader = new FileReader();
+      // fReader.readAsDataURL(inputfile.current.files[0]);
+      // fReader.onloadend = async (event) => {
+      //   const imgurl: string | ArrayBuffer = event.target?.result ?? '';
+      //   // arrayBuffer to string 구현, '' 제외
+      //   if (typeof imgurl === 'string')
+      // };
+    }
   };
 
   return (
@@ -118,7 +144,7 @@ const ImgUploadModal = () => {
         <CloseBtn onClick={imgUploadModalOff}>
           <IoClose size="28px" />
         </CloseBtn>
-        <WhatWorkModal>
+        <WhatWorkModal onClick={imgUpload}>
           <div className="icon">
             <FiUpload size="20px" />
           </div>
@@ -126,6 +152,13 @@ const ImgUploadModal = () => {
           <div className="subtitle">또는 끌어서 놓습니다</div>
         </WhatWorkModal>
       </ImgUploadWrap>
+      <input
+        type="file"
+        accept="image/*"
+        ref={inputfile}
+        onChange={getFilename}
+        style={{ display: 'none' }}
+      />
     </ImgUploadContainer>
   );
 };

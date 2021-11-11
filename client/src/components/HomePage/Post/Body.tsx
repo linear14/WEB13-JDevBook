@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import palette from 'theme/palette';
 
-import { PostBodyProps, PostImageBoxProps, PostImageInfo } from 'utils/types';
+import { PostBody, PostImageBoxProps, PostImageInfo } from 'utils/types';
 import PostImageBox from 'components/HomePage/PostImageBox';
 import imageUtil from 'utils/imageUtil';
 
@@ -31,7 +31,7 @@ const ImagesWrap = styled.div`
 `;
 
 // 여기서 이미지 정보들을 전부 가공해서 주자 (url, 원본 width, 원본 height)
-const Body = ({ contents, picture1, picture2, picture3 }: PostBodyProps) => {
+const Body = ({ contents, picture1, picture2, picture3 }: PostBody) => {
   const initMeta = {
     imageCount: [picture1, picture2, picture3].filter((item) => item !== null)
       .length,

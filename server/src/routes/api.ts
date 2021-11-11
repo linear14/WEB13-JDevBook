@@ -4,7 +4,7 @@ dotenv.config({ path: path.resolve(__dirname, '../config/.env.development') });
 import express, { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import dbManager from '../service/dbManager';
-import { DBUser, PostData } from 'service/interface';
+import { DBUser, PostAddData, PostUpdateData } from 'service/interface';
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
 
@@ -104,9 +104,43 @@ router.post(
   '/posts',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const postData: PostData = req.body;
-      console.log(`insert ${JSON.stringify(postData)}`);
-      await dbManager.addPost(postData);
+      const PostAddData: PostAddData = req.body;
+      console.log(`Insert ${JSON.stringify(PostAddData)}`);
+      const postData = await dbManager.addPost(PostAddData);
+      res.json({ result: postData, check: true });
+    } catch (err) {
+      console.error(err);
+      res.json({ result: {}, check: false });
+    }
+  }
+);
+
+router.put(
+  '/posts/:postidx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const postIdx = Number(req.params.postidx);
+      const postUpdateData: PostUpdateData = req.body;
+      console.log(
+        `Update ${JSON.stringify(postUpdateData)} where idx=${postIdx}`
+      );
+      await dbManager.updatePost(postUpdateData, postIdx);
+      res.json(true);
+    } catch (err) {
+      console.error(err);
+      res.json(false);
+    }
+  }
+);
+
+router.delete(
+  '/posts/:postidx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      console.log(req.params.postidx);
+      const postIdx = Number(req.params.postidx);
+      console.log(`Delete idx=${postIdx}`);
+      await dbManager.deletePost(postIdx);
       res.json(true);
     } catch (err) {
       console.error(err);
@@ -127,5 +161,29 @@ router.get(
     }
   }
 );
+
+router.put(
+  '/posts/like/:postidx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const postIdx = Number(req.params.postidx.slice(1));
+      const { likeNum } = req.body;
+      console.log(
+        `Update likenum ${JSON.stringify(likeNum)} where idx=${postIdx}`
+      );
+      await dbManager.updateLikeNum(postIdx, likeNum);
+      res.json(true);
+    } catch (err) {
+      console.error(err);
+      res.json(false);
+    }
+  }
+);
+
+router.post('/uploadimg', (req: Request, res: Response, next: NextFunction) => {
+  console.log('오냐고');
+  console.log(req.body);
+  res.end();
+});
 
 module.exports = router;

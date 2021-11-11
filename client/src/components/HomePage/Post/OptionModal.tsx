@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
-import { modalVisibleStates, userData } from 'recoil/store';
+import { modalVisibleStates, postListStore } from 'recoil/store';
 import palette from 'theme/palette';
+import fetchApi from 'api/fetch';
 
 const OptionModalContainer = styled.div`
   width: 240px;
@@ -21,6 +22,7 @@ const OptionModalContainer = styled.div`
     transition: 0.2s ease-in;
 
     &:hover {
+      cursor: pointer;
       background: ${palette.gray};
       border-radius: 8px;
     }
@@ -29,6 +31,7 @@ const OptionModalContainer = styled.div`
 
 const OptionModal = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const [postList, setPostList] = useRecoilState(postListStore);
 
   const modal = React.useRef<HTMLDivElement>(null);
   const closeModal = (e: any, force?: boolean) => {
@@ -36,6 +39,13 @@ const OptionModal = () => {
       return;
     }
     setModalState({ ...modalState, postOption: -1 });
+  };
+
+  const deletePost = async () => {
+    const postIdx = modalState.postOption;
+    setModalState({ ...modalState, postOption: -1 });
+    await fetchApi.deletePosts(postIdx);
+    setPostList(postList.filter((item) => item.idx !== postIdx));
   };
 
   useEffect(() => {
@@ -49,7 +59,9 @@ const OptionModal = () => {
   return (
     <OptionModalContainer ref={modal}>
       <div>게시글 수정</div>
-      <div style={{ color: palette.alert }}>게시글 삭제</div>
+      <div style={{ color: palette.alert }} onClick={() => deletePost()}>
+        게시글 삭제
+      </div>
     </OptionModalContainer>
   );
 };

@@ -1,7 +1,9 @@
 import getData from 'api/fetch';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useRecoilState } from 'recoil';
+import { postListStore } from 'recoil/store';
 import styled, { css } from 'styled-components';
-import { HomePost } from 'utils/types';
+import { PostData } from 'utils/types';
 import { Post, Skeleton } from './index';
 
 const PostListContainer = styled.div`
@@ -19,7 +21,7 @@ const Observer = styled.div`
 `;
 
 const PostList = () => {
-  const [posts, setPosts] = useState<HomePost[]>([]);
+  const [posts, setPosts] = useRecoilState(postListStore);
   const [isFetching, setFetching] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const observerRef = useRef<IntersectionObserver>();
@@ -48,7 +50,7 @@ const PostList = () => {
     if (result.length < count) {
       setHasMore(false);
     }
-    setPosts(posts.concat(result));
+    setPosts((prev) => prev.concat(result));
     setFetching(false);
   };
 
@@ -61,9 +63,8 @@ const PostList = () => {
   };
 
   useEffect(() => {
-    setTimeout(async () => {
-      fetchPosts();
-    }, 1000);
+    setPosts([]);
+    fetchPosts();
   }, []);
 
   return (
