@@ -24,7 +24,9 @@ interface MatchParams {
   userID: string;
 }
 
-const ProfilePage: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => {
+const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
+  match
+}) => {
   return (
     <ProfilePageContainer>
       <InitUserData />

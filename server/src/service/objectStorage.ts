@@ -37,12 +37,12 @@ const objectStorage = {
       Bucket: bucket_name
     }).promise();
   },
-
+  // 폴더만 만들때인데 이럴 일이 있을지는 모르겠다...
   uploadObjectfolder: async (
     object_name: string,
     bucket_name = default_bucket
   ) => {
-    // object_name = 'sample-folder/'
+    // object_name = 'test1/'
     if (object_name[object_name.length - 1] !== '/')
       object_name = object_name + '/';
 
@@ -57,15 +57,19 @@ const objectStorage = {
     local_file_path: string,
     bucket_name = default_bucket
   ) => {
-    // object_name = 'sample-object'
-    // local_file_path = '/tmp/test.txt'
+    // object_name = 'test5/5-1/testfile.png'
+    // local_file_path = '../models/erd-workbench.png'
+    // npm start로 상대경로와 절대경로 테스트는 안해봄
     // 덮어쓰기 가능
-    await S3.putObject({
-      Bucket: bucket_name,
-      Key: object_name,
-      ACL: 'public-read', // console.ncloud에서 보기 가능
-      Body: fs.createReadStream(local_file_path)
-    }).promise();
+    await S3.upload(
+      {
+        Bucket: bucket_name,
+        Key: object_name,
+        ACL: 'public-read', // console.ncloud에서 보기 가능
+        Body: fs.createReadStream(local_file_path)
+      },
+      { partSize: 15 * 1024 * 1024 }
+    ).promise();
   },
 
   getObjectlist: async (max_keys: number, bucket_name = default_bucket) => {
@@ -75,71 +79,18 @@ const objectStorage = {
     };
     // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#listObjectsV2-property
     const data = await S3.listObjectsV2(params).promise();
-    console.log(data);
+    return data.Contents;
+  },
 
-    // https://guide.ncloud-docs.com/docs/storage-storage-8-4
-    // // List All Objects
-    // console.log('List All In The Bucket');
-    // console.log('==========================');
+  //https://kr.object.ncloudstorage.com/jdevbook/test5/5-1/testfile.png
+  //ACL설정 추가는 https://guide.ncloud-docs.com/docs/storage-storage-8-4 참고
 
-    // while (true) {
-    //   let response = await S3.listObjectsV2(params).promise();
-
-    //   console.log(`IsTruncated = ${response.IsTruncated}`);
-    //   console.log(`Marker = ${response.Marker ? response.Marker : null}`);
-    //   console.log(
-    //     `NextMarker = ${response.NextMarker ? response.NextMarker : null}`
-    //   );
-    //   console.log(`  Object Lists`);
-    //   for (let content of response.Contents) {
-    //     console.log(
-    //       `    Name = ${content.Key}, Size = ${content.Size}, Owner = ${content.Owner.ID}`
-    //     );
-    //   }
-
-    //   if (response.IsTruncated) {
-    //     params.Marker = response.NextMarker;
-    //   } else {
-    //     break;
-    //   }
-    // }
-
-    // // List Top Level Folder And Files
-    // const params2 = {
-    //   Bucket: bucket_name,
-    //   MaxKeys: max_keys,
-    //   Delimiter: '/'
-    // };
-    // console.log('Top Level Folders And Files In The Bucket');
-    // console.log('==========================');
-
-    // while (true) {
-    //   let response = await S3.listObjectsV2(params2).promise();
-
-    //   console.log(`IsTruncated = ${response.IsTruncated}`);
-    //   console.log(`Marker = ${response.Marker ? response.Marker : null}`);
-    //   console.log(
-    //     `NextMarker = ${response.NextMarker ? response.NextMarker : null}`
-    //   );
-
-    //   console.log(`  Folder Lists`);
-    //   for (let folder of response.CommonPrefixes) {
-    //     console.log(`    Name = ${folder.Prefix}`);
-    //   }
-
-    //   console.log(`  File Lists`);
-    //   for (let content of response.Contents) {
-    //     console.log(
-    //       `    Name = ${content.Key}, Size = ${content.Size}, Owner = ${content.Owner.ID}`
-    //     );
-    //   }
-
-    //   if (response.IsTruncated) {
-    //     params2.Marker = response.NextMarker;
-    //   } else {
-    //     break;
-    //   }
-    // }
+  deleteObject: async (object_name: string, bucket_name = default_bucket) => {
+    // 폴더 삭제일 경우 마지막에 '/' 붙어야 한다.
+    await S3.deleteObject({
+      Bucket: bucket_name,
+      Key: object_name
+    }).promise();
   }
 };
 
@@ -148,10 +99,13 @@ export default objectStorage;
 //(async () => await objectStorage.makeBucket('jdevbook2'))();
 //(async () => console.log(await objectStorage.getBucketlist()))();
 //(async () => await objectStorage.deleteBucket('jdevbook2'))();
-//(async () => await objectStorage.uploadObjectfolder('test4'))();
+// (async () => await objectStorage.uploadObjectfolder('test14'))();
 // (async () =>
 //   await objectStorage.uploadObjectfile(
-//     'testfile.png',
+//     'test5/5-3/testfile.png',
 //     '../models/erd-workbench.png'
 //   ))();
-//(async () => await objectStorage.getObjectlist(10))();
+// (async () => console.log(await objectStorage.getObjectlist(10)))();
+
+// (async () => await objectStorage.deleteObject('test5/5-3/testfile.png'))();
+// (async () => await objectStorage.deleteObject('test3/'))();

@@ -1,4 +1,5 @@
 import { PostData, PostAddData, PostUpdateData } from 'utils/types';
+import objectStorage from './objectStorage';
 
 const fetchApi = {
   getLoginlink: async (): Promise<string> => {
@@ -49,7 +50,7 @@ const fetchApi = {
   },
 
   updatePosts: async (postIdx: number, postUpdateData: PostUpdateData) => {
-    const response = await fetch(`/api/posts/:${postIdx}`, {
+    const response = await fetch(`/api/posts/${postIdx}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -60,7 +61,7 @@ const fetchApi = {
   },
 
   deletePosts: async (postIdx: number) => {
-    const response = await fetch(`/api/posts/:${postIdx}`, {
+    const response = await fetch(`/api/posts/${postIdx}`, {
       method: 'DELETE'
     });
     return await response.json();
@@ -75,6 +76,22 @@ const fetchApi = {
       body: JSON.stringify({ likeNum: likeNum })
     });
     return await response.json();
+  },
+  
+  uploadImg: async (imglist: FileList) => {
+    console.log(imglist);
+    console.log(imglist[0]);
+    const formData = new FormData();
+    formData.append('imgfile', imglist[0]);
+    //await objectStorage.uploadObjectfile('canupload.png', imglist[0]);
+    await fetch('/api/uploadimg', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json'
+      },
+      body: formData
+    });
   }
 };
 

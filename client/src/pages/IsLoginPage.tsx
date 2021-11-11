@@ -22,7 +22,7 @@ const IsLoginPage = () => {
   return (
     <>
       <Content>
-        <text>{message}</text>
+        <div>{message}</div>
         {link}
       </Content>
     </>
