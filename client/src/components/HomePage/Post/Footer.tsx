@@ -29,6 +29,12 @@ const FooterContainer = styled.div`
   }
 `;
 
+const Comments = styled.p`
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #999999;
+`;
+
 const Footer = ({ likenum }: PostFooterProps) => {
   return (
     <FooterContainer>
@@ -36,7 +42,7 @@ const Footer = ({ likenum }: PostFooterProps) => {
         <img src={likeBadge} alt="likeBadge" />
         <p>{likenum.toString()}</p>
       </div>
-      <p>777 Comments</p>
+      <Comments>777 Comments</Comments>
     </FooterContainer>
   );
 };

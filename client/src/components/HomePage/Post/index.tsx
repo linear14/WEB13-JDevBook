@@ -8,11 +8,12 @@ import { PostProps } from 'utils/types';
 import palette from 'theme/palette';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { modalVisibleStates, userData } from 'recoil/store';
+import { modalVisibleStates, userData, CommentState } from 'recoil/store';
 import Header from './Header';
 import OptionModal from './OptionModal';
 import Body from './Body';
 import Footer from './Footer';
+import Comment from './Comment';
 
 const PostContainer = styled.div`
   width: 680px;
@@ -45,6 +46,7 @@ const Button = styled.div`
   align-items: center;
   justify-content: center;
   transition: 0.1s ease-in-out;
+  cursor: pointer;
 
   p {
     margin-left: 4px;
@@ -94,6 +96,10 @@ const Divider = styled.div`
   margin-right: 16px;
 `;
 
+const CommentsWrap = styled.div`
+
+`;
+
 const Post = ({ post }: PostProps) => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
   const {
@@ -109,6 +115,9 @@ const Post = ({ post }: PostProps) => {
   } = post;
   const { idx: postUserIdx, nickname, profile } = BTUseruseridx;
   const { idx: myIdx } = useRecoilValue(userData);
+
+  const commentFlag = useRecoilValue(CommentState);
+
   return (
     <PostContainer>
       {postUserIdx === myIdx && (
@@ -143,6 +152,8 @@ const Post = ({ post }: PostProps) => {
           <p>Comment</p>
         </Button>
       </ButtonsWrap>
+      <Divider />
+      <Comment />
     </PostContainer>
   );
 };
