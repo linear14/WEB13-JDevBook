@@ -20,8 +20,11 @@ import {
   GnbHomeActive,
   GnbGroupActive,
   gnbMessage,
+  gnbMessageActive,
   gnbAlarm,
-  gnbSelector
+  gnbAlarmActive,
+  gnbSelector,
+  gnbSelectorActive
 } from 'images/icons';
 
 import {
@@ -166,19 +169,19 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           </ProfileWrap>
         </Link>
         <IconWrap
-          img={rightModalType === 'message' ? gnbMessage : gnbMessage}
+          img={rightModalState.messageFlag ? gnbMessageActive : gnbMessage}
           onClick={() =>
             ChangeFlag(rightModalState, setRightModalState, 'messageFlag')
           }
         />
         <IconWrap
-          img={gnbAlarm}
+          img={rightModalState.alarmFlag ? gnbAlarmActive : gnbAlarm}
           onClick={() =>
             ChangeFlag(rightModalState, setRightModalState, 'alarmFlag')
           }
         />
         <IconWrap
-          img={gnbSelector}
+          img={rightModalState.selectorFlag ? gnbSelectorActive : gnbSelector}
           onClick={
             () => fetchApi.logout() // async await 안해도 될듯?
           }
