@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import palette from 'theme/palette';
 
@@ -17,12 +17,28 @@ import {
 import { useRecoilState } from 'recoil';
 import { imageViewerState as ivState } from 'recoil/store';
 
+const GlobalStyle = createGlobalStyle`
+  * {
+    font-weight: bold;
+    
+    ::placeholder,
+    ::-webkit-input-placeholder {
+      font-family: 'Noto Sans KR';
+    }
+    :-ms-input-placeholder {
+      font-family: 'Noto Sans KR';
+    }
+  }
+
+  body {
+    background-color: ${palette.lightgray};
+  }
+`;
+
 const HomePageContainer = styled.div`
   display: flex;
   justify-content: center;
   padding-bottom: 56px;
-
-  background-color: ${palette.lightgray};
 `;
 
 const PostContainer = styled.div`
@@ -38,22 +54,25 @@ const PostContainer = styled.div`
 const HomePage = () => {
   const [imageViewerState, setImageViewerState] = useRecoilState(ivState);
   return (
-    <HomePageContainer>
-      <InitUserData />
-      <Gnb type="home" rightModalType="" />
-      <SideBar isLeft={true}>
-        <InfoSideBar />
-        <GroupSideBar />
-      </SideBar>
-      <PostContainer>
-        <PostWriter />
-        <PostList />
-      </PostContainer>
-      <SideBar isLeft={false}>
-        <ChatSideBar />
-      </SideBar>
-      {imageViewerState.isOpen && <ImageViewer />}
-    </HomePageContainer>
+    <>
+      <GlobalStyle />
+      <HomePageContainer>
+        <InitUserData />
+        <Gnb type="home" rightModalType="" />
+        <SideBar isLeft={true}>
+          <InfoSideBar />
+          <GroupSideBar />
+        </SideBar>
+        <PostContainer>
+          <PostWriter />
+          <PostList />
+        </PostContainer>
+        <SideBar isLeft={false}>
+          <ChatSideBar />
+        </SideBar>
+        {imageViewerState.isOpen && <ImageViewer />}
+      </HomePageContainer>
+    </>
   );
 };
 

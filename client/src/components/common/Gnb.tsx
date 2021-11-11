@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { modalVisibleStates, rightModalStates, userData } from 'recoil/store';
 import fetchApi from 'api/fetch';
@@ -20,8 +20,11 @@ import {
   GnbHomeActive,
   GnbGroupActive,
   gnbMessage,
+  gnbMessageActive,
   gnbAlarm,
-  gnbSelector
+  gnbAlarmActive,
+  gnbSelector,
+  gnbSelectorActive
 } from 'images/icons';
 
 import {
@@ -79,7 +82,7 @@ const GnbTab = styled.div<TabProps>`
   transition: 0.1s ease-in;
 
   &:hover {
-    background: ${palette.gray};
+    background: ${palette.lightgray};
     border-radius: 8px;
   }
 
@@ -100,7 +103,7 @@ const ProfileWrap = styled.div`
   padding-right: 12px;
 
   &:hover {
-    background: ${palette.gray};
+    background: ${palette.lightgray};
     border-radius: 24px;
   }
 
@@ -115,7 +118,7 @@ const ProfileWrap = styled.div`
 const IconWrap = styled.div<IconProps>`
   width: 40px;
   height: 40px;
-  background: ${palette.gray};
+  background: ${palette.lightgray};
   border-radius: 100%;
   display: flex;
   justify-content: center;
@@ -131,15 +134,16 @@ const IconWrap = styled.div<IconProps>`
   }
 
   &:hover {
-    background: ${palette.gray};
+    background: ${palette.lightgray};
   }
 `;
 
 const Gnb = ({ type, rightModalType }: GnbProps) => {
   const modalState = useRecoilValue(modalVisibleStates);
-  const userdata = useRecoilValue(userData);
+  const [userdata, setUserdata] = useRecoilState(userData);
   const [rightModalState, setRightModalState] =
     useRecoilState(rightModalStates);
+  const history = useHistory();
 
   return (
     <GnbContainer>
@@ -166,22 +170,31 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           </ProfileWrap>
         </Link>
         <IconWrap
-          img={rightModalType === 'message' ? gnbMessage : gnbMessage}
+          img={rightModalState.messageFlag ? gnbMessageActive : gnbMessage}
           onClick={() =>
             ChangeFlag(rightModalState, setRightModalState, 'messageFlag')
           }
         />
         <IconWrap
-          img={gnbAlarm}
+          img={rightModalState.alarmFlag ? gnbAlarmActive : gnbAlarm}
           onClick={() =>
             ChangeFlag(rightModalState, setRightModalState, 'alarmFlag')
           }
         />
         <IconWrap
-          img={gnbSelector}
-          onClick={
-            () => fetchApi.logout() // async await 안해도 될듯?
-          }
+          img={rightModalState.selectorFlag ? gnbSelectorActive : gnbSelector}
+          onClick={async () => {
+            await fetchApi.logout();
+            setUserdata({
+              idx: -1,
+              name: '',
+              profile: '' as string,
+              cover: '' as string,
+              bio: '' as string,
+              login: false
+            });
+            history.push('/');
+          }}
         />
       </FlexWrap>
     </GnbContainer>

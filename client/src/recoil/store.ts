@@ -1,4 +1,4 @@
-import socket from '../components/common/Socket';
+import socket from 'components/common/Socket';
 import { atom } from 'recoil';
 import { Socket } from 'socket.io-client';
 
@@ -9,7 +9,8 @@ export const modalVisibleStates = atom({
   default: {
     searchUser: false,
     postWriter: false,
-    postInPhoto: false
+    postInPhoto: false,
+    postOption: -1
   }
 });
 
@@ -24,6 +25,11 @@ export const userData = atom({
     login: false
     // CUD는 필요할 때 DB에서 쓰자.
   }
+});
+
+export const isLoginfail = atom({
+  key: 'isLoginfail',
+  default: false as boolean
 });
 
 export const rightModalStates = atom({
@@ -46,7 +52,6 @@ export const chatWith = atom({
   default: '' as string
 });
 
-
 export const imageViewerState = atom<{
   isOpen: boolean;
   imageCount: number;
@@ -65,13 +70,12 @@ export const imageViewerState = atom<{
 export const postWriterData = atom<PostData>({
   key: 'postWriterData',
   default: {
-    userId: -1,
-    secret: 0,
+    useridx: -1,
+    secret: false,
     likenum: 0,
     contents: '',
     picture1: null,
     picture2: null,
     picture3: null
-
   }
 });

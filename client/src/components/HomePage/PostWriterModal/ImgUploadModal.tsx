@@ -105,8 +105,8 @@ const WhatWorkModal = styled.div`
 const ImgUploadModal = () => {
   const [modalState, setModalState] = useRecoilState(modalVisibleStates);
 
-  const imgUploadModalToggle = (e: React.MouseEvent<HTMLDivElement>) => {
-    setModalState({ ...modalState, postInPhoto: !modalState.postInPhoto });
+  const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
+    setModalState({ ...modalState, postInPhoto: false });
   };
 
   return (
@@ -115,7 +115,7 @@ const ImgUploadModal = () => {
       writerModalState={modalState.postWriter}
     >
       <ImgUploadWrap>
-        <CloseBtn onClick={imgUploadModalToggle}>
+        <CloseBtn onClick={imgUploadModalOff}>
           <IoClose size="28px" />
         </CloseBtn>
         <WhatWorkModal>

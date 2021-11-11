@@ -4,7 +4,7 @@ dotenv.config({ path: path.resolve(__dirname, '../config/.env.development') });
 import express, { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import dbManager from '../service/dbManager';
-import { DBUser } from 'service/interface';
+import { DBUser, PostData } from 'service/interface';
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
 
@@ -79,13 +79,38 @@ router.get(
 
 router.get(
   '/posts',
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (
+    req: Request<{}, {}, {}, { lastIdx: number; count: number }>,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
-      const posts = await dbManager.getPosts();
+      const myIdx = req.session.useridx;
+      const { lastIdx, count } = req.query;
+      const posts = await dbManager.getPosts(
+        myIdx,
+        Number(lastIdx),
+        Number(count)
+      );
       res.json(posts);
     } catch (err) {
       console.error(err);
       res.json([]);
+    }
+  }
+);
+
+router.post(
+  '/posts',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const postData: PostData = req.body;
+      console.log(`insert ${JSON.stringify(postData)}`);
+      await dbManager.addPost(postData);
+      res.json(true);
+    } catch (err) {
+      console.error(err);
+      res.json(false);
     }
   }
 );

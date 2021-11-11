@@ -1,11 +1,14 @@
-import sequelize from 'sequelize';
+import sequelize, { INTEGER } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
+
+import { PostData } from 'service/interface';
+
 import db from '../models';
 
 const dbManager = {
   sync: async () => {
     await db
-      .sync({ force: true, logging: false })
+      .sync({ force: false, logging: false })
       .then(() => {
         console.log('Connection has been established successfully.');
       })
@@ -31,13 +34,30 @@ const dbManager = {
     return users;
   },
 
-  getPosts: async () => {
+  getPosts: async (myIdx: number, lastIdx: number, count: number) => {
     const postsWithUser = await db.models.Post.findAll({
-      include: [{ model: db.models.User, as: 'BTUseruseridx' }],
-      order: [['createdAt', 'DESC']]
+      include: [
+        {
+          model: db.models.User,
+          as: 'BTUseruseridx'
+        }
+      ],
+      order: [
+        ['createdAt', 'DESC'],
+        ['idx', 'DESC']
+      ],
+      where: {
+        idx: { [Op.lt]: lastIdx === -1 ? 1000000000 : lastIdx },
+        [Op.or]: [{ useridx: myIdx }, { secret: false }]
+      },
+      limit: count
     });
 
     return postsWithUser;
+  },
+
+  addPost: async (postData: PostData) => {
+    await db.models.Post.create(postData);
   },
 
   getAllUsers: async () => {
