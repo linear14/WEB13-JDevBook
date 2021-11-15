@@ -116,6 +116,7 @@ const ImgUploadModal = () => {
   };
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
+    // 2장 올린후 바로 클릭하면 postData 반영이 느려서 click 될 때가 있다.
     if (postData.picture3 !== null) alert('첨부 사진은 3장까지 가능합니다.');
     else inputfile.current.click();
   };
