@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import palette from 'theme/palette';
 import { PostImageBoxProps, PostImageInfo } from 'types/post';
-import { errorImage } from 'images';
 
 import OneImage from './OneImage';
 import TwoImages from './TwoImages';
@@ -25,9 +24,7 @@ const PostImageBox = ({ imageCount, images }: PostImageBoxProps) => {
   }
 
   const postImages = images as PostImageInfo[];
-  const { url, originalWidth, originalHeight } = postImages[0];
-  const { url: url2 } = imageCount >= 2 ? postImages[1] : { url: errorImage };
-  const { url: url3 } = imageCount >= 3 ? postImages[2] : { url: errorImage };
+  const { originalWidth, originalHeight } = postImages[0];
 
   return imageCount === 1 ? (
     <OneImage postImages={postImages} />
