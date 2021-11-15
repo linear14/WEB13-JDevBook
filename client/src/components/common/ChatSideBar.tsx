@@ -7,6 +7,7 @@ import { rightModalStates, userData, usersocket, chatWith } from 'recoil/store';
 import CurrentUser from './CurrentUser';
 import palette from 'theme/palette';
 import style from 'theme/style';
+import { ProfilePhoto } from 'components/common';
 import { iconSubmit } from 'images/icons';
 import { RightModalProps } from 'types/GNB';
 
@@ -20,15 +21,27 @@ const CloseChatAnimation = keyframes`
   100% { opacity: 0; transform: translateX(100px); }
 `;
 
-const ChatSideBarContainer = styled.div<{rightModalFlag: boolean, messageFlag: boolean}>`
+const ChatSideBarContainer = styled.div<{
+  rightModalFlag: boolean;
+  messageFlag: boolean;
+}>`
   display: flex;
   flex-direction: column;
   width: inherit;
   height: inherit;
 
-  visibility: ${props => props.rightModalFlag && props.messageFlag ? `` : `hidden`};
-  transition: ${props => props.rightModalFlag && props.messageFlag ? `` : `visibility .5s`};
-  animation-name: ${props => props.rightModalFlag && props.messageFlag ? css`${OpenChatAnimation}` : css`${CloseChatAnimation}`};
+  visibility: ${(props) =>
+    props.rightModalFlag && props.messageFlag ? `` : `hidden`};
+  transition: ${(props) =>
+    props.rightModalFlag && props.messageFlag ? `` : `visibility .5s`};
+  animation-name: ${(props) =>
+    props.rightModalFlag && props.messageFlag
+      ? css`
+          ${OpenChatAnimation}
+        `
+      : css`
+          ${CloseChatAnimation}
+        `};
   animation-duration: 0.5s;
 
   background-color: ${palette.white};
@@ -37,22 +50,21 @@ const ChatSideBarContainer = styled.div<{rightModalFlag: boolean, messageFlag: b
 
 const ChatTitle = styled.div`
   text-align: center;
-  font-size: 14px;
+  font-size: ${style.font.small};
   color: ${palette.darkgray};
 
-  margin-bottom: 10px;
+  margin-bottom: ${style.margin.normal};
 `;
 
 const ChatList = styled.section`
   flex: 1;
-  text-align: right;
   width: 300px;
   height: 277px;
   bottom: 0;
 
-  margin-right: 20px;
-  margin-left: 20px;
-  margin-bottom: 10px;
+  margin-right: ${style.margin.large};
+  margin-left: ${style.margin.large};
+  margin-bottom: ${style.margin.small};
 
   overflow-x: hidden;
   overflow-y: scroll;
@@ -73,6 +85,8 @@ const MessageText = styled.div<{ name: string; sender: string }>`
   height: auto;
   border-radius: 10px;
   word-break: break-word;
+  text-align: left;
+  max-width:150px;
 
   ${(props) => `color: ${props.name === props.sender ? 'white;' : 'black;'}`}
   ${(props) =>
@@ -82,19 +96,21 @@ const MessageText = styled.div<{ name: string; sender: string }>`
         : `${palette.lightgray};`
     }`}
 
-  margin-top: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
+  margin-top: ${style.margin.smallest};
+  padding-left: ${style.padding.small};
+  padding-right: ${style.padding.small};
 `;
 
 const ChatInputWrapper = styled.div`
+  width: inherit;
   align-items: center;
   text-align: center;
 
-  margin-bottom: 16px;
+  margin-bottom: ${style.margin.large};
 `;
 
 const ChatInput = styled.input`
+  width:250px;
   height: 30px;
 
   border: none;
@@ -175,22 +191,22 @@ const ChatSideBar = () => {
   const chatList = messageList.map((msg, idx) => (
     <MessageWrap key={idx} name={msg.split(':')[0]} sender={userdata.name}>
       <MessageText name={msg.split(':')[0]} sender={userdata.name}>
-        {msg}
+        {msg.split(':')[1]}
       </MessageText>
     </MessageWrap>
   ));
 
-  
   return (
-    <ChatSideBarContainer rightModalFlag={rightModalState.rightModalFlag} messageFlag={rightModalState.messageFlag}>
+    <ChatSideBarContainer
+      rightModalFlag={rightModalState.rightModalFlag}
+      messageFlag={rightModalState.messageFlag}
+    >
       <CurrentUser />
       <div>
         <hr />
       </div>
       <ChatTitle>
-        {chatReceiver
-          ? chatReceiver + ' 에게 보내는 편지'
-          : '채팅할 상대 선택'}
+        {chatReceiver ? chatReceiver + ' 에게 보내는 편지' : '채팅할 상대 선택'}
       </ChatTitle>
       <ChatList className="chat-list">{chatList}</ChatList>
       <form
