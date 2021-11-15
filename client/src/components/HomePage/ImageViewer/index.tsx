@@ -127,7 +127,7 @@ const ImageViewer = () => {
         <AnimationIcon isLeft hidden={isFirst()} onClick={goPrevious}>
           <MdArrowBackIosNew />
         </AnimationIcon>
-        <OriginalImage src={images[currentIdx]} />
+        <OriginalImage className="no-drag" src={images[currentIdx]} />
         <AnimationIcon hidden={isLast()} onClick={goNext}>
           <MdArrowForwardIos />
         </AnimationIcon>

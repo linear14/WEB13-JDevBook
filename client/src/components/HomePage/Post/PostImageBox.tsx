@@ -20,6 +20,7 @@ const FlexWrap = styled.div`
 
 const HoverBox = styled.div`
   position: relative;
+  cursor: pointer;
 
   div {
     position: absolute;
@@ -81,6 +82,7 @@ const ActiveImageBox = (props: PostImageBoxStyleWithSource) => {
       }}
     >
       <ImageBox
+        className="no-drag"
         src={urls[index]}
         width={width}
         height={height}
