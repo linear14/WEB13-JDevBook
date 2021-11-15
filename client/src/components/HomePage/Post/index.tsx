@@ -8,7 +8,7 @@ import { PostData } from 'types/post';
 import palette from 'theme/palette';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { modalStateStore, userData } from 'recoil/store';
+import { modalStateStore, userDataStates } from 'recoil/store';
 import Header from './Header';
 import OptionModal from './OptionModal';
 import Body from './Body';
@@ -101,7 +101,7 @@ const Divider = styled.div`
 
 const Post = ({ post }: { post: PostData }) => {
   const [modalState, setModalState] = useRecoilState(modalStateStore);
-  const { idx: myIdx } = useRecoilValue(userData);
+  const { idx: myIdx } = useRecoilValue(userDataStates);
   const [likeFlag, setLikeFlag] = useState<boolean>(false);
   const [likeNum, setLikeNum] = useState<number>(0);
   const [commentFlag, setCommentFlag] = useState<boolean>(false);
