@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { MdMoreHoriz } from 'react-icons/md';
 
 import { LikeIcon, LikeIconActive, CommentIcon } from 'images/icons';
-import { PostProps } from 'utils/types';
+import { PostProps } from 'types/post';
 
 import palette from 'theme/palette';
 

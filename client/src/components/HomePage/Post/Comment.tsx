@@ -1,10 +1,10 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { useRecoilValue } from 'recoil';
 
+import { userData, usersocket } from 'recoil/store';
 import { ProfilePhoto } from 'components/common';
 import palette from 'theme/palette';
-import { useRecoilValue } from 'recoil';
-import { userData, usersocket } from 'recoil/store';
 
 const Animation = keyframes`
   0% { opacity: 0; filter: blur(10px); }

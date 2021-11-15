@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 
 import { modalVisibleStates } from 'recoil/store';
 import palette from 'theme/palette';
-import { ImgUploadModalProps } from 'utils/types';
+import { ImgUploadModalProps } from 'types/post';
 import fetchApi from 'api/fetch';
 // import objectStorage from 'api/objectStorage';
 

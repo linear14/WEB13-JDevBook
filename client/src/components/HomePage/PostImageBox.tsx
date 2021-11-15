@@ -1,5 +1,8 @@
 import React, { useCallback } from 'react';
 import styled, { css } from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { imageViewerState as ivState } from 'recoil/store';
+
 import palette from 'theme/palette';
 import imageUtil from 'utils/imageUtil';
 import {
@@ -7,10 +10,8 @@ import {
   PostImageBoxStyle,
   PostImageBoxStyleWithSource,
   PostImageInfo
-} from 'utils/types';
+} from 'types/post';
 import { errorImage } from 'images';
-import { useRecoilState } from 'recoil';
-import { imageViewerState as ivState } from 'recoil/store';
 
 const FlexWrap = styled.div`
   display: flex;

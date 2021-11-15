@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 
 import { likeBadge } from 'images/icons';
-import { PostFooterProps } from 'utils/types';
-
-import { useRecoilState } from 'recoil';
-import { CommentState } from 'recoil/store';
+import { PostFooterProps } from 'types/post';
 
 const FooterContainer = styled.div`
   width: 100%;
@@ -45,13 +42,12 @@ const Footer = ({ likenum, commentFlag, setCommentFlag }: PostFooterProps) => {
         <img src={likeBadge} alt="likeBadge" />
         <p>{likenum.toString()}</p>
       </div>
-      {/* <p>777 Comments</p> */}
       <Comments
         onClick={() =>
           commentFlag ? setCommentFlag(false) : setCommentFlag(true)
         }
       >
-        777 Comments
+        {/* 777 Comments */}
       </Comments>
     </FooterContainer>
   );

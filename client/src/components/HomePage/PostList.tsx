@@ -1,10 +1,12 @@
-import getData from 'api/fetch';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { postListStore } from 'recoil/store';
 import styled, { css } from 'styled-components';
-import { PostData } from 'utils/types';
-import { Post, Skeleton } from './index';
+
+import { PostData } from 'types/post';
+import getData from 'api/fetch';
+
+import { Post, Skeleton } from 'components/HomePage';
 
 const PostListContainer = styled.div`
   width: 680px;

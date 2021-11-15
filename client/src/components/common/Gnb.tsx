@@ -11,9 +11,8 @@ import {
   TabProps,
   IconProps,
   RightModalProps
-} from 'utils/types';
+} from 'types/GNB';
 import palette from 'theme/palette';
-import { defaultProfile } from 'images';
 import {
   GnbHome,
   GnbGroup,

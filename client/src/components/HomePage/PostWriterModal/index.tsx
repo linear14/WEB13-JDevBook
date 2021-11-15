@@ -10,7 +10,7 @@ import {
   postListStore
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
-import { PostData } from 'utils/types';
+import { PostData } from 'types/post';
 
 import ModalTitle from 'components/HomePage/PostWriterModal/ModalTitle';
 import PostInfo from 'components/HomePage/PostWriterModal/PostInfo';

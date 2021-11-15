@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css, keyframes } from 'styled-components';
-import { mainLogo } from 'images';
 import { iconSearch } from 'images/icons';
 import { MdArrowBack } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
-import { modalVisibleStates } from 'recoil/store';
 
-import { SearchedUser } from 'utils/types';
+import { modalVisibleStates } from 'recoil/store';
+import { SearchedUser } from 'types/GNB';
 import palette from 'theme/palette';
+import fetchApi from 'api/fetch';
+import { mainLogo } from 'images';
 
 import { UserCard } from 'components/common';
-import fetchApi from 'api/fetch';
 
 const FlexBox = styled.div`
   display: flex;

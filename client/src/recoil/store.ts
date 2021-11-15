@@ -2,7 +2,7 @@ import socket from 'components/common/Socket';
 import { atom } from 'recoil';
 import { Socket } from 'socket.io-client';
 
-import { PostAddData, PostData } from 'utils/types';
+import { PostAddData, PostData } from 'types/post';
 
 export const modalVisibleStates = atom({
   key: 'modalVisibleState',
@@ -88,4 +88,4 @@ export const postListStore = atom<PostData[]>({
 export const CommentState = atom({
   key: 'commentsFlag',
   default: false as boolean
-})
+});
