@@ -5,7 +5,7 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import { modalStateStore, postListStore, postModalData } from 'recoil/store';
 import palette from 'theme/palette';
 import fetchApi from 'api/fetch';
-import { PostData } from 'utils/types';
+import { PostData } from 'types/post';
 
 const OptionModalContainer = styled.div`
   width: 240px;
