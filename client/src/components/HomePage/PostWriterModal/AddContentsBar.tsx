@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { modalVisibleStates } from 'recoil/store';
+import { modalStateStore } from 'recoil/store';
 import palette from 'theme/palette';
 import { iconPhoto } from 'images/icons';
 
@@ -52,10 +52,13 @@ const ContentsBtn = styled.div<{ modalState: boolean }>`
 `;
 
 const AddContentsBar = () => {
-  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const [modalState, setModalState] = useRecoilState(modalStateStore);
 
   const imgUploadModalToggle = (e: React.MouseEvent<HTMLDivElement>) => {
-    setModalState({ ...modalState, postInPhoto: !modalState.postInPhoto });
+    setModalState({
+      ...modalState,
+      post: { ...modalState.post, inPhoto: !modalState.post.inPhoto }
+    });
   };
 
   return (
@@ -63,7 +66,7 @@ const AddContentsBar = () => {
       <p>게시물에 추가</p>
       <AddContentsBtnWrap>
         <ContentsBtn
-          modalState={modalState.postInPhoto}
+          modalState={modalState.post.inPhoto}
           onClick={imgUploadModalToggle}
         >
           <img src={iconPhoto} alt="사진 아이콘" />

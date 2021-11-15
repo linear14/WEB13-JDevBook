@@ -5,7 +5,7 @@ import { mainLogo } from 'images';
 import { iconSearch } from 'images/icons';
 import { MdArrowBack } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
-import { modalVisibleStates } from 'recoil/store';
+import { modalStateStore } from 'recoil/store';
 
 import { SearchedUser } from 'utils/types';
 import palette from 'theme/palette';
@@ -144,7 +144,7 @@ const SearchModalBody = styled.div`
 `;
 
 const UserSearchBar = () => {
-  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const [modalState, setModalState] = useRecoilState(modalStateStore);
   return (
     <>
       <Link to="/home">
@@ -161,7 +161,7 @@ const UserSearchBar = () => {
 };
 
 const UserSearchModal = () => {
-  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const [modalState, setModalState] = useRecoilState(modalStateStore);
   const [input, setInput] = useState('');
   const [results, setResults] = useState<{
     isProgress: boolean;

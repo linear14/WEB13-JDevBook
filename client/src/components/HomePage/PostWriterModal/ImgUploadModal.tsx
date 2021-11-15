@@ -4,7 +4,7 @@ import { IoClose } from 'react-icons/io5';
 import { FiUpload } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
 
-import { modalVisibleStates } from 'recoil/store';
+import { modalStateStore } from 'recoil/store';
 import palette from 'theme/palette';
 import { ImgUploadModalProps } from 'utils/types';
 import fetchApi from 'api/fetch';
@@ -105,11 +105,14 @@ const WhatWorkModal = styled.div`
 `;
 
 const ImgUploadModal = () => {
-  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const [modalState, setModalState] = useRecoilState(modalStateStore);
   const [img, setImg] = useState(null) as any;
 
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
-    setModalState({ ...modalState, postInPhoto: false });
+    setModalState({
+      ...modalState,
+      post: { ...modalState.post, inPhoto: false }
+    });
   };
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -137,8 +140,8 @@ const ImgUploadModal = () => {
 
   return (
     <ImgUploadContainer
-      modalState={modalState.postInPhoto}
-      writerModalState={modalState.postWriter}
+      modalState={modalState.post.inPhoto}
+      writerModalState={modalState.post.writer}
     >
       <ImgUploadWrap>
         <CloseBtn onClick={imgUploadModalOff}>

@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { modalVisibleStates, rightModalStates, userData } from 'recoil/store';
+import { modalStateStore, rightModalStates, userData } from 'recoil/store';
 import fetchApi from 'api/fetch';
 
 import {
@@ -139,7 +139,7 @@ const IconWrap = styled.div<IconProps>`
 `;
 
 const Gnb = ({ type, rightModalType }: GnbProps) => {
-  const modalState = useRecoilValue(modalVisibleStates);
+  const modalState = useRecoilValue(modalStateStore);
   const [userdata, setUserdata] = useRecoilState(userData);
   const [rightModalState, setRightModalState] =
     useRecoilState(rightModalStates);

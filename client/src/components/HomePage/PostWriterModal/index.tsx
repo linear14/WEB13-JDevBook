@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import palette from 'theme/palette';
 import {
-  modalVisibleStates,
-  postWriterData,
+  modalStateStore,
   userData,
-  postListStore
+  postListStore,
+  postModalData
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
-import { PostData } from 'utils/types';
+import { PostAddData, PostData, PostUpdateData } from 'utils/types';
 
 import ModalTitle from 'components/HomePage/PostWriterModal/ModalTitle';
 import PostInfo from 'components/HomePage/PostWriterModal/PostInfo';
 import ModalContents from 'components/HomePage/PostWriterModal/ModalContents';
 import AddContentsBar from 'components/HomePage/PostWriterModal/AddContentsBar';
 import ImgUploadModal from './ImgUploadModal';
+import useClosePostModal from 'hooks/useClosePostModal';
 
 const PostWriterModalOverlay = styled.div<{ modalState: boolean }>`
   position: fixed;
@@ -90,52 +91,73 @@ const PostBtn = styled.div`
 `;
 
 const PostWriterModal = () => {
-  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
-  const [postData, setPostData] = useRecoilState(postWriterData);
+  const modalState = useRecoilValue(modalStateStore);
+  const postData = useRecoilValue(postModalData);
   const [postList, setPostList] = useRecoilState(postListStore);
-  const userdata = useRecoilValue(userData);
+  const closePostModal = useClosePostModal();
 
-  const postDataToAPI = async (e: React.MouseEvent<HTMLDivElement>) => {
-    if (postData.contents === '')
+  /**
+   * 등록 모달인지 수정 모달인지 알려주는 함수
+   * @returns true이면 등록, false이면 수정
+   */
+  const isEnrollMode = () => modalState.post.isEnroll;
+  const alertSuccess = () => {
+    alert(`게시글이 성공적으로 ${isEnrollMode() ? '게시' : '수정'}되었습니다!`);
+  };
+  const alertFail = () => {
+    alert(
+      `게시글이 알수없는 이유로 ${
+        isEnrollMode() ? '게시' : '수정'
+      }되지 않았습니다.`
+    );
+  };
+
+  const postDataToAPI = async () => {
+    if (postData.contents === '') {
       return alert('내용이 없습니다. 내용을 입력하세요.');
+    }
 
-    const { result, check } = await fetchApi.addPosts(postData);
+    const { useridx, contents, secret, picture1, picture2, picture3, likenum } =
+      { ...postData };
 
+    const requestData = isEnrollMode()
+      ? { useridx, contents, secret, picture1, picture2, picture3, likenum }
+      : { secret, contents, picture1, picture2, picture3 };
+
+    const { result, check } = isEnrollMode()
+      ? await fetchApi.addPosts(requestData as PostAddData)
+      : await fetchApi.updatePosts(postData.idx, requestData as PostUpdateData);
+
+    // 통신 결과 후처리 (분리하면 좋을듯?)
     if (check) {
-      alert('게시글이 성공적으로 게시되었습니다!');
-      setModalState({ ...modalState, postWriter: false, postInPhoto: false });
-      const newPostData: PostData = {
+      const newPostIfExists: PostData = isEnrollMode() && {
         ...result,
-        BTUseruseridx: {
-          bio: userdata.bio,
-          idx: userdata.idx,
-          nickname: userdata.name,
-          profile: userdata.profile
-        }
+        BTUseruseridx: { ...postData.BTUseruseridx }
       };
-      setPostList([newPostData, ...postList]);
-      setPostData({
-        ...postData,
-        secret: false,
-        contents: '',
-        picture1: null,
-        picture2: null,
-        picture3: null
-      });
-    } else alert('게시글이 알수없는 이유로 게시되지 않았습니다.');
+
+      const newPostList = isEnrollMode()
+        ? [newPostIfExists, ...postList]
+        : postList.map((post) => (post.idx === postData.idx ? postData : post));
+
+      alertSuccess();
+      setPostList(newPostList);
+      closePostModal();
+    } else {
+      alertFail();
+    }
   };
 
   return (
     <>
-      <PostWriterModalOverlay modalState={modalState.postWriter} />
-      <PostWriterModalInner modalState={modalState.postWriter}>
+      <PostWriterModalOverlay modalState={modalState.post.writer} />
+      <PostWriterModalInner modalState={modalState.post.writer}>
         <ModalTitle />
         <Line />
         <PostInfo />
         <ModalContents />
         <AddContentsBar />
         <PostBtn onClick={postDataToAPI}>
-          <div>게시</div>
+          <div>{isEnrollMode() ? '게시' : '수정'}</div>
         </PostBtn>
         <ImgUploadModal />
       </PostWriterModalInner>
