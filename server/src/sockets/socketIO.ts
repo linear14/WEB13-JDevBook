@@ -6,12 +6,13 @@ import { addAssociation } from 'sequelize-typescript';
 const socketIO = (server: any) => {
   const io = new Server(server);
   io.on('connection', (socket: Socket) => {
-    socket.on('name', (username: string) => {
-      socket.name = username;
-    });
+    // socket.on('name', (username: string) => {
+    //   socket.name = username;
+    // });
 
     socket.on('send chat initial', async (receivedData) => {
       const { sender, receiver } = receivedData;
+      socket.name = sender;
 
       const { senderidx, receiveridx, previousMsg } =
         await dbManager.getChatList(sender, receiver);

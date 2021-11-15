@@ -48,6 +48,7 @@ export const rightModalStates = atom({
 export const usersocketStates = atom({
   key: 'socket',
   default: socket as Socket
+  //default: null as Socket | null
 });
 
 export const chatWith = atom({
