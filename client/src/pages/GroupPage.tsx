@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 
 import palette from 'theme/palette';
+import { os } from 'images/groupimg';
 
 import {
   Gnb,
@@ -14,13 +15,13 @@ import {
 
 const GlobalStyle = createGlobalStyle`
   * {
-    font-weight: bold;
-    
     ::placeholder,
     ::-webkit-input-placeholder {
+      font-weight: bold;
       font-family: 'Noto Sans KR';
     }
     :-ms-input-placeholder {
+      font-weight: bold;
       font-family: 'Noto Sans KR';
     }
   }
@@ -32,11 +33,25 @@ const GlobalStyle = createGlobalStyle`
 
 const GroupPageContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 56px;
 `;
-const ContentsWrap = styled.div`
+
+const ContentsContainer = styled.div`
+  position: relative;
+  top: 56px;
+  width: 908px;
+  height: 1000px;
+
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+  }
 `;
 
 const GroupPage = () => {
@@ -46,15 +61,16 @@ const GroupPage = () => {
       <GroupPageContainer>
         <InitUserData />
         <Gnb type="group" />
-        <ContentsWrap>
-          <SideBar isLeft={true}>
-            <InfoSideBar />
-            <GroupSideBar />
-          </SideBar>
-          <SideBar isLeft={false}>
-            <ChatSideBar />
-          </SideBar>
-        </ContentsWrap>
+        <SideBar isLeft={true}>
+          <InfoSideBar />
+          <GroupSideBar />
+        </SideBar>
+        <ContentsContainer>
+          <img src={os} alt="그룹 이미지" />
+        </ContentsContainer>
+        <SideBar isLeft={false}>
+          <ChatSideBar />
+        </SideBar>
       </GroupPageContainer>
     </>
   );

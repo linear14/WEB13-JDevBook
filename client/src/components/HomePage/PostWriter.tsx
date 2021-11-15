@@ -41,10 +41,11 @@ const ModalCallBtn = styled.div`
 
   &:hover {
     cursor: pointer;
+    filter: brightness(95%);
   }
 
   &:active {
-    background-color: ${palette.gray};
+    filter: brightness(90%);
   }
 `;
 

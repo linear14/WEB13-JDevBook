@@ -19,13 +19,13 @@ import { imageViewerState as ivState } from 'recoil/store';
 
 const GlobalStyle = createGlobalStyle`
   * {
-    font-weight: bold;
-    
     ::placeholder,
     ::-webkit-input-placeholder {
+      font-weight: bold;
       font-family: 'Noto Sans KR';
     }
     :-ms-input-placeholder {
+      font-weight: bold;
       font-family: 'Noto Sans KR';
     }
   }

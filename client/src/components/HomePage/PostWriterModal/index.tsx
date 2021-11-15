@@ -80,12 +80,13 @@ const PostBtn = styled.div`
 
   &:hover {
     cursor: pointer;
-    background-color: ${palette.darkgreen};
+    filter: brightness(95%);
     transition: all 0.1s;
   }
 
   &:active {
     font-size: 15px;
+    filter: brightness(90%);
   }
 `;
 
