@@ -1,5 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+
+import palette from 'theme/palette';
 
 import {
   Gnb,
@@ -9,6 +11,24 @@ import {
   GroupSideBar,
   InitUserData
 } from '../components/common';
+
+const GlobalStyle = createGlobalStyle`
+  * {
+    font-weight: bold;
+    
+    ::placeholder,
+    ::-webkit-input-placeholder {
+      font-family: 'Noto Sans KR';
+    }
+    :-ms-input-placeholder {
+      font-family: 'Noto Sans KR';
+    }
+  }
+
+  body {
+    background-color: ${palette.lightgray};
+  }
+`;
 
 const GroupPageContainer = styled.div`
   display: flex;
@@ -21,19 +41,22 @@ const ContentsWrap = styled.div`
 
 const GroupPage = () => {
   return (
-    <GroupPageContainer>
-      <InitUserData />
-      <Gnb type="group" />
-      <ContentsWrap>
-        <SideBar isLeft={true}>
-          <InfoSideBar />
-          <GroupSideBar />
-        </SideBar>
-        <SideBar isLeft={false}>
-          <ChatSideBar />
-        </SideBar>
-      </ContentsWrap>
-    </GroupPageContainer>
+    <>
+      <GlobalStyle />
+      <GroupPageContainer>
+        <InitUserData />
+        <Gnb type="group" />
+        <ContentsWrap>
+          <SideBar isLeft={true}>
+            <InfoSideBar />
+            <GroupSideBar />
+          </SideBar>
+          <SideBar isLeft={false}>
+            <ChatSideBar />
+          </SideBar>
+        </ContentsWrap>
+      </GroupPageContainer>
+    </>
   );
 };
 

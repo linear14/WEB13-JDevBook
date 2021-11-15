@@ -12,7 +12,7 @@ const GroupSideBarContainer = styled.div`
   background: ${palette.white};
   display: flex;
   flex-direction: column;
-  box-shadow: rgba(0, 0, 0, 0.24) 5px 5px 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 3px;
 `;
 
 const SearchBarWrap = styled.div`
