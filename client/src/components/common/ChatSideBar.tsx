@@ -1,26 +1,35 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import { useRecoilValue } from 'recoil';
 import { rightModalStates, userData, usersocket, chatWith } from 'recoil/store';
 
 import CurrentUser from './CurrentUser';
 import palette from 'theme/palette';
+import style from 'theme/style';
 import { iconSubmit } from 'images/icons';
+import { RightModalProps } from 'types/GNB';
 
-const Animation = keyframes`
-  0% { opacity: 0; transform: translateX(100px);  }
-  100% { opacity: 1; transform: translateX(0px);  }
+const OpenChatAnimation = keyframes`
+  0% { opacity: 0; transform: translateX(100px); }
+  100% { opacity: 1; transform: translateX(0px); }
 `;
 
-const ChatSideBarContainer = styled.div`
+const CloseChatAnimation = keyframes`
+  0% { opacity: 1; transform: translateX(0px); }
+  100% { opacity: 0; transform: translateX(100px); }
+`;
+
+const ChatSideBarContainer = styled.div<{rightModalFlag: boolean, messageFlag: boolean}>`
   display: flex;
   flex-direction: column;
   width: inherit;
   height: inherit;
 
-  animation-name: ${Animation};
-  animation-duration: 0.75s;
+  visibility: ${props => props.rightModalFlag && props.messageFlag ? `` : `hidden`};
+  transition: ${props => props.rightModalFlag && props.messageFlag ? `` : `visibility .5s`};
+  animation-name: ${props => props.rightModalFlag && props.messageFlag ? css`${OpenChatAnimation}` : css`${CloseChatAnimation}`};
+  animation-duration: 0.5s;
 
   background-color: ${palette.white};
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
@@ -171,47 +180,46 @@ const ChatSideBar = () => {
     </MessageWrap>
   ));
 
-  if (rightModalState.rightModalFlag && rightModalState.messageFlag) {
-    return (
-      <ChatSideBarContainer>
-        <CurrentUser />
-        <div>
-          <hr />
-        </div>
-        <ChatTitle>
-          {chatReceiver
-            ? chatReceiver + ' 에게 보내는 편지'
-            : '채팅할 상대 선택'}
-        </ChatTitle>
-        <ChatList className="chat-list">{chatList}</ChatList>
-        <form
-          onSubmit={(e: FormEvent<HTMLFormElement>) => {
-            if (value) {
-              submit(e);
-              setValue('');
-            } else {
-              e.preventDefault();
+  
+  return (
+    <ChatSideBarContainer rightModalFlag={rightModalState.rightModalFlag} messageFlag={rightModalState.messageFlag}>
+      <CurrentUser />
+      <div>
+        <hr />
+      </div>
+      <ChatTitle>
+        {chatReceiver
+          ? chatReceiver + ' 에게 보내는 편지'
+          : '채팅할 상대 선택'}
+      </ChatTitle>
+      <ChatList className="chat-list">{chatList}</ChatList>
+      <form
+        onSubmit={(e: FormEvent<HTMLFormElement>) => {
+          if (value) {
+            submit(e);
+            setValue('');
+          } else {
+            e.preventDefault();
+          }
+        }}
+      >
+        <ChatInputWrapper>
+          <ChatInput
+            type="text"
+            autoComplete="off"
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setValue(e.target.value)
             }
-          }}
-        >
-          <ChatInputWrapper>
-            <ChatInput
-              type="text"
-              autoComplete="off"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setValue(e.target.value)
-              }
-              value={value}
-              placeholder="Aa"
-            />
-            <SubmitBtn type="submit">
-              <img src={iconSubmit} alt="submit-button-image" />
-            </SubmitBtn>
-          </ChatInputWrapper>
-        </form>
-      </ChatSideBarContainer>
-    );
-  } else return null;
+            value={value}
+            placeholder="메시지 입력"
+          />
+          <SubmitBtn type="submit">
+            <img src={iconSubmit} alt="submit-button-image" />
+          </SubmitBtn>
+        </ChatInputWrapper>
+      </form>
+    </ChatSideBarContainer>
+  );
 };
 
 export default ChatSideBar;
