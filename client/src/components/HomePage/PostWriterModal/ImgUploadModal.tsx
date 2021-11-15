@@ -20,7 +20,7 @@ const ModalAnimation = keyframes`
 
 const ImgUploadContainer = styled.div<{ modalState: boolean }>`
   position: fixed;
-  top: 408px;
+  top: 360px;
   width: 532px;
   height: 200px;
   box-sizing: border-box;
@@ -30,7 +30,7 @@ const ImgUploadContainer = styled.div<{ modalState: boolean }>`
   border-width: 1px;
   border-radius: 8px;
   border-color: ${palette.darkgray};
-  animation: ${ModalAnimation} 0.5s 1;
+  animation: ${ModalAnimation} 0.2s 1;
 
   display: ${(props) => (props.modalState ? 'block' : 'none')};
 `;
