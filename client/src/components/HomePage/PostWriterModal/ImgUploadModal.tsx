@@ -4,7 +4,7 @@ import { IoClose } from 'react-icons/io5';
 import { FiUpload } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
 
-import { modalStateStore } from 'recoil/store';
+import { modalStateStore, postModalDataStates } from 'recoil/store';
 import palette from 'theme/palette';
 import { ImgUploadModalProps } from 'types/post';
 import fetchApi from 'api/fetch';
@@ -106,7 +106,7 @@ const WhatWorkModal = styled.div`
 
 const ImgUploadModal = () => {
   const [modalState, setModalState] = useRecoilState(modalStateStore);
-  const [img, setImg] = useState(null) as any;
+  const [postData, setPostData] = useRecoilState(postModalDataStates);
 
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
     setModalState({
@@ -116,16 +116,22 @@ const ImgUploadModal = () => {
   };
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
-    inputfile.current.click();
+    if (postData.picture3 !== null) alert('첨부 사진은 3장까지 가능합니다.');
+    else inputfile.current.click();
   };
   const getFilename = async () => {
     if (inputfile.current.files) {
       const imglist: FileList = inputfile.current.files;
       const s3fileRes = await fetchApi.uploadImg(imglist);
       if (s3fileRes.save) {
-        // imgUpload 에서
-        // postData 가져와서 postWriteData에 넣어
-        console.log(s3fileRes.file.location);
+        // 게시 버튼 이벤트 하는 곳과 엑스 눌러서 취소하는 곳을 모르겠다...
+        // 첨부하면 아직 취소 불가, 드래그X, 미리보기X
+        if (postData.picture1 === null)
+          setPostData({ ...postData, picture1: s3fileRes.file.location });
+        else if (postData.picture2 === null)
+          setPostData({ ...postData, picture2: s3fileRes.file.location });
+        else if (postData.picture3 === null)
+          setPostData({ ...postData, picture3: s3fileRes.file.location });
       }
     }
   };
