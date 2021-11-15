@@ -3,13 +3,15 @@ import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '../config/.env.development') });
 import express, { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import multer from 'multer';
 import dbManager from '../service/dbManager';
-import { DBUser, PostAddData, PostUpdateData } from 'service/interface';
+import { DBUser, PostAddData, PostUpdateData } from '../types/interface';
+import objectStorage from '../service/objectStorage';
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
-
+const upload = multer({ dest: 'uploads/' });
 const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
 
 router.get('/data', async (req: Request, res: Response, next: NextFunction) => {
@@ -180,10 +182,17 @@ router.put(
   }
 );
 
-router.post('/uploadimg', (req: Request, res: Response, next: NextFunction) => {
-  console.log('오냐고');
-  console.log(req.body);
-  res.end();
-});
+// 뭘해도 다 안되네...... multer까지 했는데 뭐냐
+router.post(
+  '/uploadimg',
+  upload.single('imgfile'),
+  (req: Request, res: Response, next: NextFunction) => {
+    console.log('오냐고');
+    console.log(req.file);
+    console.log(req.body);
+    //await objectStorage.uploadObjectfile('abc.png', req.body.blob);
+    res.json('abc');
+  }
+);
 
 module.exports = router;

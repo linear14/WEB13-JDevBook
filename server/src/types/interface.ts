@@ -9,6 +9,7 @@ declare module 'express-session' {
 declare module 'socket.io' {
   interface Socket {
     name: string;
+    get: boolean;
   }
 }
 
@@ -117,4 +118,9 @@ export interface CommentData {
   postidx: number;
   useridx: number;
   comments: string;
+}
+
+export interface IComment {
+  writer: string;
+  text: string;
 }

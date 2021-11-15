@@ -120,10 +120,11 @@ const ImgUploadModal = () => {
   };
   const getFilename = async () => {
     if (inputfile.current.files) {
-      // console.log(inputfile.current.value);
-      // const imglist: FileList = inputfile.current.files;
-      // // type에서 혹은 이름에서 확장자 찾기 가능.
-      // await fetchApi.uploadImg(imglist);
+      console.log(inputfile.current.value);
+      console.log(inputfile.current.accept);
+      const imglist: FileList = inputfile.current.files;
+      // type에서 혹은 이름에서 확장자 찾기 가능.
+      await fetchApi.uploadImg(imglist);
       // await objectStorage.uploadObjectfile(
       //   '되나요.png',
       //   inputfile.current.files[0]
