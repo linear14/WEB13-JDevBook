@@ -20,6 +20,7 @@ const ButtonWrap = styled.div`
   position: absolute;
   width: 100%;
   text-align: right;
+  cursor: pointer;
 
   svg {
     margin: 32px;
@@ -30,7 +31,9 @@ const ButtonWrap = styled.div`
 
 const Body = styled.div`
   width: calc(100% - 96px);
+  height: 100vh;
   flex: 1;
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,6 +41,8 @@ const Body = styled.div`
 `;
 
 const OriginalImage = styled.img`
+  max-width: calc(100% - 192px);
+  max-height: 100vh;
   display: block;
   box-sizing: border-box;
 `;
@@ -47,10 +52,12 @@ const AnimationIcon = styled.div<{ isLeft?: boolean; hidden: boolean }>`
   height: 48px;
   border-radius: 50%;
   background-color: ${palette.darkgray};
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: 0.2s ease-in-out;
+
   ${({ hidden }) =>
     hidden &&
     css`
