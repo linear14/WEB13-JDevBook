@@ -9,7 +9,7 @@ import palette from 'theme/palette';
 import style from 'theme/style';
 import ProfilePhoto from 'components/common/ProfilePhoto';
 import { iconSubmit } from 'images/icons';
-import { RightModalProps } from 'types/GNB';
+import { IMessage, ISocketMessage, ISuccessiveMessage } from 'types/message';
 
 const ClickableProfileImage = styled(ProfilePhoto)``;
 
@@ -76,13 +76,15 @@ const ChatList = styled.section`
   }
 `;
 
-const MessageWrap = styled.div<{ name: string; sender: string }>`
+const MessageWrap = styled.div<IMessage>`
   ${(props) =>
-    `text-align: ${props.name === props.sender ? 'right;' : 'left;'}`}
+    `text-align: ${
+      props.currentUserName === props.sender ? 'right;' : 'left;'
+    }`}
   width: inherit;
 `;
 
-const MessageText = styled.div<{ name: string; sender: string }>`
+const MessageText = styled.div<IMessage>`
   display: inline-block;
   height: auto;
   border-radius: 10px;
@@ -90,10 +92,11 @@ const MessageText = styled.div<{ name: string; sender: string }>`
   text-align: left;
   max-width: 150px;
 
-  ${(props) => `color: ${props.name === props.sender ? 'white;' : 'black;'}`}
+  ${(props) =>
+    `color: ${props.currentUserName === props.sender ? 'white;' : 'black;'}`}
   ${(props) =>
     `background-color: ${
-      props.name === props.sender
+      props.currentUserName === props.sender
         ? `${palette.green};`
         : `${palette.lightgray};`
     }`}
@@ -134,11 +137,7 @@ const SubmitBtn = styled.button`
   }
 `;
 
-const ReceiverDiv = styled.div<{
-  receiver: string;
-  sender: string;
-  flag: boolean;
-}>`
+const ReceiverDiv = styled.div<ISuccessiveMessage>`
   display: ${(props) =>
     props.receiver === props.sender || props.flag ? `none` : `flex`};
 `;
@@ -153,13 +152,13 @@ const ChatSideBar = () => {
 
   const rightModalState = useRecoilValue(rightModalStates);
   const socket = useRecoilValue(usersocket);
-  const userdata = useRecoilValue(userData);
+  const currentUserName = useRecoilValue(userData).name;
   const chatReceiver = useRecoilValue(chatWith);
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     socket.emit('send message', {
-      sender: userdata.name,
+      sender: currentUserName,
       receiver: chatReceiver,
       message: value
     });
@@ -169,7 +168,7 @@ const ChatSideBar = () => {
     if (chatReceiver !== '') {
       setMessageList([]);
       socket.emit('send chat initial', {
-        sender: userdata.name,
+        sender: currentUserName,
         receiver: chatReceiver
       });
 
@@ -183,43 +182,46 @@ const ChatSideBar = () => {
       socket.off('send chat initial');
 
       socket.off('receive message');
-      socket.on(
-        'receive message',
-        (data: { sender: string; receiver: string; msg: string }) => {
-          const { sender, receiver, msg } = data;
-          if (
-            sender === userdata.name ||
-            (receiver === userdata.name && sender === chatReceiver)
-          ) {
-            setMessageList((messageList: string[]) => messageList.concat(msg));
-          }
-
-          document.querySelector('.chat-list')?.scrollBy({
-            top: document.querySelector('.chat-list')?.scrollHeight,
-            behavior: 'smooth'
-          });
+      socket.on('receive message', (data: ISocketMessage) => {
+        const { sender, receiver, msg } = data;
+        if (
+          sender === currentUserName ||
+          (receiver === currentUserName && sender === chatReceiver)
+        ) {
+          setMessageList((messageList: string[]) => messageList.concat(msg));
         }
-      );
+
+        document.querySelector('.chat-list')?.scrollBy({
+          top: document.querySelector('.chat-list')?.scrollHeight,
+          behavior: 'smooth'
+        });
+      });
     }
   }, [chatReceiver]);
 
+  function ShowReceiverInfoFlag(idx: number, msg: string) {
+    if (idx === 0) return msg.split(':')[0] === currentUserName ? true : false;
+    else
+      return msg.split(':')[0] === messageList[idx - 1].split(':')[0]
+        ? true
+        : false;
+  }
+
   const chatList = messageList.map((msg, idx) => (
-    <MessageWrap key={idx} name={msg.split(':')[0]} sender={userdata.name}>
+    <MessageWrap
+      key={idx}
+      currentUserName={currentUserName}
+      sender={msg.split(':')[0]}
+    >
       <ReceiverDiv
         receiver={msg.split(':')[0]}
-        sender={userdata.name}
-        flag={
-          idx === 0 && msg.split(':')[0] !== userdata.name
-            ? false
-            : idx === 0 && msg.split(':')[0] === userdata.name
-            ? true
-            : messageList[idx - 1].split(':')[0] === msg.split(':')[0]
-        }
+        sender={currentUserName}
+        flag={ShowReceiverInfoFlag(idx, msg)}
       >
         <ClickableProfileImage size={'30px'} />
         <ReceiverName>{msg.split(':')[0]}</ReceiverName>
       </ReceiverDiv>
-      <MessageText name={msg.split(':')[0]} sender={userdata.name}>
+      <MessageText currentUserName={currentUserName} sender={msg.split(':')[0]}>
         {msg.split(':')[1]}
       </MessageText>
     </MessageWrap>
