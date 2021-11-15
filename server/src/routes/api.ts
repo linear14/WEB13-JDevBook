@@ -125,10 +125,10 @@ router.put(
         `Update ${JSON.stringify(postUpdateData)} where idx=${postIdx}`
       );
       await dbManager.updatePost(postUpdateData, postIdx);
-      res.json(true);
+      res.json({ check: true });
     } catch (err) {
       console.error(err);
-      res.json(false);
+      res.json({ check: false });
     }
   }
 );
