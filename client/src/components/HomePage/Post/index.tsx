@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { MdMoreHoriz } from 'react-icons/md';
 
 import { LikeIcon, LikeIconActive, CommentIcon } from 'images/icons';
-import { PostProps } from 'types/post';
+import { PostData } from 'types/post';
 
 import palette from 'theme/palette';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { modalVisibleStates, userData, CommentState } from 'recoil/store';
+import { modalStateStore, userData } from 'recoil/store';
 import Header from './Header';
 import OptionModal from './OptionModal';
 import Body from './Body';
@@ -99,8 +99,8 @@ const Divider = styled.div`
   margin-right: 16px;
 `;
 
-const Post = ({ post }: PostProps) => {
-  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+const Post = ({ post }: { post: PostData }) => {
+  const [modalState, setModalState] = useRecoilState(modalStateStore);
   const { idx: myIdx } = useRecoilValue(userData);
   const [likeFlag, setLikeFlag] = useState<boolean>(false);
   const [likeNum, setLikeNum] = useState<number>(0);
@@ -114,7 +114,6 @@ const Post = ({ post }: PostProps) => {
     picture1,
     picture2,
     picture3,
-    likenum,
     BTUseruseridx
   } = post;
   const { idx: postUserIdx, nickname, profile } = BTUseruseridx;
@@ -136,12 +135,17 @@ const Post = ({ post }: PostProps) => {
     <PostContainer>
       {postUserIdx === myIdx && (
         <IconHover
-          onClick={() => setModalState({ ...modalState, postOption: postIdx })}
+          onClick={() =>
+            setModalState({
+              ...modalState,
+              post: { ...modalState.post, index: postIdx }
+            })
+          }
         >
           <MdMoreHoriz />
         </IconHover>
       )}
-      {modalState.postOption === postIdx && <OptionModal />}
+      {modalState.post.index === postIdx && <OptionModal post={post} />}
       <Header
         nickname={nickname}
         profile={profile}
