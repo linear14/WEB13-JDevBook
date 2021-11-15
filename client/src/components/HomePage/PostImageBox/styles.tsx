@@ -5,4 +5,13 @@ const FlexWrap = styled.div`
   align-items: center;
 `;
 
-export { FlexWrap };
+const CropCenter = styled.div<{ width: number; height: number }>`
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+`;
+
+export { FlexWrap, CropCenter };

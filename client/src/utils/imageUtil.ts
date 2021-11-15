@@ -35,6 +35,29 @@ const imageUtil = {
     } else {
       return [Math.floor((width * target) / height), target];
     }
+  },
+
+  /**
+   * 최적의 이미지 너비와 높이를 계산해서 반환해준다.
+   * targetWidth와 targetHeight를 최소 너비 및 높이로 보장한다.
+   * 주로 croping을 위해 사용한다.
+   * @param targetWidth 화면에 보일 이미지의 최소 너비
+   * @param targetHeight 화면에 보일 이미지의 최소 높이
+   * @param width 원본 너비
+   * @param height 원본 높이
+   */
+  getImageFitSizeForCrop: (
+    targetWidth: number,
+    targetHeight: number,
+    width: number,
+    height: number
+  ) => {
+    const targetRatio = targetWidth / targetHeight;
+    if (targetRatio >= width / height) {
+      return [targetWidth, (height * targetWidth) / width];
+    } else {
+      return [(width * targetHeight) / height, targetHeight];
+    }
   }
 };
 
