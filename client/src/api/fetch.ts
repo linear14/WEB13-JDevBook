@@ -79,31 +79,15 @@ const fetchApi = {
   },
 
   uploadImg: async (imglist: FileList) => {
-    // console.log(imglist);
-    // console.log(imglist[0]);
-    //const blob = URL.createObjectURL(imglist[0]);
-    // console.log(blob);
-    // const reader = new FileReader();
-    // reader.readAsArrayBuffer(imglist[0]);
-    // reader.onload = (e) => {
-
-    // }
-
     const formData = new FormData();
     formData.append('imgfile', imglist[0]);
 
-    //await objectStorage.uploadObjectfile('canupload.png', imglist[0]);
-    const body = await fetch('/api/uploadimg', {
+    const fileRes = await fetch('/api/uploadimg', {
       method: 'POST',
-      // headers: {
-      //   'Content-Type':
-      //     'multipart/form-data; charset=utf-8; boundary="-----boundary-----'
-      //   // application/x-www-form-urlencoded (payload too large)
-      //   //   //   'Content-Type': 'application/json'
-      // },
       body: formData
     });
-    console.log(await body.json());
+
+    return await fileRes.json(); // {file: s3file, save: true/false}
   }
 };
 

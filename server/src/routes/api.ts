@@ -6,12 +6,12 @@ import jwt from 'jsonwebtoken';
 import multer from 'multer';
 import dbManager from '../service/dbManager';
 import { DBUser, PostAddData, PostUpdateData } from '../types/interface';
-import objectStorage from '../service/objectStorage';
+import { objectStorage, upload } from '../service/objectStorage';
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
-const upload = multer({ dest: 'uploads/' });
+//const upload = multer({ dest: 'uploads/' });
 const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
 
 router.get('/data', async (req: Request, res: Response, next: NextFunction) => {
@@ -182,16 +182,14 @@ router.put(
   }
 );
 
-// 뭘해도 다 안되네...... multer까지 했는데 뭐냐
 router.post(
   '/uploadimg',
-  upload.single('imgfile'),
-  (req: Request, res: Response, next: NextFunction) => {
-    console.log('오냐고');
-    console.log(req.file);
-    console.log(req.body);
-    //await objectStorage.uploadObjectfile('abc.png', req.body.blob);
-    res.json('abc');
+  upload.single('imgfile'), // multer-s3 location 추가됨
+  async (req: Request, res: Response, next: NextFunction) => {
+    const s3file = req.file;
+    if (s3file) res.json({ file: s3file, save: true });
+    else res.json({ save: false });
+    // type 생각하면 형식 똑같이 해야되나?
   }
 );
 

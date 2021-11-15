@@ -120,22 +120,13 @@ const ImgUploadModal = () => {
   };
   const getFilename = async () => {
     if (inputfile.current.files) {
-      console.log(inputfile.current.value);
-      console.log(inputfile.current.accept);
       const imglist: FileList = inputfile.current.files;
-      // type에서 혹은 이름에서 확장자 찾기 가능.
-      await fetchApi.uploadImg(imglist);
-      // await objectStorage.uploadObjectfile(
-      //   '되나요.png',
-      //   inputfile.current.files[0]
-      // );
-      // const fReader = new FileReader();
-      // fReader.readAsDataURL(inputfile.current.files[0]);
-      // fReader.onloadend = async (event) => {
-      //   const imgurl: string | ArrayBuffer = event.target?.result ?? '';
-      //   // arrayBuffer to string 구현, '' 제외
-      //   if (typeof imgurl === 'string')
-      // };
+      const s3fileRes = await fetchApi.uploadImg(imglist);
+      if (s3fileRes.save) {
+        // imgUpload 에서
+        // postData 가져와서 postWriteData에 넣어
+        console.log(s3fileRes.file.location);
+      }
     }
   };
 
