@@ -65,6 +65,10 @@ const GroupItem = styled(Link)`
     background: ${palette.lightgray};
     transition: all 0.2s;
   }
+
+  &:active {
+    background: ${palette.gray};
+  }
 `;
 
 type tempGroupType = {

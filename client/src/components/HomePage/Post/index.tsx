@@ -95,6 +95,10 @@ const IconHover = styled.div`
     background-color: ${palette.lightgray};
   }
 
+  &:active {
+    background-color: ${palette.gray};
+  }
+
   svg {
     font-size: 24px;
   }

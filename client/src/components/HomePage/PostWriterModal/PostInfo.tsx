@@ -34,6 +34,10 @@ const SecretSelector = styled.div`
   &:hover {
     cursor: pointer;
   }
+
+  &:active {
+    background-color: ${palette.gray};
+  }
 `;
 
 const PostInfo = () => {

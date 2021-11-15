@@ -70,6 +70,12 @@ const CloseBtn = styled.div`
   &:hover {
     cursor: pointer;
   }
+
+  &:active {
+    width: 35px;
+    height: 35px;
+    background-color: ${palette.gray};
+  }
 `;
 
 const WhatWorkModal = styled.div`
