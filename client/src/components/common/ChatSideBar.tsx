@@ -9,8 +9,8 @@ import palette from 'theme/palette';
 import { iconSubmit } from 'images/icons';
 
 const Animation = keyframes`
-  0% { opacity: 0; transform: translateX(100px); filter: blur(10px); }
-  100% { opacity: 1; transform: translateX(0px); filter: blur(0px); }
+  0% { opacity: 0; transform: translateX(100px);  }
+  100% { opacity: 1; transform: translateX(0px);  }
 `;
 
 const ChatSideBarContainer = styled.div`
