@@ -71,6 +71,10 @@ const StyledBtn = styled.div`
     transition: all 0.2s;
   }
 
+  &:active {
+    background-color: ${palette.gray};
+  }
+
   img {
     height: 30px;
     width: 30px;

@@ -6,7 +6,6 @@ import { useRecoilState } from 'recoil';
 
 import { modalStateStore } from 'recoil/store';
 import palette from 'theme/palette';
-import { ImgUploadModalProps } from 'types/post';
 import fetchApi from 'api/fetch';
 // import objectStorage from 'api/objectStorage';
 
@@ -19,7 +18,7 @@ const ModalAnimation = keyframes`
   }
 `;
 
-const ImgUploadContainer = styled.div<ImgUploadModalProps>`
+const ImgUploadContainer = styled.div<{ modalState: boolean }>`
   position: fixed;
   top: 408px;
   width: 532px;
@@ -139,10 +138,7 @@ const ImgUploadModal = () => {
   };
 
   return (
-    <ImgUploadContainer
-      modalState={modalState.post.inPhoto}
-      writerModalState={modalState.post.writer}
-    >
+    <ImgUploadContainer modalState={modalState.post.inPhoto}>
       <ImgUploadWrap>
         <CloseBtn onClick={imgUploadModalOff}>
           <IoClose size="28px" />

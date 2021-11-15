@@ -63,8 +63,3 @@ export interface PostImageBoxStyleWithSource extends PostImageBoxStyle {
   index: number;
   urls: string[];
 }
-
-export interface ImgUploadModalProps {
-  modalState: boolean;
-  writerModalState: boolean;
-}

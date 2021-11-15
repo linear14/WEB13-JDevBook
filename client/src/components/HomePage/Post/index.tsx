@@ -6,6 +6,7 @@ import { LikeIcon, LikeIconActive, CommentIcon } from 'images/icons';
 import { PostData } from 'types/post';
 
 import palette from 'theme/palette';
+import style from 'theme/style';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { modalStateStore, userData } from 'recoil/store';
@@ -39,7 +40,7 @@ const ButtonsWrap = styled.div`
   align-items: center;
 `;
 
-const Button = styled.div`
+const Button = styled.div<{ isLike?: boolean }>`
   flex: 1;
   margin: 0px 2px 4px;
   height: 36px;
@@ -47,11 +48,11 @@ const Button = styled.div`
   align-items: center;
   justify-content: center;
   transition: 0.1s ease-in-out;
-  cursor: pointer;
 
   p {
     margin-left: 8px;
-    color: #666666;
+    color: ${(props) =>
+      props.isLike ? `${palette.darkgreen}` : `${palette.darkgray}`};
   }
 
   svg {
@@ -60,13 +61,21 @@ const Button = styled.div`
   }
 
   path {
-    fill: #666666;
+    fill: ${(props) =>
+      props.isLike ? `${palette.darkgreen}` : `${palette.darkgray}`};
   }
 
   &:hover {
     cursor: pointer;
-    background: #f2f2f2;
+    background: ${palette.lightgray};
     border-radius: 4px;
+  }
+  &:active {
+    background-color: ${palette.gray};
+    svg {
+      width: 16px;
+      height: 16px;
+    }
   }
 `;
 
@@ -118,12 +127,14 @@ const Post = ({ post }: { post: PostData }) => {
   } = post;
   const { idx: postUserIdx, nickname, profile } = BTUseruseridx;
 
-  const likeToggle = (e: React.MouseEvent<HTMLDivElement>) => {
+  const likeToggle = async (e: React.MouseEvent<HTMLDivElement>) => {
     likeFlag
       ? fetchApi.updateLikeNum(postIdx, likeNum - 1)
       : fetchApi.updateLikeNum(postIdx, likeNum + 1);
+
     likeFlag ? setLikeNum(likeNum - 1) : setLikeNum(likeNum + 1);
     setLikeFlag(!likeFlag);
+    await fetchApi.addLikePost(myIdx, postIdx);
   };
 
   useEffect(() => {
@@ -165,8 +176,8 @@ const Post = ({ post }: { post: PostData }) => {
       />
       <Divider />
       <ButtonsWrap>
-        <Button onClick={likeToggle}>
-          {likeFlag ? <LikeIconActive /> : <LikeIcon />}
+        <Button isLike={likeFlag} onClick={likeToggle}>
+          <LikeIcon />
           <p>좋아요</p>
         </Button>
         <Button
