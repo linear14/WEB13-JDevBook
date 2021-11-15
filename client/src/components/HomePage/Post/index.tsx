@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { MdMoreHoriz } from 'react-icons/md';
 
 import { LikeIcon, LikeIconActive, CommentIcon } from 'images/icons';
-import { PostData } from 'utils/types';
+import { PostData } from 'types/post';
 
 import palette from 'theme/palette';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { modalStateStore, userData, CommentState } from 'recoil/store';
+import { modalStateStore, userData } from 'recoil/store';
 import Header from './Header';
 import OptionModal from './OptionModal';
 import Body from './Body';
@@ -114,7 +114,6 @@ const Post = ({ post }: { post: PostData }) => {
     picture1,
     picture2,
     picture3,
-    likenum,
     BTUseruseridx
   } = post;
   const { idx: postUserIdx, nickname, profile } = BTUseruseridx;

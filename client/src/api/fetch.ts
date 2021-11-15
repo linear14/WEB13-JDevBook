@@ -1,4 +1,4 @@
-import { PostData, PostAddData, PostUpdateData } from 'utils/types';
+import { PostData, PostAddData, PostUpdateData } from 'types/post';
 // import objectStorage from './objectStorage';
 
 const fetchApi = {

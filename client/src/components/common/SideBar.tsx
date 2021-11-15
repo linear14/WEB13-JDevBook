@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { SideBarProps } from 'utils/types';
+import { SideBarProps } from 'types/common';
 
 const SideBarContainer = styled.div<SideBarProps>`
   width: 340px;

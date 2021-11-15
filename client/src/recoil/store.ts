@@ -2,7 +2,7 @@ import socket from 'components/common/Socket';
 import { atom } from 'recoil';
 import { Socket } from 'socket.io-client';
 
-import { PostData } from 'utils/types';
+import { PostData } from 'types/post';
 
 export const modalStateStore = atom({
   key: 'modalState',

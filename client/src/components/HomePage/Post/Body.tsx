@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import palette from 'theme/palette';
-
-import { PostBody, PostImageBoxProps, PostImageInfo } from 'utils/types';
+import { PostBody, PostImageBoxProps, PostImageInfo } from 'types/post';
 import PostImageBox from 'components/HomePage/PostImageBox';
 import imageUtil from 'utils/imageUtil';
 

@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { MdClose, MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
 import { imageViewerState as ivState } from 'recoil/store';
+
 import palette from 'theme/palette';
 
 const Container = styled.div`
