@@ -7,9 +7,11 @@ import { rightModalStates, userData, usersocket, chatWith } from 'recoil/store';
 import CurrentUser from './CurrentUser';
 import palette from 'theme/palette';
 import style from 'theme/style';
-import { ProfilePhoto } from 'components/common';
+import ProfilePhoto from 'components/common/ProfilePhoto';
 import { iconSubmit } from 'images/icons';
 import { RightModalProps } from 'types/GNB';
+
+const ClickableProfileImage = styled(ProfilePhoto)``;
 
 const OpenChatAnimation = keyframes`
   0% { opacity: 0; transform: translateX(100px); }
@@ -86,7 +88,7 @@ const MessageText = styled.div<{ name: string; sender: string }>`
   border-radius: 10px;
   word-break: break-word;
   text-align: left;
-  max-width:150px;
+  max-width: 150px;
 
   ${(props) => `color: ${props.name === props.sender ? 'white;' : 'black;'}`}
   ${(props) =>
@@ -110,7 +112,7 @@ const ChatInputWrapper = styled.div`
 `;
 
 const ChatInput = styled.input`
-  width:250px;
+  width: 250px;
   height: 30px;
 
   border: none;
@@ -130,6 +132,19 @@ const SubmitBtn = styled.button`
     width: 16px;
     height: 16px;
   }
+`;
+
+const ReceiverDiv = styled.div<{
+  receiver: string;
+  sender: string;
+  flag: boolean;
+}>`
+  display: ${(props) =>
+    props.receiver === props.sender || props.flag ? `none` : `flex`};
+`;
+
+const ReceiverName = styled.div`
+  margin-left: ${style.margin.smallest};
 `;
 
 const ChatSideBar = () => {
@@ -190,6 +205,20 @@ const ChatSideBar = () => {
 
   const chatList = messageList.map((msg, idx) => (
     <MessageWrap key={idx} name={msg.split(':')[0]} sender={userdata.name}>
+      <ReceiverDiv
+        receiver={msg.split(':')[0]}
+        sender={userdata.name}
+        flag={
+          idx === 0 && msg.split(':')[0] !== userdata.name
+            ? false
+            : idx === 0 && msg.split(':')[0] === userdata.name
+            ? true
+            : messageList[idx - 1].split(':')[0] === msg.split(':')[0]
+        }
+      >
+        <ClickableProfileImage size={'30px'} />
+        <ReceiverName>{msg.split(':')[0]}</ReceiverName>
+      </ReceiverDiv>
       <MessageText name={msg.split(':')[0]} sender={userdata.name}>
         {msg.split(':')[1]}
       </MessageText>
