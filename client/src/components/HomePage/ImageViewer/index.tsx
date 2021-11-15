@@ -116,13 +116,6 @@ const ImageViewer = () => {
 
   return (
     <Container>
-      <ButtonWrap
-        onClick={() => {
-          setImageViewerState({ ...imageViewerState, isOpen: false });
-        }}
-      >
-        <MdClose />
-      </ButtonWrap>
       <Body>
         <AnimationIcon isLeft hidden={isFirst()} onClick={goPrevious}>
           <MdArrowBackIosNew />
@@ -132,6 +125,13 @@ const ImageViewer = () => {
           <MdArrowForwardIos />
         </AnimationIcon>
       </Body>
+      <ButtonWrap
+        onClick={() => {
+          setImageViewerState({ ...imageViewerState, isOpen: false });
+        }}
+      >
+        <MdClose />
+      </ButtonWrap>
     </Container>
   );
 };

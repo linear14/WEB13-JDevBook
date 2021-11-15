@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import palette from 'theme/palette';
 import { PostBody, PostImageBoxProps, PostImageInfo } from 'types/post';
-import PostImageBox from 'components/HomePage/Post/PostImageBox';
+import PostImageBox from 'components/HomePage/PostImageBox';
 import imageUtil from 'utils/imageUtil';
 
 const BodyContainer = styled.div`
