@@ -107,7 +107,6 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const PostAddData: PostAddData = req.body;
-      console.log(`Insert ${JSON.stringify(PostAddData)}`);
       const postData = await dbManager.addPost(PostAddData);
       res.json({ result: postData, check: true });
     } catch (err) {
@@ -123,9 +122,6 @@ router.put(
     try {
       const postIdx = Number(req.params.postidx);
       const postUpdateData: PostUpdateData = req.body;
-      console.log(
-        `Update ${JSON.stringify(postUpdateData)} where idx=${postIdx}`
-      );
       await dbManager.updatePost(postUpdateData, postIdx);
       res.json({ check: true });
     } catch (err) {
@@ -139,9 +135,7 @@ router.delete(
   '/posts/:postidx',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.params.postidx);
       const postIdx = Number(req.params.postidx);
-      console.log(`Delete idx=${postIdx}`);
       await dbManager.deletePost(postIdx);
       res.json(true);
     } catch (err) {
