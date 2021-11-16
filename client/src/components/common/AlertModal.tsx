@@ -10,7 +10,11 @@ const onAnimation = keyframes`
     top: -70px;
     opacity: 0%;
   }
-  50%{
+  25%{
+    top: 20px;
+    opacity: 100%;
+  }
+  75%{
     top: 20px;
     opacity: 100%;
   }
@@ -30,7 +34,7 @@ const AlertModalWrap = styled.div<{ bgColor?: string; modalState: boolean }>`
   border-radius: 8px;
   background-color: ${(props) => props.bgColor ?? `${palette.blue}`};
   color: ${palette.white};
-  animation: ${onAnimation} 4s ease;
+  animation: ${onAnimation} 3s ease;
 
   display: ${(props) => (props.modalState ? `flex` : `none`)};
   justify-content: center;
