@@ -1,7 +1,6 @@
 import dbManager from '../service/dbManager';
 import { Socket, Server } from 'socket.io';
 import { IComment } from '../types/interface';
-import { addAssociation } from 'sequelize-typescript';
 
 const socketIO = (server: any) => {
   const io = new Server(server);

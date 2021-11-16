@@ -49,6 +49,7 @@ const PostList = () => {
   const fetchPosts = async (lastIdx: number = -1, count: number = 10) => {
     setFetching(true);
     const result = await getData.getPosts(lastIdx, count);
+    console.log(result);
     if (result.length < count) {
       setHasMore(false);
     }

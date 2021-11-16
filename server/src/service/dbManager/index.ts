@@ -1,9 +1,9 @@
-import sequelize, { INTEGER, Model } from 'sequelize';
-import { Op, fn, col } from 'sequelize';
+import { Op } from 'sequelize';
 
-import { PostAddData, PostUpdateData, CommentData } from '../types/interface';
+import db from '../../models';
 
-import db from '../models';
+import { toggleLikePosts, updateLikeNum } from './like';
+import { getPosts, addPost, updatePost, deletePost } from './post';
 
 const dbManager = {
   sync: async () => {
@@ -36,54 +36,10 @@ const dbManager = {
     return users;
   },
 
-  getPosts: async (myIdx: number, lastIdx: number, count: number) => {
-    const postsWithUser = await db.models.Post.findAll({
-      include: [
-        {
-          model: db.models.User,
-          as: 'BTUseruseridx'
-        },
-        {
-          model: db.models.User,
-          as: 'BTMLikepostidx',
-          through: {
-            where: { useridx: myIdx }
-          }
-        }
-      ],
-      order: [
-        ['createdAt', 'DESC'],
-        ['idx', 'DESC']
-      ],
-      where: {
-        idx: { [Op.lt]: lastIdx === -1 ? 1000000000 : lastIdx },
-        [Op.or]: [{ useridx: myIdx }, { secret: false }]
-      },
-      limit: count,
-      logging: false
-    });
-
-    return postsWithUser;
-  },
-
-  addPost: async (postAddData: PostAddData) => {
-    const result = await db.models.Post.create({
-      ...postAddData,
-      logging: false
-    });
-    return result.get();
-  },
-
-  updatePost: async (postUpdateData: PostUpdateData, postIdx: number) => {
-    await db.models.Post.update(postUpdateData, {
-      where: { idx: postIdx },
-      logging: false
-    });
-  },
-
-  deletePost: async (postIdx: number) => {
-    await db.models.Post.destroy({ where: { idx: postIdx }, logging: false });
-  },
+  getPosts,
+  addPost,
+  updatePost,
+  deletePost,
 
   getAllUsers: async () => {
     const users = await db.models.User.findAll({ logging: false });
@@ -160,26 +116,9 @@ const dbManager = {
       comments: comments
     });
   },
-  
-  toggleLikePosts: async function (useridx: number, postidx: number) {
-    const [likePost, created] = await db.models.Like.findOrCreate({
-      where: { useridx: useridx, postidx: postidx },
-      logging: false
-    });
-    if (!created)
-      await db.models.Like.destroy({
-        where: { useridx: useridx, postidx: postidx },
-        logging: false
-      });
-    return created;
-  },
-  
-  updateLikeNum: async (postIdx: number, likeNum: number) => {
-    await db.models.Post.update(
-      { likenum: likeNum },
-      { where: { idx: postIdx }, logging: false }
-    );
-  },
+
+  toggleLikePosts,
+  updateLikeNum,
 
   getComments: async function (postidx: number) {
     const prevComments = await db.models.Comment.findAll({

@@ -85,7 +85,6 @@ const PostBtn = styled.div`
   &:hover {
     cursor: pointer;
     filter: brightness(95%);
-    transition: all 0.1s;
   }
 
   &:active {
