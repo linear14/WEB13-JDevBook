@@ -50,13 +50,22 @@ const ImgUploadWrap = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  overflow: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${palette.gray};
+  }
 `;
 
-const CloseBtn = styled.div`
+const CloseBtn = styled.div<{ right: number }>`
   position: absolute;
   top: 0;
-  right: 0;
+  right: ${({ right }) => `${right}px`};
   width: 36px;
   height: 36px;
   box-sizing: border-box;
@@ -128,8 +137,8 @@ const WhatWorkModal = styled.div`
 `;
 
 const ImgPreview = styled.div`
-  width: 150px;
-  height: 100px;
+  width: 300px;
+  height: 200px;
 
   display: none;
   flex-direction: column;
@@ -155,6 +164,8 @@ const ImgUploadModal = () => {
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgUploadWrapRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgPreviewModal = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const uploadButtonRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const workModalRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
     setModalState({
@@ -193,16 +204,13 @@ const ImgUploadModal = () => {
       return setIsImgUploading(false);
     }
 
-    // 첨부하면 아직 취소 불가, 드래그X, 미리보기X
     if (postData.picture1 === null)
       setPostData({ ...postData, picture1: s3fileRes.file.location });
     else if (postData.picture2 === null)
       setPostData({ ...postData, picture2: s3fileRes.file.location });
     else if (postData.picture3 === null) {
       setPostData({ ...postData, picture3: s3fileRes.file.location });
-      // setIsImgMax(true); // 이거 비동기인가여?
     }
-    // setIsImgUploading(false);  // 이거 비동기인가여?
   };
 
   useEffect(() => {
@@ -212,8 +220,12 @@ const ImgUploadModal = () => {
   useEffect(() => {
     if (postData.picture1 === null) {
       imgPreviewModal.current.style.display = 'none';
+      uploadButtonRef.current.style.display = 'none';
+      workModalRef.current.style.display = 'flex';
     } else {
       imgPreviewModal.current.style.display = 'flex';
+      uploadButtonRef.current.style.display = 'flex';
+      workModalRef.current.style.display = 'none';
     }
   }, [postData.picture1]);
 
@@ -230,10 +242,13 @@ const ImgUploadModal = () => {
   return (
     <ImgUploadContainer modalState={modalState.post.inPhoto}>
       <ImgUploadWrap>
-        <CloseBtn onClick={imgUploadModalOff}>
+        <CloseBtn right={0} onClick={imgUploadModalOff}>
           <IoClose size="28px" />
         </CloseBtn>
-        <WhatWorkModal onClick={imgUpload}>
+        <CloseBtn ref={uploadButtonRef} right={40} onClick={imgUpload}>
+          <FiUpload size="20px" />
+        </CloseBtn>
+        <WhatWorkModal ref={workModalRef} onClick={imgUpload}>
           <div className="icon">
             <FiUpload size="20px" />
           </div>
