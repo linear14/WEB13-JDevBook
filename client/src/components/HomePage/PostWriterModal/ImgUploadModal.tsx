@@ -12,7 +12,6 @@ import {
 } from 'recoil/store';
 import palette from 'theme/palette';
 import fetchApi from 'api/fetch';
-// import objectStorage from 'api/objectStorage';
 
 const ModalAnimation = keyframes`
   0% {
@@ -48,8 +47,10 @@ const ImgUploadWrap = styled.div`
   background-color: ${palette.lightgray};
 
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+  overflow: auto;
 `;
 
 const CloseBtn = styled.div`
@@ -115,21 +116,50 @@ const WhatWorkModal = styled.div`
   }
 `;
 
+const ImgPreview = styled.div`
+  width: 150px;
+  height: 100px;
+
+  display: none;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  img[src=''] {
+    display: none;
+  }
+`;
+
 const ImgUploadModal = () => {
   const [modalState, setModalState] = useRecoilState(modalStateStore);
   const [postData, setPostData] = useRecoilState(postModalDataStates);
   const [isImgUploading, setIsImgUploading] =
     useRecoilState(isImgUploadingState);
   const [isImgMax, setIsImgMax] = useRecoilState(isImgMaxState);
+  const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const imgUploadModal = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const imgPreviewModal = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
     setModalState({
       ...modalState,
       post: { ...modalState.post, inPhoto: false }
     });
-    // 사진 창 닫을 때도 사진 초기화 시킬지 고민중
+    setPostData({
+      ...postData,
+      picture1: null,
+      picture2: null,
+      picture3: null
+    });
+    setIsImgUploading(false);
+    setIsImgMax(false);
   };
-  const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
+
   const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isImgMax) {
       alert('첨부 사진은 3장까지 가능합니다.');
@@ -152,7 +182,6 @@ const ImgUploadModal = () => {
       return setIsImgUploading(false);
     }
 
-    // 게시 버튼 이벤트 하는 곳과 엑스 눌러서 취소하는 곳을 모르겠다...
     // 첨부하면 아직 취소 불가, 드래그X, 미리보기X
     if (postData.picture1 === null)
       setPostData({ ...postData, picture1: s3fileRes.file.location });
@@ -170,13 +199,20 @@ const ImgUploadModal = () => {
   }, [isImgUploading]);
 
   useEffect(() => {
+    if (postData.picture1 === null) {
+      imgPreviewModal.current.style.display = 'none';
+    } else {
+      imgPreviewModal.current.style.display = 'flex';
+    }
+  }, [postData.picture1]);
+
+  useEffect(() => {
     if (postData.picture3 !== null) setIsImgMax(true);
   }, [postData.picture3]);
 
   useEffect(() => {
     if (isImgUploading === true) {
       setIsImgUploading(false);
-      console.log('이미지 업로드 함 ');
     }
   }, [postData.picture1, postData.picture2, postData.picture3]);
 
@@ -186,13 +222,18 @@ const ImgUploadModal = () => {
         <CloseBtn onClick={imgUploadModalOff}>
           <IoClose size="28px" />
         </CloseBtn>
-        <WhatWorkModal onClick={imgUpload}>
+        <WhatWorkModal ref={imgUploadModal} onClick={imgUpload}>
           <div className="icon">
             <FiUpload size="20px" />
           </div>
           <div className="title">사진 추가</div>
           <div className="subtitle">또는 끌어서 놓습니다</div>
         </WhatWorkModal>
+        <ImgPreview ref={imgPreviewModal}>
+          <img src={postData.picture1 ?? ''} />
+          <img src={postData.picture2 ?? ''} />
+          <img src={postData.picture3 ?? ''} />
+        </ImgPreview>
       </ImgUploadWrap>
       <input
         type="file"
