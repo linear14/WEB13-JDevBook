@@ -10,6 +10,7 @@ import { UserSearchBar, UserSearchModal } from 'components/common/UserSearch';
 import UserCard from 'components/common/UserCard';
 import InitUserData from 'components/common/InitUserData';
 import InitSocket from 'components/common/InitSocket';
+import AlertModal from 'components/common/AlertModal';
 
 export {
   AlarmSideBar,
@@ -24,5 +25,6 @@ export {
   UserSearchModal,
   UserCard,
   InitUserData,
-  InitSocket
+  InitSocket,
+  AlertModal
 };
