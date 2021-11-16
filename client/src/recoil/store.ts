@@ -102,3 +102,12 @@ export const CommentState = atom({
   key: 'commentsFlag',
   default: false as boolean
 });
+
+export const GroupNavState = atom({
+  key: 'GroupNavState',
+  default: {
+    about: true,
+    problem: false,
+    groupChat: false
+  }
+});
