@@ -1,6 +1,5 @@
 import dbManager from '../service/dbManager';
 import { Socket, Server } from 'socket.io';
-import { IComment } from '../types/interface';
 import { addAssociation } from 'sequelize-typescript';
 
 const socketIO = (server: any) => {
@@ -38,29 +37,6 @@ const socketIO = (server: any) => {
           msg: msg
         });
       }
-    });
-
-    socket.on('add comment', (receivedData) => {
-      const { sender, postidx, comments } = receivedData;
-      dbManager.addComment(sender, postidx, comments);
-
-      io.emit('receive comment', {
-        sender: sender,
-        postidx: postidx,
-        comments: comments
-      });
-    });
-
-    socket.on('send comments initial', async (receivedData) => {
-      const { postidx } = receivedData;
-      const prevComments: any = await dbManager.getComments(postidx);
-      const filteredComments: IComment[] = prevComments.map((data: any) => {
-        return {
-          writer: data.username,
-          text: data.comments
-        };
-      });
-      io.emit('get previous comments', filteredComments);
     });
 
     socket.on('disconnect', () => {
