@@ -7,12 +7,12 @@ import {
 
 const useClosePostModal = () => {
   const resetModal = useResetRecoilState(modalStateStore);
-  const restImgMax = useResetRecoilState(isImgMaxState);
+  const resetImgMax = useResetRecoilState(isImgMaxState);
   const [postData, setPostData] = useRecoilState(postModalDataStates);
 
   return () => {
     resetModal();
-    restImgMax();
+    resetImgMax();
     setPostData({
       ...postData,
       idx: 0,
