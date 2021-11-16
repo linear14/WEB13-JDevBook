@@ -56,7 +56,7 @@ const PostList = () => {
     setFetching(false);
   };
 
-  const getSkeletions = (count: number) => {
+  const getSkeletons = (count: number) => {
     return Array(count)
       .fill(undefined)
       .map((v, i) => {
@@ -74,7 +74,7 @@ const PostList = () => {
       {posts.map((post) => (
         <Post key={post.idx} post={post} />
       ))}
-      {isFetching && getSkeletions(3)}
+      {isFetching && getSkeletons(3)}
       <Observer ref={observer} />
     </PostListContainer>
   );
