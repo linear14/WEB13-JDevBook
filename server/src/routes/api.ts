@@ -213,7 +213,7 @@ router.get(
   ) => {
     try {
       const { idx } = req.query;
-      const problems = idx ? await dbManager.getProblems(Number(idx)) : [];
+      const problems = idx ? await dbManager.getProblems([1]) : [];
       res.json(problems);
     } catch (err) {
       console.error(err);

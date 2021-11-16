@@ -1,9 +1,10 @@
+import { Op } from 'sequelize';
 import db from '../../models';
 
-const getProblems = async (groupidx: number) => {
+const getProblems = async (groupindices: number[]) => {
   const problems = await db.models.Problem.findAll({
     order: [['idx', 'DESC']],
-    where: { groupidx },
+    where: { groupidx: { [Op.in]: groupindices } },
     logging: false
   });
   return problems;
