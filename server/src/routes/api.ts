@@ -3,13 +3,15 @@ import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '../config/.env.development') });
 import express, { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import multer from 'multer';
 import dbManager from '../service/dbManager';
-import { DBUser, PostAddData, PostUpdateData } from 'service/interface';
+import { DBUser, PostAddData, PostUpdateData } from '../types/interface';
+import { objectStorage, upload } from '../service/objectStorage';
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
-
+//const upload = multer({ dest: 'uploads/' });
 const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
 
 router.get('/data', async (req: Request, res: Response, next: NextFunction) => {
@@ -191,10 +193,15 @@ router.post(
   }
 );
 
-router.post('/uploadimg', (req: Request, res: Response, next: NextFunction) => {
-  console.log('오냐고');
-  console.log(req.body);
-  res.end();
-});
+router.post(
+  '/uploadimg',
+  upload.single('imgfile'), // multer-s3 location 추가됨
+  async (req: Request, res: Response, next: NextFunction) => {
+    const s3file = req.file;
+    if (s3file) res.json({ file: s3file, save: true });
+    else res.json({ save: false });
+    // type 생각하면 형식 똑같이 해야되나?
+  }
+);
 
 module.exports = router;

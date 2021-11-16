@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { userData } from 'recoil/store';
+import { userDataStates } from 'recoil/store';
 import { useRecoilValue } from 'recoil';
 
 import palette from 'theme/palette';
@@ -75,7 +75,7 @@ const InnerBarGraph = styled.span<{ solvedRate: number }>`
 
 const InfoSideBar = () => {
   const solvedRate = Number(((123 / 155) * 100).toFixed(1));
-  const userdata = useRecoilValue(userData);
+  const userdata = useRecoilValue(userDataStates);
 
   return (
     <InfoSideBarContainer>

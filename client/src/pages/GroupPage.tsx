@@ -10,7 +10,8 @@ import {
   InfoSideBar,
   ChatSideBar,
   GroupSideBar,
-  InitUserData
+  InitUserData,
+  InitSocket
 } from '../components/common';
 
 const GlobalStyle = createGlobalStyle`
@@ -60,6 +61,7 @@ const GroupPage = () => {
       <GlobalStyle />
       <GroupPageContainer>
         <InitUserData />
+        <InitSocket />
         <Gnb type="group" />
         <SideBar isLeft={true}>
           <InfoSideBar />

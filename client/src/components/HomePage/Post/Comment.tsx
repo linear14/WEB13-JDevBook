@@ -2,13 +2,13 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { userData, usersocket } from 'recoil/store';
+import { userDataStates, usersocketStates } from 'recoil/store';
 import { ProfilePhoto } from 'components/common';
 import palette from 'theme/palette';
 
 const Animation = keyframes`
-  0% { opacity: 0; filter: blur(10px); }
-  100% { opacity: 1; filter: blur(0px); }
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 `;
 
 const CommentsWrap = styled.div`
@@ -68,42 +68,50 @@ interface IComment {
 const Comment = ({ postIdx }: { postIdx: number }) => {
   const [value, setValue] = useState<string>('');
   const [commentList, setCommentList] = useState<IComment[]>([]);
-  const socket = useRecoilValue(usersocket);
-  const userdata = useRecoilValue(userData);
+  const socket = useRecoilValue(usersocketStates);
+  const userdata = useRecoilValue(userDataStates);
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    socket.emit('add comment', {
-      sender: userdata.name,
-      postidx: postIdx,
-      comments: value
-    });
+    if (socket !== null) {
+      socket.emit('add comment', {
+        sender: userdata.name,
+        postidx: postIdx,
+        comments: value
+      });
+    }
   };
 
   useEffect(() => {
     setCommentList([]);
-    socket.emit('send comments initial', {
-      postidx: postIdx
-    });
+    if (socket !== null) {
+      socket.emit('send comments initial', {
+        postidx: postIdx
+      });
 
-    socket.on('get previous comments', (comment: IComment[]) => {
-      setCommentList((commentList: IComment[]) => commentList.concat(comment));
-      socket.off('get previous comments');
-    });
-  }, [postIdx]);
+      socket.on('get previous comments', (comment: IComment[]) => {
+        setCommentList((commentList: IComment[]) =>
+          commentList.concat(comment)
+        );
+        socket.off('get previous comments');
+      });
+    }
+  }, [postIdx, socket]);
 
   useEffect(() => {
-    socket.off('receive comment');
-    socket.on(
-      'receive comment',
-      (data: { sender: string; postidx: number; comments: string }) => {
-        const { sender, postidx, comments } = data;
-        setCommentList((commentList: IComment[]) =>
-          commentList.concat({ writer: sender, text: comments })
-        );
-      }
-    );
-  }, [commentList]);
+    if (socket !== null) {
+      socket.off('receive comment');
+      socket.on(
+        'receive comment',
+        (data: { sender: string; postidx: number; comments: string }) => {
+          const { sender, postidx, comments } = data;
+          setCommentList((commentList: IComment[]) =>
+            commentList.concat({ writer: sender, text: comments })
+          );
+        }
+      );
+    }
+  }, [commentList, socket]);
 
   const comments = commentList.map((comment: IComment, idx: number) => (
     <CommentsWrap key={idx}>

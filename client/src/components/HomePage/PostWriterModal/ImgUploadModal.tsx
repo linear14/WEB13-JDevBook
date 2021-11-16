@@ -4,7 +4,7 @@ import { IoClose } from 'react-icons/io5';
 import { FiUpload } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
 
-import { modalStateStore } from 'recoil/store';
+import { modalStateStore, postModalDataStates } from 'recoil/store';
 import palette from 'theme/palette';
 import fetchApi from 'api/fetch';
 // import objectStorage from 'api/objectStorage';
@@ -111,7 +111,7 @@ const WhatWorkModal = styled.div`
 
 const ImgUploadModal = () => {
   const [modalState, setModalState] = useRecoilState(modalStateStore);
-  const [img, setImg] = useState(null) as any;
+  const [postData, setPostData] = useRecoilState(postModalDataStates);
 
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
     setModalState({
@@ -121,25 +121,24 @@ const ImgUploadModal = () => {
   };
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
-    inputfile.current.click();
+    // 2장 올린후 바로 클릭하면 postData 반영이 느려서 click 될 때가 있다.
+    if (postData.picture3 !== null) alert('첨부 사진은 3장까지 가능합니다.');
+    else inputfile.current.click();
   };
   const getFilename = async () => {
     if (inputfile.current.files) {
-      // console.log(inputfile.current.value);
-      // const imglist: FileList = inputfile.current.files;
-      // // type에서 혹은 이름에서 확장자 찾기 가능.
-      // await fetchApi.uploadImg(imglist);
-      // await objectStorage.uploadObjectfile(
-      //   '되나요.png',
-      //   inputfile.current.files[0]
-      // );
-      // const fReader = new FileReader();
-      // fReader.readAsDataURL(inputfile.current.files[0]);
-      // fReader.onloadend = async (event) => {
-      //   const imgurl: string | ArrayBuffer = event.target?.result ?? '';
-      //   // arrayBuffer to string 구현, '' 제외
-      //   if (typeof imgurl === 'string')
-      // };
+      const imglist: FileList = inputfile.current.files;
+      const s3fileRes = await fetchApi.uploadImg(imglist);
+      if (s3fileRes.save) {
+        // 게시 버튼 이벤트 하는 곳과 엑스 눌러서 취소하는 곳을 모르겠다...
+        // 첨부하면 아직 취소 불가, 드래그X, 미리보기X
+        if (postData.picture1 === null)
+          setPostData({ ...postData, picture1: s3fileRes.file.location });
+        else if (postData.picture2 === null)
+          setPostData({ ...postData, picture2: s3fileRes.file.location });
+        else if (postData.picture3 === null)
+          setPostData({ ...postData, picture3: s3fileRes.file.location });
+      }
     }
   };
 

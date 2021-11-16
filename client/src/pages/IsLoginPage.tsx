@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { isLoginfail } from 'recoil/store';
+import { isLoginfailStates } from 'recoil/store';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 const IsLoginPage = () => {
-  const loginfail = useRecoilValue(isLoginfail);
+  const loginfail = useRecoilValue(isLoginfailStates);
   const [message, setMessage] = useState('로그인 여부 확인중 ...');
   const [link, setLink] = useState(<></>);
   const history = useHistory();

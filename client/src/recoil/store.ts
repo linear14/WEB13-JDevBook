@@ -17,7 +17,7 @@ export const modalStateStore = atom({
   }
 });
 
-export const userData = atom({
+export const userDataStates = atom({
   key: 'userData',
   default: {
     idx: -1,
@@ -30,7 +30,7 @@ export const userData = atom({
   }
 });
 
-export const isLoginfail = atom({
+export const isLoginfailStates = atom({
   key: 'isLoginfail',
   default: false as boolean
 });
@@ -45,9 +45,10 @@ export const rightModalStates = atom({
   }
 });
 
-export const usersocket = atom({
+export const usersocketStates = atom({
   key: 'socket',
   default: socket as Socket
+  //default: null as Socket | null
 });
 
 export const chatWith = atom({
@@ -70,7 +71,7 @@ export const imageViewerState = atom<{
   }
 });
 
-export const postModalData = atom<PostData>({
+export const postModalDataStates = atom<PostData>({
   key: 'postModalData',
   default: {
     idx: 0,

@@ -2,7 +2,7 @@ import userEvent from '@testing-library/user-event';
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { userData, isLoginfail } from 'recoil/store';
+import { userDataStates, isLoginfailStates } from 'recoil/store';
 import {
   GroupPage,
   HomePage,
@@ -13,8 +13,8 @@ import {
 
 const Router: React.FC = () => {
   const [login, setLogin] = useState(false);
-  const [loginfail, setLoginfail] = useRecoilState(isLoginfail);
-  const userdata = useRecoilValue(userData);
+  const [loginfail, setLoginfail] = useRecoilState(isLoginfailStates);
+  const userdata = useRecoilValue(userDataStates);
   useEffect(() => {
     if (userdata.login === false) {
       // 새로고침해도 default가 false라 상관X, 로그인직후 userdata 변경시 막기용

@@ -12,7 +12,8 @@ import {
   AlarmSideBar,
   SelectorSideBar,
   GroupSideBar,
-  InitUserData
+  InitUserData,
+  InitSocket
 } from 'components/common';
 import { useRecoilState } from 'recoil';
 import { imageViewerState as ivState } from 'recoil/store';
@@ -58,6 +59,7 @@ const HomePage = () => {
       <GlobalStyle />
       <HomePageContainer>
         <InitUserData />
+        <InitSocket />
         <Gnb type="home" rightModalType="" />
         <SideBar isLeft={true}>
           <InfoSideBar />

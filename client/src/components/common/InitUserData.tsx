@@ -3,13 +3,17 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import fetchApi from 'api/fetch';
 
-import { userData, usersocket, postModalData } from 'recoil/store';
+import {
+  userDataStates,
+  usersocketStates,
+  postModalDataStates
+} from 'recoil/store';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 
 const InitUserData = (/*{ history }: RouteComponentProps*/) => {
-  const [userdata, setUserdata] = useRecoilState(userData);
-  const [postData, setPostData] = useRecoilState(postModalData);
-  const socket = useRecoilValue(usersocket);
+  const [userdata, setUserdata] = useRecoilState(userDataStates);
+  const [postData, setPostData] = useRecoilState(postModalDataStates);
+  //const socket = useRecoilValue(usersocketStates);
   const history = useHistory();
 
   useEffect(() => {
@@ -32,7 +36,7 @@ const InitUserData = (/*{ history }: RouteComponentProps*/) => {
           useridx: data.idx,
           BTUseruseridx: { ...data }
         });
-        socket.emit('name', data.nickname);
+        //socket?.emit('name', data.nickname);
       }
     })();
   }, []);

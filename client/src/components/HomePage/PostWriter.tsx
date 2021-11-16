@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { userData, modalStateStore } from 'recoil/store';
+import { userDataStates, modalStateStore } from 'recoil/store';
 import palette from 'theme/palette';
 import { iconPhoto } from 'images/icons';
 
@@ -94,7 +94,7 @@ const StyledBtn = styled.div`
 
 const PostWriter = () => {
   const [modalState, setModalState] = useRecoilState(modalStateStore);
-  const userdata = useRecoilValue(userData);
+  const userdata = useRecoilValue(userDataStates);
 
   const postWriterModalOn = (e: React.MouseEvent<HTMLDivElement>) => {
     setModalState({

@@ -1,9 +1,9 @@
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { modalStateStore, postModalData } from 'recoil/store';
+import { modalStateStore, postModalDataStates } from 'recoil/store';
 
 const useClosePostModal = () => {
   const resetModal = useResetRecoilState(modalStateStore);
-  const [postData, setPostData] = useRecoilState(postModalData);
+  const [postData, setPostData] = useRecoilState(postModalDataStates);
 
   return () => {
     resetModal();
