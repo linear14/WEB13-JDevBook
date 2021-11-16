@@ -10,7 +10,7 @@ import palette from 'theme/palette';
 
 const CurrentUserWrapper = styled.div`
   width: inherit;
-  height: 320px;
+  height: 300px;
 
   overflow-x: hidden;
   overflow-y: scroll;

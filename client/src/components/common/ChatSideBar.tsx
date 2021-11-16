@@ -152,6 +152,13 @@ const ReceiverName = styled.div`
   margin-left: ${style.margin.smallest};
 `;
 
+const Divider = styled.div`
+  width: calc(100% - 32px);
+  height: 1px;
+  background: #dddddd;
+  margin: ${style.margin.normal} ${style.margin.large} ${style.margin.normal} ${style.margin.large};
+`;
+
 const ChatSideBar = () => {
   const [messageList, setMessageList] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
@@ -243,9 +250,7 @@ const ChatSideBar = () => {
       messageFlag={rightModalState.messageFlag}
     >
       <CurrentUser />
-      <div>
-        <hr />
-      </div>
+      <Divider />
       <ChatTitle>
         {chatReceiver ? chatReceiver + ' 에게 보내는 편지' : '채팅할 상대 선택'}
       </ChatTitle>
