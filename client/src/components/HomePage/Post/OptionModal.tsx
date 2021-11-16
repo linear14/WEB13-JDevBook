@@ -21,6 +21,7 @@ const OptionModalContainer = styled.div`
   right: 16px;
   box-sizing: border-box;
   padding: 8px;
+  z-index: 1;
 
   div {
     padding: 12px;
