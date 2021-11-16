@@ -86,6 +86,7 @@ const WhatWorkModal = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   div.icon {
     width: 40px;
