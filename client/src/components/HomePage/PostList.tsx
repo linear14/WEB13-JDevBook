@@ -3,7 +3,6 @@ import { useRecoilState } from 'recoil';
 import { postListStore } from 'recoil/store';
 import styled, { css } from 'styled-components';
 
-import { PostData } from 'types/post';
 import getData from 'api/fetch';
 
 import { Post, Skeleton } from 'components/HomePage';
