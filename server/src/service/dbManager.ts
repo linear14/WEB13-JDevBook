@@ -161,14 +161,6 @@ const dbManager = {
     });
   },
 
-  getLikePosts: async function (useridx: number) {
-    const ilike = await db.models.Like.findAll({
-      where: { useridx: useridx }
-    });
-    const ilikeArray = ilike.map((data: any) => data.get());
-    return ilikeArray;
-  },
-
   updateLikeNum: async (postIdx: number, likeNum: number) => {
     await db.models.Post.update(
       { likenum: likeNum },

@@ -7,8 +7,8 @@ import { ProfilePhoto } from 'components/common';
 import palette from 'theme/palette';
 
 const Animation = keyframes`
-  0% { opacity: 0; filter: blur(10px); }
-  100% { opacity: 1; filter: blur(0px); }
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 `;
 
 const CommentsWrap = styled.div`
