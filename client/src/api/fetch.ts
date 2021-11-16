@@ -95,6 +95,12 @@ const fetchApi = {
     });
 
     return await fileRes.json(); // {file: s3file, save: true/false}
+  },
+
+  getProblems: async (groupIdx: number) => {
+    const response = await fetch(`/api/problems?idx=${groupIdx}`);
+    const problems = await response.json();
+    return problems;
   }
 };
 

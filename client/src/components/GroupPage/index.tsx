@@ -1,4 +1,4 @@
-import Quiz from 'components/GroupPage/Quiz';
-import QuizList from 'components/GroupPage/QuizList';
+import Problem from 'components/GroupPage/Problem';
+import ProblemList from 'components/GroupPage/ProblemList';
 
-export { Quiz, QuizList };
+export { Problem, ProblemList };

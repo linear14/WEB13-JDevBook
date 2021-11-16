@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 import palette from 'theme/palette';
+import { IProblem } from 'types/group';
 
-const QuizContainer = styled.div`
+const ProblemContainer = styled.div`
   width: 680px;
   min-width: 680px;
   height: 240px;
@@ -19,8 +20,8 @@ const QuizContainer = styled.div`
   }
 `;
 
-const Quiz = () => {
-  return <QuizContainer />;
+const Problem = ({ problem }: { problem: IProblem }) => {
+  return <ProblemContainer>{problem.question}</ProblemContainer>;
 };
 
-export default Quiz;
+export default Problem;

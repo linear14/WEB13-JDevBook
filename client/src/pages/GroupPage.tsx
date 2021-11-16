@@ -13,7 +13,7 @@ import {
   InitUserData,
   InitSocket
 } from '../components/common';
-import { QuizList } from 'components/GroupPage';
+import { ProblemList } from 'components/GroupPage';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -70,7 +70,7 @@ const GroupPage = () => {
         </SideBar>
         <ContentsContainer>
           <img src={os} alt="그룹 이미지" />
-          <QuizList />
+          <ProblemList />
         </ContentsContainer>
         <SideBar isLeft={false}>
           <ChatSideBar />

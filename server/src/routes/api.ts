@@ -204,4 +204,22 @@ router.post(
   }
 );
 
+router.get(
+  '/problems',
+  async (
+    req: Request<{}, {}, {}, { idx: string }>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { idx } = req.query;
+      const problems = idx ? await dbManager.getProblems(Number(idx)) : [];
+      res.json(problems);
+    } catch (err) {
+      console.error(err);
+      res.json([]);
+    }
+  }
+);
+
 module.exports = router;
