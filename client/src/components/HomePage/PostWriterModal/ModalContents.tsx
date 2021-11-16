@@ -8,6 +8,7 @@ import {
   postModalDataStates
 } from 'recoil/store';
 import palette from 'theme/palette';
+import style from 'theme/style';
 import textUtil from 'utils/textUtil';
 
 const ModalContentsContainer = styled.div`
@@ -26,8 +27,9 @@ const ContentsInput = styled.textarea<{ modalState: boolean }>`
   outline: none;
   resize: none;
   background-color: ${palette.white};
-  font-family: 'Spoqa Han Sans Neo';
-  font-size: 18px;
+  font-family: 'Noto Sans KR';
+  font-weight: bold;
+  font-size: ${style.font.normal};
 
   overscroll-behavior: none;
 `;
