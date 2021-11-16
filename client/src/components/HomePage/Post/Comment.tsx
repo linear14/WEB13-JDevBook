@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { userDataStates, usersocketStates } from 'recoil/store';
 import { ProfilePhoto } from 'components/common';
 import palette from 'theme/palette';
+import style from 'theme/style';
 import { IComment } from 'types/comment';
 
 import fetchApi from 'api/fetch';
@@ -17,7 +18,7 @@ const Animation = keyframes`
 const CommentsWrap = styled.div`
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: ${style.padding.small} ${style.padding.small} 0 ${style.padding.small};
 
   animation-name: ${Animation};
   animation-duration: 0.5s;
@@ -29,11 +30,13 @@ const CommentBox = styled.div`
   display: inline-block;
   border-radius: 15px;
   background-color: ${palette.lightgray};
-  margin-left: 10px;
+  margin-left: ${style.margin.normal};
+  padding-left: ${style.padding.small};
+  padding-right: ${style.padding.small};
 `;
 
 const CommentContent = styled.div`
-  margin: 5px;
+  margin: ${style.margin.smallest};
   word-break: break-word;
 `;
 
@@ -45,7 +48,7 @@ const CommentText = styled.div`
 const CommentInputWrap = styled.div`
   animation-name: ${Animation};
   animation-duration: 0.5s;
-  padding: 10px;
+  padding: ${style.padding.small};
 `;
 const CommentInputWrapper = styled.div`
   display: flex;
@@ -53,14 +56,14 @@ const CommentInputWrapper = styled.div`
 `;
 
 const CommentInput = styled.input`
-  width: 600px;
+  width: 622px;
   height: 35px;
   border: none;
   border-radius: 15px;
 
   background-color: ${palette.lightgray};
-  margin-left: 10px;
-  padding-left: 10px;
+  margin-left: ${style.margin.normal};
+  padding-left: ${style.padding.normal};
 `;
 
 const Comment = ({ postIdx }: { postIdx: number }) => {
