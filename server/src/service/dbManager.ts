@@ -127,14 +127,6 @@ const dbManager = {
       receiveridx: receiveridx,
       previousMsg: allChatsArray
     };
-    //console.log(allChatsArray); // 없거나 오류여도 [] 나옴
-
-    /*
-      { senderdix: ?
-        receiveridx: ?
-        chat: ?}, 
-        줄줄이
-    */
   },
 
   setChatList: async function (sender: string, receiver: string, msg: string) {
@@ -148,19 +140,15 @@ const dbManager = {
     });
   },
 
-  addComment: async function (
-    sender: string,
-    postidx: number,
-    comments: string
-  ) {
-    const useridx: number = await this.getUseridx(sender);
-    await db.models.Comment.create({
-      postidx: postidx,
-      useridx: useridx,
-      comments: comments
+  addComment: async function (addComment: CommentData) {
+    const userIdx: number = await this.getUseridx(addComment.sender);
+    const result = await db.models.Comment.create({
+      ...addComment,
+      useridx: userIdx
     });
+    return result.get();
   },
-  
+
   toggleLikePosts: async function (useridx: number, postidx: number) {
     const [likePost, created] = await db.models.Like.findOrCreate({
       where: { useridx: useridx, postidx: postidx },
@@ -173,7 +161,7 @@ const dbManager = {
       });
     return created;
   },
-  
+
   updateLikeNum: async (postIdx: number, likeNum: number) => {
     await db.models.Post.update(
       { likenum: likeNum },
@@ -183,15 +171,15 @@ const dbManager = {
 
   getComments: async function (postidx: number) {
     const prevComments = await db.models.Comment.findAll({
+      include: [
+        {
+          model: db.models.User,
+          as: 'BTUseruseridx'
+        }
+      ],
       where: { postidx: postidx }
     });
-    const prevCommentsArray = prevComments.map((data: any) => data.get());
-    for (let i = 0; i < prevCommentsArray.length; i++) {
-      prevCommentsArray[i].username = await this.getUserName(
-        prevCommentsArray[i].useridx
-      );
-    }
-    return prevCommentsArray;
+    return prevComments;
   }
 };
 
