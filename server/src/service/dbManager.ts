@@ -1,6 +1,8 @@
 import sequelize, { INTEGER, Model } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 
+import { searchUsers } from './dbManager/search';
+
 import { PostAddData, PostUpdateData, CommentData } from '../types/interface';
 
 import db from '../models';
@@ -27,14 +29,7 @@ const dbManager = {
     return user.get();
   },
 
-  searchUsers: async (keyword: string) => {
-    const users = await db.models.User.findAll({
-      where: { nickname: { [Op.like]: `%${keyword}%` } },
-      logging: false
-    });
-
-    return users;
-  },
+  searchUsers,
 
   getPosts: async (myIdx: number, lastIdx: number, count: number) => {
     const postsWithUser = await db.models.Post.findAll({
@@ -160,7 +155,7 @@ const dbManager = {
       comments: comments
     });
   },
-  
+
   toggleLikePosts: async function (useridx: number, postidx: number) {
     const [likePost, created] = await db.models.Like.findOrCreate({
       where: { useridx: useridx, postidx: postidx },
@@ -173,7 +168,7 @@ const dbManager = {
       });
     return created;
   },
-  
+
   updateLikeNum: async (postIdx: number, likeNum: number) => {
     await db.models.Post.update(
       { likenum: likeNum },
