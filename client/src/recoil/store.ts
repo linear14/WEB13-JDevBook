@@ -2,6 +2,7 @@ import socket from 'components/common/Socket';
 import { atom } from 'recoil';
 import { Socket } from 'socket.io-client';
 
+import { Alert } from 'types/common';
 import { PostData } from 'types/post';
 
 export const modalStateStore = atom({
@@ -109,5 +110,14 @@ export const GroupNavState = atom({
     about: true,
     problem: false,
     groupChat: false
+  }
+});
+
+export const AlertState = atom<Alert>({
+  key: 'AlertState',
+  default: {
+    bgColor: undefined,
+    comment: '',
+    modalState: false
   }
 });
