@@ -75,6 +75,8 @@ const CloseBtn = styled.div`
 
   &:hover {
     cursor: pointer;
+    filter: brightness(95%);
+    transition: all 0.1s;
   }
 
   &:active {
@@ -92,7 +94,16 @@ const WhatWorkModal = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(95%);
+    transition: all 0.1s;
+  }
+
+  &:active {
+    filter: brightness(90%);
+  }
 
   div.icon {
     width: 40px;
@@ -142,7 +153,7 @@ const ImgUploadModal = () => {
     useRecoilState(isImgUploadingState);
   const [isImgMax, setIsImgMax] = useRecoilState(isImgMaxState);
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const imgUploadModal = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const imgUploadWrapRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgPreviewModal = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -222,12 +233,19 @@ const ImgUploadModal = () => {
         <CloseBtn onClick={imgUploadModalOff}>
           <IoClose size="28px" />
         </CloseBtn>
-        <WhatWorkModal ref={imgUploadModal} onClick={imgUpload}>
+        <WhatWorkModal onClick={imgUpload}>
           <div className="icon">
             <FiUpload size="20px" />
           </div>
           <div className="title">사진 추가</div>
           <div className="subtitle">또는 끌어서 놓습니다</div>
+          <input
+            type="file"
+            accept="image/*"
+            ref={inputfile}
+            onChange={() => setIsImgUploading(true)}
+            style={{ display: 'none' }}
+          />
         </WhatWorkModal>
         <ImgPreview ref={imgPreviewModal}>
           <img src={postData.picture1 ?? ''} />
@@ -235,13 +253,6 @@ const ImgUploadModal = () => {
           <img src={postData.picture3 ?? ''} />
         </ImgPreview>
       </ImgUploadWrap>
-      <input
-        type="file"
-        accept="image/*"
-        ref={inputfile}
-        onChange={() => setIsImgUploading(true)}
-        style={{ display: 'none' }}
-      />
     </ImgUploadContainer>
   );
 };
