@@ -41,7 +41,7 @@ const ModalAnimation = keyframes`
 
 const PostWriterModalInner = styled.div<{ modalState: boolean }>`
   position: fixed;
-  top: 160px;
+  top: 100px;
   width: 600px;
   box-sizing: border-box;
   padding: 20px;
@@ -49,7 +49,7 @@ const PostWriterModalInner = styled.div<{ modalState: boolean }>`
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 8px;
   background-color: ${palette.white};
-  animation: ${ModalAnimation} 0.5s 1;
+  animation: ${ModalAnimation} 0.2s 1;
 
   display: ${(props) => (props.modalState ? 'flex' : 'none')};
   flex-direction: column;
@@ -84,8 +84,13 @@ const PostBtn = styled.div`
 
   &:hover {
     cursor: pointer;
-    background-color: ${palette.darkgreen};
+    filter: brightness(95%);
     transition: all 0.1s;
+  }
+
+  &:active {
+    font-size: 15px;
+    filter: brightness(90%);
   }
 `;
 

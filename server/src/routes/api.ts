@@ -168,15 +168,26 @@ router.put(
   '/posts/like/:postidx',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const postIdx = Number(req.params.postidx.slice(1));
+      const postIdx = Number(req.params.postidx);
       const { likeNum } = req.body;
-      console.log(
-        `Update likenum ${JSON.stringify(likeNum)} where idx=${postIdx}`
-      );
       await dbManager.updateLikeNum(postIdx, likeNum);
       res.json(true);
     } catch (err) {
       console.error(err);
+      res.json(false);
+    }
+  }
+);
+
+router.post(
+  '/likes/:useridx/:postidx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const useridx = Number(req.params.useridx);
+      const postidx = Number(req.params.postidx);
+      const result = await dbManager.toggleLikePosts(useridx, postidx);
+      res.json(result);
+    } catch (err) {
       res.json(false);
     }
   }

@@ -6,7 +6,6 @@ import { useRecoilState } from 'recoil';
 
 import { modalStateStore, postModalDataStates } from 'recoil/store';
 import palette from 'theme/palette';
-import { ImgUploadModalProps } from 'types/post';
 import fetchApi from 'api/fetch';
 // import objectStorage from 'api/objectStorage';
 
@@ -19,9 +18,9 @@ const ModalAnimation = keyframes`
   }
 `;
 
-const ImgUploadContainer = styled.div<ImgUploadModalProps>`
+const ImgUploadContainer = styled.div<{ modalState: boolean }>`
   position: fixed;
-  top: 408px;
+  top: 360px;
   width: 532px;
   height: 200px;
   box-sizing: border-box;
@@ -31,7 +30,7 @@ const ImgUploadContainer = styled.div<ImgUploadModalProps>`
   border-width: 1px;
   border-radius: 8px;
   border-color: ${palette.darkgray};
-  animation: ${ModalAnimation} 0.5s 1;
+  animation: ${ModalAnimation} 0.2s 1;
 
   display: ${(props) => (props.modalState ? 'block' : 'none')};
 `;
@@ -70,6 +69,12 @@ const CloseBtn = styled.div`
 
   &:hover {
     cursor: pointer;
+  }
+
+  &:active {
+    width: 35px;
+    height: 35px;
+    background-color: ${palette.gray};
   }
 `;
 
@@ -138,10 +143,7 @@ const ImgUploadModal = () => {
   };
 
   return (
-    <ImgUploadContainer
-      modalState={modalState.post.inPhoto}
-      writerModalState={modalState.post.writer}
-    >
+    <ImgUploadContainer modalState={modalState.post.inPhoto}>
       <ImgUploadWrap>
         <CloseBtn onClick={imgUploadModalOff}>
           <IoClose size="28px" />

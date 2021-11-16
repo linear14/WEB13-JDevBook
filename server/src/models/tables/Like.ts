@@ -3,10 +3,7 @@ import User from './User';
 import Post from './Post';
 
 @Table({
-  tableName: 'likes',
-  timestamps: true,
-  paranoid: true,
-  charset: 'utf8mb4'
+  tableName: 'likes'
 })
 export default class Like extends Model<Like> {
   @Column({

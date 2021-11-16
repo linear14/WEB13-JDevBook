@@ -38,6 +38,13 @@ const CloseBtn = styled.div`
 
   &:hover {
     cursor: pointer;
+    filter: brightness(95%);
+  }
+
+  &:active {
+    width: 35px;
+    height: 35px;
+    filter: brightness(90%);
   }
 `;
 const ModalTitle = () => {

@@ -28,12 +28,12 @@ const AddContentsBtnWrap = styled.div`
 `;
 
 const ContentsBtn = styled.div<{ modalState: boolean }>`
-  width: 45px;
-  height: 45px;
+  width: 48px;
+  height: 48px;
 
   border-radius: 50%;
   background-color: ${(props) =>
-    props.modalState ? `${palette.gray}` : `${palette.white}`};
+    props.modalState ? `${palette.lightgray}` : `${palette.white}`};
 
   display: flex;
   justify-content: center;
@@ -41,8 +41,11 @@ const ContentsBtn = styled.div<{ modalState: boolean }>`
 
   &:hover {
     cursor: pointer;
-    background-color: ${palette.gray};
-    transition: all 0.1s;
+    filter: brightness(90%);
+  }
+
+  &:active {
+    filter: brightness(85%);
   }
 
   img {

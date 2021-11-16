@@ -85,8 +85,12 @@ const GnbTab = styled.div<TabProps>`
   transition: 0.1s ease-in;
 
   &:hover {
-    background: ${palette.lightgray};
+    background-color: ${palette.lightgray};
     border-radius: 8px;
+  }
+
+  &:active {
+    background-color: ${palette.gray};
   }
 
   svg path {
@@ -106,8 +110,12 @@ const ProfileWrap = styled.div`
   padding-right: 12px;
 
   &:hover {
-    background: ${palette.lightgray};
+    background-color: ${palette.lightgray};
     border-radius: 24px;
+  }
+
+  &:active {
+    background-color: ${palette.gray};
   }
 
   p {
@@ -137,7 +145,11 @@ const IconWrap = styled.div<IconProps>`
   }
 
   &:hover {
-    background: ${palette.lightgray};
+    background-color: ${palette.lightgray};
+  }
+
+  &:active {
+    background-color: ${palette.gray};
   }
 `;
 

@@ -67,8 +67,15 @@ const fetchApi = {
     return await response.json();
   },
 
+  addLikePost: async (userIdx: number, postIdx: number) => {
+    const response = await fetch(`/api/likes/${userIdx}/${postIdx}`, {
+      method: 'POST'
+    });
+    return await response.json();
+  },
+
   updateLikeNum: async (postIdx: number, likeNum: number) => {
-    const response = await fetch(`/api/posts/like/:${postIdx}`, {
+    const response = await fetch(`/api/posts/like/${postIdx}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
