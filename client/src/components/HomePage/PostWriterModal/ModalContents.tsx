@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { modalVisibleStates, userData, postWriterData } from 'recoil/store';
+import {
+  modalStateStore,
+  userDataStates,
+  postModalDataStates
+} from 'recoil/store';
 import palette from 'theme/palette';
 import textUtil from 'utils/textUtil';
 
@@ -39,9 +43,9 @@ const ContentsBytesChecker = styled.div`
 `;
 
 const ModalContents = () => {
-  const modalState = useRecoilValue(modalVisibleStates);
-  const userdata = useRecoilValue(userData);
-  const [postData, setPostData] = useRecoilState(postWriterData);
+  const modalState = useRecoilValue(modalStateStore);
+  const userdata = useRecoilValue(userDataStates);
+  const [postData, setPostData] = useRecoilState(postModalDataStates);
   const [contentsBytes, setContentsBytes] = useState<number>(0);
 
   const inputContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -69,7 +73,7 @@ const ModalContents = () => {
     <ModalContentsContainer>
       <ContentsInput
         placeholder={`${userdata.name}님, 무슨 생각을 하고 계신가요?`}
-        modalState={modalState.postInPhoto}
+        modalState={modalState.post.inPhoto}
         onChange={inputContents}
         onKeyUp={contentsBytesCheck}
         value={postData.contents}

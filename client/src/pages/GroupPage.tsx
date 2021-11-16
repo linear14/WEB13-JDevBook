@@ -7,7 +7,8 @@ import {
   InfoSideBar,
   ChatSideBar,
   GroupSideBar,
-  InitUserData
+  InitUserData,
+  InitSocket
 } from '../components/common';
 
 const GroupPageContainer = styled.div`
@@ -23,6 +24,7 @@ const GroupPage = () => {
   return (
     <GroupPageContainer>
       <InitUserData />
+      <InitSocket />
       <Gnb type="group" />
       <ContentsWrap>
         <SideBar isLeft={true}>
