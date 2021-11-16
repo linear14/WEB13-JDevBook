@@ -1,10 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { FiUpload } from 'react-icons/fi';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
-import { modalStateStore, postModalDataStates } from 'recoil/store';
+import {
+  isImgMaxState,
+  isImgUploadingState,
+  modalStateStore,
+  postModalDataStates
+} from 'recoil/store';
 import palette from 'theme/palette';
 import fetchApi from 'api/fetch';
 // import objectStorage from 'api/objectStorage';
@@ -113,35 +118,59 @@ const WhatWorkModal = styled.div`
 const ImgUploadModal = () => {
   const [modalState, setModalState] = useRecoilState(modalStateStore);
   const [postData, setPostData] = useRecoilState(postModalDataStates);
+  const [isImgUploading, setIsImgUploading] =
+    useRecoilState(isImgUploadingState);
+  const [isImgMax, setIsImgMax] = useRecoilState(isImgMaxState);
 
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
     setModalState({
       ...modalState,
       post: { ...modalState.post, inPhoto: false }
     });
+    // 사진 창 닫을 때도 사진 초기화 시킬지 고민중
   };
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
-    // 2장 올린후 바로 클릭하면 postData 반영이 느려서 click 될 때가 있다.
-    if (postData.picture3 !== null) alert('첨부 사진은 3장까지 가능합니다.');
-    else inputfile.current.click();
-  };
-  const getFilename = async () => {
-    if (inputfile.current.files) {
-      const imglist: FileList = inputfile.current.files;
-      const s3fileRes = await fetchApi.uploadImg(imglist);
-      if (s3fileRes.save) {
-        // 게시 버튼 이벤트 하는 곳과 엑스 눌러서 취소하는 곳을 모르겠다...
-        // 첨부하면 아직 취소 불가, 드래그X, 미리보기X
-        if (postData.picture1 === null)
-          setPostData({ ...postData, picture1: s3fileRes.file.location });
-        else if (postData.picture2 === null)
-          setPostData({ ...postData, picture2: s3fileRes.file.location });
-        else if (postData.picture3 === null)
-          setPostData({ ...postData, picture3: s3fileRes.file.location });
-      }
+    if (isImgMax) {
+      alert('첨부 사진은 3장까지 가능합니다.');
+    } else if (!isImgUploading) {
+      setIsImgUploading(true);
+      inputfile.current.click();
+    } else {
+      alert('이미지 업로드 중입니다.');
     }
   };
+  const getFile = async () => {
+    if (!inputfile.current.files) return setIsImgUploading(false);
+
+    const imglist: FileList = inputfile.current.files;
+    const s3fileRes = await fetchApi.uploadImg(imglist);
+
+    if (!s3fileRes.save) {
+      alert('이미지 업로드 실패');
+      return setIsImgUploading(false);
+    }
+
+    // 게시 버튼 이벤트 하는 곳과 엑스 눌러서 취소하는 곳을 모르겠다...
+    // 첨부하면 아직 취소 불가, 드래그X, 미리보기X
+    if (postData.picture1 === null)
+      setPostData({ ...postData, picture1: s3fileRes.file.location });
+    else if (postData.picture2 === null)
+      setPostData({ ...postData, picture2: s3fileRes.file.location });
+    else if (postData.picture3 === null) {
+      setPostData({ ...postData, picture3: s3fileRes.file.location });
+      // setIsImgMax(true); // 이거 비동기인가여?
+    }
+    // setIsImgUploading(false);  // 이거 비동기인가여?
+  };
+
+  useEffect(() => {
+    if (postData.picture3 !== null) setIsImgMax(true);
+  }, [postData.picture3]);
+
+  useEffect(() => {
+    setIsImgUploading(false);
+  }, [postData.picture1, postData.picture2, postData.picture3]);
 
   return (
     <ImgUploadContainer modalState={modalState.post.inPhoto}>
@@ -161,7 +190,7 @@ const ImgUploadModal = () => {
         type="file"
         accept="image/*"
         ref={inputfile}
-        onChange={getFilename}
+        onChange={getFile}
         style={{ display: 'none' }}
       />
     </ImgUploadContainer>
