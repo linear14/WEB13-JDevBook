@@ -139,9 +139,7 @@ router.delete(
   '/posts/:postidx',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.params.postidx);
       const postIdx = Number(req.params.postidx);
-      console.log(`Delete idx=${postIdx}`);
       await dbManager.deletePost(postIdx);
       res.json(true);
     } catch (err) {
@@ -222,4 +220,17 @@ router.get(
   }
 );
 
+router.post(
+  '/problems/correct',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userIdx = req.session.useridx;
+      const { problemIdx } = req.body;
+      await dbManager.insertSolvedProblem(userIdx, Number(problemIdx));
+      res.json(true);
+    } catch (err) {
+      res.json(false);
+    }
+  }
+);
 module.exports = router;

@@ -1,3 +1,4 @@
+import fetchApi from 'api/fetch';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { solvedProblemState } from 'recoil/store';
@@ -73,6 +74,7 @@ const Problem = ({ problem }: { problem: IProblem }) => {
       alert('정답입니다.');
       if (!solvedProblems.includes(problem.idx)) {
         setSolvedProblems(solvedProblems.concat(problem.idx));
+        fetchApi.insertSolvedProblem(problem.idx);
       }
     } else {
       alert('오답입니다.');

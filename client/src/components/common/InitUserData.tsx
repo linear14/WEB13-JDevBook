@@ -10,6 +10,7 @@ import {
   solvedProblemState
 } from 'recoil/store';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { IProblem } from 'types/group';
 
 const InitUserData = (/*{ history }: RouteComponentProps*/) => {
   const [userdata, setUserdata] = useRecoilState(userDataStates);
@@ -39,7 +40,9 @@ const InitUserData = (/*{ history }: RouteComponentProps*/) => {
           useridx: data.idx,
           BTUseruseridx: { ...data }
         });
-        setSolvedProblems(data.BTMUserProblemuseridx);
+        setSolvedProblems(
+          data.BTMUserProblemuseridx.map((item: IProblem) => item.idx)
+        );
         //socket?.emit('name', data.nickname);
       }
     })();

@@ -10,4 +10,10 @@ const getProblems = async (groupindices: number[]) => {
   return problems;
 };
 
-export { getProblems };
+const insertSolvedProblem = async (useridx: number, problemidx: number) => {
+  await db.models.UserProblem.findOrCreate({
+    where: { useridx, problemidx }
+  });
+};
+
+export { getProblems, insertSolvedProblem };

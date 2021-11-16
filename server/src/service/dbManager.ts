@@ -2,7 +2,7 @@ import sequelize, { INTEGER, Model } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 
 import { searchUsers } from './dbManager/search';
-import { getProblems } from './dbManager/problem';
+import { getProblems, insertSolvedProblem } from './dbManager/problem';
 
 import { PostAddData, PostUpdateData, CommentData } from '../types/interface';
 
@@ -191,7 +191,8 @@ const dbManager = {
     return prevCommentsArray;
   },
 
-  getProblems
+  getProblems,
+  insertSolvedProblem
 };
 
 export default dbManager;
