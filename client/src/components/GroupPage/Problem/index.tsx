@@ -1,4 +1,6 @@
 import React from 'react';
+import { useRecoilState } from 'recoil';
+import { solvedProblemState } from 'recoil/store';
 import styled from 'styled-components';
 
 import palette from 'theme/palette';
@@ -63,13 +65,27 @@ const SolvedLabel = styled.div`
 `;
 
 const Problem = ({ problem }: { problem: IProblem }) => {
+  const [solvedProblems, setSolvedProblems] =
+    useRecoilState(solvedProblemState);
+
+  const handleAnswer = (selected: boolean) => {
+    if (problem.answer === selected) {
+      alert('정답입니다.');
+      if (!solvedProblems.includes(problem.idx)) {
+        setSolvedProblems(solvedProblems.concat(problem.idx));
+      }
+    } else {
+      alert('오답입니다.');
+    }
+  };
+
   return (
     <ProblemContainer>
-      <SolvedLabel />
+      {solvedProblems.includes(problem.idx) && <SolvedLabel />}
       <Body>Q. {problem.question}</Body>
       <AnswerWrap>
-        <RightButton />
-        <WrongButton />
+        <RightButton onClick={() => handleAnswer(true)} />
+        <WrongButton onClick={() => handleAnswer(false)} />
       </AnswerWrap>
     </ProblemContainer>
   );

@@ -102,3 +102,8 @@ export const CommentState = atom({
   key: 'commentsFlag',
   default: false as boolean
 });
+
+export const solvedProblemState = atom<number[]>({
+  key: 'solvedProblem',
+  default: []
+});

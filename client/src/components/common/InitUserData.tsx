@@ -6,13 +6,16 @@ import fetchApi from 'api/fetch';
 import {
   userDataStates,
   usersocketStates,
-  postModalDataStates
+  postModalDataStates,
+  solvedProblemState
 } from 'recoil/store';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 
 const InitUserData = (/*{ history }: RouteComponentProps*/) => {
   const [userdata, setUserdata] = useRecoilState(userDataStates);
   const [postData, setPostData] = useRecoilState(postModalDataStates);
+  const [solvedProblems, setSolvedProblems] =
+    useRecoilState(solvedProblemState);
   //const socket = useRecoilValue(usersocketStates);
   const history = useHistory();
 
@@ -36,6 +39,7 @@ const InitUserData = (/*{ history }: RouteComponentProps*/) => {
           useridx: data.idx,
           BTUseruseridx: { ...data }
         });
+        setSolvedProblems(data.BTMUserProblemuseridx);
         //socket?.emit('name', data.nickname);
       }
     })();

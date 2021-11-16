@@ -22,6 +22,7 @@ const dbManager = {
 
   getUserdata: async (username: string) => {
     const [user, created] = await db.models.User.findOrCreate({
+      include: db.models.Problem,
       where: { nickname: username },
       defaults: { nickname: username },
       logging: false
