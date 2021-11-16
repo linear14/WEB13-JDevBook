@@ -5,6 +5,9 @@ import { useRecoilValue } from 'recoil';
 import { userDataStates, usersocketStates } from 'recoil/store';
 import { ProfilePhoto } from 'components/common';
 import palette from 'theme/palette';
+import { IComment } from 'types/comment';
+
+import fetchApi from 'api/fetch';
 
 const Animation = keyframes`
   0% { opacity: 0; }
@@ -60,58 +63,49 @@ const CommentInput = styled.input`
   padding-left: 10px;
 `;
 
-interface IComment {
-  writer: string;
-  text: string;
-}
-
 const Comment = ({ postIdx }: { postIdx: number }) => {
   const [value, setValue] = useState<string>('');
   const [commentList, setCommentList] = useState<IComment[]>([]);
-  const socket = useRecoilValue(usersocketStates);
-  const userdata = useRecoilValue(userDataStates);
+  const currentUserName = useRecoilValue(userDataStates).name;
 
-  const submit = (e: FormEvent<HTMLFormElement>) => {
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (socket !== null) {
-      socket.emit('add comment', {
-        sender: userdata.name,
-        postidx: postIdx,
-        comments: value
-      });
+
+    const addCommentRes = await fetchApi.addComments({
+      sender: currentUserName,
+      postidx: postIdx,
+      comments: value
+    });
+    
+    if (addCommentRes.check) {
+      setCommentList((commentList: IComment[]) =>
+        commentList.concat(
+          Object.assign({
+            writer: currentUserName,
+            text: addCommentRes.result.comments
+          })
+        )
+      );
     }
   };
 
   useEffect(() => {
     setCommentList([]);
-    if (socket !== null) {
-      socket.emit('send comments initial', {
-        postidx: postIdx
-      });
-
-      socket.on('get previous comments', (comment: IComment[]) => {
-        setCommentList((commentList: IComment[]) =>
-          commentList.concat(comment)
-        );
-        socket.off('get previous comments');
-      });
-    }
-  }, [postIdx, socket]);
-
-  useEffect(() => {
-    if (socket !== null) {
-      socket.off('receive comment');
-      socket.on(
-        'receive comment',
-        (data: { sender: string; postidx: number; comments: string }) => {
-          const { sender, postidx, comments } = data;
-          setCommentList((commentList: IComment[]) =>
-            commentList.concat({ writer: sender, text: comments })
-          );
-        }
+    const getPrevComments = async () => {
+      const prevComments = await fetchApi.getComments(postIdx);
+      const prevCommentsArray: IComment[] = prevComments.map((data: any) =>
+        Object.assign({
+          writer: data.BTUseruseridx.nickname,
+          text: data.comments
+        })
       );
-    }
-  }, [commentList, socket]);
+      setCommentList((commentList: IComment[]) =>
+        commentList.concat(prevCommentsArray)
+      );
+    };
+
+    getPrevComments();
+  }, []);
 
   const comments = commentList.map((comment: IComment, idx: number) => (
     <CommentsWrap key={idx}>
