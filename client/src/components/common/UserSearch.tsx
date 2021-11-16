@@ -28,6 +28,10 @@ const ModalHeader = styled(FlexBox)`
   margin-right: 8px;
 `;
 
+const MainLogo = styled.img`
+  width: 40px;
+`;
+
 const UserSearchBarContainer = styled.div`
   width: 240px;
   height: 40px;
@@ -149,7 +153,7 @@ const UserSearchBar = () => {
   return (
     <>
       <Link to="/home">
-        <img src={mainLogo} alt="mainLogo" />
+        <MainLogo src={mainLogo} alt="mainLogo" />
       </Link>
       <UserSearchBarContainer
         onClick={() => setModalState({ ...modalState, searchUser: true })}
