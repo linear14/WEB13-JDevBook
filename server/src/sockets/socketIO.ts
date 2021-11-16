@@ -2,12 +2,20 @@ import dbManager from '../service/dbManager';
 import { Socket, Server } from 'socket.io';
 import { addAssociation } from 'sequelize-typescript';
 
+let userArray:string[] = [];
+
 const socketIO = (server: any) => {
   const io = new Server(server);
   io.on('connection', (socket: Socket) => {
     // socket.on('name', (username: string) => {
     //   socket.name = username;
     // });
+    socket.on('login notify', (username: string) => {
+      if(!userArray.includes(username)) {
+        userArray.push(username);
+        io.emit('receive users login state', userArray);
+      }
+    })
 
     socket.on('send chat initial', async (receivedData) => {
       const { sender, receiver } = receivedData;
@@ -41,6 +49,7 @@ const socketIO = (server: any) => {
 
     socket.on('disconnect', () => {
       socket.get = false;
+      userArray = userArray.filter((el:string) => el !== socket.name);
       console.log(`${socket.name}:${socket.id} disconnected`);
     });
   });
