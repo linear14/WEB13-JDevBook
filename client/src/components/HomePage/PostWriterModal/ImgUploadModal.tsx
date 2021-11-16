@@ -134,7 +134,6 @@ const ImgUploadModal = () => {
     if (isImgMax) {
       alert('첨부 사진은 3장까지 가능합니다.');
     } else if (!isImgUploading) {
-      setIsImgUploading(true);
       inputfile.current.click();
     } else {
       alert('이미지 업로드 중입니다.');
@@ -142,6 +141,8 @@ const ImgUploadModal = () => {
   };
   const getFile = async () => {
     if (!inputfile.current.files) return setIsImgUploading(false);
+    // 업로드 직후 다시 클릭하고 취소하면 getFile 실행되는데 파일은 없음
+    if (inputfile.current.files.length === 0) return setIsImgUploading(false);
 
     const imglist: FileList = inputfile.current.files;
     const s3fileRes = await fetchApi.uploadImg(imglist);
@@ -165,11 +166,18 @@ const ImgUploadModal = () => {
   };
 
   useEffect(() => {
+    if (isImgUploading === true) getFile();
+  }, [isImgUploading]);
+
+  useEffect(() => {
     if (postData.picture3 !== null) setIsImgMax(true);
   }, [postData.picture3]);
 
   useEffect(() => {
-    setIsImgUploading(false);
+    if (isImgUploading === true) {
+      setIsImgUploading(false);
+      console.log('이미지 업로드 함 ');
+    }
   }, [postData.picture1, postData.picture2, postData.picture3]);
 
   return (
@@ -190,7 +198,7 @@ const ImgUploadModal = () => {
         type="file"
         accept="image/*"
         ref={inputfile}
-        onChange={getFile}
+        onChange={() => setIsImgUploading(true)}
         style={{ display: 'none' }}
       />
     </ImgUploadContainer>
