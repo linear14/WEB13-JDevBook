@@ -1,9 +1,11 @@
 import sequelize, { INTEGER, Model } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 
-import { PostAddData, PostUpdateData, CommentData } from '../types/interface';
+import { PostAddData, PostUpdateData, CommentData } from '../../types/interface';
 
-import db from '../models';
+import db from '../../models';
+import { getComments } from './comment';
+import { getAllUsers, getUseridx, getUserName } from './user';
 
 const dbManager = {
   sync: async () => {
@@ -85,27 +87,9 @@ const dbManager = {
     await db.models.Post.destroy({ where: { idx: postIdx }, logging: false });
   },
 
-  getAllUsers: async () => {
-    const users = await db.models.User.findAll({ logging: false });
-    return users;
-  },
-
-  getUserName: async function (idx: number) {
-    const username = await db.models.User.findOne({
-      where: { idx: idx },
-      logging: false
-    });
-    return username?.get().nickname;
-  },
-
-  getUseridx: async function (name: string) {
-    const user = await db.models.User.findOne({
-      where: { nickname: name },
-      logging: false
-    });
-
-    return user?.get().idx ? user?.get().idx : -1;
-  },
+  getAllUsers: getAllUsers,
+  getUserName: getUserName,
+  getUseridx: getUseridx,
 
   getChatList: async function (sender: string, receiver: string) {
     const senderidx: number = await this.getUseridx(sender);
@@ -169,18 +153,7 @@ const dbManager = {
     );
   },
 
-  getComments: async function (postidx: number) {
-    const prevComments = await db.models.Comment.findAll({
-      include: [
-        {
-          model: db.models.User,
-          as: 'BTUseruseridx'
-        }
-      ],
-      where: { postidx: postidx }
-    });
-    return prevComments;
-  }
+  getComments: getComments
 };
 
 export default dbManager;
