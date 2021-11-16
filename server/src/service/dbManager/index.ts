@@ -3,7 +3,7 @@ import { Op, fn, col } from 'sequelize';
 
 import { PostAddData, PostUpdateData, CommentData } from 'types/interface';
 
-import db from 'models';
+import db from '../../models'; // 왜 절대경로 안되지...
 
 const dbManager = {
   sync: async () => {

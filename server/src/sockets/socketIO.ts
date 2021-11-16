@@ -1,4 +1,4 @@
-import dbManager from '../service/dbManager';
+import dbManager from '../service/dbManager'; // 왜 절대경로 안되지
 import { Socket, Server } from 'socket.io';
 import { IComment } from '../types/interface';
 import { addAssociation } from 'sequelize-typescript';
