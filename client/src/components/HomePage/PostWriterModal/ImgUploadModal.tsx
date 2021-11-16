@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { FiUpload } from 'react-icons/fi';
 import { useRecoilState, useResetRecoilState } from 'recoil';
+import { imageViewerState as ivState } from 'recoil/store';
 
 import {
   isImgMaxState,
@@ -148,6 +149,12 @@ const ImgPreview = styled.div`
   img {
     width: 100%;
     height: 100%;
+    &:hover {
+      cursor: pointer;
+    }
+    &:active {
+      cursor: pointer;
+    }
   }
 
   img[src=''] {
@@ -161,6 +168,8 @@ const ImgUploadModal = () => {
   const [isImgUploading, setIsImgUploading] =
     useRecoilState(isImgUploadingState);
   const [isImgMax, setIsImgMax] = useRecoilState(isImgMaxState);
+  const [imageViewerState, setImageViewerState] = useRecoilState(ivState);
+
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgUploadWrapRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgPreviewModal = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -211,6 +220,16 @@ const ImgUploadModal = () => {
     else if (postData.picture3 === null) {
       setPostData({ ...postData, picture3: s3fileRes.file.location });
     }
+  };
+  const imgPreviewBigger = (e: BaseSyntheticEvent) => {
+    // 연속되게는 안함
+    setImageViewerState({
+      ...imageViewerState,
+      imageCount: 1,
+      currentIdx: 0,
+      images: [e.target.src ?? ''],
+      isOpen: true
+    });
   };
 
   useEffect(() => {
@@ -263,9 +282,9 @@ const ImgUploadModal = () => {
           />
         </WhatWorkModal>
         <ImgPreview ref={imgPreviewModal}>
-          <img src={postData.picture1 ?? ''} />
-          <img src={postData.picture2 ?? ''} />
-          <img src={postData.picture3 ?? ''} />
+          <img src={postData.picture1 ?? ''} onClick={imgPreviewBigger} />
+          <img src={postData.picture2 ?? ''} onClick={imgPreviewBigger} />
+          <img src={postData.picture3 ?? ''} onClick={imgPreviewBigger} />
         </ImgPreview>
       </ImgUploadWrap>
     </ImgUploadContainer>
