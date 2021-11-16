@@ -2,7 +2,11 @@ import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
-import { modalStateStore, postListStore, postModalData } from 'recoil/store';
+import {
+  modalStateStore,
+  postListStore,
+  postModalDataStates
+} from 'recoil/store';
 import palette from 'theme/palette';
 import fetchApi from 'api/fetch';
 import { PostData } from 'types/post';
@@ -33,7 +37,7 @@ const OptionModalContainer = styled.div`
 const OptionModal = ({ post }: { post: PostData }) => {
   const [modalState, setModalState] = useRecoilState(modalStateStore);
   const [postList, setPostList] = useRecoilState(postListStore);
-  const [postData, setPostData] = useRecoilState(postModalData);
+  const [postData, setPostData] = useRecoilState(postModalDataStates);
   const resetModalState = useResetRecoilState(modalStateStore);
 
   const modal = React.useRef<HTMLDivElement>(null);

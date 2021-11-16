@@ -9,6 +9,7 @@ import ProfilePhoto from 'components/common/ProfilePhoto';
 import { UserSearchBar, UserSearchModal } from 'components/common/UserSearch';
 import UserCard from 'components/common/UserCard';
 import InitUserData from 'components/common/InitUserData';
+import InitSocket from 'components/common/InitSocket';
 
 export {
   AlarmSideBar,
@@ -22,5 +23,6 @@ export {
   UserSearchBar,
   UserSearchModal,
   UserCard,
-  InitUserData
+  InitUserData,
+  InitSocket
 };

@@ -2,7 +2,12 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
 import { useRecoilValue } from 'recoil';
-import { rightModalStates, userData, usersocket, chatWith } from 'recoil/store';
+import {
+  rightModalStates,
+  userDataStates,
+  usersocketStates,
+  chatWith
+} from 'recoil/store';
 
 import CurrentUser from './CurrentUser';
 import palette from 'theme/palette';
@@ -151,22 +156,26 @@ const ChatSideBar = () => {
   const [value, setValue] = useState<string>('');
 
   const rightModalState = useRecoilValue(rightModalStates);
-  const socket = useRecoilValue(usersocket);
-  const currentUserName = useRecoilValue(userData).name;
+  const socket = useRecoilValue(usersocketStates);
+  const currentUserName = useRecoilValue(userDataStates).name;
   const chatReceiver = useRecoilValue(chatWith);
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    socket.emit('send message', {
-      sender: currentUserName,
-      receiver: chatReceiver,
-      message: value
-    });
+
+    if (socket !== null) {
+      socket.emit('send message', {
+        sender: currentUserName,
+        receiver: chatReceiver,
+        message: value
+      });
+    }
   };
 
   useEffect(() => {
-    if (chatReceiver !== '') {
+    if (chatReceiver !== '' && socket !== null) {
       setMessageList([]);
+      //console.log(socket);
       socket.emit('send chat initial', {
         sender: currentUserName,
         receiver: chatReceiver
@@ -197,7 +206,7 @@ const ChatSideBar = () => {
         });
       });
     }
-  }, [chatReceiver]);
+  }, [chatReceiver, socket]);
 
   function ShowReceiverInfoFlag(idx: number, msg: string) {
     if (idx === 0) return msg.split(':')[0] === currentUserName ? true : false;

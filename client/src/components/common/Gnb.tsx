@@ -2,7 +2,11 @@ import React, { Dispatch } from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { modalStateStore, rightModalStates, userData } from 'recoil/store';
+import {
+  modalStateStore,
+  rightModalStates,
+  userDataStates
+} from 'recoil/store';
 import fetchApi from 'api/fetch';
 
 import {
@@ -139,7 +143,7 @@ const IconWrap = styled.div<IconProps>`
 
 const Gnb = ({ type, rightModalType }: GnbProps) => {
   const modalState = useRecoilValue(modalStateStore);
-  const [userdata, setUserdata] = useRecoilState(userData);
+  const [userdata, setUserdata] = useRecoilState(userDataStates);
   const [rightModalState, setRightModalState] =
     useRecoilState(rightModalStates);
   const history = useHistory();

@@ -3,7 +3,11 @@ import styled, { keyframes } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import palette from 'theme/palette';
-import { modalStateStore, postListStore, postModalData } from 'recoil/store';
+import {
+  modalStateStore,
+  postListStore,
+  postModalDataStates
+} from 'recoil/store';
 import fetchApi from 'api/fetch';
 import { PostAddData, PostUpdateData, PostData } from 'types/post';
 
@@ -87,7 +91,7 @@ const PostBtn = styled.div`
 
 const PostWriterModal = () => {
   const modalState = useRecoilValue(modalStateStore);
-  const postData = useRecoilValue(postModalData);
+  const postData = useRecoilValue(postModalDataStates);
   const [postList, setPostList] = useRecoilState(postListStore);
   const closePostModal = useClosePostModal();
 

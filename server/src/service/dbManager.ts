@@ -1,7 +1,7 @@
 import sequelize, { INTEGER } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 
-import { PostAddData, PostUpdateData, CommentData } from 'service/interface';
+import { PostAddData, PostUpdateData, CommentData } from '../types/interface';
 
 import db from '../models';
 
