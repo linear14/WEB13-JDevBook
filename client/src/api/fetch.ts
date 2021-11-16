@@ -1,3 +1,4 @@
+import { CommentData } from 'types/comment';
 import { PostData, PostAddData, PostUpdateData } from 'types/post';
 // import objectStorage from './objectStorage';
 
@@ -95,7 +96,26 @@ const fetchApi = {
     });
 
     return await fileRes.json(); // {file: s3file, save: true/false}
-  }
+  },
+
+  getComments: async (postidx: number) => {
+    const response = await fetch(`/api/comments/${postidx}`);
+    const getCommentsList = await response.json();
+    // 여기서 getCommentsList map해서 보내준다.
+    return getCommentsList;
+  },
+
+  addComments: async (addComment: CommentData) => {
+    const response = await fetch(`/api/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(addComment)
+    });
+
+    return await response.json();
+  },
 };
 
 export default fetchApi;
