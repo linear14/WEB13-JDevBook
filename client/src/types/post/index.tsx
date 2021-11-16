@@ -26,10 +26,6 @@ export interface PostData extends PostAddData {
   likeFlag: boolean;
 }
 
-export interface PostProps {
-  post: PostData;
-}
-
 export interface PostHeaderProps {
   nickname: string;
   profile: string | null;
@@ -66,9 +62,4 @@ export interface PostImageBoxStyle {
 export interface PostImageBoxStyleWithSource extends PostImageBoxStyle {
   index: number;
   urls: string[];
-}
-
-export interface ImgUploadModalProps {
-  modalState: boolean;
-  writerModalState: boolean;
 }

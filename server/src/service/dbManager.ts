@@ -1,7 +1,7 @@
-import sequelize, { INTEGER } from 'sequelize';
+import sequelize, { INTEGER, Model } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 
-import { PostAddData, PostUpdateData, CommentData } from 'service/interface';
+import { PostAddData, PostUpdateData, CommentData } from '../types/interface';
 
 import db from '../models';
 
@@ -160,19 +160,24 @@ const dbManager = {
       comments: comments
     });
   },
-
-  getLikePosts: async function (useridx: number) {
-    const ilike = await db.models.Like.findAll({
-      where: { useridx: useridx }
+  
+  toggleLikePosts: async function (useridx: number, postidx: number) {
+    const [likePost, created] = await db.models.Like.findOrCreate({
+      where: { useridx: useridx, postidx: postidx },
+      logging: false
     });
-    const ilikeArray = ilike.map((data: any) => data.get());
-    return ilikeArray;
+    if (!created)
+      await db.models.Like.destroy({
+        where: { useridx: useridx, postidx: postidx },
+        logging: false
+      });
+    return created;
   },
-
+  
   updateLikeNum: async (postIdx: number, likeNum: number) => {
     await db.models.Post.update(
       { likenum: likeNum },
-      { where: { idx: postIdx } }
+      { where: { idx: postIdx }, logging: false }
     );
   },
 
@@ -189,7 +194,5 @@ const dbManager = {
     return prevCommentsArray;
   }
 };
-
-// fn('COUNT', col('Comments.idx'))
 
 export default dbManager;

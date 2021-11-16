@@ -3,13 +3,15 @@ import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '../config/.env.development') });
 import express, { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import multer from 'multer';
 import dbManager from '../service/dbManager';
-import { DBUser, PostAddData, PostUpdateData } from 'service/interface';
+import { DBUser, PostAddData, PostUpdateData } from '../types/interface';
+import { objectStorage, upload } from '../service/objectStorage';
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
-
+//const upload = multer({ dest: 'uploads/' });
 const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
 
 router.get('/data', async (req: Request, res: Response, next: NextFunction) => {
@@ -125,10 +127,10 @@ router.put(
         `Update ${JSON.stringify(postUpdateData)} where idx=${postIdx}`
       );
       await dbManager.updatePost(postUpdateData, postIdx);
-      res.json(true);
+      res.json({ check: true });
     } catch (err) {
       console.error(err);
-      res.json(false);
+      res.json({ check: false });
     }
   }
 );
@@ -166,11 +168,8 @@ router.put(
   '/posts/like/:postidx',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const postIdx = Number(req.params.postidx.slice(1));
+      const postIdx = Number(req.params.postidx);
       const { likeNum } = req.body;
-      console.log(
-        `Update likenum ${JSON.stringify(likeNum)} where idx=${postIdx}`
-      );
       await dbManager.updateLikeNum(postIdx, likeNum);
       res.json(true);
     } catch (err) {
@@ -180,10 +179,29 @@ router.put(
   }
 );
 
-router.post('/uploadimg', (req: Request, res: Response, next: NextFunction) => {
-  console.log('오냐고');
-  console.log(req.body);
-  res.end();
-});
+router.post(
+  '/likes/:useridx/:postidx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const useridx = Number(req.params.useridx);
+      const postidx = Number(req.params.postidx);
+      const result = await dbManager.toggleLikePosts(useridx, postidx);
+      res.json(result);
+    } catch (err) {
+      res.json(false);
+    }
+  }
+);
+
+router.post(
+  '/uploadimg',
+  upload.single('imgfile'), // multer-s3 location 추가됨
+  async (req: Request, res: Response, next: NextFunction) => {
+    const s3file = req.file;
+    if (s3file) res.json({ file: s3file, save: true });
+    else res.json({ save: false });
+    // type 생각하면 형식 똑같이 해야되나?
+  }
+);
 
 module.exports = router;

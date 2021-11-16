@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import styled, { css, keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { iconSearch } from 'images/icons';
 import { MdArrowBack } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
+import { modalStateStore } from 'recoil/store';
 
-import { modalVisibleStates } from 'recoil/store';
 import { SearchedUser } from 'types/GNB';
 import palette from 'theme/palette';
 import fetchApi from 'api/fetch';
@@ -114,6 +114,7 @@ const HoverRound = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   &:hover {
     background: ${palette.lightgray};
@@ -144,7 +145,7 @@ const SearchModalBody = styled.div`
 `;
 
 const UserSearchBar = () => {
-  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const [modalState, setModalState] = useRecoilState(modalStateStore);
   return (
     <>
       <Link to="/home">
@@ -161,7 +162,7 @@ const UserSearchBar = () => {
 };
 
 const UserSearchModal = () => {
-  const [modalState, setModalState] = useRecoilState(modalVisibleStates);
+  const [modalState, setModalState] = useRecoilState(modalStateStore);
   const [input, setInput] = useState('');
   const [results, setResults] = useState<{
     isProgress: boolean;

@@ -12,20 +12,21 @@ import {
   AlarmSideBar,
   SelectorSideBar,
   GroupSideBar,
-  InitUserData
+  InitUserData,
+  InitSocket
 } from 'components/common';
 import { useRecoilState } from 'recoil';
 import { imageViewerState as ivState } from 'recoil/store';
 
 const GlobalStyle = createGlobalStyle`
   * {
-    font-weight: bold;
-    
     ::placeholder,
     ::-webkit-input-placeholder {
+      font-weight: bold;
       font-family: 'Noto Sans KR';
     }
     :-ms-input-placeholder {
+      font-weight: bold;
       font-family: 'Noto Sans KR';
     }
   }
@@ -58,6 +59,7 @@ const HomePage = () => {
       <GlobalStyle />
       <HomePageContainer>
         <InitUserData />
+        <InitSocket />
         <Gnb type="home" rightModalType="" />
         <SideBar isLeft={true}>
           <InfoSideBar />

@@ -67,8 +67,15 @@ const fetchApi = {
     return await response.json();
   },
 
+  addLikePost: async (userIdx: number, postIdx: number) => {
+    const response = await fetch(`/api/likes/${userIdx}/${postIdx}`, {
+      method: 'POST'
+    });
+    return await response.json();
+  },
+
   updateLikeNum: async (postIdx: number, likeNum: number) => {
-    const response = await fetch(`/api/posts/like/:${postIdx}`, {
+    const response = await fetch(`/api/posts/like/${postIdx}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -79,19 +86,15 @@ const fetchApi = {
   },
 
   uploadImg: async (imglist: FileList) => {
-    console.log(imglist);
-    console.log(imglist[0]);
     const formData = new FormData();
     formData.append('imgfile', imglist[0]);
-    //await objectStorage.uploadObjectfile('canupload.png', imglist[0]);
-    await fetch('/api/uploadimg', {
+
+    const fileRes = await fetch('/api/uploadimg', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Accept: 'application/json'
-      },
       body: formData
     });
+
+    return await fileRes.json(); // {file: s3file, save: true/false}
   }
 };
 

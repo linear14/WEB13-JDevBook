@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { userData } from 'recoil/store';
+import { userDataStates } from 'recoil/store';
 import { useRecoilValue } from 'recoil';
 
 import palette from 'theme/palette';
@@ -14,7 +14,7 @@ const InfoSideBarContainer = styled.div`
   background: ${palette.white};
   display: flex;
   flex-direction: column;
-  box-shadow: rgba(0, 0, 0, 0.24) 5px 5px 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 3px;
 `;
 
 const ProfileWrap = styled(Link)`
@@ -75,7 +75,7 @@ const InnerBarGraph = styled.span<{ solvedRate: number }>`
 
 const InfoSideBar = () => {
   const solvedRate = Number(((123 / 155) * 100).toFixed(1));
-  const userdata = useRecoilValue(userData);
+  const userdata = useRecoilValue(userDataStates);
 
   return (
     <InfoSideBarContainer>
