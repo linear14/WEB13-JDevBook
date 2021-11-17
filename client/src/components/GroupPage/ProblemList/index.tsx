@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import fetchApi from 'api/fetch';
 import { Problem } from '..';
-import { IProblem } from 'types/group';
+import { IProblem } from 'types/problem';
 
 const ProblemListContainer = styled.div`
   width: 680px;

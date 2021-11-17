@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import palette from 'theme/palette';
 import style from 'theme/style';
-import { IProblem } from 'types/group';
+import { IProblem } from 'types/problem';
 
 const ProblemContainer = styled.div`
   width: 680px;
