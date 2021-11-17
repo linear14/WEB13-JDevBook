@@ -4,8 +4,10 @@ import { postListStore } from 'recoil/store';
 import styled, { css } from 'styled-components';
 
 import fetchApi from 'api/fetch';
+import arrayUtil from 'utils/arrayUtil';
 
 import { Post, Skeleton } from 'components/HomePage';
+import { Problem } from 'components/GroupPage';
 
 const PostListContainer = styled.div`
   width: 680px;
@@ -23,8 +25,10 @@ const Observer = styled.div`
 
 const PostList = () => {
   const [posts, setPosts] = useRecoilState(postListStore);
+  const [problems, setProblems] = useState([]);
   const [isFetching, setFetching] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const problemOrders = useRef<number[]>([]);
   const observerRef = useRef<IntersectionObserver>();
 
   const observer = (element: HTMLDivElement) => {
@@ -35,7 +39,7 @@ const PostList = () => {
       ([entry]) => {
         if (entry.isIntersecting && !isFetching && hasMore) {
           const lastIdx = posts[posts.length - 1].idx;
-          fetchPosts(lastIdx);
+          fetchPostsMore(lastIdx, 10);
         }
       },
       {
@@ -45,7 +49,22 @@ const PostList = () => {
     element && observerRef.current.observe(element);
   };
 
-  const fetchPosts = async (lastIdx: number = -1, count: number = 10) => {
+  const fetchInit = async () => {
+    setFetching(true);
+    const fetchPosts = await fetchApi.getPosts();
+    const fetchProblems = await fetchApi.getProblems();
+    const result = await Promise.all([fetchPosts, fetchProblems]);
+    setPosts((prev) => prev.concat(result[0]));
+    setProblems(result[1]);
+    problemOrders.current = arrayUtil.shuffle(
+      Array(result[1].length)
+        .fill(undefined)
+        .map((_, idx) => idx)
+    );
+    setFetching(false);
+  };
+
+  const fetchPostsMore = async (lastIdx: number, count: number) => {
     setFetching(true);
     const result = await fetchApi.getPosts(lastIdx, count);
     if (result.length < count) {
@@ -53,11 +72,6 @@ const PostList = () => {
     }
     setPosts((prev) => prev.concat(result));
     setFetching(false);
-  };
-
-  const fetchProblems = async () => {
-    const problems = await fetchApi.getProblems();
-    console.log(problems);
   };
 
   const getSkeletons = (count: number) => {
@@ -70,15 +84,34 @@ const PostList = () => {
 
   useEffect(() => {
     setPosts([]);
-    fetchPosts();
-    fetchProblems();
+    fetchInit();
   }, []);
+
+  const getNextProblem = (idx: number) => {
+    if (problemOrders.current.length * 5 <= idx) return null;
+    return idx % 5 === 4
+      ? problems[problemOrders.current[Math.floor(idx / 5)]]
+      : null;
+  };
 
   return (
     <PostListContainer>
-      {posts.map((post) => (
-        <Post key={post.idx} post={post} />
-      ))}
+      {Array(posts.length)
+        .fill(undefined)
+        .map((_, idx) => {
+          const nextProblem = getNextProblem(idx);
+          return (
+            <div key={idx}>
+              <Post key={posts[idx].idx} post={posts[idx]} />
+              {nextProblem && (
+                <Problem
+                  key={`p${(nextProblem as any).idx}`}
+                  problem={nextProblem}
+                />
+              )}
+            </div>
+          );
+        })}
       {isFetching && getSkeletons(3)}
       <Observer ref={observer} />
     </PostListContainer>

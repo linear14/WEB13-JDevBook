@@ -27,7 +27,10 @@ const fetchApi = {
     return await allusersRes.json();
   },
 
-  getPosts: async (lastIdx: number, count: number): Promise<PostData[]> => {
+  getPosts: async (
+    lastIdx: number = -1,
+    count: number = 10
+  ): Promise<PostData[]> => {
     const response = await fetch(
       `/api/posts?lastIdx=${lastIdx}&count=${count}`
     );
