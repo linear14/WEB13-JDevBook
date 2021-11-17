@@ -259,12 +259,13 @@ const ImgUploadModal = () => {
   const deleteOneImg = (idx: number) => {
     const tmp = imgList.map((v) => v);
     tmp.splice(idx, 1);
+    if (idx === 2) setIsImgMax(false);
     setImgList(tmp);
   };
 
   const imgsetRendering = (): JSX.Element[] => {
     return [0, 1, 2].map((v) => (
-      <div className="imgset">
+      <div key={v} className="imgset">
         <CloseOneImg imgsrc={imgList[v]} onClick={deleteOneImg.bind(null, v)}>
           <IoClose size="20px" />
         </CloseOneImg>
