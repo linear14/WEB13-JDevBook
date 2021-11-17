@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import palette from 'theme/palette';
@@ -16,7 +17,7 @@ const GroupCardWrap = styled.div`
   flex-direction: column;
 `;
 
-const GroupImg = styled.div`
+const GroupImg = styled(Link)`
   width: 100%;
   height: 65%;
 
@@ -69,10 +70,10 @@ const GroupJoinBtn = styled.div`
 const GroupCard = () => {
   return (
     <GroupCardWrap>
-      <GroupImg />
+      <GroupImg to="/group" />
       <GroupSelectorWrap>
         <GroupName>그룹 이름</GroupName>
-        <GroupJoinBtn>그룹 추가</GroupJoinBtn>
+        <GroupJoinBtn className="no-drag">그룹 추가</GroupJoinBtn>
       </GroupSelectorWrap>
     </GroupCardWrap>
   );

@@ -15,10 +15,12 @@ const GlobalStyle = createGlobalStyle`
     ::-webkit-input-placeholder {
       font-weight: bold;
       font-family: 'Noto Sans KR';
+      color: ${palette.darkgray};
     }
     :-ms-input-placeholder {
       font-weight: bold;
       font-family: 'Noto Sans KR';
+      color: ${palette.darkgray};
     }
   }
 

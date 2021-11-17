@@ -57,11 +57,6 @@ const PostWriterModalInner = styled.div<{ modalState: boolean }>`
   display: ${(props) => (props.modalState ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
-
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 `;
 
 const Line = styled.div`
@@ -172,7 +167,10 @@ const PostWriterModal = () => {
   return (
     <>
       <PostWriterModalOverlay modalState={modalState.post.writer} />
-      <PostWriterModalInner modalState={modalState.post.writer}>
+      <PostWriterModalInner
+        modalState={modalState.post.writer}
+        className="no-drag"
+      >
         <ModalTitle />
         <Line />
         <PostInfo />

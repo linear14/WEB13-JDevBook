@@ -29,11 +29,17 @@ const ContentsInput = styled.textarea<{ modalState: boolean }>`
   outline: none;
   resize: none;
   background-color: ${palette.white};
-  font-family: 'Noto Sans KR';
-  font-weight: bold;
   font-size: ${style.font.normal};
 
   overscroll-behavior: none;
+
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    color: #bfbfbf;
+  }
+  :-ms-input-placeholder {
+    color: #bfbfbf;
+  }
 `;
 
 const ContentsBytesChecker = styled.div`

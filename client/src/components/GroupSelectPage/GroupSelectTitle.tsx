@@ -21,7 +21,7 @@ const Description = styled.div`
 
 const GroupSelectTitle = () => {
   return (
-    <GroupSelectTitleWrap>
+    <GroupSelectTitleWrap className="no-drag">
       <Title>그룹 찾기</Title>
       <Description>원하는 그룹을 선택해 보세요 😀</Description>
     </GroupSelectTitleWrap>
