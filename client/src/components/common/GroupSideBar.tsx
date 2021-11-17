@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -34,7 +34,6 @@ const SearchBarWrap = styled.div`
     background: none;
     border: none;
     font-size: 1rem;
-    font-family: 'Spoqa Han Sans Neo';
   }
 `;
 
