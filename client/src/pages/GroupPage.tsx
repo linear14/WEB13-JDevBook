@@ -1,7 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import { os } from 'images/groupimg';
+import palette from 'theme/palette';
 
 import {
   Gnb,
@@ -13,6 +14,12 @@ import {
   InitSocket
 } from '../components/common';
 import { ProblemList, GroupNavBar } from 'components/GroupPage';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${palette.lightgray};
+  }
+`;
 
 const GroupPageContainer = styled.div`
   display: flex;
@@ -40,6 +47,7 @@ const ContentsContainer = styled.div`
 const GroupPage = () => {
   return (
     <GroupPageContainer>
+      <GlobalStyle />
       <InitUserData />
       <InitSocket />
       <Gnb type="group" />
