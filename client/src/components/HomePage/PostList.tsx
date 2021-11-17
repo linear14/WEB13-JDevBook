@@ -107,6 +107,7 @@ const PostList = () => {
                 <Problem
                   key={`p${(nextProblem as any).idx}`}
                   problem={nextProblem}
+                  isHome
                 />
               )}
             </div>
