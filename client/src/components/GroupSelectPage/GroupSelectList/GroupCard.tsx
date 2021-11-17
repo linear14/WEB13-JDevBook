@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import palette from 'theme/palette';
 import style from 'theme/style';
+import { os } from 'images/groupimg';
 
 const GroupCardWrap = styled.div`
   width: 244px;
@@ -21,9 +22,13 @@ const GroupImg = styled(Link)`
   width: 100%;
   height: 65%;
 
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  background-color: green;
+  img {
+    width: 100%;
+    height: 100%;
+
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
 `;
 
 const GroupSelectorWrap = styled.div`
@@ -34,6 +39,7 @@ const GroupSelectorWrap = styled.div`
 
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
+  border-top: solid 1px ${palette.gray};
   background-color: ${palette.white};
 
   display: flex;
@@ -70,7 +76,9 @@ const GroupJoinBtn = styled.div`
 const GroupCard = () => {
   return (
     <GroupCardWrap>
-      <GroupImg to="/group" />
+      <GroupImg to="/group">
+        <img src={os} alt="그룹 이미지" />
+      </GroupImg>
       <GroupSelectorWrap>
         <GroupName>그룹 이름</GroupName>
         <GroupJoinBtn className="no-drag">그룹 추가</GroupJoinBtn>
