@@ -155,7 +155,7 @@ const UserSearchBar = () => {
         onClick={() => setModalState({ ...modalState, searchUser: true })}
       >
         <img src={iconSearch} alt="iconSearch" />
-        <input type="text" placeholder="Search User" readOnly />
+        <input type="text" placeholder="사용자 검색" readOnly />
       </UserSearchBarContainer>
     </>
   );
@@ -225,9 +225,9 @@ const UserSearchModal = () => {
       </ModalHeader>
       <SearchModalBody>
         {results.isProgress ? (
-          <p>Searching...</p>
+          <p>검색 중...</p>
         ) : results.users.length === 0 ? (
-          <p>No Result</p>
+          <p>결과 없음</p>
         ) : (
           results.users.map((result) => (
             <UserCard key={result.idx} user={result} />

@@ -1,11 +1,12 @@
 import sequelize, { INTEGER, Model } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 
-import { PostAddData, PostUpdateData, CommentData } from '../../types/interface';
-
 import db from '../../models';
 import { getComments } from './comment';
 import { getAllUsers, getUseridx, getUserName } from './user';
+import { searchUsers } from './search';
+import { getProblems, insertSolvedProblem } from './problem';
+import { PostAddData, PostUpdateData, CommentData } from '../../types/interface';
 
 const dbManager = {
   sync: async () => {
@@ -21,6 +22,7 @@ const dbManager = {
 
   getUserdata: async (username: string) => {
     const [user, created] = await db.models.User.findOrCreate({
+      include: db.models.Problem,
       where: { nickname: username },
       defaults: { nickname: username },
       logging: false
@@ -29,14 +31,7 @@ const dbManager = {
     return user.get();
   },
 
-  searchUsers: async (keyword: string) => {
-    const users = await db.models.User.findAll({
-      where: { nickname: { [Op.like]: `%${keyword}%` } },
-      logging: false
-    });
-
-    return users;
-  },
+  searchUsers,
 
   getPosts: async (myIdx: number, lastIdx: number, count: number) => {
     const postsWithUser = await db.models.Post.findAll({
@@ -87,9 +82,9 @@ const dbManager = {
     await db.models.Post.destroy({ where: { idx: postIdx }, logging: false });
   },
 
-  getAllUsers: getAllUsers,
-  getUserName: getUserName,
-  getUseridx: getUseridx,
+  getAllUsers,
+  getUserName,
+  getUseridx,
 
   getChatList: async function (sender: string, receiver: string) {
     const senderidx: number = await this.getUseridx(sender);
@@ -131,6 +126,7 @@ const dbManager = {
       useridx: userIdx
     });
     return result.get();
+
   },
 
   toggleLikePosts: async function (useridx: number, postidx: number) {
@@ -153,7 +149,9 @@ const dbManager = {
     );
   },
 
-  getComments: getComments
+  getComments,
+  getProblems,
+  insertSolvedProblem
 };
 
 export default dbManager;

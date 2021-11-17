@@ -2,6 +2,7 @@ import AWS from 'aws-sdk';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
 import fs from 'fs';
+import { yyyymmdd } from './date';
 const storage = require('../config/objectstorage.json');
 
 //const endpoint: AWS.Endpoint = new AWS.Endpoint(storage.url);
@@ -28,7 +29,7 @@ const storageS3 = multerS3({
   key: (req, file, callback) => {
     callback(
       null,
-      `${req.session.username}/${Date.now()}_${file.originalname}`
+      `${req.session.username}/${yyyymmdd}/${Date.now()}_${file.originalname}`
     );
   },
   serverSideEncryption: 'AES256'

@@ -51,10 +51,23 @@ const OptionModal = ({ post }: { post: PostData }) => {
 
   const openPostModal = () => {
     setPostData(post);
-    setModalState({
-      ...modalState,
-      post: { ...modalState.post, writer: true, index: -1, isEnroll: false }
-    });
+    if (post.picture1) {
+      setModalState({
+        ...modalState,
+        post: {
+          ...modalState.post,
+          writer: true,
+          index: -1,
+          isEnroll: false,
+          inPhoto: true
+        }
+      });
+    } else {
+      setModalState({
+        ...modalState,
+        post: { ...modalState.post, writer: true, index: -1, isEnroll: false }
+      });
+    }
   };
 
   const deletePost = async () => {

@@ -116,6 +116,22 @@ const fetchApi = {
 
     return await response.json();
   },
+  getProblems: async (groupIdx: number) => {
+    const response = await fetch(`/api/problems?idx=${groupIdx}`);
+    const problems = await response.json();
+    return problems;
+  },
+
+  insertSolvedProblem: async (problemIdx: number) => {
+    const response = await fetch(`/api/problems/correct`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ problemIdx })
+    });
+    return await response.json();
+  }
 };
 
 export default fetchApi;
