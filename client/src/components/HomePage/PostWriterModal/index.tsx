@@ -6,7 +6,8 @@ import palette from 'theme/palette';
 import {
   modalStateStore,
   postListStore,
-  postModalDataStates
+  postModalDataStates,
+  AlertState
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 import { PostAddData, PostUpdateData, PostData } from 'types/post';
@@ -17,6 +18,7 @@ import ModalContents from 'components/HomePage/PostWriterModal/ModalContents';
 import AddContentsBar from 'components/HomePage/PostWriterModal/AddContentsBar';
 import ImgUploadModal from './ImgUploadModal';
 import useClosePostModal from 'hooks/useClosePostModal';
+import { setTimeout } from 'timers';
 
 const PostWriterModalOverlay = styled.div<{ modalState: boolean }>`
   position: fixed;
@@ -85,7 +87,6 @@ const PostBtn = styled.div`
   &:hover {
     cursor: pointer;
     filter: brightness(95%);
-    transition: all 0.1s;
   }
 
   &:active {
@@ -98,6 +99,7 @@ const PostWriterModal = () => {
   const modalState = useRecoilValue(modalStateStore);
   const postData = useRecoilValue(postModalDataStates);
   const [postList, setPostList] = useRecoilState(postListStore);
+  const [alertModal, setAlertModal] = useRecoilState(AlertState);
   const closePostModal = useClosePostModal();
 
   /**
@@ -106,7 +108,21 @@ const PostWriterModal = () => {
    */
   const isEnrollMode = () => modalState.post.isEnroll;
   const alertSuccess = () => {
-    alert(`게시글이 성공적으로 ${isEnrollMode() ? '게시' : '수정'}되었습니다!`);
+    setAlertModal({
+      ...alertModal,
+      comment: `게시글이 성공적으로 ${
+        isEnrollMode() ? '게시' : '수정'
+      }되었습니다!`,
+      modalState: true
+    });
+    setTimeout(() => {
+      setAlertModal({
+        ...alertModal,
+        modalState: false
+      });
+    }, 3000);
+
+    // alert(`게시글이 성공적으로 ${isEnrollMode() ? '게시' : '수정'}되었습니다!`);
   };
   const alertFail = () => {
     alert(

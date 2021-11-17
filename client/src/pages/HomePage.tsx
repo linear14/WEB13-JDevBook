@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import { useRecoilState } from 'recoil';
 
+import { imageViewerState as ivState } from 'recoil/store';
 import palette from 'theme/palette';
 
 import { PostWriter, PostList, ImageViewer } from 'components/HomePage';
@@ -13,10 +15,9 @@ import {
   SelectorSideBar,
   GroupSideBar,
   InitUserData,
-  InitSocket
+  InitSocket,
+  AlertModal
 } from 'components/common';
-import { useRecoilState } from 'recoil';
-import { imageViewerState as ivState } from 'recoil/store';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -60,6 +61,7 @@ const HomePage = () => {
       <HomePageContainer>
         <InitUserData />
         <InitSocket />
+        <AlertModal />
         <Gnb type="home" rightModalType="" />
         <SideBar isLeft={true}>
           <InfoSideBar />
