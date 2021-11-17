@@ -150,3 +150,13 @@ export const groupListState = atom<IGroup[]>({
   key: 'groupListState',
   default: []
 });
+
+export const groupState = atom<IGroup>({
+  key: 'groupState',
+  default: {
+    idx: 0,
+    title: '',
+    description: '',
+    cover: ''
+  }
+});

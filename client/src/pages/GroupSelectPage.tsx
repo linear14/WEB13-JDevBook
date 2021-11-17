@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 
-import { os } from 'images/groupimg';
 import palette from 'theme/palette';
 
 import {

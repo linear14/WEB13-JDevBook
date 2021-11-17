@@ -13,7 +13,7 @@ import {
   InitUserData,
   InitSocket
 } from 'components/common';
-import { ProblemList, GroupNavBar } from 'components/GroupPage';
+import { ProblemList, GroupNavBar, InitGroupData } from 'components/GroupPage';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -49,6 +49,7 @@ const GroupPage = () => {
     <GroupPageContainer>
       <GlobalStyle />
       <InitUserData />
+      <InitGroupData groupIdx={1} />
       <InitSocket />
       <Gnb type="group" />
       <SideBar isLeft={true}>
