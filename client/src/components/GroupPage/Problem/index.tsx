@@ -84,7 +84,9 @@ const Problem = ({ problem }: { problem: IProblem }) => {
   return (
     <ProblemContainer>
       {solvedProblems.includes(problem.idx) && <SolvedLabel />}
-      <Body>Q. {problem.question}</Body>
+      <Body>
+        Q. {problem.question} ({problem.BTGroupgroupidx.title})
+      </Body>
       <AnswerWrap>
         <RightButton onClick={() => handleAnswer(true)} />
         <WrongButton onClick={() => handleAnswer(false)} />
