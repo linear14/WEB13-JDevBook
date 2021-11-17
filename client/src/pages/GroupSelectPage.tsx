@@ -32,7 +32,7 @@ const ContentsContainer = styled.div`
   width: 1220px;
   height: 1000px;
   box-sizing: border-box;
-  padding: 50px;
+  padding: 30px 50px;
 
   display: flex;
   flex-direction: column;

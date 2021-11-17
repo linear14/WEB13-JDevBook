@@ -8,7 +8,7 @@ import style from 'theme/style';
 const GroupCardWrap = styled.div`
   width: 244px;
   height: 244px;
-  margin: ${style.margin.large};
+  margin: 18px;
 
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 5px;

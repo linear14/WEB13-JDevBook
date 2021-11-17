@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 
-import palette from 'theme/palette';
-
+import { rightModalStates } from 'recoil/store';
 import GroupCard from 'components/GroupSelectPage/GroupSelectList/GroupCard';
 
-const GroupSelectListContainer = styled.div`
-  width: 100%;
+const GroupSelectListContainer = styled.div<{ modalState: boolean }>`
+  width: ${(props) => (props.modalState ? `100%` : `130%`)};
   box-sizing: border-box;
   padding-bottom: 40px;
 
@@ -15,8 +15,10 @@ const GroupSelectListContainer = styled.div`
 `;
 
 const GroupSelectList = () => {
+  const rightModalState = useRecoilValue(rightModalStates).rightModalFlag;
+
   return (
-    <GroupSelectListContainer>
+    <GroupSelectListContainer modalState={rightModalState}>
       <GroupCard />
       <GroupCard />
       <GroupCard />
