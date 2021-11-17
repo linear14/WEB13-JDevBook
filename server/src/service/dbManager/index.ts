@@ -1,12 +1,12 @@
 import sequelize, { INTEGER, Model } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 
-import { searchUsers } from './dbManager/search';
-import { getProblems, insertSolvedProblem } from './dbManager/problem';
+import { searchUsers } from './search';
+import { getProblems, insertSolvedProblem } from './problem';
 
-import { PostAddData, PostUpdateData, CommentData } from '../types/interface';
+import { PostAddData, PostUpdateData, CommentData } from '../../types/interface';
 
-import db from '../models';
+import db from '../../models'; // 왜 절대경로 안되지...
 
 const dbManager = {
   sync: async () => {
