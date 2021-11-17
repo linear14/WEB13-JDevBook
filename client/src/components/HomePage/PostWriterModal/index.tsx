@@ -120,7 +120,7 @@ const PostWriterModal = () => {
         ...alertModal,
         modalState: false
       });
-    }, 3000);
+    }, 2500);
 
     // alert(`게시글이 성공적으로 ${isEnrollMode() ? '게시' : '수정'}되었습니다!`);
   };
