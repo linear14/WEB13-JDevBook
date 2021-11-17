@@ -84,7 +84,7 @@ const InfoSideBar = () => {
   }, []);
 
   return (
-    <InfoSideBarContainer>
+    <InfoSideBarContainer className="no-drag">
       <ProfileWrap to="/profile/shin">
         <ProfilePhoto src="" />
         <p>{userdata.name}</p>
