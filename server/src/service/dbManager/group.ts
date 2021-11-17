@@ -1,6 +1,6 @@
 import db from '../../models';
 
-const getGroupList = async function () {
+const getGroupList = async () => {
   const groupList = await db.models.Group.findAll({
     logging: false
   });

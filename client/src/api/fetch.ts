@@ -128,6 +128,11 @@ const fetchApi = {
       body: JSON.stringify({ problemIdx })
     });
     return await response.json();
+  },
+
+  getGroupList: async () => {
+    const response = await fetch('/api/groups');
+    return await response.json();
   }
 };
 
