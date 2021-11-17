@@ -1,3 +1,4 @@
+import { CommentData } from 'types/comment';
 import { PostData, PostAddData, PostUpdateData } from 'types/post';
 // import objectStorage from './objectStorage';
 
@@ -96,6 +97,41 @@ const fetchApi = {
     });
 
     return await fileRes.json(); // {file: s3file, save: true/false}
+  },
+
+  getComments: async (postidx: number) => {
+    const response = await fetch(`/api/comments/${postidx}`);
+    const getCommentsList = await response.json();
+    // 여기서 getCommentsList map해서 보내준다.
+    return getCommentsList;
+  },
+
+  addComments: async (addComment: CommentData) => {
+    const response = await fetch(`/api/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(addComment)
+    });
+
+    return await response.json();
+  },
+  getProblems: async (groupIdx: number) => {
+    const response = await fetch(`/api/problems?idx=${groupIdx}`);
+    const problems = await response.json();
+    return problems;
+  },
+
+  insertSolvedProblem: async (problemIdx: number) => {
+    const response = await fetch(`/api/problems/correct`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ problemIdx })
+    });
+    return await response.json();
   }
 };
 

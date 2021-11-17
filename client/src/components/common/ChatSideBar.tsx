@@ -92,7 +92,7 @@ const MessageWrap = styled.div<IMessage>`
 const MessageText = styled.div<IMessage>`
   display: inline-block;
   height: auto;
-  border-radius: 10px;
+  border-radius: 20px;
   word-break: break-word;
   text-align: left;
   max-width: 150px;
@@ -107,8 +107,8 @@ const MessageText = styled.div<IMessage>`
     }`}
 
   margin-top: ${style.margin.smallest};
-  padding-left: ${style.padding.small};
-  padding-right: ${style.padding.small};
+  padding: ${style.padding.smallest} ${style.padding.normal}
+    ${style.padding.smallest} ${style.padding.normal};
 `;
 
 const ChatInputWrapper = styled.div`
@@ -116,6 +116,7 @@ const ChatInputWrapper = styled.div`
   align-items: center;
   text-align: center;
 
+  margin-top: ${style.margin.smallest};
   margin-bottom: ${style.margin.large};
 `;
 
@@ -149,6 +150,13 @@ const ReceiverDiv = styled.div<ISuccessiveMessage>`
 
 const ReceiverName = styled.div`
   margin-left: ${style.margin.smallest};
+`;
+
+const Divider = styled.div`
+  width: calc(100% - 32px);
+  height: 1px;
+  background: #dddddd;
+  margin: ${style.margin.normal} ${style.margin.large} ${style.margin.normal} ${style.margin.large};
 `;
 
 const ChatSideBar = () => {
@@ -242,9 +250,7 @@ const ChatSideBar = () => {
       messageFlag={rightModalState.messageFlag}
     >
       <CurrentUser />
-      <div>
-        <hr />
-      </div>
+      <Divider />
       <ChatTitle>
         {chatReceiver ? chatReceiver + ' 에게 보내는 편지' : '채팅할 상대 선택'}
       </ChatTitle>

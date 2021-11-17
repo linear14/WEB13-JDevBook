@@ -3,7 +3,6 @@ import { useRecoilState } from 'recoil';
 import { postListStore } from 'recoil/store';
 import styled, { css } from 'styled-components';
 
-import { PostData } from 'types/post';
 import getData from 'api/fetch';
 
 import { Post, Skeleton } from 'components/HomePage';
@@ -57,7 +56,7 @@ const PostList = () => {
     setFetching(false);
   };
 
-  const getSkeletions = (count: number) => {
+  const getSkeletons = (count: number) => {
     return Array(count)
       .fill(undefined)
       .map((v, i) => {
@@ -75,7 +74,7 @@ const PostList = () => {
       {posts.map((post) => (
         <Post key={post.idx} post={post} />
       ))}
-      {isFetching && getSkeletions(3)}
+      {isFetching && getSkeletons(3)}
       <Observer ref={observer} />
     </PostListContainer>
   );

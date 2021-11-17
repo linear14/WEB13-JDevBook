@@ -5,8 +5,13 @@ import express, { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import multer from 'multer';
 import dbManager from '../service/dbManager';
-import { DBUser, PostAddData, PostUpdateData } from '../types/interface';
-import { objectStorage, upload } from '../service/objectStorage';
+import {
+  DBUser,
+  PostAddData,
+  PostUpdateData,
+  CommentData
+} from '../types/interface';
+// import { objectStorage, upload } from '../service/objectStorage';
 const githubOauth = require('../service/githubOauth');
 const oauth = require('../config/oauth.json');
 
@@ -189,7 +194,7 @@ router.post(
 
 router.post(
   '/uploadimg',
-  upload.single('imgfile'), // multer-s3 location 추가됨
+  // upload.single('imgfile'), // multer-s3 location 추가됨
   async (req: Request, res: Response, next: NextFunction) => {
     const s3file = req.file;
     if (s3file) res.json({ file: s3file, save: true });
@@ -198,4 +203,62 @@ router.post(
   }
 );
 
+router.get(
+  '/comments/:postidx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const postidx = Number(req.params.postidx);
+      const result = await dbManager.getComments(postidx);
+      res.json(result);
+    } catch (err) {
+      console.error(err);
+      res.json(false);
+    }
+});
+
+router.get(
+  '/problems',
+  async (
+    req: Request<{}, {}, {}, { idx: string }>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { idx } = req.query;
+      const problems = idx ? await dbManager.getProblems([1]) : [];
+      res.json(problems);
+    } catch (err) {
+      console.error(err);
+      res.json([]);
+    }
+  }
+);
+
+router.post(
+  '/comments',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const addComment: CommentData = req.body;
+      const result = await dbManager.addComment(addComment);
+      res.json({ result: result, check: true });
+    } catch (err) {
+      console.error(err);
+      res.json({ check: false });
+    }
+  }
+);
+
+router.post(
+  '/problems/correct',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userIdx = req.session.useridx;
+      const { problemIdx } = req.body;
+      await dbManager.insertSolvedProblem(userIdx, Number(problemIdx));
+      res.json(true);
+    } catch (err) {
+      res.json(false);
+    }
+  }
+);
 module.exports = router;

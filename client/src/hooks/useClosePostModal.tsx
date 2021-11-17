@@ -1,12 +1,18 @@
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { modalStateStore, postModalDataStates } from 'recoil/store';
+import {
+  isImgMaxState,
+  modalStateStore,
+  postModalDataStates
+} from 'recoil/store';
 
 const useClosePostModal = () => {
   const resetModal = useResetRecoilState(modalStateStore);
+  const resetImgMax = useResetRecoilState(isImgMaxState);
   const [postData, setPostData] = useRecoilState(postModalDataStates);
 
   return () => {
     resetModal();
+    resetImgMax();
     setPostData({
       ...postData,
       idx: 0,
