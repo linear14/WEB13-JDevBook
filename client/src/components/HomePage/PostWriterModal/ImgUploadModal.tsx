@@ -138,17 +138,19 @@ const WhatWorkModal = styled.div`
 `;
 
 const ImgPreview = styled.div`
-  width: 300px;
-  height: 200px;
+  width: 150px;
+  height: 100px;
 
   display: none;
-  flex-direction: column;
-  /* justify-content: center;
-  align-items: center; */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
   img {
     width: 100%;
     height: 100%;
+    border: 10px solid ${palette.lightgray};
+
     &:hover {
       cursor: pointer;
     }
