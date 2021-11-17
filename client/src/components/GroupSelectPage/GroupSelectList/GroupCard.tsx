@@ -75,9 +75,11 @@ const GroupJoinBtn = styled.div`
 `;
 
 const GroupCard = ({ group }: { group: IGroup }) => {
+  const groupUrl = `/group/${group.idx}`;
+
   return (
     <GroupCardWrap>
-      <GroupImg to="/group">
+      <GroupImg to={groupUrl}>
         <img src={group.cover || os} alt="그룹 이미지" />
       </GroupImg>
       <GroupSelectorWrap>

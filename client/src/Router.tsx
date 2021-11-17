@@ -43,7 +43,7 @@ const Router: React.FC = () => {
           render={() => (login ? <GroupSelectPage /> : <IsLoginPage />)}
         />
         <Route
-          path="/group"
+          path="/group/:groupidx"
           exact
           render={() => (login ? <GroupPage /> : <IsLoginPage />)}
         />
