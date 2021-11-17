@@ -3,6 +3,7 @@ import { atom } from 'recoil';
 import { Socket } from 'socket.io-client';
 
 import { Alert } from 'types/common';
+import { IGroup } from 'types/group';
 import { PostData } from 'types/post';
 import { SolvedRates } from 'types/user';
 
@@ -143,4 +144,9 @@ export const rateState = atom<SolvedRates>({
     prevRate: 0,
     solvedRate: 0
   }
+});
+
+export const groupListState = atom<IGroup[]>({
+  key: 'groupListState',
+  default: []
 });

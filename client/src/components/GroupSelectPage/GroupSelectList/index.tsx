@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { rightModalStates } from 'recoil/store';
+import { rightModalStates, groupListState } from 'recoil/store';
 import GroupCard from 'components/GroupSelectPage/GroupSelectList/GroupCard';
 
 const GroupSelectListContainer = styled.div<{ modalState: boolean }>`
@@ -16,22 +16,13 @@ const GroupSelectListContainer = styled.div<{ modalState: boolean }>`
 
 const GroupSelectList = () => {
   const rightModalState = useRecoilValue(rightModalStates).rightModalFlag;
+  const [groupList, setGroupList] = useRecoilState(groupListState);
 
   return (
     <GroupSelectListContainer modalState={rightModalState}>
-      <GroupCard />
-      <GroupCard />
-      <GroupCard />
-      <GroupCard />
-      <GroupCard />
-      <GroupCard />
-      <GroupCard />
-      <GroupCard />
-      <GroupCard />
-      <GroupCard />
-      <GroupCard />
-      <GroupCard />
-      <GroupCard />
+      {groupList.map((group) => (
+        <GroupCard group={group} />
+      ))}
     </GroupSelectListContainer>
   );
 };

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import palette from 'theme/palette';
 import style from 'theme/style';
 import { os } from 'images/groupimg';
+import { IGroup } from 'types/group';
 
 const GroupCardWrap = styled.div`
   width: 244px;
@@ -73,14 +74,14 @@ const GroupJoinBtn = styled.div`
   }
 `;
 
-const GroupCard = () => {
+const GroupCard = ({ group }: { group: IGroup }) => {
   return (
     <GroupCardWrap>
       <GroupImg to="/group">
-        <img src={os} alt="그룹 이미지" />
+        <img src={group.cover || os} alt="그룹 이미지" />
       </GroupImg>
       <GroupSelectorWrap>
-        <GroupName>그룹 이름</GroupName>
+        <GroupName>{group.title}</GroupName>
         <GroupJoinBtn className="no-drag">그룹 추가</GroupJoinBtn>
       </GroupSelectorWrap>
     </GroupCardWrap>
