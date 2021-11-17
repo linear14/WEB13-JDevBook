@@ -27,7 +27,7 @@ const GroupSelectList = () => {
   };
 
   useEffect(() => {
-    fetchList();
+    if (groupList.length === 0) fetchList();
   }, []);
 
   return (
