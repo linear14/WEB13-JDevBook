@@ -194,10 +194,10 @@ const ImgUploadModal = () => {
   const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isImgMax) {
       alert('첨부 사진은 3장까지 가능합니다.');
-    } else if (!isImgUploading) {
-      inputfile.current.click();
-    } else {
+    } else if (isImgUploading) {
       alert('이미지 업로드 중입니다.');
+    } else {
+      inputfile.current.click();
     }
   };
   const getFile = async () => {
