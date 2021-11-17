@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 
-import { AlertState } from 'recoil/store';
+import { alertState } from 'recoil/store';
 import palette from 'theme/palette';
 
 const onAnimation = keyframes`
@@ -43,8 +43,8 @@ const AlertModalWrap = styled.div<{ bgColor?: string; modalState: boolean }>`
 `;
 
 const AlertModal = () => {
-  const alert = useRecoilValue(AlertState);
-  const resetAlert = useResetRecoilState(AlertState);
+  const alert = useRecoilValue(alertState);
+  const resetAlert = useResetRecoilState(alertState);
 
   const alertOff = (e: React.AnimationEvent) => {
     resetAlert();

@@ -8,7 +8,7 @@ import {
   modalStateStore,
   postListStore,
   postModalDataStates,
-  AlertState
+  alertState
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 import { PostAddData, PostUpdateData, PostData } from 'types/post';
@@ -96,7 +96,7 @@ const PostWriterModal = () => {
   const postData = useRecoilValue(postModalDataStates);
   const isImgUploading = useRecoilValue(isImgUploadingState);
   const [postList, setPostList] = useRecoilState(postListStore);
-  const [alertModal, setAlertModal] = useRecoilState(AlertState);
+  const [alertModal, setAlertModal] = useRecoilState(alertState);
   const closePostModal = useClosePostModal();
   const alertMessage = useAlertModal();
 

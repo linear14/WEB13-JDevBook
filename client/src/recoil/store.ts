@@ -113,8 +113,8 @@ export const GroupNavState = atom({
   }
 });
 
-export const AlertState = atom<Alert>({
-  key: 'AlertState',
+export const alertState = atom<Alert>({
+  key: 'alertState',
   default: {
     bgColor: undefined,
     comment: '',
