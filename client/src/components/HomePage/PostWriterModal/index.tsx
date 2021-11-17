@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
 
 import palette from 'theme/palette';
 import {
@@ -8,7 +8,8 @@ import {
   modalStateStore,
   postListStore,
   postModalDataStates,
-  AlertState
+  AlertState,
+  uploadImgList
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 import { PostAddData, PostUpdateData, PostData } from 'types/post';
@@ -102,6 +103,7 @@ const PostWriterModal = () => {
   const isImgUploading = useRecoilValue(isImgUploadingState);
   const [postList, setPostList] = useRecoilState(postListStore);
   const [alertModal, setAlertModal] = useRecoilState(AlertState);
+  const imgList = useRecoilValue(uploadImgList);
   const closePostModal = useClosePostModal();
 
   /**
@@ -135,16 +137,17 @@ const PostWriterModal = () => {
   };
 
   const postDataToAPI = async () => {
+    if (isImgUploading > 0)
+      return alert('이미지 업로드 중입니다. 잠시 후에 게시하세요');
+
     if (postData.contents === '') {
       return alert('내용이 없습니다. 내용을 입력하세요.');
     }
 
-    if (isImgUploading) {
-      return alert('이미지 업로드 중입니다. 잠시 후에 게시하세요');
-    }
-
-    const { useridx, contents, secret, picture1, picture2, picture3, likenum } =
-      { ...postData };
+    const { useridx, contents, secret, likenum } = { ...postData };
+    const picture1 = imgList[0] ?? null;
+    const picture2 = imgList[1] ?? null;
+    const picture3 = imgList[2] ?? null;
 
     const requestData = isEnrollMode()
       ? { useridx, contents, secret, picture1, picture2, picture3, likenum }
@@ -163,7 +166,11 @@ const PostWriterModal = () => {
 
       const newPostList = isEnrollMode()
         ? [newPostIfExists, ...postList]
-        : postList.map((post) => (post.idx === postData.idx ? postData : post));
+        : postList.map((post) =>
+            post.idx === postData.idx
+              ? ({ ...postData, picture1, picture2, picture3 } as PostData)
+              : post
+          );
 
       alertSuccess();
       setPostList(newPostList);
