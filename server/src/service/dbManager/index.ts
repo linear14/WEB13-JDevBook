@@ -8,6 +8,7 @@ import { getComments } from './comment';
 import { getAllUsers, getUseridx, getUserName } from './user';
 import { searchUsers } from './search';
 import { getProblems, insertSolvedProblem } from './problem';
+import { getGroupList } from './group';
 import { CommentData } from '../../types/interface';
 
 const dbManager = {
@@ -92,7 +93,9 @@ const dbManager = {
   getComments,
 
   getProblems,
-  insertSolvedProblem
+  insertSolvedProblem,
+
+  getGroupList
 };
 
 export default dbManager;

@@ -258,4 +258,18 @@ router.post(
     }
   }
 );
+
+router.get(
+  '/groups',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const groupList = await dbManager.getGroupList();
+      res.json(groupList);
+    } catch (err) {
+      console.error(err);
+      res.json([]);
+    }
+  }
+);
+
 module.exports = router;
