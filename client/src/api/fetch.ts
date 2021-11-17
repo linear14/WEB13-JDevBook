@@ -133,6 +133,11 @@ const fetchApi = {
   getGroupList: async () => {
     const response = await fetch('/api/groups');
     return await response.json();
+  },
+
+  getGroup: async (groupIdx: number) => {
+    const response = await fetch(`/api/groups/${groupIdx}`);
+    return await response.json();
   }
 };
 
