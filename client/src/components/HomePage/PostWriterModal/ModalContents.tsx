@@ -56,7 +56,7 @@ const ModalContents = () => {
   const modalState = useRecoilValue(modalStateStore);
   const userdata = useRecoilValue(userDataStates);
   const [postData, setPostData] = useRecoilState(postModalDataStates);
-  const [contentsBytes, setContentsBytes] = useState<number>(0);
+  const [contentsLength, setcontentsLength] = useState<number>(0);
   const alertMessage = useAlertModal();
 
   const inputContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -64,15 +64,15 @@ const ModalContents = () => {
   };
 
   const contentsBytesCheck = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    const maxBytes = 1000;
+    const maxLength = 340;
 
-    if (contentsBytes > maxBytes) {
+    if (contentsLength > maxLength) {
       let contents = postData.contents;
       alertMessage(
-        `게시글은 ${maxBytes}bytes를 넘을 수 없습니다.`,
+        `게시글은 ${maxLength}글자를 넘을 수 없습니다.`,
         `${palette.alert}`
       );
-      while (textUtil.getByteLength(contents) > maxBytes) {
+      while (contents.length > maxLength) {
         contents = contents.slice(0, -1);
       }
       setPostData({ ...postData, contents: contents });
@@ -80,7 +80,7 @@ const ModalContents = () => {
   };
 
   useEffect(() => {
-    setContentsBytes(textUtil.getByteLength(postData.contents));
+    setcontentsLength(postData.contents.length);
   }, [postData.contents]);
 
   return (
@@ -92,7 +92,7 @@ const ModalContents = () => {
         onKeyUp={contentsBytesCheck}
         value={postData.contents}
       />
-      <ContentsBytesChecker>{contentsBytes} / 1000 bytes</ContentsBytesChecker>
+      <ContentsBytesChecker>{contentsLength} / 340 글자</ContentsBytesChecker>
     </ModalContentsContainer>
   );
 };
