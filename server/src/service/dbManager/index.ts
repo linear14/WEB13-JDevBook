@@ -1,7 +1,10 @@
 import sequelize, { INTEGER, Model } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 
-import { PostAddData, PostUpdateData, CommentData } from 'types/interface';
+import { searchUsers } from './search';
+import { getProblems, insertSolvedProblem } from './problem';
+
+import { PostAddData, PostUpdateData, CommentData } from '../../types/interface';
 
 import db from '../../models'; // 왜 절대경로 안되지...
 
@@ -19,6 +22,7 @@ const dbManager = {
 
   getUserdata: async (username: string) => {
     const [user, created] = await db.models.User.findOrCreate({
+      include: db.models.Problem,
       where: { nickname: username },
       defaults: { nickname: username },
       logging: false
@@ -27,14 +31,7 @@ const dbManager = {
     return user.get();
   },
 
-  searchUsers: async (keyword: string) => {
-    const users = await db.models.User.findAll({
-      where: { nickname: { [Op.like]: `%${keyword}%` } },
-      logging: false
-    });
-
-    return users;
-  },
+  searchUsers,
 
   getPosts: async (myIdx: number, lastIdx: number, count: number) => {
     const postsWithUser = await db.models.Post.findAll({
@@ -192,7 +189,10 @@ const dbManager = {
       );
     }
     return prevCommentsArray;
-  }
+  },
+
+  getProblems,
+  insertSolvedProblem
 };
 
 export default dbManager;

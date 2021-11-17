@@ -40,7 +40,7 @@ const Body = ({ contents, picture1, picture2, picture3 }: PostBody) => {
 
   useEffect(() => {
     async function makeImageInfoObject() {
-      if (imagesMeta.imageCount !== 0) {
+      if (initMeta.imageCount !== 0) {
         const images = await Promise.all(
           [picture1, picture2, picture3]
             .filter((item) => item !== null)
@@ -53,16 +53,17 @@ const Body = ({ contents, picture1, picture2, picture3 }: PostBody) => {
             })
         );
         setImagesMeta({
-          ...imagesMeta,
+          ...initMeta,
           images: images.filter(
             (image) => image !== undefined
           ) as PostImageInfo[]
         });
       }
     }
-
-    makeImageInfoObject();
-  }, []);
+    if (picture1) {
+      makeImageInfoObject();
+    }
+  }, [picture1, picture2, picture3]);
 
   return (
     <BodyContainer>

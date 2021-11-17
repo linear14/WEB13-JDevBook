@@ -103,6 +103,11 @@ export const CommentState = atom({
   default: false as boolean
 });
 
+export const solvedProblemState = atom<number[]>({
+  key: 'solvedProblem',
+  default: []
+});
+
 export const isImgUploadingState = atom({
   key: 'isImgUploading',
   default: false
@@ -112,3 +117,4 @@ export const isImgMaxState = atom({
   key: 'isImgMax',
   default: false
 });
+

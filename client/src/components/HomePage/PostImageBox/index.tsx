@@ -16,8 +16,8 @@ const SkeletonBox = styled.div`
 
 const PostImageBox = ({ imageCount, images }: PostImageBoxProps) => {
   const isLoading = useCallback(() => {
-    return imageCount >= 1 && images === null;
-  }, [imageCount, images]);
+    return images === null;
+  }, [images]);
 
   if (isLoading()) {
     return <SkeletonBox />;

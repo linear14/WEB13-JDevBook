@@ -139,9 +139,7 @@ router.delete(
   '/posts/:postidx',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.params.postidx);
       const postIdx = Number(req.params.postidx);
-      console.log(`Delete idx=${postIdx}`);
       await dbManager.deletePost(postIdx);
       res.json(true);
     } catch (err) {
@@ -204,4 +202,35 @@ router.post(
   }
 );
 
+router.get(
+  '/problems',
+  async (
+    req: Request<{}, {}, {}, { idx: string }>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { idx } = req.query;
+      const problems = idx ? await dbManager.getProblems([1]) : [];
+      res.json(problems);
+    } catch (err) {
+      console.error(err);
+      res.json([]);
+    }
+  }
+);
+
+router.post(
+  '/problems/correct',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userIdx = req.session.useridx;
+      const { problemIdx } = req.body;
+      await dbManager.insertSolvedProblem(userIdx, Number(problemIdx));
+      res.json(true);
+    } catch (err) {
+      res.json(false);
+    }
+  }
+);
 module.exports = router;
