@@ -4,7 +4,7 @@ import db from '../../models';
 import { toggleLikePosts, updateLikeNum } from './like';
 import { getPosts, addPost, updatePost, deletePost } from './post';
 import { getComments, addComment } from './comment';
-import { getUserData, getAllUsers, getUseridx, getUserName } from './user';
+import { getUserData, getAllUsers, getUseridx, getUserName, setUserLoginState, getUserLoginState } from './user';
 import { searchUsers } from './search';
 import { getProblems, insertSolvedProblem } from './problem';
 import { CommentData } from '../../types/interface';
@@ -26,6 +26,9 @@ const dbManager = {
   getAllUsers,
   getUserName,
   getUseridx,
+
+  setUserLoginState,
+  getUserLoginState,
 
   searchUsers,
   

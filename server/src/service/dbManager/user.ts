@@ -1,15 +1,15 @@
 import db from '../../models';
 
 const getUserData = async (username: string) => {
-    const [user, created] = await db.models.User.findOrCreate({
-      include: db.models.Problem,
-      where: { nickname: username },
-      defaults: { nickname: username },
-      logging: false
-    });
+  const [user, created] = await db.models.User.findOrCreate({
+    include: db.models.Problem,
+    where: { nickname: username },
+    defaults: { nickname: username },
+    logging: false
+  });
 
-    return user.get();
-  }
+  return user.get();
+};
 
 const getAllUsers = async () => {
   const users = await db.models.User.findAll({ logging: false });
@@ -33,4 +33,27 @@ const getUseridx = async function (name: string) {
   return user?.get().idx ? user?.get().idx : -1;
 };
 
-export { getUserData, getAllUsers, getUserName, getUseridx };
+const setUserLoginState = async function (name: string, state: boolean) {
+  await db.models.User.update(
+    { loginstate: state },
+    { where: { nickname: name }, logging: false }
+  );
+};
+
+const getUserLoginState = async function (name: string) {
+  const user = await db.models.User.findOne({
+    where: { nickname: name },
+    logging: false
+  });
+
+  return user?.get().loginstate;
+};
+
+export {
+  getUserData,
+  getAllUsers,
+  getUserName,
+  getUseridx,
+  setUserLoginState,
+  getUserLoginState
+};
