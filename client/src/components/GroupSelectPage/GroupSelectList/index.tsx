@@ -12,6 +12,7 @@ const GroupSelectListContainer = styled.div<{ modalState: boolean }>`
   width: ${(props) => (props.modalState ? `100%` : `130%`)};
   box-sizing: border-box;
   padding-bottom: 40px;
+  z-index: 1;
 
   display: flex;
   flex-flow: row wrap;
