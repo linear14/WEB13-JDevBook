@@ -13,7 +13,7 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
   background: black;
-  z-index: 1;
+  z-index: 7; // PostWriterModalInner가 6임
 `;
 
 const ButtonWrap = styled.div`
