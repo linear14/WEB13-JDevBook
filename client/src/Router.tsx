@@ -8,7 +8,8 @@ import {
   HomePage,
   LoginPage,
   ProfilePage,
-  IsLoginPage
+  IsLoginPage,
+  GroupSelectPage
 } from './pages';
 
 const Router: React.FC = () => {
@@ -35,6 +36,11 @@ const Router: React.FC = () => {
           path="/home"
           exact
           render={() => (login ? <HomePage /> : <IsLoginPage />)}
+        />
+        <Route
+          path="/groupselect"
+          exact
+          render={() => (login ? <GroupSelectPage /> : <IsLoginPage />)}
         />
         <Route
           path="/group"
