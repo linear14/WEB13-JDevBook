@@ -4,6 +4,7 @@ import { Socket } from 'socket.io-client';
 
 import { Alert } from 'types/common';
 import { PostData } from 'types/post';
+import { SolvedRates } from 'types/user';
 
 export const modalStateStore = atom({
   key: 'modalState',
@@ -134,4 +135,12 @@ export const isImgUploadingState = atom({
 export const isImgMaxState = atom({
   key: 'isImgMax',
   default: false
+});
+
+export const rateState = atom<SolvedRates>({
+  key: 'rateState',
+  default: {
+    prevRate: 0,
+    solvedRate: 0
+  }
 });

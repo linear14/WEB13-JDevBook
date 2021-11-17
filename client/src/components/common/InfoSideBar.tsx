@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { userDataStates } from 'recoil/store';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { userDataStates, rateState } from 'recoil/store';
 import palette from 'theme/palette';
 
 import { ProfilePhoto } from 'components/common';
@@ -44,20 +44,16 @@ const SolvedBarGraph = styled.div`
   margin: 0 50px;
 `;
 
-const GraphAnimation = (solvedRate: number) => keyframes`
+const GraphAnimation = (prevRate: number, solvedRate: number) => keyframes`
   0% {
-    width: 0;
-    color: rgba(255, 255, 255, 0);
-  }
-  50% {
-    color: rgba(255, 255, 255, 1);
+    width: ${prevRate}%;
   }
   100% {
     width: ${solvedRate}%;
   }
 `;
 
-const InnerBarGraph = styled.span<{ solvedRate: number }>`
+const InnerBarGraph = styled.span<{ prevRate: number; solvedRate: number }>`
   display: block;
   width: ${(props) => props.solvedRate}%;
   height: 25px;
@@ -70,12 +66,22 @@ const InnerBarGraph = styled.span<{ solvedRate: number }>`
   color: ${palette.white};
   font-size: small;
   font-weight: 600;
-  animation: ${(props) => GraphAnimation(props.solvedRate)} 1.5s 1;
+  animation: ${(props) => GraphAnimation(props.prevRate, props.solvedRate)} 1.5s
+    1;
 `;
 
 const InfoSideBar = () => {
-  const solvedRate = Number(((123 / 155) * 100).toFixed(1));
   const userdata = useRecoilValue(userDataStates);
+  const [rate, setRate] = useRecoilState(rateState);
+
+  const prevRateUpdate = (e: React.AnimationEvent) => {
+    setRate({ ...rate, prevRate: rate.solvedRate });
+  };
+
+  useEffect(() => {
+    const solvedRate = Number(((123 / 155) * 100).toFixed(1));
+    setRate({ ...rate, solvedRate: solvedRate });
+  }, []);
 
   return (
     <InfoSideBarContainer>
@@ -85,7 +91,13 @@ const InfoSideBar = () => {
       </ProfileWrap>
       <SolvedTitle>문제 푼 수</SolvedTitle>
       <SolvedBarGraph>
-        <InnerBarGraph solvedRate={solvedRate}>{solvedRate}%</InnerBarGraph>
+        <InnerBarGraph
+          prevRate={rate.prevRate}
+          solvedRate={rate.solvedRate}
+          onAnimationEnd={prevRateUpdate}
+        >
+          {rate.solvedRate}%
+        </InnerBarGraph>
       </SolvedBarGraph>
     </InfoSideBarContainer>
   );
