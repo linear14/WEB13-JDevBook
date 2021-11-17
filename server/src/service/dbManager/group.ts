@@ -8,4 +8,13 @@ const getGroupList = async () => {
   return groupList;
 };
 
-export { getGroupList };
+const getGroup = async (groupIdx: number) => {
+  const group = await db.models.Group.findOne({
+    where: { idx: groupIdx },
+    logging: false
+  });
+
+  return group;
+};
+
+export { getGroupList, getGroup };

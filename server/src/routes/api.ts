@@ -272,4 +272,18 @@ router.get(
   }
 );
 
+router.get(
+  '/groups/:groupidx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const groupIdx: number = Number(req.params.groupidx);
+      const group = await dbManager.getGroup(groupIdx);
+      res.json(group);
+    } catch (err) {
+      console.error(err);
+      res.json([]);
+    }
+  }
+);
+
 module.exports = router;
