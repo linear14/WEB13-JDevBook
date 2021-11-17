@@ -5,7 +5,12 @@ import db from '../../models';
 import { toggleLikePosts, updateLikeNum } from './like';
 import { getPosts, addPost, updatePost, deletePost } from './post';
 import { getComments } from './comment';
-import { getAllUsers, getUseridx, getUserName } from './user';
+import {
+  getAllUsers,
+  getUseridx,
+  getUserName,
+  getUserJoinedGroups
+} from './user';
 import { searchUsers } from './search';
 import { getProblems, insertSolvedProblem } from './problem';
 import { CommentData } from '../../types/interface';
@@ -92,7 +97,8 @@ const dbManager = {
   getComments,
 
   getProblems,
-  insertSolvedProblem
+  insertSolvedProblem,
+  getUserJoinedGroups
 };
 
 export default dbManager;

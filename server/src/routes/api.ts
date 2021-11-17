@@ -214,15 +214,28 @@ router.get(
 );
 
 router.get(
-  '/problems',
-  async (
-    req: Request<{}, {}, {}, { idx: string }>,
-    res: Response,
-    next: NextFunction
-  ) => {
+  '/problems/:groupidx',
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { idx } = req.query;
-      const problems = idx ? await dbManager.getProblems([1]) : [];
+      const groupIdx = Number(req.params.groupidx);
+      const problems = groupIdx ? await dbManager.getProblems([groupIdx]) : [];
+      res.json(problems);
+    } catch (err) {
+      console.error(err);
+      res.json([]);
+    }
+  }
+);
+
+router.get(
+  '/problems',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const groups = await dbManager.getUserJoinedGroups(req.session.useridx);
+      const groupIndices = JSON.parse(JSON.stringify(groups)).map(
+        (item: any) => item.groupidx
+      );
+      const problems = await dbManager.getProblems(groupIndices);
       res.json(problems);
     } catch (err) {
       console.error(err);
