@@ -146,7 +146,14 @@ const ImgPreview = styled.div`
   justify-content: center;
   align-items: center;
 
-  div > img {
+  div.imgset {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center;
+    align-items: center; */
+  }
+
+  img {
     width: 120px;
     height: 100%;
     border: 10px solid ${palette.lightgray};
@@ -161,6 +168,24 @@ const ImgPreview = styled.div`
 
   img[src=''] {
     display: none;
+  }
+`;
+
+const CloseOneImg = styled.div<{ imgsrc: string | undefined }>`
+  display: ${({ imgsrc }) => (imgsrc ? 'flex' : 'none')};
+  position: relative;
+  top: 10px;
+  left: 10px;
+
+  &:hover {
+    cursor: pointer;
+    color: red;
+  }
+  &:active {
+    cursor: pointer;
+    transform-origin: 10px 10px;
+    transform: scale(1.2);
+    transition: transform 0.1s;
   }
 `;
 
@@ -293,13 +318,22 @@ const ImgUploadModal = () => {
           />
         </WhatWorkModal>
         <ImgPreview ref={imgPreviewModal}>
-          <div>
+          <div className="imgset">
+            <CloseOneImg imgsrc={imgList[0]}>
+              <IoClose size="20px" />
+            </CloseOneImg>
             <img src={imgList[0] ?? ''} onClick={imgPreviewBigger} />
           </div>
-          <div>
+          <div className="imgset">
+            <CloseOneImg imgsrc={imgList[1]}>
+              <IoClose size="20px" />
+            </CloseOneImg>
             <img src={imgList[1] ?? ''} onClick={imgPreviewBigger} />
           </div>
-          <div>
+          <div className="imgset">
+            <CloseOneImg imgsrc={imgList[2]}>
+              <IoClose size="20px" />
+            </CloseOneImg>
             <img src={imgList[2] ?? ''} onClick={imgPreviewBigger} />
           </div>
         </ImgPreview>
