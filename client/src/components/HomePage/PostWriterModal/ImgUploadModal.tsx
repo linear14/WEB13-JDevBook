@@ -138,16 +138,16 @@ const WhatWorkModal = styled.div`
 `;
 
 const ImgPreview = styled.div`
-  width: 150px;
-  height: 100px;
+  /* width: 300px;
+  height: 200px; */
 
   display: none;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 
-  img {
-    width: 100%;
+  div > img {
+    width: 120px;
     height: 100%;
     border: 10px solid ${palette.lightgray};
 
@@ -198,6 +198,7 @@ const ImgUploadModal = () => {
       inputfile.current.click();
     }
   };
+
   const getFile = async () => {
     if (!inputfile.current.files) return setIsImgUploading(isImgUploading - 1);
     // 업로드 직후 다시 클릭하고 취소하면 getFile 실행되는데 파일은 없음
@@ -218,6 +219,7 @@ const ImgUploadModal = () => {
 
     setImgList([...imgList, s3fileRes.file.location]);
   };
+
   const imgPreviewBigger = (e: BaseSyntheticEvent) => {
     // 연속되게는 안함
     setImageViewerState({
@@ -291,12 +293,15 @@ const ImgUploadModal = () => {
           />
         </WhatWorkModal>
         <ImgPreview ref={imgPreviewModal}>
-          {/* <img src={postData.picture1 ?? ''} onClick={imgPreviewBigger} />
-          <img src={postData.picture2 ?? ''} onClick={imgPreviewBigger} />
-          <img src={postData.picture3 ?? ''} onClick={imgPreviewBigger} /> */}
-          <img src={imgList[0] ?? ''} onClick={imgPreviewBigger} />
-          <img src={imgList[1] ?? ''} onClick={imgPreviewBigger} />
-          <img src={imgList[2] ?? ''} onClick={imgPreviewBigger} />
+          <div>
+            <img src={imgList[0] ?? ''} onClick={imgPreviewBigger} />
+          </div>
+          <div>
+            <img src={imgList[1] ?? ''} onClick={imgPreviewBigger} />
+          </div>
+          <div>
+            <img src={imgList[2] ?? ''} onClick={imgPreviewBigger} />
+          </div>
         </ImgPreview>
       </ImgUploadWrap>
     </ImgUploadContainer>
