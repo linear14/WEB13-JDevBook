@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import { postListStore } from 'recoil/store';
 import styled, { css } from 'styled-components';
 
-import getData from 'api/fetch';
+import fetchApi from 'api/fetch';
 
 import { Post, Skeleton } from 'components/HomePage';
 
@@ -47,12 +47,17 @@ const PostList = () => {
 
   const fetchPosts = async (lastIdx: number = -1, count: number = 10) => {
     setFetching(true);
-    const result = await getData.getPosts(lastIdx, count);
+    const result = await fetchApi.getPosts(lastIdx, count);
     if (result.length < count) {
       setHasMore(false);
     }
     setPosts((prev) => prev.concat(result));
     setFetching(false);
+  };
+
+  const fetchProblems = async () => {
+    const problems = await fetchApi.getProblems();
+    console.log(problems);
   };
 
   const getSkeletons = (count: number) => {
@@ -66,6 +71,7 @@ const PostList = () => {
   useEffect(() => {
     setPosts([]);
     fetchPosts();
+    fetchProblems();
   }, []);
 
   return (

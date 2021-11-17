@@ -116,8 +116,11 @@ const fetchApi = {
 
     return await response.json();
   },
-  getProblems: async (groupIdx: number) => {
-    const response = await fetch(`/api/problems?idx=${groupIdx}`);
+
+  getProblems: async (groupIdx?: number) => {
+    const response = groupIdx
+      ? await fetch(`/api/problems/${groupIdx}`)
+      : await fetch(`api/problems`);
     const problems = await response.json();
     return problems;
   },
