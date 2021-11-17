@@ -3,16 +3,17 @@ import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '../config/.env.development') });
 import express, { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import multer from 'multer';
 import dbManager from '../service/dbManager';
-import { DBUser, PostAddData, PostUpdateData } from '../types/interface';
-import { objectStorage, upload } from '../service/objectStorage';
-const githubOauth = require('../service/githubOauth');
+import {
+  DBUser,
+  PostAddData,
+  PostUpdateData,
+  CommentData
+} from '../types/interface';
+import { upload } from '../service/objectStorage';
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
-//const upload = multer({ dest: 'uploads/' });
-const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
 
 router.get('/data', async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -198,4 +199,63 @@ router.post(
   }
 );
 
+router.get(
+  '/comments/:postidx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const postidx = Number(req.params.postidx);
+      const result = await dbManager.getComments(postidx);
+      res.json(result);
+    } catch (err) {
+      console.error(err);
+      res.json(false);
+    }
+  }
+);
+
+router.get(
+  '/problems',
+  async (
+    req: Request<{}, {}, {}, { idx: string }>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { idx } = req.query;
+      const problems = idx ? await dbManager.getProblems([1]) : [];
+      res.json(problems);
+    } catch (err) {
+      console.error(err);
+      res.json([]);
+    }
+  }
+);
+
+router.post(
+  '/comments',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const addComment: CommentData = req.body;
+      const result = await dbManager.addComment(addComment);
+      res.json({ result: result, check: true });
+    } catch (err) {
+      console.error(err);
+      res.json({ check: false });
+    }
+  }
+);
+
+router.post(
+  '/problems/correct',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userIdx = req.session.useridx;
+      const { problemIdx } = req.body;
+      await dbManager.insertSolvedProblem(userIdx, Number(problemIdx));
+      res.json(true);
+    } catch (err) {
+      res.json(false);
+    }
+  }
+);
 module.exports = router;

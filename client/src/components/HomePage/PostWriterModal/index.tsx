@@ -4,6 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import palette from 'theme/palette';
 import {
+  isImgUploadingState,
   modalStateStore,
   postListStore,
   postModalDataStates,
@@ -98,6 +99,7 @@ const PostBtn = styled.div`
 const PostWriterModal = () => {
   const modalState = useRecoilValue(modalStateStore);
   const postData = useRecoilValue(postModalDataStates);
+  const isImgUploading = useRecoilValue(isImgUploadingState);
   const [postList, setPostList] = useRecoilState(postListStore);
   const [alertModal, setAlertModal] = useRecoilState(AlertState);
   const closePostModal = useClosePostModal();
@@ -120,7 +122,7 @@ const PostWriterModal = () => {
         ...alertModal,
         modalState: false
       });
-    }, 3000);
+    }, 2500);
 
     // alert(`게시글이 성공적으로 ${isEnrollMode() ? '게시' : '수정'}되었습니다!`);
   };
@@ -135,6 +137,10 @@ const PostWriterModal = () => {
   const postDataToAPI = async () => {
     if (postData.contents === '') {
       return alert('내용이 없습니다. 내용을 입력하세요.');
+    }
+
+    if (isImgUploading) {
+      return alert('이미지 업로드 중입니다. 잠시 후에 게시하세요');
     }
 
     const { useridx, contents, secret, picture1, picture2, picture3, likenum } =

@@ -1,9 +1,8 @@
 import React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
 import { imageViewerState as ivState } from 'recoil/store';
-import palette from 'theme/palette';
 
 import { PostWriter, PostList, ImageViewer } from 'components/HomePage';
 import {
@@ -18,24 +17,6 @@ import {
   InitSocket,
   AlertModal
 } from 'components/common';
-
-const GlobalStyle = createGlobalStyle`
-  * {
-    ::placeholder,
-    ::-webkit-input-placeholder {
-      font-weight: bold;
-      font-family: 'Noto Sans KR';
-    }
-    :-ms-input-placeholder {
-      font-weight: bold;
-      font-family: 'Noto Sans KR';
-    }
-  }
-
-  body {
-    background-color: ${palette.lightgray};
-  }
-`;
 
 const HomePageContainer = styled.div`
   display: flex;
@@ -56,27 +37,24 @@ const PostContainer = styled.div`
 const HomePage = () => {
   const [imageViewerState, setImageViewerState] = useRecoilState(ivState);
   return (
-    <>
-      <GlobalStyle />
-      <HomePageContainer>
-        <InitUserData />
-        <InitSocket />
-        <AlertModal />
-        <Gnb type="home" rightModalType="" />
-        <SideBar isLeft={true}>
-          <InfoSideBar />
-          <GroupSideBar />
-        </SideBar>
-        <PostContainer>
-          <PostWriter />
-          <PostList />
-        </PostContainer>
-        <SideBar isLeft={false}>
-          <ChatSideBar />
-        </SideBar>
-        {imageViewerState.isOpen && <ImageViewer />}
-      </HomePageContainer>
-    </>
+    <HomePageContainer>
+      <InitUserData />
+      <InitSocket />
+      <AlertModal />
+      <Gnb type="home" rightModalType="" />
+      <SideBar isLeft={true}>
+        <InfoSideBar />
+        <GroupSideBar />
+      </SideBar>
+      <PostContainer>
+        <PostWriter />
+        <PostList />
+      </PostContainer>
+      <SideBar isLeft={false}>
+        <ChatSideBar />
+      </SideBar>
+      {imageViewerState.isOpen && <ImageViewer />}
+    </HomePageContainer>
   );
 };
 

@@ -39,7 +39,7 @@ const Text = styled.div`
 const LoginBox = (): JSX.Element => {
   //const history = useHistory();
   return (
-    <Box>
+    <Box className="no-drag">
       <div>
         <MainLogo src={mainLogo} />
         <Text>개발자라면 Github 아이디는 가지고 계시죠?</Text>
