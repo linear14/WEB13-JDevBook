@@ -256,6 +256,12 @@ const ImgUploadModal = () => {
     });
   };
 
+  const deleteOneImg = (idx: number) => {
+    const tmp = imgList.map((v) => v);
+    tmp.splice(idx, 1);
+    setImgList(tmp);
+  };
+
   useEffect(() => {
     if (isImgUploading > 0) getFile();
   }, [isImgUploading]);
@@ -319,19 +325,28 @@ const ImgUploadModal = () => {
         </WhatWorkModal>
         <ImgPreview ref={imgPreviewModal}>
           <div className="imgset">
-            <CloseOneImg imgsrc={imgList[0]}>
+            <CloseOneImg
+              imgsrc={imgList[0]}
+              onClick={deleteOneImg.bind(null, 0)}
+            >
               <IoClose size="20px" />
             </CloseOneImg>
             <img src={imgList[0] ?? ''} onClick={imgPreviewBigger} />
           </div>
           <div className="imgset">
-            <CloseOneImg imgsrc={imgList[1]}>
+            <CloseOneImg
+              imgsrc={imgList[1]}
+              onClick={deleteOneImg.bind(null, 1)}
+            >
               <IoClose size="20px" />
             </CloseOneImg>
             <img src={imgList[1] ?? ''} onClick={imgPreviewBigger} />
           </div>
           <div className="imgset">
-            <CloseOneImg imgsrc={imgList[2]}>
+            <CloseOneImg
+              imgsrc={imgList[2]}
+              onClick={deleteOneImg.bind(null, 2)}
+            >
               <IoClose size="20px" />
             </CloseOneImg>
             <img src={imgList[2] ?? ''} onClick={imgPreviewBigger} />
