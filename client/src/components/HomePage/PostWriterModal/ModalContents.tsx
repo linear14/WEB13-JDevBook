@@ -11,6 +11,8 @@ import palette from 'theme/palette';
 import style from 'theme/style';
 import textUtil from 'utils/textUtil';
 
+import useAlertModal from 'hooks/useAlertModal';
+
 const ModalContentsContainer = styled.div`
   width: 100%;
   height: 300px;
@@ -49,6 +51,7 @@ const ModalContents = () => {
   const userdata = useRecoilValue(userDataStates);
   const [postData, setPostData] = useRecoilState(postModalDataStates);
   const [contentsBytes, setContentsBytes] = useState<number>(0);
+  const alertMessage = useAlertModal();
 
   const inputContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setPostData({ ...postData, contents: e.target.value });
@@ -59,7 +62,10 @@ const ModalContents = () => {
 
     if (contentsBytes > maxBytes) {
       let contents = postData.contents;
-      alert(`게시글은 ${maxBytes}bytes를 넘을 수 없습니다.`);
+      alertMessage(
+        `게시글은 ${maxBytes}bytes를 넘을 수 없습니다.`,
+        `${palette.alert}`
+      );
       while (textUtil.getByteLength(contents) > maxBytes) {
         contents = contents.slice(0, -1);
       }
