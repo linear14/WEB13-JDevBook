@@ -7,6 +7,7 @@ const style = {
     large: '16px'
   },
   padding: {
+    smallest: '4px',
     small: '8px',
     normal: '12px',
     large: '16px'

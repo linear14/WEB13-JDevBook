@@ -1,12 +1,12 @@
 import sequelize, { INTEGER, Model } from 'sequelize';
 import { Op, fn, col } from 'sequelize';
 
+import db from '../../models';
+import { getComments } from './comment';
+import { getAllUsers, getUseridx, getUserName } from './user';
 import { searchUsers } from './search';
 import { getProblems, insertSolvedProblem } from './problem';
-
 import { PostAddData, PostUpdateData, CommentData } from '../../types/interface';
-
-import db from '../../models'; // 왜 절대경로 안되지...
 
 const dbManager = {
   sync: async () => {
@@ -82,27 +82,9 @@ const dbManager = {
     await db.models.Post.destroy({ where: { idx: postIdx }, logging: false });
   },
 
-  getAllUsers: async () => {
-    const users = await db.models.User.findAll({ logging: false });
-    return users;
-  },
-
-  getUserName: async function (idx: number) {
-    const username = await db.models.User.findOne({
-      where: { idx: idx },
-      logging: false
-    });
-    return username?.get().nickname;
-  },
-
-  getUseridx: async function (name: string) {
-    const user = await db.models.User.findOne({
-      where: { nickname: name },
-      logging: false
-    });
-
-    return user?.get().idx ? user?.get().idx : -1;
-  },
+  getAllUsers,
+  getUserName,
+  getUseridx,
 
   getChatList: async function (sender: string, receiver: string) {
     const senderidx: number = await this.getUseridx(sender);
@@ -124,14 +106,6 @@ const dbManager = {
       receiveridx: receiveridx,
       previousMsg: allChatsArray
     };
-    //console.log(allChatsArray); // 없거나 오류여도 [] 나옴
-
-    /*
-      { senderdix: ?
-        receiveridx: ?
-        chat: ?}, 
-        줄줄이
-    */
   },
 
   setChatList: async function (sender: string, receiver: string, msg: string) {
@@ -145,17 +119,14 @@ const dbManager = {
     });
   },
 
-  addComment: async function (
-    sender: string,
-    postidx: number,
-    comments: string
-  ) {
-    const useridx: number = await this.getUseridx(sender);
-    await db.models.Comment.create({
-      postidx: postidx,
-      useridx: useridx,
-      comments: comments
+  addComment: async function (addComment: CommentData) {
+    const userIdx: number = await this.getUseridx(addComment.sender);
+    const result = await db.models.Comment.create({
+      ...addComment,
+      useridx: userIdx
     });
+    return result.get();
+
   },
 
   toggleLikePosts: async function (useridx: number, postidx: number) {
@@ -178,19 +149,7 @@ const dbManager = {
     );
   },
 
-  getComments: async function (postidx: number) {
-    const prevComments = await db.models.Comment.findAll({
-      where: { postidx: postidx }
-    });
-    const prevCommentsArray = prevComments.map((data: any) => data.get());
-    for (let i = 0; i < prevCommentsArray.length; i++) {
-      prevCommentsArray[i].username = await this.getUserName(
-        prevCommentsArray[i].useridx
-      );
-    }
-    return prevCommentsArray;
-  },
-
+  getComments,
   getProblems,
   insertSolvedProblem
 };
