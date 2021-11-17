@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import palette from 'theme/palette';
+import FakeAnswerWrap from './FakeAnswerWrap';
 import FakeBody from './FakeBody';
 import FakeHeader from './FakeHeader';
 
@@ -16,11 +17,12 @@ const SkeletonContainer = styled.div`
   padding-bottom: 32px;
 `;
 
-const Skeleton = () => {
+const Skeleton = ({ type = 'home' }: { type?: string }) => {
   return (
     <SkeletonContainer>
-      <FakeHeader />
-      <FakeBody />
+      <FakeHeader type={type} />
+      {type === 'home' && <FakeBody />}
+      {type === 'problem' && <FakeAnswerWrap />}
     </SkeletonContainer>
   );
 };

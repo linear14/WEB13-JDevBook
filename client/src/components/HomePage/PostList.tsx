@@ -6,8 +6,9 @@ import styled, { css } from 'styled-components';
 import fetchApi from 'api/fetch';
 import arrayUtil from 'utils/arrayUtil';
 
-import { Post, Skeleton } from 'components/HomePage';
+import { Post } from 'components/HomePage';
 import { Problem } from 'components/GroupPage';
+import { Skeleton } from 'components/common';
 
 const PostListContainer = styled.div`
   width: 680px;
