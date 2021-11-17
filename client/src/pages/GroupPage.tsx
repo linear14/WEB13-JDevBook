@@ -1,4 +1,5 @@
 import React from 'react';
+import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
 
 import { os } from 'images/groupimg';
@@ -49,12 +50,14 @@ const ContentsContainer = styled.div`
   }
 `;
 
-const GroupPage = () => {
+const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
+  match
+}) => {
   return (
     <GroupPageContainer>
       <GlobalStyle />
       <InitUserData />
-      <InitGroupData groupIdx={1} />
+      <InitGroupData groupIdx={Number(match.params.groupidx)} />
       <InitSocket />
       <Gnb type="group" />
       <SideBar isLeft={true}>
