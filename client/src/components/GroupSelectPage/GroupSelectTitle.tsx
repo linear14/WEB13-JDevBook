@@ -6,6 +6,7 @@ import style from 'theme/style';
 
 const GroupSelectTitleWrap = styled.div`
   width: 216px;
+  margin-left: 16px;
 
   display: flex;
   flex-direction: column;

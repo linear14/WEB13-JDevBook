@@ -12,8 +12,8 @@ import {
   GroupSideBar,
   InitUserData,
   InitSocket
-} from '../components/common';
-import { ProblemList, GroupNavBar } from 'components/GroupPage';
+} from 'components/common';
+import { GroupSelectTitle, GroupSelectList } from 'components/GroupSelectPage';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -24,24 +24,18 @@ const GlobalStyle = createGlobalStyle`
 const GroupSelectPageContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding-bottom: 56px;
 `;
 
 const ContentsContainer = styled.div`
   position: relative;
   top: 56px;
-  width: 908px;
+  width: 1220px;
   height: 1000px;
+  box-sizing: border-box;
+  padding: 50px;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-
-  img {
-    width: 100%;
-    height: 320px;
-    object-fit: cover;
-  }
 `;
 
 const GroupSelectPage = () => {
@@ -55,7 +49,10 @@ const GroupSelectPage = () => {
         <InfoSideBar />
         <GroupSideBar />
       </SideBar>
-      <ContentsContainer></ContentsContainer>
+      <ContentsContainer>
+        <GroupSelectTitle />
+        <GroupSelectList />
+      </ContentsContainer>
       <SideBar isLeft={false}>
         <ChatSideBar />
       </SideBar>
