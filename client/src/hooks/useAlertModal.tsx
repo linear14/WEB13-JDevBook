@@ -8,7 +8,9 @@ const useAlertModal = () => {
 
   return (comment: string, bgColor?: string) => {
     setAlertState({ comment: comment, bgColor: bgColor, modalState: true });
-    resetModal();
+    setTimeout(() => {
+      resetModal();
+    }, 2500);
   };
 };
 
