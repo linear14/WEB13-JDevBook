@@ -204,6 +204,10 @@ const ImgUploadModal = () => {
     if (!inputfile.current.files) return setIsImgUploading(false);
     // 업로드 직후 다시 클릭하고 취소하면 getFile 실행되는데 파일은 없음
     if (inputfile.current.files.length === 0) return setIsImgUploading(false);
+    if (inputfile.current.files[0].type.match(/image\/*/) === null) {
+      alert('이미지가 아닙니다.');
+      return setIsImgUploading(false);
+    }
 
     const imglist: FileList = inputfile.current.files;
     const s3fileRes = await fetchApi.uploadImg(imglist);
