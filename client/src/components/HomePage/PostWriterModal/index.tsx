@@ -126,11 +126,17 @@ const PostWriterModal = () => {
 
   const postDataToAPI = async () => {
     if (postData.contents === '') {
-      return alert('내용이 없습니다. 내용을 입력하세요.');
+      return alertMessage(
+        '내용이 없습니다. 내용을 입력하세요.',
+        `${palette.alert}`
+      );
     }
 
     if (isImgUploading) {
-      return alert('이미지 업로드 중입니다. 잠시 후에 게시하세요');
+      return alertMessage(
+        '이미지 업로드 중입니다. 잠시 후에 게시하세요',
+        `${palette.alert}`
+      );
     }
 
     const { useridx, contents, secret, picture1, picture2, picture3, likenum } =

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { AlertState } from 'recoil/store';
 import palette from 'theme/palette';
@@ -44,9 +44,18 @@ const AlertModalWrap = styled.div<{ bgColor?: string; modalState: boolean }>`
 
 const AlertModal = () => {
   const alert = useRecoilValue(AlertState);
+  const resetAlert = useResetRecoilState(AlertState);
+
+  const alertOff = (e: React.AnimationEvent) => {
+    resetAlert();
+  };
 
   return (
-    <AlertModalWrap modalState={alert.modalState} bgColor={alert.bgColor}>
+    <AlertModalWrap
+      modalState={alert.modalState}
+      bgColor={alert.bgColor}
+      onAnimationEnd={alertOff}
+    >
       {alert.comment}
     </AlertModalWrap>
   );
