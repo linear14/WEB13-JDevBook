@@ -32,7 +32,6 @@ const fetchApi = {
       `/api/posts?lastIdx=${lastIdx}&count=${count}`
     );
     const getPostsList = await response.json();
-    console.log(getPostsList);
     return getPostsList.map((cur: any) =>
       cur.BTMLikepostidx.length === 0
         ? { ...cur, likeFlag: false }

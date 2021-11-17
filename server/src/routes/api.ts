@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '../config/.env.development') });
 import express, { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import multer from 'multer';
 import dbManager from '../service/dbManager';
 import {
   DBUser,
@@ -11,13 +10,10 @@ import {
   PostUpdateData,
   CommentData
 } from '../types/interface';
-// import { objectStorage, upload } from '../service/objectStorage';
-const githubOauth = require('../service/githubOauth');
+import { upload } from '../service/objectStorage';
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
-//const upload = multer({ dest: 'uploads/' });
-const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
 
 router.get('/data', async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -194,7 +190,7 @@ router.post(
 
 router.post(
   '/uploadimg',
-  // upload.single('imgfile'), // multer-s3 location 추가됨
+  upload.single('imgfile'), // multer-s3 location 추가됨
   async (req: Request, res: Response, next: NextFunction) => {
     const s3file = req.file;
     if (s3file) res.json({ file: s3file, save: true });
@@ -214,7 +210,8 @@ router.get(
       console.error(err);
       res.json(false);
     }
-});
+  }
+);
 
 router.get(
   '/problems',

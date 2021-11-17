@@ -23,7 +23,4 @@ export default class UserProblem extends Model<UserProblem> {
   @ForeignKey(() => Problem)
   @Column
   problemidx!: number;
-
-  @Column
-  correct!: boolean;
 }
