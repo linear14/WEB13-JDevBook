@@ -262,6 +262,17 @@ const ImgUploadModal = () => {
     setImgList(tmp);
   };
 
+  const imgsetRendering = (): JSX.Element[] => {
+    return [0, 1, 2].map((v) => (
+      <div className="imgset">
+        <CloseOneImg imgsrc={imgList[v]} onClick={deleteOneImg.bind(null, v)}>
+          <IoClose size="20px" />
+        </CloseOneImg>
+        <img src={imgList[v] ?? ''} onClick={imgPreviewBigger} />
+      </div>
+    ));
+  };
+
   useEffect(() => {
     if (isImgUploading > 0) getFile();
   }, [isImgUploading]);
@@ -323,35 +334,7 @@ const ImgUploadModal = () => {
             style={{ display: 'none' }}
           />
         </WhatWorkModal>
-        <ImgPreview ref={imgPreviewModal}>
-          <div className="imgset">
-            <CloseOneImg
-              imgsrc={imgList[0]}
-              onClick={deleteOneImg.bind(null, 0)}
-            >
-              <IoClose size="20px" />
-            </CloseOneImg>
-            <img src={imgList[0] ?? ''} onClick={imgPreviewBigger} />
-          </div>
-          <div className="imgset">
-            <CloseOneImg
-              imgsrc={imgList[1]}
-              onClick={deleteOneImg.bind(null, 1)}
-            >
-              <IoClose size="20px" />
-            </CloseOneImg>
-            <img src={imgList[1] ?? ''} onClick={imgPreviewBigger} />
-          </div>
-          <div className="imgset">
-            <CloseOneImg
-              imgsrc={imgList[2]}
-              onClick={deleteOneImg.bind(null, 2)}
-            >
-              <IoClose size="20px" />
-            </CloseOneImg>
-            <img src={imgList[2] ?? ''} onClick={imgPreviewBigger} />
-          </div>
-        </ImgPreview>
+        <ImgPreview ref={imgPreviewModal}>{imgsetRendering()}</ImgPreview>
       </ImgUploadWrap>
     </ImgUploadContainer>
   );
