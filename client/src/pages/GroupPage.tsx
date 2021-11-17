@@ -12,7 +12,7 @@ import {
   GroupSideBar,
   InitUserData,
   InitSocket
-} from '../components/common';
+} from 'components/common';
 import { ProblemList, GroupNavBar } from 'components/GroupPage';
 
 const GlobalStyle = createGlobalStyle`
