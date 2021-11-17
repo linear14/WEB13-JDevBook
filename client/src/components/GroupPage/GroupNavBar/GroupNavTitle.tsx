@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 
+import { groupState } from 'recoil/store';
 import palette from 'theme/palette';
 import style from 'theme/style';
 
@@ -25,9 +27,11 @@ const GroupMemberNum = styled.div`
 `;
 
 const GroupNavTitle = () => {
+  const groupData = useRecoilValue(groupState);
+
   return (
     <GroupNavTitleWrap>
-      <GroupTitle>그룹명</GroupTitle>
+      <GroupTitle>{groupData.title}</GroupTitle>
       <GroupMemberNum>멤버 n명</GroupMemberNum>
     </GroupNavTitleWrap>
   );
