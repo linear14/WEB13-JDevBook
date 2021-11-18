@@ -64,12 +64,13 @@ const ImgUploadWrap = styled.div`
 
   &:hover {
     cursor: pointer;
+    /* background-color: ${palette.darkgray};
     filter: brightness(95%);
-    transition: all 0.1s;
+    transition: all 0.1s; */
   }
 
   &:active {
-    filter: brightness(90%);
+    //filter: brightness(90%);
   }
 `;
 
@@ -176,7 +177,8 @@ const CloseOneImg = styled.div<{ imgsrc: string | undefined }>`
   display: ${({ imgsrc }) => (imgsrc ? 'flex' : 'none')};
   position: relative;
   top: 10px;
-  left: 10px;
+  left: 30px;
+  z-index: 3;
 
   &:hover {
     cursor: pointer;
