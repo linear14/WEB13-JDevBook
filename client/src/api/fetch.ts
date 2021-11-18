@@ -120,7 +120,7 @@ const fetchApi = {
   getProblems: async (groupIdx?: number) => {
     const response = groupIdx
       ? await fetch(`/api/problems/${groupIdx}`)
-      : await fetch(`api/problems`);
+      : await fetch(`/api/problems`);
     const problems = await response.json();
     return problems;
   },
@@ -143,6 +143,13 @@ const fetchApi = {
 
   getGroup: async (groupIdx: number) => {
     const response = await fetch(`/api/groups/${groupIdx}`);
+    return await response.json();
+  },
+
+  joinGroup: async (userIdx: number, groupIdx: number) => {
+    const response = await fetch(`/api/joingroup/${userIdx}/${groupIdx}`, {
+      method: 'POST'
+    });
     return await response.json();
   }
 };

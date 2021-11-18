@@ -1,4 +1,5 @@
 import fetchApi from 'api/fetch';
+import useAlertModal from 'hooks/useAlertModal';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { solvedProblemState } from 'recoil/store';
@@ -26,6 +27,10 @@ const ProblemContainer = styled.div`
 
   p {
     margin: 0;
+  }
+
+  &:first-child {
+    margin-top: 16px;
   }
 `;
 
@@ -130,16 +135,17 @@ const Problem = ({
 }) => {
   const [solvedProblems, setSolvedProblems] =
     useRecoilState(solvedProblemState);
+  const showAlert = useAlertModal();
 
   const handleAnswer = (selected: boolean) => {
     if (problem.answer === selected) {
-      alert('정답입니다.');
+      showAlert('정답입니다.');
       if (!solvedProblems.includes(problem.idx)) {
         setSolvedProblems(solvedProblems.concat(problem.idx));
         fetchApi.insertSolvedProblem(problem.idx);
       }
     } else {
-      alert('오답입니다.');
+      showAlert('오답입니다.', palette.alert);
     }
   };
 

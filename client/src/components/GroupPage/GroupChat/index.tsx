@@ -1,15 +1,14 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-
 import { useRecoilValue } from 'recoil';
+
 import {
+  GroupNavState,
   rightModalStates,
   userDataStates,
-  usersocketStates,
-  chatWith
+  usersocketStates
 } from 'recoil/store';
 
-import CurrentUser from './CurrentUser';
 import palette from 'theme/palette';
 import style from 'theme/style';
 import ProfilePhoto from 'components/common/ProfilePhoto';
@@ -28,23 +27,17 @@ const CloseChatAnimation = keyframes`
   100% { opacity: 0; transform: translateX(100px); }
 `;
 
-const ChatSideBarContainer = styled.div<{
-  rightModalFlag: boolean;
-  messageFlag: boolean;
-}>`
+const ChatSideBarContainer = styled.div<{ groupChatFlag: boolean }>`
+  position: aboslute;
   display: flex;
   flex-direction: column;
   width: inherit;
-  height: ${(props) =>
-    props.rightModalFlag && props.messageFlag ? `inherit` : `0px`};
+  height: ${(props) => (props.groupChatFlag ? `inherit` : `0px`)};
 
-  visibility: ${(props) =>
-    props.rightModalFlag && props.messageFlag ? `` : `hidden`};
-  transition: ${(props) =>
-    props.rightModalFlag && props.messageFlag ? `` : `all .5s`};
-
+  visibility: ${(props) => (props.groupChatFlag ? `` : `hidden`)};
+  transition: ${(props) => (props.groupChatFlag ? `` : `all .5s`)};
   animation-name: ${(props) =>
-    props.rightModalFlag && props.messageFlag
+    props.groupChatFlag
       ? css`
           ${OpenChatAnimation}
         `
@@ -57,10 +50,7 @@ const ChatSideBarContainer = styled.div<{
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
 `;
 
-const CurrentUserTitle = styled.div<{
-  rightModalFlag: boolean;
-  messageFlag: boolean;
-}>`
+const CurrentUserTitle = styled.div`
   text-align: center;
   font-size: ${style.font.small};
   color: ${palette.darkgray};
@@ -68,10 +58,7 @@ const CurrentUserTitle = styled.div<{
   margin-top: ${style.margin.small};
 `;
 
-const ChatTitle = styled.div<{
-  rightModalFlag: boolean;
-  messageFlag: boolean;
-}>`
+const ChatTitle = styled.div`
   text-align: center;
   font-size: ${style.font.small};
   color: ${palette.darkgray};
@@ -121,16 +108,13 @@ const MessageText = styled.div<IMessage>`
         ? `${palette.green};`
         : `${palette.lightgray};`
     }`}
-
-  margin-top: ${style.margin.smallest};
+  
+    margin-top: ${style.margin.smallest};
   padding: ${style.padding.smallest} ${style.padding.normal}
     ${style.padding.smallest} ${style.padding.normal};
 `;
 
-const ChatInputWrapper = styled.div<{
-  rightModalFlag: boolean;
-  messageFlag: boolean;
-}>`
+const ChatInputWrapper = styled.div`
   width: inherit;
   align-items: center;
   text-align: center;
@@ -179,62 +163,73 @@ const Divider = styled.div`
     ${style.margin.large};
 `;
 
-const ChatSideBar = () => {
+const CurrentUserBox = styled.div`
+  display: flex;
+  align-items: center;
+  height: 50px;
+  border-radius: 10px;
+  margin-left: ${style.margin.small};
+`;
+
+const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
+  const groupNavState = useRecoilValue(GroupNavState);
   const [messageList, setMessageList] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
-
   const rightModalState = useRecoilValue(rightModalStates);
+  const [allUsers, setAllUsers] = useState<string[]>([]);
+
   const socket = useRecoilValue(usersocketStates);
   const currentUserName = useRecoilValue(userDataStates).name;
-  const chatReceiver = useRecoilValue(chatWith);
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (socket !== null) {
-      socket.emit('send message', {
+      socket.emit('send group message', {
         sender: currentUserName,
-        receiver: chatReceiver,
+        groupidx: groupIdx,
         message: value
       });
     }
   };
 
   useEffect(() => {
-    if (chatReceiver !== '' && socket !== null) {
-      setMessageList([]);
-      //console.log(socket);
-      socket.emit('send chat initial', {
-        sender: currentUserName,
-        receiver: chatReceiver
+      socket.emit('enter group notify', {
+          groupidx: groupIdx
       });
-
-      socket.on('get previous chats', (filteredMsgs: string[]) => {
-        setMessageList((messageList: string[]) =>
-          messageList.concat(filteredMsgs)
-        );
-        socket.off('get previous chats');
+      socket.off('get group users');
+      socket.on('get group users', (data:string[]) => {
+        setAllUsers(data);
       });
+  }, []);
 
-      socket.off('send chat initial');
+  useEffect(() => {
+    setMessageList([]);
+    socket.emit('send group chat initial', {
+      sender: currentUserName,
+      groupidx: groupIdx
+    });
 
-      socket.off('receive message');
-      socket.on('receive message', (data: ISocketMessage) => {
-        const { sender, receiver, msg } = data;
-        if (
-          sender === currentUserName ||
-          (receiver === currentUserName && sender === chatReceiver)
-        ) {
-          setMessageList((messageList: string[]) => messageList.concat(msg));
-        }
+    socket.on('get previous group chats', (filteredMsgs: string[]) => {
+      setMessageList((messageList: string[]) =>
+        messageList.concat(filteredMsgs)
+      );
+      socket.off('get previous group chats');
+    });
 
-        document.querySelector('.chat-list')?.scrollBy({
-          top: document.querySelector('.chat-list')?.scrollHeight,
-          behavior: 'smooth'
-        });
+    socket.off('receive group message');
+    socket.on('receive group message', (data: { sender:string, groupidx:number, msg:string }) => {
+      const { sender, groupidx, msg } = data;
+      if (groupidx === groupIdx) {
+        setMessageList((messageList: string[]) => messageList.concat(msg));
+      }
+
+      document.querySelector('.group-chat-list')?.scrollBy({
+        top: document.querySelector('.group-chat-list')?.scrollHeight,
+        behavior: 'smooth'
       });
-    }
-  }, [chatReceiver, socket]);
+    });
+  }, [socket, groupIdx]);
 
   function ShowReceiverInfoFlag(idx: number, msg: string) {
     if (idx === 0) return msg.split(':')[0] === currentUserName ? true : false;
@@ -243,6 +238,16 @@ const ChatSideBar = () => {
         ? true
         : false;
   }
+
+  const UserList = allUsers.map((user: string, idx: number) => (
+    <CurrentUserBox
+      key={idx}
+      className="User"
+    >
+      <ClickableProfileImage size={'30px'} />
+      {user}
+    </CurrentUserBox>
+  ));
 
   const chatList = messageList.map((msg, idx) => (
     <MessageWrap
@@ -265,25 +270,12 @@ const ChatSideBar = () => {
   ));
 
   return (
-    <ChatSideBarContainer
-      rightModalFlag={rightModalState.rightModalFlag}
-      messageFlag={rightModalState.messageFlag}
-    >
-      <CurrentUserTitle
-        rightModalFlag={rightModalState.rightModalFlag}
-        messageFlag={rightModalState.messageFlag}
-      >
-        전체 유저
-      </CurrentUserTitle>
-      <CurrentUser />
+    <ChatSideBarContainer groupChatFlag={groupNavState.groupChat}>
+      <CurrentUserTitle>이 그룹에 가입한 유저</CurrentUserTitle>
+      {UserList}
       <Divider />
-      <ChatTitle
-        rightModalFlag={rightModalState.rightModalFlag}
-        messageFlag={rightModalState.messageFlag}
-      >
-        {chatReceiver ? chatReceiver + ' 에게 보내는 편지' : '채팅할 상대 선택'}
-      </ChatTitle>
-      <ChatList className="chat-list">{chatList}</ChatList>
+      <ChatTitle>{'모두 에게 보내는 편지'}</ChatTitle>
+      <ChatList className="group-chat-list">{chatList}</ChatList>
       <form
         onSubmit={(e: FormEvent<HTMLFormElement>) => {
           if (value) {
@@ -294,10 +286,7 @@ const ChatSideBar = () => {
           }
         }}
       >
-        <ChatInputWrapper
-          rightModalFlag={rightModalState.rightModalFlag}
-          messageFlag={rightModalState.messageFlag}
-        >
+        <ChatInputWrapper>
           <ChatInput
             type="text"
             autoComplete="off"
@@ -321,4 +310,4 @@ const ChatSideBar = () => {
   );
 };
 
-export default ChatSideBar;
+export default GroupChat;

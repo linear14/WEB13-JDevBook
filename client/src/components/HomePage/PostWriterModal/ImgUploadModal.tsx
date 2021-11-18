@@ -6,13 +6,13 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import { imageViewerState as ivState, uploadImgList } from 'recoil/store';
 
 import {
-  isImgMaxState,
   isImgUploadingState,
   modalStateStore,
   postModalDataStates
 } from 'recoil/store';
 import palette from 'theme/palette';
 import fetchApi from 'api/fetch';
+import useAlertModal from 'hooks/useAlertModal';
 
 const ModalAnimation = keyframes`
   0% {
@@ -61,12 +61,23 @@ const ImgUploadWrap = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: ${palette.gray};
   }
+
+  &:hover {
+    cursor: pointer;
+    /* background-color: ${palette.darkgray};
+    filter: brightness(95%);
+    transition: all 0.1s; */
+  }
+
+  &:active {
+    //filter: brightness(90%);
+  }
 `;
 
-const CloseBtn = styled.div<{ right: number }>`
+const CloseBtn = styled.div`
   position: absolute;
   top: 0;
-  right: ${({ right }) => `${right}px`};
+  right: 0;
   width: 36px;
   height: 36px;
   box-sizing: border-box;
@@ -105,16 +116,6 @@ const WhatWorkModal = styled.div`
   justify-content: center;
   align-items: center;
 
-  &:hover {
-    cursor: pointer;
-    filter: brightness(95%);
-    transition: all 0.1s;
-  }
-
-  &:active {
-    filter: brightness(90%);
-  }
-
   div.icon {
     width: 40px;
     height: 40px;
@@ -149,17 +150,18 @@ const ImgPreview = styled.div`
   div.imgset {
     display: flex;
     flex-direction: row;
-    /* justify-content: center;
-    align-items: center; */
   }
 
   img {
     width: 120px;
     height: 100%;
-    border: 10px solid ${palette.lightgray};
+    max-height: 180px;
+    padding: 10px;
 
     &:hover {
       cursor: pointer;
+      filter: brightness(80%);
+      transition: all 0.1s;
     }
     &:active {
       cursor: pointer;
@@ -175,7 +177,8 @@ const CloseOneImg = styled.div<{ imgsrc: string | undefined }>`
   display: ${({ imgsrc }) => (imgsrc ? 'flex' : 'none')};
   position: relative;
   top: 10px;
-  left: 10px;
+  left: 30px;
+  z-index: 3;
 
   &:hover {
     cursor: pointer;
@@ -194,9 +197,9 @@ const ImgUploadModal = () => {
   const [postData, setPostData] = useRecoilState(postModalDataStates);
   const [isImgUploading, setIsImgUploading] =
     useRecoilState(isImgUploadingState);
-  const [isImgMax, setIsImgMax] = useRecoilState(isImgMaxState);
   const [imageViewerState, setImageViewerState] = useRecoilState(ivState);
   const [imgList, setImgList] = useRecoilState(uploadImgList);
+  const alertMessage = useAlertModal();
 
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgUploadWrapRef = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -204,50 +207,57 @@ const ImgUploadModal = () => {
   const uploadButtonRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const workModalRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
+  let dropfile: FileList[] = [];
+
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     setModalState({
       ...modalState,
       post: { ...modalState.post, inPhoto: false }
     });
-    // setImgList([] as string[]);
-    // setIsImgUploading(0);
-    // setIsImgMax(false);
   };
 
-  const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isImgMax) {
-      alert('첨부 사진은 3장까지 가능합니다.');
-      // } else if (isImgUploading) {
-      //   alert('이미지 업로드 중입니다.');
-    } else {
-      inputfile.current.click();
-    }
+  const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (imgList.length >= 3)
+      return alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
+
+    inputfile.current.click();
   };
 
-  const getFile = async () => {
-    if (!inputfile.current.files) return setIsImgUploading(isImgUploading - 1);
-    // 업로드 직후 다시 클릭하고 취소하면 getFile 실행되는데 파일은 없음
-    if (inputfile.current.files.length === 0)
-      return setIsImgUploading(isImgUploading - 1);
-    if (inputfile.current.files[0].type.match(/image\/*/) === null) {
-      alert('이미지가 아닙니다.');
-      return setIsImgUploading(isImgUploading - 1);
+  const uploadOneFile = (filelist: FileList | null, uploadNum: number) => {
+    if (imgList.length >= 3) {
+      return alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
+    }
+    setIsImgUploading(uploadNum + 1);
+    getFile(filelist, uploadNum + 1);
+  };
+
+  const getFile = async (filelist: FileList | null, uploadNum: number) => {
+    if (!filelist || filelist.length === 0) {
+      setIsImgUploading(uploadNum - 1);
+      return alertMessage('파일을 가져오지 못했습니다.', palette.alert);
     }
 
-    const imglist: FileList = inputfile.current.files;
+    if (filelist[0].type.match(/image\/*/) === null) {
+      setIsImgUploading(uploadNum - 1);
+      return alertMessage('이미지 파일이 아닙니다.', palette.alert);
+    }
+
+    const imglist: FileList = filelist; //inputfile.current.files;
     const s3fileRes = await fetchApi.uploadImg(imglist);
 
     if (!s3fileRes.save) {
-      alert('이미지 업로드 실패');
-      return setIsImgUploading(isImgUploading - 1);
+      alertMessage('이미지 업로드 실패');
+      return setIsImgUploading(uploadNum - 1);
     }
 
     setImgList([...imgList, s3fileRes.file.location]);
   };
 
   const imgPreviewBigger = (e: BaseSyntheticEvent) => {
-    // 연속되게는 안함
+    e.stopPropagation(); // 업로드 창 막기
     setImageViewerState({
+      // 연속되게는 안함
       ...imageViewerState,
       imageCount: 1,
       currentIdx: 0,
@@ -256,42 +266,37 @@ const ImgUploadModal = () => {
     });
   };
 
-  const deleteOneImg = (idx: number) => {
+  const deleteOneImg = (e: any, idx: number) => {
+    e.stopPropagation();
     const tmp = imgList.map((v) => v);
     tmp.splice(idx, 1);
-    if (idx === 2) setIsImgMax(false);
     setImgList(tmp);
   };
 
   const imgsetRendering = (): JSX.Element[] => {
     return [0, 1, 2].map((v) => (
       <div key={v} className="imgset">
-        <CloseOneImg imgsrc={imgList[v]} onClick={deleteOneImg.bind(null, v)}>
+        <CloseOneImg imgsrc={imgList[v]} onClick={(e) => deleteOneImg(e, v)}>
           <IoClose size="20px" />
         </CloseOneImg>
-        <img src={imgList[v] ?? ''} onClick={imgPreviewBigger} />
+        <img
+          className="no-drag"
+          src={imgList[v] ?? ''}
+          onClick={imgPreviewBigger}
+        />
       </div>
     ));
   };
 
   useEffect(() => {
-    if (isImgUploading > 0) getFile();
-  }, [isImgUploading]);
-
-  useEffect(() => {
     if (isImgUploading > 0) {
       setIsImgUploading(isImgUploading - 1);
     }
-    if (imgList.length === 3) {
-      setIsImgMax(true);
-    }
     if (imgList.length > 0) {
       imgPreviewModal.current.style.display = 'flex';
-      uploadButtonRef.current.style.display = 'flex';
       workModalRef.current.style.display = 'none';
     } else {
       imgPreviewModal.current.style.display = 'none';
-      uploadButtonRef.current.style.display = 'none';
       workModalRef.current.style.display = 'flex';
     }
   }, [imgList]);
@@ -312,16 +317,34 @@ const ImgUploadModal = () => {
     }
   }, [postData]);
 
+  const dragDropEvent = (e: React.DragEvent, color: string) => {
+    e.preventDefault();
+    imgUploadWrapRef.current.style.backgroundColor = color;
+  };
+
   return (
     <ImgUploadContainer modalState={modalState.post.inPhoto}>
-      <ImgUploadWrap>
-        <CloseBtn right={0} onClick={imgUploadModalOff}>
+      <ImgUploadWrap
+        ref={imgUploadWrapRef}
+        onClick={openFileModal}
+        onDragEnter={(e) => {
+          dragDropEvent(e, palette.darkgray);
+        }}
+        onDragOver={(e) => {
+          dragDropEvent(e, palette.darkgray);
+        }}
+        onDragLeave={(e) => {
+          dragDropEvent(e, palette.lightgray);
+        }}
+        onDrop={(e) => {
+          dragDropEvent(e, palette.lightgray);
+          uploadOneFile(e.dataTransfer.files, isImgUploading);
+        }}
+      >
+        <CloseBtn onClick={imgUploadModalOff}>
           <IoClose size="28px" />
         </CloseBtn>
-        <CloseBtn ref={uploadButtonRef} right={40} onClick={imgUpload}>
-          <FiUpload size="20px" />
-        </CloseBtn>
-        <WhatWorkModal ref={workModalRef} onClick={imgUpload}>
+        <WhatWorkModal ref={workModalRef}>
           <div className="icon">
             <FiUpload size="20px" />
           </div>
@@ -331,7 +354,9 @@ const ImgUploadModal = () => {
             type="file"
             accept="image/*"
             ref={inputfile}
-            onChange={() => setIsImgUploading(isImgUploading + 1)}
+            onChange={() => {
+              uploadOneFile(inputfile.current.files, isImgUploading);
+            }}
             style={{ display: 'none' }}
           />
         </WhatWorkModal>

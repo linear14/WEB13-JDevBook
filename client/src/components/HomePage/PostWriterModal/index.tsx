@@ -9,7 +9,8 @@ import {
   postListStore,
   postModalDataStates,
   alertState,
-  uploadImgList
+  uploadImgList,
+  usersocketStates
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 import { PostAddData, PostUpdateData, PostData } from 'types/post';
@@ -99,6 +100,7 @@ const PostWriterModal = () => {
   const [postList, setPostList] = useRecoilState(postListStore);
   const [alertModal, setAlertModal] = useRecoilState(alertState);
   const imgList = useRecoilValue(uploadImgList);
+  const socket = useRecoilValue(usersocketStates);
   const closePostModal = useClosePostModal();
   const alertMessage = useAlertModal();
 
@@ -123,7 +125,10 @@ const PostWriterModal = () => {
 
   const postDataToAPI = async () => {
     if (isImgUploading > 0)
-      return alert('이미지 업로드 중입니다. 잠시 후에 게시하세요');
+      return alertMessage(
+        '이미지 업로드 중입니다. 잠시 후에 게시하세요',
+        palette.alert
+      );
 
     if (postData.contents === '') {
       return alertMessage(
@@ -167,6 +172,9 @@ const PostWriterModal = () => {
               : post
           );
 
+      if (isEnrollMode()) {
+        socket.emit('post_added');
+      }
       alertSuccess();
       setPostList(newPostList);
       closePostModal();
