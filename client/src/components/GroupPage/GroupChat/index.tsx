@@ -163,11 +163,20 @@ const Divider = styled.div`
     ${style.margin.large};
 `;
 
+const CurrentUserBox = styled.div`
+  display: flex;
+  align-items: center;
+  height: 50px;
+  border-radius: 10px;
+  margin-left: ${style.margin.small};
+`;
+
 const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
   const groupNavState = useRecoilValue(GroupNavState);
   const [messageList, setMessageList] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
   const rightModalState = useRecoilValue(rightModalStates);
+  const [allUsers, setAllUsers] = useState<string[]>([]);
 
   const socket = useRecoilValue(usersocketStates);
   const currentUserName = useRecoilValue(userDataStates).name;
@@ -176,15 +185,23 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
     e.preventDefault();
 
     if (socket !== null) {
-      socket.emit('send message', {
+      socket.emit('send group message', {
         sender: currentUserName,
-        // group idx 추가해야 할지도
+        groupidx: groupIdx,
         message: value
       });
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+      socket.emit('enter group notify', {
+          groupidx: groupIdx
+      });
+      socket.off('get group users');
+      socket.on('get group users', (data:string[]) => {
+        setAllUsers(data);
+      });
+  }, []);
 
   function ShowReceiverInfoFlag(idx: number, msg: string) {
     if (idx === 0) return msg.split(':')[0] === currentUserName ? true : false;
@@ -193,6 +210,16 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
         ? true
         : false;
   }
+
+  const UserList = allUsers.map((user: string, idx: number) => (
+    <CurrentUserBox
+      key={idx}
+      className="User"
+    >
+      <ClickableProfileImage size={'30px'} />
+      {user}
+    </CurrentUserBox>
+  ));
 
   const chatList = messageList.map((msg, idx) => (
     <MessageWrap
@@ -217,7 +244,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
   return (
     <ChatSideBarContainer groupChatFlag={groupNavState.groupChat}>
       <CurrentUserTitle>전체 유저</CurrentUserTitle>
-      {/* <CurrentUser /> */}
+      {UserList}
       <Divider />
       <ChatTitle>{' 에게 보내는 편지'}</ChatTitle>
       <ChatList className="chat-list">{chatList}</ChatList>
