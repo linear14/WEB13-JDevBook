@@ -10,14 +10,14 @@ import {
   getUserName,
   setUserLoginState,
   getUserLoginState,
-  getUserJoinedGroups,
+  getUserJoinedGroups
 } from './user';
 import { searchUsers } from './search';
 import { getProblems, insertSolvedProblem } from './problem';
 import { getGroupList, getGroup } from './group';
 import { CommentData } from '../../types/interface';
 import { setChatList, getChatList } from './chat';
-import {} from './groupchat';
+import { setGroupChatList } from './groupchat';
 import { getGroupUsers, getGroupUsersName } from './usergroup';
 
 const dbManager = {
@@ -65,6 +65,8 @@ const dbManager = {
 
   getGroupUsers,
   getGroupUsersName,
+
+  setGroupChatList
 };
 
 export default dbManager;
