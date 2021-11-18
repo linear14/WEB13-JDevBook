@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { groupState } from 'recoil/store';
 import { defaultGroup } from 'images/groupimg';
@@ -57,6 +57,11 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
   match
 }) => {
   const groupData = useRecoilValue(groupState);
+  const resetGroupData = useResetRecoilState(groupState);
+
+  useEffect(() => {
+    return () => resetGroupData();
+  }, []);
 
   return (
     <GroupPageContainer>
