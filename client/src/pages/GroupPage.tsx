@@ -4,7 +4,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
 import { groupState } from 'recoil/store';
-import { os } from 'images/groupimg';
+import { defaultGroup } from 'images/groupimg';
 import palette from 'theme/palette';
 
 import {
@@ -71,7 +71,7 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
         <GroupSideBar />
       </SideBar>
       <ContentsContainer contentsState={groupData.idx !== 0}>
-        <img src={os} alt="그룹 이미지" />
+        <img src={groupData.cover || defaultGroup} alt="그룹 이미지" />
         <GroupNavBar />
         <About />
         <ProblemList />

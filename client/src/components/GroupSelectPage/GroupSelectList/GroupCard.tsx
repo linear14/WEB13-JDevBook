@@ -6,7 +6,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { userDataStates, myJoinedGroupState } from 'recoil/store';
 import palette from 'theme/palette';
 import style from 'theme/style';
-import { os } from 'images/groupimg';
+import { defaultGroup } from 'images/groupimg';
 import { IGroup } from 'types/group';
 import fetchApi from 'api/fetch';
 import useAlertModal from 'hooks/useAlertModal';
@@ -126,7 +126,7 @@ const GroupCard = ({ group }: { group: IGroup }) => {
   return (
     <GroupCardWrap>
       <GroupImg to={groupUrl}>
-        <img src={group.cover || os} alt="그룹 이미지" />
+        <img src={group.cover || defaultGroup} alt="그룹 이미지" />
       </GroupImg>
       <GroupSelectorWrap>
         <GroupName>{group.title}</GroupName>
