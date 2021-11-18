@@ -7,14 +7,17 @@ import {
   userDataStates,
   usersocketStates,
   postModalDataStates,
-  solvedProblemState
+  solvedProblemState,
+  groupListState
 } from 'recoil/store';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { IProblem } from 'types/problem';
+import { IGroup } from 'types/group';
 
 const InitUserData = (/*{ history }: RouteComponentProps*/) => {
   const [userdata, setUserdata] = useRecoilState(userDataStates);
   const [postData, setPostData] = useRecoilState(postModalDataStates);
+  const [groupList, setGroupList] = useRecoilState(groupListState);
   const [solvedProblems, setSolvedProblems] =
     useRecoilState(solvedProblemState);
   //const socket = useRecoilValue(usersocketStates);
@@ -23,6 +26,7 @@ const InitUserData = (/*{ history }: RouteComponentProps*/) => {
   useEffect(() => {
     (async () => {
       const { data, error } = await fetchApi.getuserData();
+      const fetchGroupList: IGroup[] = await fetchApi.getGroupList();
       if (error) {
         alert('비정상 접근');
         history.push('/');
@@ -43,6 +47,7 @@ const InitUserData = (/*{ history }: RouteComponentProps*/) => {
         setSolvedProblems(
           data.BTMUserProblemuseridx.map((item: IProblem) => item.idx)
         );
+        if (groupList.length !== 0) setGroupList(fetchGroupList);
         //socket?.emit('name', data.nickname);
       }
     })();
