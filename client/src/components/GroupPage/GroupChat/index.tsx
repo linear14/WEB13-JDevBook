@@ -203,6 +203,21 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
       });
   }, []);
 
+  useEffect(() => {
+    socket.off('receive group message');
+    socket.on('receive group message', (data: { sender:string, groupidx:number, msg:string }) => {
+      const { sender, groupidx, msg } = data;
+      if (groupidx === groupIdx) {
+        setMessageList((messageList: string[]) => messageList.concat(msg));
+      }
+
+      document.querySelector('.chat-list')?.scrollBy({
+        top: document.querySelector('.chat-list')?.scrollHeight,
+        behavior: 'smooth'
+      });
+    });
+  }, [socket, groupIdx]);
+
   function ShowReceiverInfoFlag(idx: number, msg: string) {
     if (idx === 0) return msg.split(':')[0] === currentUserName ? true : false;
     else
