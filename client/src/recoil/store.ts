@@ -133,11 +133,6 @@ export const isImgUploadingState = atom({
   default: 0
 });
 
-export const isImgMaxState = atom({
-  key: 'isImgMax',
-  default: false
-});
-
 export const rateState = atom<SolvedRates>({
   key: 'rateState',
   default: {

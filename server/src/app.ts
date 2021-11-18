@@ -52,7 +52,11 @@ app.use(
       secure: false, //process.env.HTTPS_FALSE ? false : true,
       maxAge: 24000 * 60 * 60
     },
-    store: new FileStore({ path: path.resolve(__dirname, './sessions/') })
+    store: new FileStore({
+      path: path.resolve(__dirname, './sessions/'),
+      reapInterval: 24 * 60 * 60,
+      ttl: 24 * 60 * 60
+    })
   })
 );
 
