@@ -6,7 +6,8 @@ import {
   modalStateStore,
   rightModalStates,
   solvedProblemState,
-  userDataStates
+  userDataStates,
+  GroupNavState
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 
@@ -160,6 +161,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   const resetSolvedProblemState = useResetRecoilState(solvedProblemState);
   const [rightModalState, setRightModalState] =
     useRecoilState(rightModalStates);
+  const [groupNavState, setGroupNavState] = useRecoilState(GroupNavState);
   const history = useHistory();
 
   return (
@@ -188,9 +190,13 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
         </Link>
         <IconWrap
           img={rightModalState.messageFlag ? gnbMessageActive : gnbMessage}
-          onClick={() =>
-            ChangeFlag(rightModalState, setRightModalState, 'messageFlag')
-          }
+          onClick={() => {
+            ChangeFlag(rightModalState, setRightModalState, 'messageFlag');
+            setGroupNavState({
+              ...groupNavState,
+              groupChat: false
+            });
+          }}
         />
         <IconWrap
           img={rightModalState.alarmFlag ? gnbAlarmActive : gnbAlarm}
