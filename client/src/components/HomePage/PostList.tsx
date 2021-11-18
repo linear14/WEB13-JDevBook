@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { postListStore, usersocketStates } from 'recoil/store';
+import { useRecoilState } from 'recoil';
+import { postListStore } from 'recoil/store';
 import styled, { css } from 'styled-components';
 
 import fetchApi from 'api/fetch';
@@ -8,7 +8,7 @@ import arrayUtil from 'utils/arrayUtil';
 
 import { Post } from 'components/HomePage';
 import { Problem } from 'components/GroupPage';
-import { Skeleton } from 'components/common';
+import { NewPostAlert, Skeleton } from 'components/common';
 
 const PostListContainer = styled.div`
   width: 680px;
@@ -25,14 +25,12 @@ const Observer = styled.div`
 `;
 
 const PostList = () => {
-  const socket = useRecoilValue(usersocketStates);
   const [posts, setPosts] = useRecoilState(postListStore);
   const [problems, setProblems] = useState([]);
   const [isFetching, setFetching] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const problemOrders = useRef<number[]>([]);
   const observerRef = useRef<IntersectionObserver>();
-  const addedPostRef = useRef<number>(0);
 
   const observer = (element: HTMLDivElement) => {
     if (isFetching) return;
@@ -88,12 +86,6 @@ const PostList = () => {
   useEffect(() => {
     setPosts([]);
     fetchInit();
-    socket.on('post_added', () => {
-      addedPostRef.current += 1;
-    });
-    return () => {
-      socket.off('post_added');
-    };
   }, []);
 
   const getNextProblem = (idx: number) => {
@@ -104,27 +96,30 @@ const PostList = () => {
   };
 
   return (
-    <PostListContainer>
-      {Array(posts.length)
-        .fill(undefined)
-        .map((_, idx) => {
-          const nextProblem = getNextProblem(idx);
-          return (
-            <div key={idx}>
-              <Post key={posts[idx].idx} post={posts[idx]} />
-              {nextProblem && (
-                <Problem
-                  key={`p${(nextProblem as any).idx}`}
-                  problem={nextProblem}
-                  isHome
-                />
-              )}
-            </div>
-          );
-        })}
-      {isFetching && getSkeletons(3)}
-      <Observer ref={observer} />
-    </PostListContainer>
+    <>
+      <NewPostAlert />
+      <PostListContainer>
+        {Array(posts.length)
+          .fill(undefined)
+          .map((_, idx) => {
+            const nextProblem = getNextProblem(idx);
+            return (
+              <div key={idx}>
+                <Post key={posts[idx].idx} post={posts[idx]} />
+                {nextProblem && (
+                  <Problem
+                    key={`p${(nextProblem as any).idx}`}
+                    problem={nextProblem}
+                    isHome
+                  />
+                )}
+              </div>
+            );
+          })}
+        {isFetching && getSkeletons(3)}
+        <Observer ref={observer} />
+      </PostListContainer>
+    </>
   );
 };
 
