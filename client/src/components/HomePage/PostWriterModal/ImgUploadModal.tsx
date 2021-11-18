@@ -225,17 +225,16 @@ const ImgUploadModal = () => {
     }
   };
 
-  const getFile = async () => {
-    if (!inputfile.current.files) return setIsImgUploading(isImgUploading - 1);
+  const getFile = async (filelist: FileList | null) => {
+    if (!filelist) return setIsImgUploading(isImgUploading - 1);
     // 업로드 직후 다시 클릭하고 취소하면 getFile 실행되는데 파일은 없음
-    if (inputfile.current.files.length === 0)
-      return setIsImgUploading(isImgUploading - 1);
-    if (inputfile.current.files[0].type.match(/image\/*/) === null) {
+    if (filelist.length === 0) return setIsImgUploading(isImgUploading - 1);
+    if (filelist[0].type.match(/image\/*/) === null) {
       alertMessage('이미지 파일이 아닙니다.', palette.alert);
       return setIsImgUploading(isImgUploading - 1);
     }
 
-    const imglist: FileList = inputfile.current.files;
+    const imglist: FileList = filelist; //inputfile.current.files;
     const s3fileRes = await fetchApi.uploadImg(imglist);
 
     if (!s3fileRes.save) {
@@ -282,7 +281,7 @@ const ImgUploadModal = () => {
   };
 
   useEffect(() => {
-    if (isImgUploading > 0) getFile();
+    if (isImgUploading > 0) getFile(inputfile.current.files);
   }, [isImgUploading]);
 
   useEffect(() => {
@@ -294,11 +293,9 @@ const ImgUploadModal = () => {
     }
     if (imgList.length > 0) {
       imgPreviewModal.current.style.display = 'flex';
-      //uploadButtonRef.current.style.display = 'flex';
       workModalRef.current.style.display = 'none';
     } else {
       imgPreviewModal.current.style.display = 'none';
-      //uploadButtonRef.current.style.display = 'none';
       workModalRef.current.style.display = 'flex';
     }
   }, [imgList]);
@@ -325,22 +322,30 @@ const ImgUploadModal = () => {
         ref={imgUploadWrapRef}
         onClick={imgUpload}
         onDragEnter={(e) => {
+          e.preventDefault();
           // e.stopPropagation();
-          // e.preventDefault();
-          imgUploadWrapRef.current.style.backgroundColor = palette.darkgray;
+          imgUploadWrapRef.current.style.filter = 'brightness(95%)';
+        }}
+        onDragOver={(e) => {
+          e.preventDefault();
+          // e.stopPropagation();
+          imgUploadWrapRef.current.style.filter = 'brightness(95%)';
         }}
         onDragLeave={(e) => {
-          // e.stopPropagation();
-          // e.preventDefault();
-          imgUploadWrapRef.current.style.backgroundColor = palette.lightgray;
+          e.preventDefault();
+          imgUploadWrapRef.current.style.filter = 'none';
+        }}
+        onDrop={async (e) => {
+          e.preventDefault();
+          //e.stopPropagation();
+          setIsImgUploading(isImgUploading + 1);
+          await getFile(e.dataTransfer.files);
+          imgUploadWrapRef.current.style.filter = 'none';
         }}
       >
         <CloseBtn right={0} onClick={imgUploadModalOff}>
           <IoClose size="28px" />
         </CloseBtn>
-        {/* <CloseBtn ref={uploadButtonRef} right={40} onClick={imgUpload}>
-          <FiUpload size="20px" />
-        </CloseBtn> */}
         <WhatWorkModal ref={workModalRef}>
           <div className="icon">
             <FiUpload size="20px" />
