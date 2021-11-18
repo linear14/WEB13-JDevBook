@@ -2,7 +2,7 @@ import dbManager from '../service/dbManager'; // 왜 절대경로 안되지
 import { Socket, Server } from 'socket.io';
 import { IUserSocket } from '../types/interface';
 
-const UserObj:IUserSocket = {};
+const UserObj: IUserSocket = {};
 
 const socketIO = (server: any) => {
   const io = new Server(server);
@@ -10,10 +10,13 @@ const socketIO = (server: any) => {
     // socket.on('name', (username: string) => {
     //   socket.name = username;
     // });
-    socket.on('login notify', async (userData:{socketId:string, userName: string}) => {
-      UserObj[userData.socketId] = userData.userName;
-      io.emit('get current users', UserObj);
-    });
+    socket.on(
+      'login notify',
+      async (userData: { socketId: string; userName: string }) => {
+        UserObj[userData.socketId] = userData.userName;
+        io.emit('get current users', UserObj);
+      }
+    );
 
     socket.on('send chat initial', async (receivedData) => {
       const { sender, receiver } = receivedData;
@@ -43,6 +46,10 @@ const socketIO = (server: any) => {
           msg: msg
         });
       }
+    });
+
+    socket.on('post_added', () => {
+      socket.broadcast.emit('post_added');
     });
 
     socket.on('disconnect', () => {

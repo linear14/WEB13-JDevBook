@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { useRecoilState } from 'recoil';
-import { postListStore } from 'recoil/store';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { postListStore, usersocketStates } from 'recoil/store';
 import styled, { css } from 'styled-components';
 
 import fetchApi from 'api/fetch';
@@ -25,12 +25,14 @@ const Observer = styled.div`
 `;
 
 const PostList = () => {
+  const socket = useRecoilValue(usersocketStates);
   const [posts, setPosts] = useRecoilState(postListStore);
   const [problems, setProblems] = useState([]);
   const [isFetching, setFetching] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const problemOrders = useRef<number[]>([]);
   const observerRef = useRef<IntersectionObserver>();
+  const addedPostRef = useRef<number>(0);
 
   const observer = (element: HTMLDivElement) => {
     if (isFetching) return;
@@ -86,6 +88,12 @@ const PostList = () => {
   useEffect(() => {
     setPosts([]);
     fetchInit();
+    socket.on('post_added', () => {
+      addedPostRef.current += 1;
+    });
+    return () => {
+      socket.off('post_added');
+    };
   }, []);
 
   const getNextProblem = (idx: number) => {
