@@ -18,7 +18,7 @@ const ProblemListContainer = styled.div<{ navState: boolean }>`
   display: ${(props) => (props.navState ? 'block' : 'none')};
 `;
 
-const ProblemList = () => {
+const ProblemList = ({ groupIdx }: { groupIdx: number }) => {
   const groupNavState = useRecoilValue(GroupNavState);
   const [problemList, setProblemList] = useState<IProblem[]>([]);
   const [isFetching, setFetching] = useState<boolean>(true);
@@ -39,7 +39,7 @@ const ProblemList = () => {
   }, []);
 
   useEffect(() => {
-    fetchProblems(1);
+    fetchProblems(groupIdx);
   }, []);
 
   return (
