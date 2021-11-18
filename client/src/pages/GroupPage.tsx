@@ -1,7 +1,9 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
+import { useRecoilValue } from 'recoil';
 
+import { groupState } from 'recoil/store';
 import { os } from 'images/groupimg';
 import palette from 'theme/palette';
 
@@ -12,7 +14,8 @@ import {
   ChatSideBar,
   GroupSideBar,
   InitUserData,
-  InitSocket
+  InitSocket,
+  LoadingModal
 } from 'components/common';
 import {
   ProblemList,
@@ -33,13 +36,13 @@ const GroupPageContainer = styled.div`
   padding-bottom: 56px;
 `;
 
-const ContentsContainer = styled.div`
+const ContentsContainer = styled.div<{ contentsState: boolean }>`
   position: relative;
   top: 56px;
   width: 908px;
   height: 1000px;
 
-  display: flex;
+  display: ${(props) => (props.contentsState ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
 
@@ -53,18 +56,21 @@ const ContentsContainer = styled.div`
 const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
   match
 }) => {
+  const groupData = useRecoilValue(groupState);
+
   return (
     <GroupPageContainer>
       <GlobalStyle />
       <InitUserData />
       <InitGroupData groupIdx={Number(match.params.groupidx)} />
       <InitSocket />
+      <LoadingModal modalState={groupData.idx === 0} />
       <Gnb type="group" />
       <SideBar isLeft={true}>
         <InfoSideBar />
         <GroupSideBar />
       </SideBar>
-      <ContentsContainer>
+      <ContentsContainer contentsState={groupData.idx !== 0}>
         <img src={os} alt="그룹 이미지" />
         <GroupNavBar />
         <About />
