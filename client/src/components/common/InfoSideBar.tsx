@@ -100,7 +100,6 @@ const InfoSideBar = () => {
       : Number(((solvedProblemCount / rate.problemCount) * 100).toFixed(1));
   }, [solvedProblemCount, rate.problemCount]);
 
-  // 현재 그룹에 추가로 가입된 경우에는 값이 변경되지 않음 (그룹 관리 recoil 생기면 들어갈듯)
   useEffect(() => {
     const solvedRate = getSolvedRate();
     setRate((prev) => ({ ...prev, solvedRate }));

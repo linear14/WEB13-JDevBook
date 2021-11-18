@@ -27,6 +27,10 @@ const ProblemContainer = styled.div`
   p {
     margin: 0;
   }
+
+  &:first-child {
+    margin-top: 16px;
+  }
 `;
 
 const GroupTitle = styled.div`
