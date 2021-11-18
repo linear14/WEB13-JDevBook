@@ -20,12 +20,12 @@ const ButtonWrap = styled.div`
   position: absolute;
   width: 100%;
   text-align: right;
-  cursor: pointer;
 
   svg {
     margin: 32px;
     color: white;
     font-size: 32px;
+    cursor: pointer;
   }
 `;
 
@@ -125,12 +125,12 @@ const ImageViewer = () => {
           <MdArrowForwardIos />
         </AnimationIcon>
       </Body>
-      <ButtonWrap
-        onClick={() => {
-          setImageViewerState({ ...imageViewerState, isOpen: false });
-        }}
-      >
-        <MdClose />
+      <ButtonWrap>
+        <MdClose
+          onClick={() => {
+            setImageViewerState({ ...imageViewerState, isOpen: false });
+          }}
+        />
       </ButtonWrap>
     </Container>
   );

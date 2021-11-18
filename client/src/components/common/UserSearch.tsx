@@ -78,7 +78,7 @@ const SearchBarContainerModal = styled(UserSearchBarContainer)`
   width: 100%;
   animation: ${ExtendSearchBarAnimation} 0.5s ease-in-out;
 
-  &::before {
+  /* &::before {
     content: '';
     width: 22px;
     height: 22px;
@@ -91,7 +91,7 @@ const SearchBarContainerModal = styled(UserSearchBarContainer)`
     background-image: none;
     width: 0px;
     height: 0px;
-  }
+  } */
 `;
 
 const UserSearchModalContainer = styled.div`
@@ -115,6 +115,7 @@ const UserSearchModalContainer = styled.div`
 const HoverRound = styled.div`
   width: 36px;
   height: 36px;
+  min-width: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -220,7 +221,7 @@ const UserSearchModal = () => {
         <SearchBarContainerModal>
           <input
             type="text"
-            placeholder="Search User"
+            placeholder="사용자 검색"
             value={input}
             onChange={onChangeInput}
             ref={inputBox}

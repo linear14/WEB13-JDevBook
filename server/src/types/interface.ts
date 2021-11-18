@@ -131,3 +131,7 @@ export interface IGroup {
   description: string;
   cover: string;
 }
+
+export interface IUserSocket {
+  [key: string]: string;
+}

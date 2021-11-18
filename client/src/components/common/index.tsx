@@ -11,6 +11,7 @@ import UserCard from 'components/common/UserCard';
 import InitUserData from 'components/common/InitUserData';
 import InitSocket from 'components/common/InitSocket';
 import AlertModal from 'components/common/AlertModal';
+import Skeleton from 'components/common/Skeleton';
 
 export {
   AlarmSideBar,
@@ -26,5 +27,6 @@ export {
   UserCard,
   InitUserData,
   InitSocket,
-  AlertModal
+  AlertModal,
+  Skeleton
 };
