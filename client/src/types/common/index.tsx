@@ -13,3 +13,7 @@ export interface Alert {
   comment: string;
   modalState: boolean;
 }
+
+export interface UserSocket {
+  [key: string]: string;
+}

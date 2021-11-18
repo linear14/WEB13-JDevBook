@@ -1,19 +1,14 @@
-import { Op } from 'sequelize';
 
 import db from '../../models';
 
 import { toggleLikePosts, updateLikeNum } from './like';
 import { getPosts, addPost, updatePost, deletePost } from './post';
-import { getComments } from './comment';
-import {
-  getAllUsers,
-  getUseridx,
-  getUserName,
-  getUserJoinedGroups
-} from './user';
+import { getComments, addComment } from './comment';
+import { getUserData, getAllUsers, getUseridx, getUserName, setUserLoginState, getUserLoginState, getUserJoinedGroups } from './user';
 import { searchUsers } from './search';
 import { getProblems, insertSolvedProblem } from './problem';
 import { CommentData } from '../../types/interface';
+import { setChatList, getChatList } from './chat';
 
 const dbManager = {
   sync: async () => {
@@ -26,74 +21,29 @@ const dbManager = {
         console.error('Unable to connect to the database:', error);
       });
   },
-
-  getUserdata: async (username: string) => {
-    const [user, created] = await db.models.User.findOrCreate({
-      include: db.models.Problem,
-      where: { nickname: username },
-      defaults: { nickname: username },
-      logging: false
-    });
-
-    return user.get();
-  },
-
-  searchUsers,
-
-  getPosts,
-  addPost,
-  updatePost,
-  deletePost,
-
+  
+  getUserData,
   getAllUsers,
   getUserName,
   getUseridx,
 
-  getChatList: async function (sender: string, receiver: string) {
-    const senderidx: number = await this.getUseridx(sender);
-    const receiveridx: number = await this.getUseridx(receiver);
+  setUserLoginState,
+  getUserLoginState,
 
-    const allChats = await db.models.Chat.findAll({
-      where: {
-        [Op.or]: [
-          { senderidx: senderidx, receiveridx: receiveridx },
-          { senderidx: receiveridx, receiveridx: senderidx }
-        ]
-      },
-      logging: false
-    });
-    const allChatsArray = allChats.map((data: any) => data.get());
+  searchUsers,
+  
+  getPosts,
+  addPost,
+  updatePost,
+  deletePost,  
 
-    return {
-      senderidx: senderidx,
-      receiveridx: receiveridx,
-      previousMsg: allChatsArray
-    };
-  },
-
-  setChatList: async function (sender: string, receiver: string, msg: string) {
-    const senderidx: number = await this.getUseridx(sender);
-    const receiveridx: number = await this.getUseridx(receiver);
-    await db.models.Chat.create({
-      senderidx: senderidx,
-      receiveridx: receiveridx,
-      content: msg,
-      logging: false
-    });
-  },
-
-  addComment: async function (addComment: CommentData) {
-    const userIdx: number = await this.getUseridx(addComment.sender);
-    const result = await db.models.Comment.create({
-      ...addComment,
-      useridx: userIdx
-    });
-    return result.get();
-  },
-
+  setChatList,
+  getChatList,
+  
   toggleLikePosts,
   updateLikeNum,
-
+  
+  addComment,
   getComments,
 
   getProblems,

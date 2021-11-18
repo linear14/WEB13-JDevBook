@@ -26,7 +26,7 @@ router.get(
     );
     const username: string = await githubOauth.getUsername(accessToken);
 
-    const userdata: DBUser = await dbManager.getUserdata(username);
+    const userdata: DBUser = await dbManager.getUserData(username);
     console.log(userdata);
 
     req.session.username = userdata.nickname;

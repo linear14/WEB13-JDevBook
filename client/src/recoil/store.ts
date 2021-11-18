@@ -128,10 +128,15 @@ export const solvedProblemState = atom<number[]>({
 
 export const isImgUploadingState = atom({
   key: 'isImgUploading',
-  default: false
+  default: 0
 });
 
 export const isImgMaxState = atom({
   key: 'isImgMax',
   default: false
+});
+
+export const uploadImgList = atom({
+  key: 'uploadImgList',
+  default: [] as string[]
 });

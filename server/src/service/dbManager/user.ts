@@ -1,5 +1,15 @@
 import db from '../../models';
-import './index';
+
+const getUserData = async (username: string) => {
+  const [user, created] = await db.models.User.findOrCreate({
+    include: db.models.Problem,
+    where: { nickname: username },
+    defaults: { nickname: username },
+    logging: false
+  });
+
+  return user.get();
+};
 
 const getAllUsers = async () => {
   const users = await db.models.User.findAll({ logging: false });
@@ -19,7 +29,6 @@ const getUseridx = async function (name: string) {
     where: { nickname: name },
     logging: false
   });
-
   return user?.get().idx ? user?.get().idx : -1;
 };
 
@@ -31,4 +40,28 @@ const getUserJoinedGroups = async (userIdx: number) => {
   return groups;
 };
 
-export { getAllUsers, getUserName, getUseridx, getUserJoinedGroups };
+const setUserLoginState = async function (name: string, state: boolean) {
+  await db.models.User.update(
+    { loginstate: state },
+    { where: { nickname: name }, logging: false }
+  );
+};
+
+const getUserLoginState = async function (name: string) {
+  const user = await db.models.User.findOne({
+    where: { nickname: name },
+    logging: false
+  });
+
+  return user?.get().loginstate;
+};
+
+export {
+  getUserData,
+  getAllUsers,
+  getUserName,
+  getUseridx,
+  setUserLoginState,
+  getUserLoginState,
+  getUserJoinedGroups
+};

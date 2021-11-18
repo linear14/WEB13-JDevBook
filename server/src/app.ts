@@ -19,7 +19,14 @@ const apiRouter = require('./routes/api');
 const debug = require('debug')('server:server');
 
 const app = express();
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'build')));
+
 const port = 4000;
+app.set('port', port);
 const FileStore = sessionFileStore(session);
 
 // app.use(
@@ -49,20 +56,12 @@ app.use(
   })
 );
 
-app.set('port', port);
-
 const server = createServer(app);
 socketIO(server);
 
 server.listen(port, () => {
   console.log(`✅ Server Listening on : http://localhost:${port}`);
 });
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'build')));
 
 app.use('/', indexRouter);
 app.use('/oauth', oauthRouter);
