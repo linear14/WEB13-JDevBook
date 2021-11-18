@@ -16,6 +16,17 @@ const getAllUsers = async () => {
   return users;
 };
 
+const getAllUsersObj = async () => {
+  const users = await db.models.User.findAll({logging:false});
+  const usersIdxArray = users.map((data) => data.get().idx);
+  const usersNameArray = users.map((data) => data.get().nickname);
+  const usersObj:any = {};
+  for(let i=0 ; i<usersIdxArray.length ; i++) {
+    usersObj[usersIdxArray[i]] = usersNameArray[i];
+  }
+  return usersObj;
+}
+
 const getUserName = async function (idx: number) {
   const username = await db.models.User.findOne({
     where: { idx: idx },
@@ -63,5 +74,6 @@ export {
   getUseridx,
   setUserLoginState,
   getUserLoginState,
-  getUserJoinedGroups
+  getUserJoinedGroups,
+  getAllUsersObj
 };

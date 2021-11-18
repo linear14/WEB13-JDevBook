@@ -1,6 +1,8 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { GroupNavState, rightModalStates } from 'recoil/store';
 
 import { os } from 'images/groupimg';
 import palette from 'theme/palette';
@@ -18,7 +20,8 @@ import {
   ProblemList,
   GroupNavBar,
   InitGroupData,
-  About
+  About,
+  GroupChat
 } from 'components/GroupPage';
 
 const GlobalStyle = createGlobalStyle`
@@ -53,6 +56,9 @@ const ContentsContainer = styled.div`
 const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
   match
 }) => {
+  const groupNavState = useRecoilValue(GroupNavState);
+  const rightModalState = useRecoilValue(rightModalStates);
+
   return (
     <GroupPageContainer>
       <GlobalStyle />
@@ -72,6 +78,7 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
       </ContentsContainer>
       <SideBar isLeft={false}>
         <ChatSideBar />
+        <GroupChat groupIdx={Number(match.params.groupidx)} />
       </SideBar>
     </GroupPageContainer>
   );

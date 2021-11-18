@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { GroupNavState } from 'recoil/store';
+import { GroupNavState, rightModalStates } from 'recoil/store';
 import palette from 'theme/palette';
 import style from 'theme/style';
 
@@ -55,6 +55,8 @@ const NavigationBtn = styled.div<{ isActive: boolean }>`
 
 const GroupNavigation = () => {
   const [navState, setNavState] = useRecoilState(GroupNavState);
+  const [rightModalState, setRightModalState] =
+    useRecoilState(rightModalStates);
 
   const selectAbout = (e: React.MouseEvent<HTMLDivElement>) => {
     setNavState({
@@ -76,6 +78,13 @@ const GroupNavigation = () => {
     setNavState({
       ...navState,
       groupChat: !navState.groupChat
+    });
+    setRightModalState({
+      ...rightModalState,
+      rightModalFlag: false,
+      messageFlag: false,
+      alarmFlag: false,
+      selectorFlag: false
     });
   };
 
