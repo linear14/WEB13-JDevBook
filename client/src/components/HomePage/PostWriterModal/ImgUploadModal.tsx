@@ -205,13 +205,13 @@ const ImgUploadModal = () => {
   const workModalRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
-    // setModalState({
-    //   ...modalState,
-    //   post: { ...modalState.post, inPhoto: false }
-    // });
-    setImgList([] as string[]);
-    setIsImgUploading(0);
-    setIsImgMax(false);
+    setModalState({
+      ...modalState,
+      post: { ...modalState.post, inPhoto: false }
+    });
+    // setImgList([] as string[]);
+    // setIsImgUploading(0);
+    // setIsImgMax(false);
   };
 
   const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
