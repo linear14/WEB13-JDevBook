@@ -209,9 +209,6 @@ const ImgUploadModal = () => {
       ...modalState,
       post: { ...modalState.post, inPhoto: false }
     });
-    // setImgList([] as string[]);
-    // setIsImgUploading(0);
-    // setIsImgMax(false);
   };
 
   const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
