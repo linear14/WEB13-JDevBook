@@ -13,6 +13,7 @@ import {
 } from 'recoil/store';
 import palette from 'theme/palette';
 import fetchApi from 'api/fetch';
+import useAlertModal from 'hooks/useAlertModal';
 
 const ModalAnimation = keyframes`
   0% {
@@ -156,6 +157,7 @@ const ImgPreview = styled.div`
   img {
     width: 120px;
     height: 100%;
+    max-height: 180px;
     border: 10px solid ${palette.lightgray};
 
     &:hover {
@@ -197,6 +199,7 @@ const ImgUploadModal = () => {
   const [isImgMax, setIsImgMax] = useRecoilState(isImgMaxState);
   const [imageViewerState, setImageViewerState] = useRecoilState(ivState);
   const [imgList, setImgList] = useRecoilState(uploadImgList);
+  const alertMessage = useAlertModal();
 
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgUploadWrapRef = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -213,7 +216,7 @@ const ImgUploadModal = () => {
 
   const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isImgMax) {
-      alert('첨부 사진은 3장까지 가능합니다.');
+      alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
       // } else if (isImgUploading) {
       //   alert('이미지 업로드 중입니다.');
     } else {
@@ -227,7 +230,7 @@ const ImgUploadModal = () => {
     if (inputfile.current.files.length === 0)
       return setIsImgUploading(isImgUploading - 1);
     if (inputfile.current.files[0].type.match(/image\/*/) === null) {
-      alert('이미지가 아닙니다.');
+      alertMessage('이미지 파일이 아닙니다.', palette.alert);
       return setIsImgUploading(isImgUploading - 1);
     }
 
@@ -235,7 +238,7 @@ const ImgUploadModal = () => {
     const s3fileRes = await fetchApi.uploadImg(imglist);
 
     if (!s3fileRes.save) {
-      alert('이미지 업로드 실패');
+      alertMessage('이미지 업로드 실패');
       return setIsImgUploading(isImgUploading - 1);
     }
 
