@@ -39,7 +39,7 @@ const PostList = () => {
     observerRef.current = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !isFetching && hasMore) {
-          const lastIdx = posts[posts.length - 1].idx;
+          const lastIdx = posts.length !== 0 ? posts[posts.length - 1].idx : -1;
           fetchPostsMore(lastIdx, 10);
         }
       },
