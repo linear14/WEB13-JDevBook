@@ -1,4 +1,5 @@
 import db from '../../models';
+import { Op } from 'sequelize';
 
 const setGroupChatList = async (
   sender: string,
@@ -22,4 +23,15 @@ const setGroupChatList = async (
   );
 };
 
-export { setGroupChatList };
+const getGroupChatList = async (groupidx: number) => {
+  const allGroupChats = await db.models.GroupChat.findAll({
+    where: { groupidx: groupidx },
+    logging: false
+  });
+
+  const allGroupChatsArray = allGroupChats.map((data: any) => data.get());
+
+  return allGroupChatsArray;
+};
+
+export { setGroupChatList, getGroupChatList };
