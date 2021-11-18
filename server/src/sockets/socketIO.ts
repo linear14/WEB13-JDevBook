@@ -4,6 +4,7 @@ import { IUserSocket } from '../types/interface';
 
 const UserObj:IUserSocket = {};
 
+
 const socketIO = (server: any) => {
   const io = new Server(server);
   io.on('connection', (socket: Socket) => {
@@ -73,6 +74,19 @@ const socketIO = (server: any) => {
         msg: msg
       })
     });
+
+    socket.on('send group chat initial', async (receivedData) => {
+      const { sender, groupidx } = receivedData;
+      socket.name = sender;
+
+      const previousMsg = await dbManager.getGroupChatList(groupidx);
+      const usersObj = await dbManager.getAllUsersObj();
+      const filteredMsgs: string[] = previousMsg.map((msg) => {
+        return `${usersObj[msg.useridx]}: ${msg.content}`;
+      });
+      io.to(socket.id).emit('get previous group chats', filteredMsgs);
+    });
+
 
     // 유저 로그아웃 부분
     socket.on('disconnect', () => {
