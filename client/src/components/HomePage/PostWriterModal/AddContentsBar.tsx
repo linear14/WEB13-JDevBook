@@ -72,7 +72,7 @@ const AddContentsBar = () => {
           modalState={modalState.post.inPhoto}
           onClick={imgUploadModalToggle}
         >
-          <img src={iconPhoto} alt="사진 아이콘" />
+          <img src={iconPhoto} className="no-drag" alt="사진 아이콘" />
         </ContentsBtn>
       </AddContentsBtnWrap>
     </AddContentsBarWrap>

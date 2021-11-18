@@ -16,6 +16,7 @@ const ProfilePhoto = ({ src, size }: ProfilePhotoProps) => {
       src={src || defaultProfile}
       size={size}
       alt="프로필 사진"
+      className="no-drag"
     ></StyledProfilePhoto>
   );
 };

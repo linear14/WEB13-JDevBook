@@ -13,7 +13,7 @@ import CurrentUser from './CurrentUser';
 import palette from 'theme/palette';
 import style from 'theme/style';
 import ProfilePhoto from 'components/common/ProfilePhoto';
-import { iconSubmit } from 'images/icons';
+import { iconSubmit, iconSubmitActive } from 'images/icons';
 import { IMessage, ISocketMessage, ISuccessiveMessage } from 'types/message';
 
 const ClickableProfileImage = styled(ProfilePhoto)``;
@@ -141,6 +141,7 @@ const SubmitBtn = styled.button`
     width: 16px;
     height: 16px;
   }
+
 `;
 
 const ReceiverDiv = styled.div<ISuccessiveMessage>`
@@ -156,7 +157,8 @@ const Divider = styled.div`
   width: calc(100% - 32px);
   height: 1px;
   background: #dddddd;
-  margin: ${style.margin.normal} ${style.margin.large} ${style.margin.normal} ${style.margin.large};
+  margin: ${style.margin.normal} ${style.margin.large} ${style.margin.normal}
+    ${style.margin.large};
 `;
 
 const ChatSideBar = () => {
@@ -276,7 +278,12 @@ const ChatSideBar = () => {
             placeholder="메시지 입력"
           />
           <SubmitBtn type="submit">
-            <img src={iconSubmit} alt="submit-button-image" />
+            <img
+              src={iconSubmit}
+              onMouseOver={(e) => (e.currentTarget.src = `${iconSubmitActive}`)}
+              onMouseOut={(e) => (e.currentTarget.src = `${iconSubmit}`)}
+              alt="submit-button-image"
+            />
           </SubmitBtn>
         </ChatInputWrapper>
       </form>

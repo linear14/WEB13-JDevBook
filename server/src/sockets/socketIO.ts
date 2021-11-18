@@ -1,8 +1,8 @@
 import dbManager from '../service/dbManager'; // 왜 절대경로 안되지
 import { Socket, Server } from 'socket.io';
-// import { IComment } from '../types/interface';
+import { IUserSocket } from '../types/interface';
 
-let userArray: string[] = [];
+const UserObj:IUserSocket = {};
 
 const socketIO = (server: any) => {
   const io = new Server(server);
@@ -10,11 +10,9 @@ const socketIO = (server: any) => {
     // socket.on('name', (username: string) => {
     //   socket.name = username;
     // });
-    socket.on('login notify', (username: string) => {
-      if (!userArray.includes(username)) {
-        userArray.push(username);
-        io.emit('receive users login state', userArray);
-      }
+    socket.on('login notify', async (userData:{socketId:string, userName: string}) => {
+      UserObj[userData.socketId] = userData.userName;
+      io.emit('get current users', UserObj);
     });
 
     socket.on('send chat initial', async (receivedData) => {
@@ -49,7 +47,8 @@ const socketIO = (server: any) => {
 
     socket.on('disconnect', () => {
       socket.get = false;
-      userArray = userArray.filter((el: string) => el !== socket.name);
+      delete UserObj[socket.id];
+      io.emit('get current users', UserObj);
       console.log(`${socket.name}:${socket.id} disconnected`);
     });
   });

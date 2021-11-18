@@ -124,3 +124,14 @@ export interface IComment {
   writer: string;
   text: string;
 }
+
+export interface IGroup {
+  idx: number;
+  title: string;
+  description: string;
+  cover: string;
+}
+
+export interface IUserSocket {
+  [key: string]: string;
+}

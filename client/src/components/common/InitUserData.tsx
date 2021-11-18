@@ -10,7 +10,7 @@ import {
   solvedProblemState
 } from 'recoil/store';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { IProblem } from 'types/group';
+import { IProblem } from 'types/problem';
 
 const InitUserData = (/*{ history }: RouteComponentProps*/) => {
   const [userdata, setUserdata] = useRecoilState(userDataStates);

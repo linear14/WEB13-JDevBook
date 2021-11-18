@@ -173,7 +173,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
             {type === 'home' ? <GnbHomeActive /> : <GnbHome />}
           </GnbTab>
         </Link>
-        <Link to="/group">
+        <Link to="/groupselect">
           <GnbTab current={type === 'group'}>
             {type === 'group' ? <GnbGroupActive /> : <GnbGroup />}
           </GnbTab>

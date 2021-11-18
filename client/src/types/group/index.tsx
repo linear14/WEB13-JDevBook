@@ -1,6 +1,6 @@
-export interface IProblem {
+export interface IGroup {
   idx: number;
-  groupidx: number;
-  question: string;
-  answer: boolean;
+  title: string;
+  description: string;
+  cover: string;
 }

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -29,12 +29,11 @@ const SearchBarWrap = styled.div`
   }
 
   input {
-    flex: 1;
+    width: 70%;
     outline: none;
     background: none;
     border: none;
     font-size: 1rem;
-    font-family: 'Spoqa Han Sans Neo';
   }
 `;
 
@@ -97,7 +96,7 @@ const GroupSideBar = () => {
   };
 
   return (
-    <GroupSideBarContainer>
+    <GroupSideBarContainer className="no-drag">
       <SearchBarWrap>
         <img src={iconSearch} alt="Search 아이콘" />
         <input type="text" placeholder="그룹 검색" onChange={searchHandler} />

@@ -33,14 +33,35 @@ const FakeHeaderContent = styled.div`
   }
 `;
 
-const FakeHeader = () => {
+const FakeHeaderProblem = styled.div`
+  div {
+    border-radius: 12px;
+    background: ${palette.skeleton};
+
+    &:last-child {
+      margin-top: 12px;
+    }
+  }
+`;
+
+const FakeHeader = ({ type }: { type: string }) => {
   return (
     <FakeHeaderContainer>
-      <FakeImage />
-      <FakeHeaderContent>
-        <div style={{ width: 64, height: 18 }}></div>
-        <div style={{ width: 120, height: 16 }}></div>
-      </FakeHeaderContent>
+      {type === 'home' && (
+        <>
+          <FakeImage />
+          <FakeHeaderContent>
+            <div style={{ width: 64, height: 18 }}></div>
+            <div style={{ width: 120, height: 16 }}></div>
+          </FakeHeaderContent>
+        </>
+      )}
+      {type === 'problem' && (
+        <FakeHeaderProblem>
+          <div style={{ width: 64, height: 18 }}></div>
+          <div style={{ width: 120, height: 16 }}></div>
+        </FakeHeaderProblem>
+      )}
     </FakeHeaderContainer>
   );
 };

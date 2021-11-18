@@ -1,7 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
+import { RouteComponentProps } from 'react-router';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import { os } from 'images/groupimg';
+import palette from 'theme/palette';
 
 import {
   Gnb,
@@ -11,8 +13,19 @@ import {
   GroupSideBar,
   InitUserData,
   InitSocket
-} from '../components/common';
-import { ProblemList, GroupNavBar } from 'components/GroupPage';
+} from 'components/common';
+import {
+  ProblemList,
+  GroupNavBar,
+  InitGroupData,
+  About
+} from 'components/GroupPage';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${palette.lightgray};
+  }
+`;
 
 const GroupPageContainer = styled.div`
   display: flex;
@@ -37,10 +50,14 @@ const ContentsContainer = styled.div`
   }
 `;
 
-const GroupPage = () => {
+const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
+  match
+}) => {
   return (
     <GroupPageContainer>
+      <GlobalStyle />
       <InitUserData />
+      <InitGroupData groupIdx={Number(match.params.groupidx)} />
       <InitSocket />
       <Gnb type="group" />
       <SideBar isLeft={true}>
@@ -50,6 +67,7 @@ const GroupPage = () => {
       <ContentsContainer>
         <img src={os} alt="그룹 이미지" />
         <GroupNavBar />
+        <About />
         <ProblemList />
       </ContentsContainer>
       <SideBar isLeft={false}>
