@@ -14,7 +14,7 @@ import {
 } from './user';
 import { searchUsers } from './search';
 import { getProblems, insertSolvedProblem } from './problem';
-import { getGroupList, getGroup } from './group';
+import { getGroupList, getGroup, toggleUserGroup } from './group';
 import { CommentData } from '../../types/interface';
 import { setChatList, getChatList } from './chat';
 
@@ -59,7 +59,8 @@ const dbManager = {
 
   getGroupList,
   getGroup,
-  getUserJoinedGroups
+  getUserJoinedGroups,
+  toggleUserGroup
 };
 
 export default dbManager;

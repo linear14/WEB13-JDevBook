@@ -36,7 +36,7 @@ const AlertModalWrap = styled.div<{ bgColor?: string; modalState: boolean }>`
   border-radius: 8px;
   background-color: ${(props) => props.bgColor ?? `${palette.blue}`};
   color: ${palette.white};
-  animation: ${onAnimation} 2.5s ease;
+  animation: ${onAnimation} 2s ease;
 
   display: ${(props) => (props.modalState ? `flex` : `none`)};
   justify-content: center;

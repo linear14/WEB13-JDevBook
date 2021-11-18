@@ -299,4 +299,18 @@ router.get(
   }
 );
 
+router.post(
+  '/joingroup/:useridx/:postidx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const useridx = Number(req.params.useridx);
+      const postidx = Number(req.params.postidx);
+      const result = await dbManager.toggleUserGroup(useridx, postidx);
+      res.json(result);
+    } catch (err) {
+      res.json(false);
+    }
+  }
+);
+
 module.exports = router;

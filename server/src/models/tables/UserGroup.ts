@@ -3,10 +3,7 @@ import User from './User';
 import Group from './Group';
 
 @Table({
-  tableName: 'usergroups',
-  timestamps: true,
-  paranoid: true,
-  charset: 'utf8mb4'
+  tableName: 'usergroups'
 })
 export default class UserGroup extends Model<UserGroup> {
   @Column({
