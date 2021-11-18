@@ -112,7 +112,7 @@ const GroupCard = ({ group }: { group: IGroup }) => {
 
   const joinGroup = async (e: React.MouseEvent) => {
     const result = await fetchApi.joinGroup(userData.idx, group.idx);
-    if (result) {
+    if (result && myJoinedGroup !== null) {
       alertMessage(`${group.title} 그룹에 가입되었습니다.`);
       setMyJoinedGroup([...myJoinedGroup, group.idx]);
       setJoinedState(true);
@@ -125,7 +125,7 @@ const GroupCard = ({ group }: { group: IGroup }) => {
 
   return (
     <GroupCardWrap>
-      <GroupImg to={groupUrl}>
+      <GroupImg to={groupUrl} className="no-drag">
         <img src={group.cover || defaultGroup} alt="그룹 이미지" />
       </GroupImg>
       <GroupSelectorWrap>

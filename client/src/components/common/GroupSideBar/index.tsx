@@ -60,12 +60,14 @@ const GroupSideBar = () => {
   };
 
   useEffect(() => {
-    setJoinedGroup(
-      groupList.filter((group) => joinedGroupIdx.includes(group.idx))
-    );
-    setSearchGroup(
-      groupList.filter((group) => joinedGroupIdx.includes(group.idx))
-    );
+    if (joinedGroupIdx !== null) {
+      setJoinedGroup(
+        groupList.filter((group) => joinedGroupIdx.includes(group.idx))
+      );
+      setSearchGroup(
+        groupList.filter((group) => joinedGroupIdx.includes(group.idx))
+      );
+    }
   }, [joinedGroupIdx]);
 
   return (

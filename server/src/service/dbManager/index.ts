@@ -10,13 +10,15 @@ import {
   getUserName,
   setUserLoginState,
   getUserLoginState,
-  getUserJoinedGroups
+  getUserJoinedGroups,
+  getAllUsersObj
 } from './user';
 import { searchUsers } from './search';
 import { getProblems, insertSolvedProblem } from './problem';
 import { getGroupList, getGroup, toggleUserGroup } from './group';
-import { CommentData } from '../../types/interface';
 import { setChatList, getChatList } from './chat';
+import { setGroupChatList, getGroupChatList } from './groupchat';
+import { getGroupUsers, getGroupUsersName } from './usergroup';
 
 const dbManager = {
   sync: async () => {
@@ -60,7 +62,14 @@ const dbManager = {
   getGroupList,
   getGroup,
   getUserJoinedGroups,
-  toggleUserGroup
+  toggleUserGroup,
+
+  getGroupUsers,
+  getGroupUsersName,
+
+  setGroupChatList,
+  getGroupChatList,
+  getAllUsersObj
 };
 
 export default dbManager;

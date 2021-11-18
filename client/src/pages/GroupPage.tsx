@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
-
+import { GroupNavState, rightModalStates } from 'recoil/store';
 import { groupState } from 'recoil/store';
 import { defaultGroup } from 'images/groupimg';
 import palette from 'theme/palette';
@@ -21,7 +21,8 @@ import {
   ProblemList,
   GroupNavBar,
   InitGroupData,
-  About
+  About,
+  GroupChat
 } from 'components/GroupPage';
 
 const GlobalStyle = createGlobalStyle`
@@ -79,10 +80,11 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
         <img src={groupData.cover || defaultGroup} alt="그룹 이미지" />
         <GroupNavBar />
         <About />
-        <ProblemList />
+        <ProblemList groupIdx={Number(match.params.groupidx)} />
       </ContentsContainer>
       <SideBar isLeft={false}>
         <ChatSideBar />
+        <GroupChat groupIdx={Number(match.params.groupidx)} />
       </SideBar>
     </GroupPageContainer>
   );

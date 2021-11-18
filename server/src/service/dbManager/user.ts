@@ -2,7 +2,7 @@ import db from '../../models';
 
 const getUserData = async (username: string) => {
   const [user, created] = await db.models.User.findOrCreate({
-    include: db.models.Problem,
+    include: [db.models.Problem, db.models.Group],
     where: { nickname: username },
     defaults: { nickname: username },
     logging: false
@@ -15,6 +15,17 @@ const getAllUsers = async () => {
   const users = await db.models.User.findAll({ logging: false });
   return users;
 };
+
+const getAllUsersObj = async () => {
+  const users = await db.models.User.findAll({logging:false});
+  const usersIdxArray = users.map((data) => data.get().idx);
+  const usersNameArray = users.map((data) => data.get().nickname);
+  const usersObj:any = {};
+  for(let i=0 ; i<usersIdxArray.length ; i++) {
+    usersObj[usersIdxArray[i]] = usersNameArray[i];
+  }
+  return usersObj;
+}
 
 const getUserName = async function (idx: number) {
   const username = await db.models.User.findOne({
@@ -63,5 +74,6 @@ export {
   getUseridx,
   setUserLoginState,
   getUserLoginState,
-  getUserJoinedGroups
+  getUserJoinedGroups,
+  getAllUsersObj
 };

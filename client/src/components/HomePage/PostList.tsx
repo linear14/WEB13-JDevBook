@@ -8,7 +8,7 @@ import arrayUtil from 'utils/arrayUtil';
 
 import { Post } from 'components/HomePage';
 import { Problem } from 'components/GroupPage';
-import { Skeleton } from 'components/common';
+import { NewPostAlert, Skeleton } from 'components/common';
 
 const PostListContainer = styled.div`
   width: 680px;
@@ -39,7 +39,7 @@ const PostList = () => {
     observerRef.current = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !isFetching && hasMore) {
-          const lastIdx = posts[posts.length - 1].idx;
+          const lastIdx = posts.length !== 0 ? posts[posts.length - 1].idx : -1;
           fetchPostsMore(lastIdx, 10);
         }
       },
@@ -96,27 +96,30 @@ const PostList = () => {
   };
 
   return (
-    <PostListContainer>
-      {Array(posts.length)
-        .fill(undefined)
-        .map((_, idx) => {
-          const nextProblem = getNextProblem(idx);
-          return (
-            <div key={idx}>
-              <Post key={posts[idx].idx} post={posts[idx]} />
-              {nextProblem && (
-                <Problem
-                  key={`p${(nextProblem as any).idx}`}
-                  problem={nextProblem}
-                  isHome
-                />
-              )}
-            </div>
-          );
-        })}
-      {isFetching && getSkeletons(3)}
-      <Observer ref={observer} />
-    </PostListContainer>
+    <>
+      <NewPostAlert />
+      <PostListContainer>
+        {Array(posts.length)
+          .fill(undefined)
+          .map((_, idx) => {
+            const nextProblem = getNextProblem(idx);
+            return (
+              <div key={idx}>
+                <Post key={posts[idx].idx} post={posts[idx]} />
+                {nextProblem && (
+                  <Problem
+                    key={`p${(nextProblem as any).idx}`}
+                    problem={nextProblem}
+                    isHome
+                  />
+                )}
+              </div>
+            );
+          })}
+        {isFetching && getSkeletons(3)}
+        <Observer ref={observer} />
+      </PostListContainer>
+    </>
   );
 };
 

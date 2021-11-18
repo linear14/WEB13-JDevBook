@@ -133,22 +133,18 @@ export const isImgUploadingState = atom({
   default: 0
 });
 
-export const isImgMaxState = atom({
-  key: 'isImgMax',
-  default: false
-});
-
 export const rateState = atom<SolvedRates>({
   key: 'rateState',
   default: {
     prevRate: 0,
-    solvedRate: 0
+    solvedRate: 0,
+    problemCount: 0
   }
 });
 
-export const myJoinedGroupState = atom<number[]>({
+export const myJoinedGroupState = atom<number[] | null>({
   key: 'myJoinedGroup',
-  default: []
+  default: null
 });
 
 export const groupListState = atom<IGroup[]>({

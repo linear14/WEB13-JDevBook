@@ -20,12 +20,14 @@ const setChatList = async function (
   const receiveridx: number = receiverData?.get().idx
     ? receiverData?.get().idx
     : -1;
-  await db.models.Chat.create({
-    senderidx: senderidx,
-    receiveridx: receiveridx,
-    content: msg,
-    logging: false
-  });
+  await db.models.Chat.create(
+    {
+      senderidx: senderidx,
+      receiveridx: receiveridx,
+      content: msg
+    },
+    { logging: false }
+  );
 };
 
 const getChatList = async function (sender: string, receiver: string) {
