@@ -115,9 +115,6 @@ const GroupCard = ({ group }: { group: IGroup }) => {
     if (result) {
       alertMessage(`${group.title} 그룹에 가입되었습니다.`);
       setJoinedState(true);
-    } else {
-      alertMessage(`${group.title} 그룹을 탈퇴했습니다.`, palette.alert);
-      setJoinedState(false);
     }
   };
 
