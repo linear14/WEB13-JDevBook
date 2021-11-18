@@ -142,7 +142,8 @@ export const rateState = atom<SolvedRates>({
   key: 'rateState',
   default: {
     prevRate: 0,
-    solvedRate: 0
+    solvedRate: 0,
+    problemCount: 0
   }
 });
 

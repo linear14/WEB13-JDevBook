@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -37,6 +37,15 @@ const SolvedTitle = styled.div`
   margin: 10px 50px;
 `;
 
+const NoGroup = styled.div`
+  margin: 0 50px;
+  color: ${palette.darkgray};
+
+  &:after {
+    content: '가입된 그룹이 없습니다';
+  }
+`;
+
 const SolvedBarGraph = styled.div`
   height: 25px;
   background: ${palette.gray};
@@ -72,33 +81,31 @@ const InnerBarGraph = styled.span<{ prevRate: number; solvedRate: number }>`
 
 const InfoSideBar = () => {
   const userdata = useRecoilValue(userDataStates);
+  const solvedProblemCount = useRecoilValue(solvedProblemState).length;
   const [rate, setRate] = useRecoilState(rateState);
 
   const prevRateUpdate = (e: React.AnimationEvent) => {
     setRate({ ...rate, prevRate: rate.solvedRate });
   };
 
-  useEffect(() => {
-    const solvedRate = Number(((123 / 155) * 100).toFixed(1));
-    setRate({ ...rate, solvedRate: solvedRate });
-  }, []);
-  const solvedProblemCount = useRecoilValue(solvedProblemState).length;
-  const [totalProblemCount, setTotalProblemCount] = useState<number>(0);
-  const [solvedRate, setSolvedRate] = useState<number>(0);
+  const getSolvedRate = useCallback(() => {
+    return rate.problemCount === 0
+      ? 0
+      : Number(((solvedProblemCount / rate.problemCount) * 100).toFixed(1));
+  }, [solvedProblemCount, rate.problemCount]);
 
   // 현재 그룹에 추가로 가입된 경우에는 값이 변경되지 않음 (그룹 관리 recoil 생기면 들어갈듯)
   useEffect(() => {
-    setSolvedRate(
-      totalProblemCount === 0
-        ? 0
-        : Number(((solvedProblemCount / totalProblemCount) * 100).toFixed(1))
-    );
-  }, [solvedProblemCount, totalProblemCount]);
+    const solvedRate = getSolvedRate();
+    setRate({ ...rate, solvedRate });
+  }, [solvedProblemCount, rate.problemCount]);
 
   useEffect(() => {
     const initProblemCount = async () => {
       const problems = await fetchApi.getProblems();
-      setTotalProblemCount(problems.length);
+      if (problems.length !== rate.problemCount) {
+        setRate({ ...rate, problemCount: problems.length });
+      }
     };
     initProblemCount();
   }, []);
@@ -110,13 +117,14 @@ const InfoSideBar = () => {
         <p>{userdata.name}</p>
       </ProfileWrap>
       <SolvedTitle>문제 정답률</SolvedTitle>
+      {/* <NoGroup /> */}
       <SolvedBarGraph>
         <InnerBarGraph
           prevRate={rate.prevRate}
           solvedRate={rate.solvedRate}
           onAnimationEnd={prevRateUpdate}
         >
-          {totalProblemCount !== 0 && `${solvedRate}%`}
+          {rate.problemCount !== 0 && `${rate.solvedRate}%`}
         </InnerBarGraph>
       </SolvedBarGraph>
     </InfoSideBarContainer>
