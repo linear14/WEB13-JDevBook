@@ -204,6 +204,19 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
   }, []);
 
   useEffect(() => {
+    setMessageList([]);
+    socket.emit('send group chat initial', {
+      sender: currentUserName,
+      groupidx: groupIdx
+    });
+
+    socket.on('get previous group chats', (filteredMsgs: string[]) => {
+      setMessageList((messageList: string[]) =>
+        messageList.concat(filteredMsgs)
+      );
+      socket.off('get previous group chats');
+    });
+
     socket.off('receive group message');
     socket.on('receive group message', (data: { sender:string, groupidx:number, msg:string }) => {
       const { sender, groupidx, msg } = data;
@@ -211,8 +224,8 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
         setMessageList((messageList: string[]) => messageList.concat(msg));
       }
 
-      document.querySelector('.chat-list')?.scrollBy({
-        top: document.querySelector('.chat-list')?.scrollHeight,
+      document.querySelector('.group-chat-list')?.scrollBy({
+        top: document.querySelector('.group-chat-list')?.scrollHeight,
         behavior: 'smooth'
       });
     });
@@ -258,11 +271,11 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
 
   return (
     <ChatSideBarContainer groupChatFlag={groupNavState.groupChat}>
-      <CurrentUserTitle>전체 유저</CurrentUserTitle>
+      <CurrentUserTitle>이 그룹에 가입한 유저</CurrentUserTitle>
       {UserList}
       <Divider />
-      <ChatTitle>{' 에게 보내는 편지'}</ChatTitle>
-      <ChatList className="chat-list">{chatList}</ChatList>
+      <ChatTitle>{'모두 에게 보내는 편지'}</ChatTitle>
+      <ChatList className="group-chat-list">{chatList}</ChatList>
       <form
         onSubmit={(e: FormEvent<HTMLFormElement>) => {
           if (value) {
