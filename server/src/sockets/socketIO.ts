@@ -64,6 +64,7 @@ const socketIO = (server: any) => {
 
     socket.on('send group message', async (receivedData) => {
       const { sender, groupidx, message } = receivedData;
+      await dbManager.setGroupChatList(sender, groupidx, message);
     });
 
     // 유저 로그아웃 부분
