@@ -62,8 +62,8 @@ const GroupNavMiddle = () => {
   };
 
   useEffect(() => {
-    if (myJoinedGroup?.includes(groupData.idx)) setJoinedState(true);
-  }, [myJoinedGroup]);
+    if (myJoinedGroup.includes(groupData.idx)) setJoinedState(true);
+  }, [groupData]);
 
   return (
     <GroupNavMiddleWrap>
