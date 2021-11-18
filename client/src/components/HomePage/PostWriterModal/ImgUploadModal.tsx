@@ -6,7 +6,6 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import { imageViewerState as ivState, uploadImgList } from 'recoil/store';
 
 import {
-  isImgMaxState,
   isImgUploadingState,
   modalStateStore,
   postModalDataStates
@@ -216,20 +215,22 @@ const ImgUploadModal = () => {
     });
   };
 
-  const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
+  const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
     if (imgList.length >= 3)
       return alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
 
     inputfile.current.click();
   };
 
-  const getFile = async (filelist: FileList | null, uploadNum: number) => {
+  const uploadOneFile = (filelist: FileList | null, uploadNum: number) => {
     if (imgList.length >= 3) {
-      // drop 체크
-      setIsImgUploading(uploadNum - 1);
       return alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
     }
+    setIsImgUploading(uploadNum + 1);
+    getFile(filelist, uploadNum + 1);
+  };
 
+  const getFile = async (filelist: FileList | null, uploadNum: number) => {
     if (!filelist || filelist.length === 0) {
       setIsImgUploading(uploadNum - 1);
       return alertMessage('파일을 가져오지 못했습니다.', palette.alert);
@@ -314,29 +315,28 @@ const ImgUploadModal = () => {
     }
   }, [postData]);
 
+  const dragDropEvent = (e: React.DragEvent, color: string) => {
+    e.preventDefault();
+    imgUploadWrapRef.current.style.backgroundColor = color;
+  };
+
   return (
     <ImgUploadContainer modalState={modalState.post.inPhoto}>
       <ImgUploadWrap
         ref={imgUploadWrapRef}
-        onClick={imgUpload}
+        onClick={openFileModal}
         onDragEnter={(e) => {
-          e.preventDefault();
-          imgUploadWrapRef.current.style.backgroundColor = palette.darkgray;
+          dragDropEvent(e, palette.darkgray);
         }}
         onDragOver={(e) => {
-          e.preventDefault();
-          imgUploadWrapRef.current.style.backgroundColor = palette.darkgray;
+          dragDropEvent(e, palette.darkgray);
         }}
         onDragLeave={(e) => {
-          e.preventDefault();
-          imgUploadWrapRef.current.style.backgroundColor = palette.lightgray;
+          dragDropEvent(e, palette.lightgray);
         }}
         onDrop={(e) => {
-          e.preventDefault();
-          const uploadNum = isImgUploading;
-          setIsImgUploading(uploadNum + 1);
-          getFile(e.dataTransfer.files, uploadNum + 1);
-          imgUploadWrapRef.current.style.backgroundColor = palette.lightgray;
+          dragDropEvent(e, palette.lightgray);
+          uploadOneFile(e.dataTransfer.files, isImgUploading);
         }}
       >
         <CloseBtn onClick={imgUploadModalOff}>
@@ -353,9 +353,7 @@ const ImgUploadModal = () => {
             accept="image/*"
             ref={inputfile}
             onChange={() => {
-              const uploadNum = isImgUploading;
-              setIsImgUploading(uploadNum + 1);
-              getFile(inputfile.current.files, uploadNum + 1);
+              uploadOneFile(inputfile.current.files, isImgUploading);
             }}
             style={{ display: 'none' }}
           />
