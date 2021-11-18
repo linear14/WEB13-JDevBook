@@ -35,12 +35,14 @@ const ChatSideBarContainer = styled.div<{
   display: flex;
   flex-direction: column;
   width: inherit;
-  height: inherit;
+  height: ${(props) =>
+    props.rightModalFlag && props.messageFlag ? `inherit` : `0px`};
 
   visibility: ${(props) =>
     props.rightModalFlag && props.messageFlag ? `` : `hidden`};
   transition: ${(props) =>
-    props.rightModalFlag && props.messageFlag ? `` : `visibility .5s`};
+    props.rightModalFlag && props.messageFlag ? `` : `all .5s`};
+
   animation-name: ${(props) =>
     props.rightModalFlag && props.messageFlag
       ? css`
@@ -55,7 +57,10 @@ const ChatSideBarContainer = styled.div<{
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
 `;
 
-const CurrentUserTitle = styled.div`
+const CurrentUserTitle = styled.div<{
+  rightModalFlag: boolean;
+  messageFlag: boolean;
+}>`
   text-align: center;
   font-size: ${style.font.small};
   color: ${palette.darkgray};
@@ -63,7 +68,10 @@ const CurrentUserTitle = styled.div`
   margin-top: ${style.margin.small};
 `;
 
-const ChatTitle = styled.div`
+const ChatTitle = styled.div<{
+  rightModalFlag: boolean;
+  messageFlag: boolean;
+}>`
   text-align: center;
   font-size: ${style.font.small};
   color: ${palette.darkgray};
@@ -119,7 +127,10 @@ const MessageText = styled.div<IMessage>`
     ${style.padding.smallest} ${style.padding.normal};
 `;
 
-const ChatInputWrapper = styled.div`
+const ChatInputWrapper = styled.div<{
+  rightModalFlag: boolean;
+  messageFlag: boolean;
+}>`
   width: inherit;
   align-items: center;
   text-align: center;
@@ -258,10 +269,18 @@ const ChatSideBar = () => {
       rightModalFlag={rightModalState.rightModalFlag}
       messageFlag={rightModalState.messageFlag}
     >
-      <CurrentUserTitle>전체 유저</CurrentUserTitle>
+      <CurrentUserTitle
+        rightModalFlag={rightModalState.rightModalFlag}
+        messageFlag={rightModalState.messageFlag}
+      >
+        전체 유저
+      </CurrentUserTitle>
       <CurrentUser />
       <Divider />
-      <ChatTitle>
+      <ChatTitle
+        rightModalFlag={rightModalState.rightModalFlag}
+        messageFlag={rightModalState.messageFlag}
+      >
         {chatReceiver ? chatReceiver + ' 에게 보내는 편지' : '채팅할 상대 선택'}
       </ChatTitle>
       <ChatList className="chat-list">{chatList}</ChatList>
@@ -275,7 +294,10 @@ const ChatSideBar = () => {
           }
         }}
       >
-        <ChatInputWrapper>
+        <ChatInputWrapper
+          rightModalFlag={rightModalState.rightModalFlag}
+          messageFlag={rightModalState.messageFlag}
+        >
           <ChatInput
             type="text"
             autoComplete="off"
