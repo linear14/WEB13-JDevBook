@@ -55,6 +55,14 @@ const ChatSideBarContainer = styled.div<{
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
 `;
 
+const CurrentUserTitle = styled.div`
+  text-align: center;
+  font-size: ${style.font.small};
+  color: ${palette.darkgray};
+
+  margin-top: ${style.margin.small};
+`;
+
 const ChatTitle = styled.div`
   text-align: center;
   font-size: ${style.font.small};
@@ -141,7 +149,6 @@ const SubmitBtn = styled.button`
     width: 16px;
     height: 16px;
   }
-
 `;
 
 const ReceiverDiv = styled.div<ISuccessiveMessage>`
@@ -251,6 +258,7 @@ const ChatSideBar = () => {
       rightModalFlag={rightModalState.rightModalFlag}
       messageFlag={rightModalState.messageFlag}
     >
+      <CurrentUserTitle>전체 유저</CurrentUserTitle>
       <CurrentUser />
       <Divider />
       <ChatTitle>
