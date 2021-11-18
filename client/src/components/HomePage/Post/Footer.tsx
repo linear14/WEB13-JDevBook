@@ -19,12 +19,12 @@ const FooterContainer = styled.div`
     img {
       width: 18px;
       height: 18px;
-      margin-right: 4px;
+      margin-right: 6px;
+      margin-top: 2px;
     }
   }
 
   p {
-    font-size: 0.95rem;
     color: #999999;
   }
 `;

@@ -27,7 +27,10 @@ const fetchApi = {
     return await allusersRes.json();
   },
 
-  getPosts: async (lastIdx: number, count: number): Promise<PostData[]> => {
+  getPosts: async (
+    lastIdx: number = -1,
+    count: number = 10
+  ): Promise<PostData[]> => {
     const response = await fetch(
       `/api/posts?lastIdx=${lastIdx}&count=${count}`
     );
@@ -116,8 +119,11 @@ const fetchApi = {
 
     return await response.json();
   },
-  getProblems: async (groupIdx: number) => {
-    const response = await fetch(`/api/problems?idx=${groupIdx}`);
+
+  getProblems: async (groupIdx?: number) => {
+    const response = groupIdx
+      ? await fetch(`/api/problems/${groupIdx}`)
+      : await fetch(`api/problems`);
     const problems = await response.json();
     return problems;
   },

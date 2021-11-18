@@ -3,6 +3,5 @@ import PostWriterModal from './PostWriterModal';
 import Post from './Post';
 import PostList from 'components/HomePage/PostList';
 import ImageViewer from 'components/HomePage/ImageViewer';
-import Skeleton from './Skeleton';
 
-export { PostWriter, PostWriterModal, Post, PostList, ImageViewer, Skeleton };
+export { PostWriter, PostWriterModal, Post, PostList, ImageViewer };

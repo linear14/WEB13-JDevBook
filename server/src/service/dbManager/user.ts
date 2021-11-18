@@ -29,8 +29,15 @@ const getUseridx = async function (name: string) {
     where: { nickname: name },
     logging: false
   });
-
   return user?.get().idx ? user?.get().idx : -1;
+};
+
+const getUserJoinedGroups = async (userIdx: number) => {
+  const groups = await db.models.UserGroup.findAll({
+    where: { useridx: userIdx },
+    logging: false
+  });
+  return groups;
 };
 
 const setUserLoginState = async function (name: string, state: boolean) {
@@ -55,5 +62,6 @@ export {
   getUserName,
   getUseridx,
   setUserLoginState,
-  getUserLoginState
+  getUserLoginState,
+  getUserJoinedGroups
 };
