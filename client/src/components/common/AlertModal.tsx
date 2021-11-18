@@ -27,9 +27,10 @@ const onAnimation = keyframes`
 const AlertModalWrap = styled.div<{ bgColor?: string; modalState: boolean }>`
   position: fixed;
   top: -70px;
-  left: 720px;
+  left: 50%;
   width: 500px;
   height: 50px;
+  transform: translateX(-50%);
   z-index: 7;
 
   border-radius: 8px;
