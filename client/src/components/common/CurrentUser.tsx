@@ -9,6 +9,7 @@ import { defaultProfile } from 'images';
 import ProfilePhoto from 'components/common/ProfilePhoto';
 import palette from 'theme/palette';
 import style from 'theme/style';
+import { UserSocket } from 'types/common';
 
 const ClickableProfileImage = styled(ProfilePhoto)``;
 
@@ -46,18 +47,17 @@ const CurrentUserBox = styled.div`
   }
 `;
 
-// 프리티어 적용되면 css palette 부분 인식 못해서 로그인 여부 색깔 안보임!
-const LoginState = styled.div<{ usersLoginState: string[]; user: string }>`
+const LoginState = styled.div<{ user: string; loginStateArray: any }>`
   width: 8px;
   height: 8px;
-  border-radius: 100%;  
+  border-radius: 100%;
+  margin-right: ${style.margin.small};
   ${(props) =>
     `background-color: ${
-      props.usersLoginState.includes(props.user)
-        ? css`${palette.green}`
-        : css`${palette.darkgray}`
+      props.loginStateArray?.includes(props.user)
+        ? `${palette.green}`
+        : `${palette.darkgray}`
     };`}
-  margin-right: ${style.margin.small};
 `;
 
 const CurrentUser = () => {
@@ -65,7 +65,8 @@ const CurrentUser = () => {
   const [allUsers, setAllUsers] = useState<string[]>([]);
   const [chatReceiver, setChatWith] = useRecoilState(chatWith);
   const currentUserName = useRecoilValue(userDataStates).name;
-  const [usersLoginState, setUsersLoginState] = useState<string[]>([]);
+  const [usersLoginState, setUsersLoginState] = useState<UserSocket>({});
+  const [loginStateArray, setLoginStateArray] = useState<string[]>();
 
   useEffect(() => {
     const fetchJob = setTimeout(async () => {
@@ -74,21 +75,27 @@ const CurrentUser = () => {
         (user: { idx: number; nickname: string }) => user.nickname
       );
       setAllUsers(usersInfo);
-      // 새로운 유저는 소켓으로 받아오도록
-
       return () => clearTimeout(fetchJob);
     }, 0);
   }, []);
 
   useEffect(() => {
     if (currentUserName) {
-      socket.emit('login notify', currentUserName);
-      socket.off('receive users login state');
-      socket.on('receive users login state', (userArray: string[]) => {
-        setUsersLoginState(userArray);
+      socket.emit('login notify', {
+        socketId: socket.id,
+        userName: currentUserName
+      });
+      socket.off('get current users');
+      socket.on('get current users', (userData: UserSocket) => {
+        setUsersLoginState(userData);
       });
     }
-  }, [currentUserName, usersLoginState]);
+  }, [currentUserName]);
+
+  useEffect(() => {
+    const usersLoginStateArray = Object.values(usersLoginState);
+    setLoginStateArray(usersLoginStateArray);
+  }, [usersLoginState]);
 
   const UserList = allUsers.map((user: string, idx: number) => (
     <CurrentUserBox
@@ -97,7 +104,7 @@ const CurrentUser = () => {
       onClick={() => setChatWith(user)}
     >
       <ClickableProfileImage size={'30px'} />
-      <LoginState usersLoginState={usersLoginState} user={user} />
+      <LoginState user={user} loginStateArray={loginStateArray} />
       {user}
     </CurrentUserBox>
   ));

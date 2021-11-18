@@ -124,3 +124,7 @@ export interface IComment {
   writer: string;
   text: string;
 }
+
+export interface IUserSocket {
+  [key: string]: string;
+}
