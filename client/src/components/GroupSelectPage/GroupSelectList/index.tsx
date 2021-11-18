@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { rightModalStates, groupListState } from 'recoil/store';
@@ -7,6 +7,15 @@ import fetchApi from 'api/fetch';
 
 import GroupCard from 'components/GroupSelectPage/GroupSelectList/GroupCard';
 import { IGroup } from 'types/group';
+
+const listAnimation = keyframes`
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 130%;
+  }
+`;
 
 const GroupSelectListContainer = styled.div<{ modalState: boolean }>`
   width: ${(props) => (props.modalState ? `100%` : `130%`)};
@@ -16,6 +25,12 @@ const GroupSelectListContainer = styled.div<{ modalState: boolean }>`
 
   display: flex;
   flex-flow: row wrap;
+  ${(props) =>
+    props.modalState
+      ? ''
+      : css`
+          animation: ${listAnimation} 0.5s;
+        `};
 `;
 
 const GroupSelectList = () => {
