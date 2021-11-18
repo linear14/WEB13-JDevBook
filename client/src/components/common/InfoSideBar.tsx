@@ -2,7 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { solvedProblemState, userDataStates, rateState } from 'recoil/store';
+import {
+  solvedProblemState,
+  userDataStates,
+  rateState,
+  myJoinedGroupState
+} from 'recoil/store';
 import palette from 'theme/palette';
 
 import { ProfilePhoto } from 'components/common';
@@ -81,11 +86,12 @@ const InnerBarGraph = styled.span<{ prevRate: number; solvedRate: number }>`
 
 const InfoSideBar = () => {
   const userdata = useRecoilValue(userDataStates);
+  const joinedGroups = useRecoilValue(myJoinedGroupState);
   const solvedProblemCount = useRecoilValue(solvedProblemState).length;
   const [rate, setRate] = useRecoilState(rateState);
 
   const prevRateUpdate = (e: React.AnimationEvent) => {
-    setRate({ ...rate, prevRate: rate.solvedRate });
+    setRate((prev) => ({ ...prev, prevRate: rate.solvedRate }));
   };
 
   const getSolvedRate = useCallback(() => {
@@ -97,18 +103,18 @@ const InfoSideBar = () => {
   // 현재 그룹에 추가로 가입된 경우에는 값이 변경되지 않음 (그룹 관리 recoil 생기면 들어갈듯)
   useEffect(() => {
     const solvedRate = getSolvedRate();
-    setRate({ ...rate, solvedRate });
+    setRate((prev) => ({ ...prev, solvedRate }));
   }, [solvedProblemCount, rate.problemCount]);
 
   useEffect(() => {
     const initProblemCount = async () => {
       const problems = await fetchApi.getProblems();
       if (problems.length !== rate.problemCount) {
-        setRate({ ...rate, problemCount: problems.length });
+        setRate((prev) => ({ ...prev, problemCount: problems.length }));
       }
     };
     initProblemCount();
-  }, []);
+  }, [joinedGroups]);
 
   return (
     <InfoSideBarContainer className="no-drag">
@@ -117,16 +123,18 @@ const InfoSideBar = () => {
         <p>{userdata.name}</p>
       </ProfileWrap>
       <SolvedTitle>문제 정답률</SolvedTitle>
-      {/* <NoGroup /> */}
-      <SolvedBarGraph>
-        <InnerBarGraph
-          prevRate={rate.prevRate}
-          solvedRate={rate.solvedRate}
-          onAnimationEnd={prevRateUpdate}
-        >
-          {rate.problemCount !== 0 && `${rate.solvedRate}%`}
-        </InnerBarGraph>
-      </SolvedBarGraph>
+      {joinedGroups && joinedGroups.length === 0 && <NoGroup />}
+      {joinedGroups && joinedGroups.length > 0 && (
+        <SolvedBarGraph>
+          <InnerBarGraph
+            prevRate={rate.prevRate}
+            solvedRate={rate.solvedRate}
+            onAnimationEnd={prevRateUpdate}
+          >
+            {rate.problemCount !== 0 && `${rate.solvedRate}%`}
+          </InnerBarGraph>
+        </SolvedBarGraph>
+      )}
     </InfoSideBarContainer>
   );
 };
