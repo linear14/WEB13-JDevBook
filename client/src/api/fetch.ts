@@ -120,7 +120,7 @@ const fetchApi = {
   getProblems: async (groupIdx?: number) => {
     const response = groupIdx
       ? await fetch(`/api/problems/${groupIdx}`)
-      : await fetch(`api/problems`);
+      : await fetch(`/api/problems`);
     const problems = await response.json();
     return problems;
   },

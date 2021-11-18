@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { solvedProblemState, userDataStates, rateState } from 'recoil/store';
+import {
+  solvedProblemState,
+  userDataStates,
+  rateState,
+  myJoinedGroupState
+} from 'recoil/store';
 import palette from 'theme/palette';
 
 import { ProfilePhoto } from 'components/common';
@@ -35,6 +40,15 @@ const ProfileWrap = styled(Link)`
 const SolvedTitle = styled.div`
   font-weight: bold;
   margin: 10px 50px;
+`;
+
+const NoGroup = styled.div`
+  margin: 0 50px;
+  color: ${palette.darkgray};
+
+  &:after {
+    content: '가입된 그룹이 없습니다';
+  }
 `;
 
 const SolvedBarGraph = styled.div`
@@ -72,36 +86,34 @@ const InnerBarGraph = styled.span<{ prevRate: number; solvedRate: number }>`
 
 const InfoSideBar = () => {
   const userdata = useRecoilValue(userDataStates);
+  const joinedGroups = useRecoilValue(myJoinedGroupState);
+  const solvedProblemCount = useRecoilValue(solvedProblemState).length;
   const [rate, setRate] = useRecoilState(rateState);
 
   const prevRateUpdate = (e: React.AnimationEvent) => {
-    setRate({ ...rate, prevRate: rate.solvedRate });
+    setRate((prev) => ({ ...prev, prevRate: rate.solvedRate }));
   };
 
-  useEffect(() => {
-    const solvedRate = Number(((123 / 155) * 100).toFixed(1));
-    setRate({ ...rate, solvedRate: solvedRate });
-  }, []);
-  const solvedProblemCount = useRecoilValue(solvedProblemState).length;
-  const [totalProblemCount, setTotalProblemCount] = useState<number>(0);
-  const [solvedRate, setSolvedRate] = useState<number>(0);
+  const getSolvedRate = useCallback(() => {
+    return rate.problemCount === 0
+      ? 0
+      : Number(((solvedProblemCount / rate.problemCount) * 100).toFixed(1));
+  }, [solvedProblemCount, rate.problemCount]);
 
-  // 현재 그룹에 추가로 가입된 경우에는 값이 변경되지 않음 (그룹 관리 recoil 생기면 들어갈듯)
   useEffect(() => {
-    setSolvedRate(
-      totalProblemCount === 0
-        ? 0
-        : Number(((solvedProblemCount / totalProblemCount) * 100).toFixed(1))
-    );
-  }, [solvedProblemCount, totalProblemCount]);
+    const solvedRate = getSolvedRate();
+    setRate((prev) => ({ ...prev, solvedRate }));
+  }, [solvedProblemCount, rate.problemCount]);
 
   useEffect(() => {
     const initProblemCount = async () => {
       const problems = await fetchApi.getProblems();
-      setTotalProblemCount(problems.length);
+      if (problems.length !== rate.problemCount) {
+        setRate((prev) => ({ ...prev, problemCount: problems.length }));
+      }
     };
     initProblemCount();
-  }, []);
+  }, [joinedGroups]);
 
   return (
     <InfoSideBarContainer className="no-drag">
@@ -110,15 +122,18 @@ const InfoSideBar = () => {
         <p>{userdata.name}</p>
       </ProfileWrap>
       <SolvedTitle>문제 정답률</SolvedTitle>
-      <SolvedBarGraph>
-        <InnerBarGraph
-          prevRate={rate.prevRate}
-          solvedRate={rate.solvedRate}
-          onAnimationEnd={prevRateUpdate}
-        >
-          {totalProblemCount !== 0 && `${solvedRate}%`}
-        </InnerBarGraph>
-      </SolvedBarGraph>
+      {joinedGroups && joinedGroups.length === 0 && <NoGroup />}
+      {joinedGroups && joinedGroups.length > 0 && (
+        <SolvedBarGraph>
+          <InnerBarGraph
+            prevRate={rate.prevRate}
+            solvedRate={rate.solvedRate}
+            onAnimationEnd={prevRateUpdate}
+          >
+            {rate.problemCount !== 0 && `${rate.solvedRate}%`}
+          </InnerBarGraph>
+        </SolvedBarGraph>
+      )}
     </InfoSideBarContainer>
   );
 };

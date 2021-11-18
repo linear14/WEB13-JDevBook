@@ -2,7 +2,7 @@ import dbManager from '../service/dbManager'; // 왜 절대경로 안되지
 import { Socket, Server } from 'socket.io';
 import { IUserSocket } from '../types/interface';
 
-const UserObj:IUserSocket = {};
+const UserObj: IUserSocket = {};
 
 
 const socketIO = (server: any) => {
@@ -49,6 +49,12 @@ const socketIO = (server: any) => {
         });
       }
     });
+
+
+    socket.on('post_added', () => {
+      socket.broadcast.emit('post_added');
+    });
+
 
     // 그룹 유저들 가져오는 부분
     // socket.on('asd', (dd) => {

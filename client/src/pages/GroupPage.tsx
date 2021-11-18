@@ -74,7 +74,7 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
         <img src={os} alt="그룹 이미지" />
         <GroupNavBar />
         <About />
-        <ProblemList />
+        <ProblemList groupIdx={Number(match.params.groupidx)} />
       </ContentsContainer>
       <SideBar isLeft={false}>
         <ChatSideBar />

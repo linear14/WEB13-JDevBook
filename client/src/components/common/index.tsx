@@ -12,6 +12,7 @@ import InitUserData from 'components/common/InitUserData';
 import InitSocket from 'components/common/InitSocket';
 import AlertModal from 'components/common/AlertModal';
 import Skeleton from 'components/common/Skeleton';
+import NewPostAlert from 'components/common/NewPostAlert';
 
 export {
   AlarmSideBar,
@@ -28,5 +29,6 @@ export {
   InitUserData,
   InitSocket,
   AlertModal,
-  Skeleton
+  Skeleton,
+  NewPostAlert
 };

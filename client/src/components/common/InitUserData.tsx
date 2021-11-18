@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import fetchApi from 'api/fetch';
 
@@ -7,16 +7,18 @@ import {
   userDataStates,
   usersocketStates,
   postModalDataStates,
-  solvedProblemState
+  solvedProblemState,
+  myJoinedGroupState
 } from 'recoil/store';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { IProblem } from 'types/problem';
+import { IGroup } from 'types/group';
 
 const InitUserData = (/*{ history }: RouteComponentProps*/) => {
   const [userdata, setUserdata] = useRecoilState(userDataStates);
   const [postData, setPostData] = useRecoilState(postModalDataStates);
-  const [solvedProblems, setSolvedProblems] =
-    useRecoilState(solvedProblemState);
+  const setSolvedProblems = useSetRecoilState(solvedProblemState);
+  const setJoinedGroups = useSetRecoilState(myJoinedGroupState);
   //const socket = useRecoilValue(usersocketStates);
   const history = useHistory();
 
@@ -43,6 +45,10 @@ const InitUserData = (/*{ history }: RouteComponentProps*/) => {
         setSolvedProblems(
           data.BTMUserProblemuseridx.map((item: IProblem) => item.idx)
         );
+        setJoinedGroups(
+          data.BTMUserGroupuseridx.map((item: IGroup) => item.idx)
+        );
+
         //socket?.emit('name', data.nickname);
       }
     })();

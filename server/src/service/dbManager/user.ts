@@ -2,7 +2,7 @@ import db from '../../models';
 
 const getUserData = async (username: string) => {
   const [user, created] = await db.models.User.findOrCreate({
-    include: db.models.Problem,
+    include: [db.models.Problem, db.models.Group],
     where: { nickname: username },
     defaults: { nickname: username },
     logging: false
