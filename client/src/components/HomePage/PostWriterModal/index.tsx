@@ -123,7 +123,10 @@ const PostWriterModal = () => {
 
   const postDataToAPI = async () => {
     if (isImgUploading > 0)
-      return alertMessage('이미지 업로드 중입니다. 잠시 후에 게시하세요');
+      return alertMessage(
+        '이미지 업로드 중입니다. 잠시 후에 게시하세요',
+        palette.alert
+      );
 
     if (postData.contents === '') {
       return alertMessage(

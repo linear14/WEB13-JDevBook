@@ -160,7 +160,7 @@ const ImgPreview = styled.div`
 
     &:hover {
       cursor: pointer;
-      filter: brightness(90%);
+      filter: brightness(80%);
       transition: all 0.1s;
     }
     &:active {
@@ -196,7 +196,6 @@ const ImgUploadModal = () => {
   const [postData, setPostData] = useRecoilState(postModalDataStates);
   const [isImgUploading, setIsImgUploading] =
     useRecoilState(isImgUploadingState);
-  const [isImgMax, setIsImgMax] = useRecoilState(isImgMaxState);
   const [imageViewerState, setImageViewerState] = useRecoilState(ivState);
   const [imgList, setImgList] = useRecoilState(uploadImgList);
   const alertMessage = useAlertModal();
@@ -207,6 +206,8 @@ const ImgUploadModal = () => {
   const uploadButtonRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const workModalRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
+  let dropfile: FileList[] = [];
+
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     setModalState({
@@ -216,22 +217,27 @@ const ImgUploadModal = () => {
   };
 
   const imgUpload = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isImgMax) {
-      alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
-      // } else if (isImgUploading) {
-      //   alert('이미지 업로드 중입니다.');
-    } else {
-      inputfile.current.click();
-    }
+    if (imgList.length >= 3)
+      return alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
+
+    inputfile.current.click();
   };
 
-  const getFile = async (filelist: FileList | null) => {
-    if (!filelist) return setIsImgUploading(isImgUploading - 1);
-    // 업로드 직후 다시 클릭하고 취소하면 getFile 실행되는데 파일은 없음
-    if (filelist.length === 0) return setIsImgUploading(isImgUploading - 1);
+  const getFile = async (filelist: FileList | null, uploadNum: number) => {
+    if (imgList.length >= 3) {
+      // drop 체크
+      setIsImgUploading(uploadNum - 1);
+      return alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
+    }
+
+    if (!filelist || filelist.length === 0) {
+      setIsImgUploading(uploadNum - 1);
+      return alertMessage('파일을 가져오지 못했습니다.', palette.alert);
+    }
+
     if (filelist[0].type.match(/image\/*/) === null) {
-      alertMessage('이미지 파일이 아닙니다.', palette.alert);
-      return setIsImgUploading(isImgUploading - 1);
+      setIsImgUploading(uploadNum - 1);
+      return alertMessage('이미지 파일이 아닙니다.', palette.alert);
     }
 
     const imglist: FileList = filelist; //inputfile.current.files;
@@ -239,7 +245,7 @@ const ImgUploadModal = () => {
 
     if (!s3fileRes.save) {
       alertMessage('이미지 업로드 실패');
-      return setIsImgUploading(isImgUploading - 1);
+      return setIsImgUploading(uploadNum - 1);
     }
 
     setImgList([...imgList, s3fileRes.file.location]);
@@ -261,7 +267,6 @@ const ImgUploadModal = () => {
     e.stopPropagation();
     const tmp = imgList.map((v) => v);
     tmp.splice(idx, 1);
-    if (idx === 2) setIsImgMax(false);
     setImgList(tmp);
   };
 
@@ -281,15 +286,8 @@ const ImgUploadModal = () => {
   };
 
   useEffect(() => {
-    if (isImgUploading > 0) getFile(inputfile.current.files);
-  }, [isImgUploading]);
-
-  useEffect(() => {
     if (isImgUploading > 0) {
       setIsImgUploading(isImgUploading - 1);
-    }
-    if (imgList.length >= 3) {
-      setIsImgMax(true);
     }
     if (imgList.length > 0) {
       imgPreviewModal.current.style.display = 'flex';
@@ -323,24 +321,22 @@ const ImgUploadModal = () => {
         onClick={imgUpload}
         onDragEnter={(e) => {
           e.preventDefault();
-          // e.stopPropagation();
-          imgUploadWrapRef.current.style.filter = 'brightness(95%)';
+          imgUploadWrapRef.current.style.backgroundColor = palette.darkgray;
         }}
         onDragOver={(e) => {
           e.preventDefault();
-          // e.stopPropagation();
-          imgUploadWrapRef.current.style.filter = 'brightness(95%)';
+          imgUploadWrapRef.current.style.backgroundColor = palette.darkgray;
         }}
         onDragLeave={(e) => {
           e.preventDefault();
-          imgUploadWrapRef.current.style.filter = 'none';
+          imgUploadWrapRef.current.style.backgroundColor = palette.lightgray;
         }}
-        onDrop={async (e) => {
+        onDrop={(e) => {
           e.preventDefault();
-          //e.stopPropagation();
-          setIsImgUploading(isImgUploading + 1);
-          await getFile(e.dataTransfer.files);
-          imgUploadWrapRef.current.style.filter = 'none';
+          const uploadNum = isImgUploading;
+          setIsImgUploading(uploadNum + 1);
+          getFile(e.dataTransfer.files, uploadNum + 1);
+          imgUploadWrapRef.current.style.backgroundColor = palette.lightgray;
         }}
       >
         <CloseBtn right={0} onClick={imgUploadModalOff}>
@@ -356,7 +352,11 @@ const ImgUploadModal = () => {
             type="file"
             accept="image/*"
             ref={inputfile}
-            onChange={() => setIsImgUploading(isImgUploading + 1)}
+            onChange={() => {
+              const uploadNum = isImgUploading;
+              setIsImgUploading(uploadNum + 1);
+              getFile(inputfile.current.files, uploadNum + 1);
+            }}
             style={{ display: 'none' }}
           />
         </WhatWorkModal>
