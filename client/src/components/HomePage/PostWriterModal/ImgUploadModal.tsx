@@ -74,10 +74,10 @@ const ImgUploadWrap = styled.div`
   }
 `;
 
-const CloseBtn = styled.div<{ right: number }>`
+const CloseBtn = styled.div`
   position: absolute;
   top: 0;
-  right: ${({ right }) => `${right}px`};
+  right: 0;
   width: 36px;
   height: 36px;
   box-sizing: border-box;
@@ -339,7 +339,7 @@ const ImgUploadModal = () => {
           imgUploadWrapRef.current.style.backgroundColor = palette.lightgray;
         }}
       >
-        <CloseBtn right={0} onClick={imgUploadModalOff}>
+        <CloseBtn onClick={imgUploadModalOff}>
           <IoClose size="28px" />
         </CloseBtn>
         <WhatWorkModal ref={workModalRef}>
