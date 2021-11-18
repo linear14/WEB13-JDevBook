@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { userDataStates, myJoinedGroupState } from 'recoil/store';
 import palette from 'theme/palette';
 import style from 'theme/style';
 import { os } from 'images/groupimg';
 import { IGroup } from 'types/group';
+import fetchApi from 'api/fetch';
+import useAlertModal from 'hooks/useAlertModal';
 
 const GroupCardWrap = styled.div`
   width: 244px;
@@ -74,8 +78,52 @@ const GroupJoinBtn = styled.div`
   }
 `;
 
+const GroupEnterBtn = styled(Link)`
+  width: 100%;
+  height: 30px;
+
+  border-radius: 8px;
+  background-color: ${palette.green};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${palette.white};
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(95%);
+  }
+
+  &:active {
+    font-size: 15px;
+    filter: brightness(90%);
+  }
+`;
+
 const GroupCard = ({ group }: { group: IGroup }) => {
+  const userData = useRecoilValue(userDataStates);
+  const [myJoinedGroup, setMyJoinedGroup] = useRecoilState(myJoinedGroupState);
+  const [joinedState, setJoinedState] = useState<boolean>(false);
+  const alertMessage = useAlertModal();
+
   const groupUrl = `/group/${group.idx}`;
+
+  const joinGroup = async (e: React.MouseEvent) => {
+    const result = await fetchApi.joinGroup(userData.idx, group.idx);
+    if (result) {
+      alertMessage(`${group.title} 그룹에 가입되었습니다.`);
+      setJoinedState(true);
+    } else {
+      alertMessage(`${group.title} 그룹을 탈퇴했습니다.`, palette.alert);
+      setJoinedState(false);
+    }
+  };
+
+  useEffect(() => {
+    if (myJoinedGroup?.includes(group.idx)) setJoinedState(true);
+  }, [myJoinedGroup]);
 
   return (
     <GroupCardWrap>
@@ -84,7 +132,15 @@ const GroupCard = ({ group }: { group: IGroup }) => {
       </GroupImg>
       <GroupSelectorWrap>
         <GroupName>{group.title}</GroupName>
-        <GroupJoinBtn className="no-drag">그룹 추가</GroupJoinBtn>
+        {joinedState ? (
+          <GroupEnterBtn to={groupUrl} className="no-drag">
+            그룹 입장
+          </GroupEnterBtn>
+        ) : (
+          <GroupJoinBtn onClick={joinGroup} className="no-drag">
+            그룹 추가
+          </GroupJoinBtn>
+        )}
       </GroupSelectorWrap>
     </GroupCardWrap>
   );

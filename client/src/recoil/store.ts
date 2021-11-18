@@ -146,6 +146,11 @@ export const rateState = atom<SolvedRates>({
   }
 });
 
+export const myJoinedGroupState = atom<number[] | null>({
+  key: 'myJoinedGroup',
+  default: null
+});
+
 export const groupListState = atom<IGroup[]>({
   key: 'groupListState',
   default: []
