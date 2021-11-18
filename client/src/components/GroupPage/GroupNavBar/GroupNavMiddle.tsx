@@ -50,9 +50,13 @@ const GroupNavMiddle = () => {
     const result = await fetchApi.joinGroup(userData.idx, groupData.idx);
     if (result) {
       alertMessage(`${groupData.title} 그룹에 가입되었습니다.`);
+      setMyJoinedGroup([...myJoinedGroup, groupData.idx]);
       setJoinedState(true);
     } else {
       alertMessage(`${groupData.title} 그룹을 탈퇴했습니다.`, palette.alert);
+      setMyJoinedGroup(
+        myJoinedGroup.filter((groupidx) => groupidx !== groupData.idx)
+      );
       setJoinedState(false);
     }
   };

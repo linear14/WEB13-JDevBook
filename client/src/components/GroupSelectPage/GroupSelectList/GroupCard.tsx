@@ -114,6 +114,7 @@ const GroupCard = ({ group }: { group: IGroup }) => {
     const result = await fetchApi.joinGroup(userData.idx, group.idx);
     if (result) {
       alertMessage(`${group.title} 그룹에 가입되었습니다.`);
+      setMyJoinedGroup([...myJoinedGroup, group.idx]);
       setJoinedState(true);
     }
   };
