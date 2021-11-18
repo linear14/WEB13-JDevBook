@@ -62,6 +62,16 @@ const ImgUploadWrap = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: ${palette.gray};
   }
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(95%);
+    transition: all 0.1s;
+  }
+
+  &:active {
+    filter: brightness(90%);
+  }
 `;
 
 const CloseBtn = styled.div<{ right: number }>`
@@ -106,16 +116,6 @@ const WhatWorkModal = styled.div`
   justify-content: center;
   align-items: center;
 
-  &:hover {
-    cursor: pointer;
-    filter: brightness(95%);
-    transition: all 0.1s;
-  }
-
-  &:active {
-    filter: brightness(90%);
-  }
-
   div.icon {
     width: 40px;
     height: 40px;
@@ -150,18 +150,18 @@ const ImgPreview = styled.div`
   div.imgset {
     display: flex;
     flex-direction: row;
-    /* justify-content: center;
-    align-items: center; */
   }
 
   img {
     width: 120px;
     height: 100%;
     max-height: 180px;
-    border: 10px solid ${palette.lightgray};
+    padding: 10px;
 
     &:hover {
       cursor: pointer;
+      filter: brightness(90%);
+      transition: all 0.1s;
     }
     &:active {
       cursor: pointer;
@@ -208,6 +208,7 @@ const ImgUploadModal = () => {
   const workModalRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     setModalState({
       ...modalState,
       post: { ...modalState.post, inPhoto: false }
@@ -246,8 +247,9 @@ const ImgUploadModal = () => {
   };
 
   const imgPreviewBigger = (e: BaseSyntheticEvent) => {
-    // 연속되게는 안함
+    e.stopPropagation(); // 업로드 창 막기
     setImageViewerState({
+      // 연속되게는 안함
       ...imageViewerState,
       imageCount: 1,
       currentIdx: 0,
@@ -256,7 +258,8 @@ const ImgUploadModal = () => {
     });
   };
 
-  const deleteOneImg = (idx: number) => {
+  const deleteOneImg = (e: any, idx: number) => {
+    e.stopPropagation();
     const tmp = imgList.map((v) => v);
     tmp.splice(idx, 1);
     if (idx === 2) setIsImgMax(false);
@@ -266,10 +269,14 @@ const ImgUploadModal = () => {
   const imgsetRendering = (): JSX.Element[] => {
     return [0, 1, 2].map((v) => (
       <div key={v} className="imgset">
-        <CloseOneImg imgsrc={imgList[v]} onClick={deleteOneImg.bind(null, v)}>
+        <CloseOneImg imgsrc={imgList[v]} onClick={(e) => deleteOneImg(e, v)}>
           <IoClose size="20px" />
         </CloseOneImg>
-        <img src={imgList[v] ?? ''} onClick={imgPreviewBigger} />
+        <img
+          className="no-drag"
+          src={imgList[v] ?? ''}
+          onClick={imgPreviewBigger}
+        />
       </div>
     ));
   };
@@ -282,16 +289,16 @@ const ImgUploadModal = () => {
     if (isImgUploading > 0) {
       setIsImgUploading(isImgUploading - 1);
     }
-    if (imgList.length === 3) {
+    if (imgList.length >= 3) {
       setIsImgMax(true);
     }
     if (imgList.length > 0) {
       imgPreviewModal.current.style.display = 'flex';
-      uploadButtonRef.current.style.display = 'flex';
+      //uploadButtonRef.current.style.display = 'flex';
       workModalRef.current.style.display = 'none';
     } else {
       imgPreviewModal.current.style.display = 'none';
-      uploadButtonRef.current.style.display = 'none';
+      //uploadButtonRef.current.style.display = 'none';
       workModalRef.current.style.display = 'flex';
     }
   }, [imgList]);
@@ -314,14 +321,27 @@ const ImgUploadModal = () => {
 
   return (
     <ImgUploadContainer modalState={modalState.post.inPhoto}>
-      <ImgUploadWrap>
+      <ImgUploadWrap
+        ref={imgUploadWrapRef}
+        onClick={imgUpload}
+        onDragEnter={(e) => {
+          // e.stopPropagation();
+          // e.preventDefault();
+          imgUploadWrapRef.current.style.backgroundColor = palette.darkgray;
+        }}
+        onDragLeave={(e) => {
+          // e.stopPropagation();
+          // e.preventDefault();
+          imgUploadWrapRef.current.style.backgroundColor = palette.lightgray;
+        }}
+      >
         <CloseBtn right={0} onClick={imgUploadModalOff}>
           <IoClose size="28px" />
         </CloseBtn>
-        <CloseBtn ref={uploadButtonRef} right={40} onClick={imgUpload}>
+        {/* <CloseBtn ref={uploadButtonRef} right={40} onClick={imgUpload}>
           <FiUpload size="20px" />
-        </CloseBtn>
-        <WhatWorkModal ref={workModalRef} onClick={imgUpload}>
+        </CloseBtn> */}
+        <WhatWorkModal ref={workModalRef}>
           <div className="icon">
             <FiUpload size="20px" />
           </div>
