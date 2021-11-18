@@ -5,23 +5,27 @@ import { createGlobalStyle } from 'styled-components';
 
 import palette from 'theme/palette';
 
+import { AlertModal } from 'components/common';
+
 const GlobalStyle = createGlobalStyle`
   * {
-    margin: 0;
     font-weight: bold;
+    font-family: 'Noto Sans KR';
     ::placeholder,
     ::-webkit-input-placeholder {
       font-weight: bold;
       font-family: 'Noto Sans KR';
+      color: ${palette.darkgray};
     }
     :-ms-input-placeholder {
       font-weight: bold;
       font-family: 'Noto Sans KR';
+      color: ${palette.darkgray};
     }
   }
 
   body {
-    background-color: ${palette.lightgray};
+    margin: 0;
   }
 `;
 
@@ -29,6 +33,7 @@ function App() {
   return (
     <RecoilRoot>
       <GlobalStyle />
+      <AlertModal />
       <Router />
     </RecoilRoot>
   );

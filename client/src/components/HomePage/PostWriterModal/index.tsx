@@ -8,7 +8,7 @@ import {
   modalStateStore,
   postListStore,
   postModalDataStates,
-  AlertState,
+  alertState,
   uploadImgList
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
@@ -20,7 +20,7 @@ import ModalContents from 'components/HomePage/PostWriterModal/ModalContents';
 import AddContentsBar from 'components/HomePage/PostWriterModal/AddContentsBar';
 import ImgUploadModal from './ImgUploadModal';
 import useClosePostModal from 'hooks/useClosePostModal';
-import { setTimeout } from 'timers';
+import useAlertModal from 'hooks/useAlertModal';
 
 const PostWriterModalOverlay = styled.div<{ modalState: boolean }>`
   position: fixed;
@@ -58,11 +58,6 @@ const PostWriterModalInner = styled.div<{ modalState: boolean }>`
   display: ${(props) => (props.modalState ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
-
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 `;
 
 const Line = styled.div`
@@ -102,9 +97,10 @@ const PostWriterModal = () => {
   const postData = useRecoilValue(postModalDataStates);
   const isImgUploading = useRecoilValue(isImgUploadingState);
   const [postList, setPostList] = useRecoilState(postListStore);
-  const [alertModal, setAlertModal] = useRecoilState(AlertState);
+  const [alertModal, setAlertModal] = useRecoilState(alertState);
   const imgList = useRecoilValue(uploadImgList);
   const closePostModal = useClosePostModal();
+  const alertMessage = useAlertModal();
 
   /**
    * 등록 모달인지 수정 모달인지 알려주는 함수
@@ -112,27 +108,16 @@ const PostWriterModal = () => {
    */
   const isEnrollMode = () => modalState.post.isEnroll;
   const alertSuccess = () => {
-    setAlertModal({
-      ...alertModal,
-      comment: `게시글이 성공적으로 ${
-        isEnrollMode() ? '게시' : '수정'
-      }되었습니다!`,
-      modalState: true
-    });
-    setTimeout(() => {
-      setAlertModal({
-        ...alertModal,
-        modalState: false
-      });
-    }, 2500);
-
-    // alert(`게시글이 성공적으로 ${isEnrollMode() ? '게시' : '수정'}되었습니다!`);
+    alertMessage(
+      `게시글이 성공적으로 ${isEnrollMode() ? '게시' : '수정'}되었습니다!`
+    );
   };
   const alertFail = () => {
-    alert(
+    alertMessage(
       `게시글이 알수없는 이유로 ${
         isEnrollMode() ? '게시' : '수정'
-      }되지 않았습니다.`
+      }되지 않았습니다.`,
+      `${palette.alert}`
     );
   };
 
@@ -141,7 +126,17 @@ const PostWriterModal = () => {
       return alert('이미지 업로드 중입니다. 잠시 후에 게시하세요');
 
     if (postData.contents === '') {
-      return alert('내용이 없습니다. 내용을 입력하세요.');
+      return alertMessage(
+        '내용이 없습니다. 내용을 입력하세요.',
+        `${palette.alert}`
+      );
+    }
+
+    if (isImgUploading) {
+      return alertMessage(
+        '이미지 업로드 중입니다. 잠시 후에 게시하세요',
+        `${palette.alert}`
+      );
     }
 
     const { useridx, contents, secret, likenum } = { ...postData };
@@ -183,7 +178,10 @@ const PostWriterModal = () => {
   return (
     <>
       <PostWriterModalOverlay modalState={modalState.post.writer} />
-      <PostWriterModalInner modalState={modalState.post.writer}>
+      <PostWriterModalInner
+        modalState={modalState.post.writer}
+        className="no-drag"
+      >
         <ModalTitle />
         <Line />
         <PostInfo />

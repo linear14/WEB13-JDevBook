@@ -3,7 +3,9 @@ import { atom } from 'recoil';
 import { Socket } from 'socket.io-client';
 
 import { Alert } from 'types/common';
+import { IGroup } from 'types/group';
 import { PostData } from 'types/post';
+import { SolvedRates } from 'types/user';
 
 export const modalStateStore = atom({
   key: 'modalState',
@@ -113,8 +115,8 @@ export const GroupNavState = atom({
   }
 });
 
-export const AlertState = atom<Alert>({
-  key: 'AlertState',
+export const alertState = atom<Alert>({
+  key: 'alertState',
   default: {
     bgColor: undefined,
     comment: '',
@@ -134,6 +136,29 @@ export const isImgUploadingState = atom({
 export const isImgMaxState = atom({
   key: 'isImgMax',
   default: false
+});
+
+export const rateState = atom<SolvedRates>({
+  key: 'rateState',
+  default: {
+    prevRate: 0,
+    solvedRate: 0
+  }
+});
+
+export const groupListState = atom<IGroup[]>({
+  key: 'groupListState',
+  default: []
+});
+
+export const groupState = atom<IGroup>({
+  key: 'groupState',
+  default: {
+    idx: 0,
+    title: '',
+    description: '',
+    cover: ''
+  }
 });
 
 export const uploadImgList = atom({

@@ -1,17 +1,20 @@
 import userEvent from '@testing-library/user-event';
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
+
 import { userDataStates, isLoginfailStates } from 'recoil/store';
+
 import {
   GroupPage,
   HomePage,
   LoginPage,
   ProfilePage,
-  IsLoginPage
-} from './pages';
+  IsLoginPage,
+  GroupSelectPage
+} from 'pages';
 
-const Router: React.FC = () => {
+const Router = () => {
   const [login, setLogin] = useState(false);
   const [loginfail, setLoginfail] = useRecoilState(isLoginfailStates);
   const userdata = useRecoilValue(userDataStates);
@@ -37,10 +40,13 @@ const Router: React.FC = () => {
           render={() => (login ? <HomePage /> : <IsLoginPage />)}
         />
         <Route
-          path="/group"
+          path="/groupselect"
           exact
-          render={() => (login ? <GroupPage /> : <IsLoginPage />)}
+          render={() => (login ? <GroupSelectPage /> : <IsLoginPage />)}
         />
+        <Route path="/group/:groupidx" exact component={GroupPage} />
+        /* 위처럼 하면 ProfilePage에 match? 때문에 오류나는듯? */ /*
+        ProfilePage에서 타입 바꿨는데 작동이 이상함 */
         <Route
           path="/profile/:userId"
           exact

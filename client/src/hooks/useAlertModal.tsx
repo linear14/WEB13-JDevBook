@@ -1,14 +1,12 @@
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
-import { AlertState } from 'recoil/store';
+import { alertState } from 'recoil/store';
 
 const useAlertModal = () => {
-  const resetModal = useResetRecoilState(AlertState);
-  const [alertState, setAlertState] = useRecoilState(AlertState);
+  const [alertModal, setAlertModal] = useRecoilState(alertState);
 
   return (comment: string, bgColor?: string) => {
-    setAlertState({ comment: comment, bgColor: bgColor, modalState: true });
-    resetModal();
+    setAlertModal({ comment: comment, bgColor: bgColor, modalState: true });
   };
 };
 

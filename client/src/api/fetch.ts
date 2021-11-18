@@ -1,6 +1,5 @@
 import { CommentData } from 'types/comment';
 import { PostData, PostAddData, PostUpdateData } from 'types/post';
-// import objectStorage from './objectStorage';
 
 const fetchApi = {
   getLoginlink: async (): Promise<string> => {
@@ -13,9 +12,7 @@ const fetchApi = {
     return await userDataRes.json();
   },
   logout: async () => {
-    const logoutRes: Response = await fetch('/oauth/logout');
-    const { message } = await logoutRes.json();
-    alert(message);
+    await fetch('/oauth/logout');
   },
   searchUsers: async (keyword: string) => {
     const usersRes: Response = await fetch(`/api/users?keyword=${keyword}`);
@@ -136,6 +133,16 @@ const fetchApi = {
       },
       body: JSON.stringify({ problemIdx })
     });
+    return await response.json();
+  },
+
+  getGroupList: async () => {
+    const response = await fetch('/api/groups');
+    return await response.json();
+  },
+
+  getGroup: async (groupIdx: number) => {
+    const response = await fetch(`/api/groups/${groupIdx}`);
     return await response.json();
   }
 };

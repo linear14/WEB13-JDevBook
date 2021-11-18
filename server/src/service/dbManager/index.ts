@@ -1,12 +1,20 @@
-
 import db from '../../models';
 
 import { toggleLikePosts, updateLikeNum } from './like';
 import { getPosts, addPost, updatePost, deletePost } from './post';
 import { getComments, addComment } from './comment';
-import { getUserData, getAllUsers, getUseridx, getUserName, setUserLoginState, getUserLoginState, getUserJoinedGroups } from './user';
+import {
+  getUserData,
+  getAllUsers,
+  getUseridx,
+  getUserName,
+  setUserLoginState,
+  getUserLoginState,
+  getUserJoinedGroups
+} from './user';
 import { searchUsers } from './search';
 import { getProblems, insertSolvedProblem } from './problem';
+import { getGroupList, getGroup } from './group';
 import { CommentData } from '../../types/interface';
 import { setChatList, getChatList } from './chat';
 
@@ -21,7 +29,7 @@ const dbManager = {
         console.error('Unable to connect to the database:', error);
       });
   },
-  
+
   getUserData,
   getAllUsers,
   getUserName,
@@ -31,23 +39,26 @@ const dbManager = {
   getUserLoginState,
 
   searchUsers,
-  
+
   getPosts,
   addPost,
   updatePost,
-  deletePost,  
+  deletePost,
 
   setChatList,
   getChatList,
-  
+
   toggleLikePosts,
   updateLikeNum,
-  
+
   addComment,
   getComments,
 
   getProblems,
   insertSolvedProblem,
+
+  getGroupList,
+  getGroup,
   getUserJoinedGroups
 };
 

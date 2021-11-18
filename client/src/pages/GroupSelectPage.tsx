@@ -1,8 +1,6 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
 
-import { os } from 'images/groupimg';
 import palette from 'theme/palette';
 
 import {
@@ -14,12 +12,7 @@ import {
   InitUserData,
   InitSocket
 } from 'components/common';
-import {
-  ProblemList,
-  GroupNavBar,
-  InitGroupData,
-  About
-} from 'components/GroupPage';
+import { GroupSelectTitle, GroupSelectList } from 'components/GroupSelectPage';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -27,37 +20,28 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const GroupPageContainer = styled.div`
+const GroupSelectPageContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding-bottom: 56px;
 `;
 
 const ContentsContainer = styled.div`
   position: relative;
   top: 56px;
-  width: 908px;
+  width: 1220px;
   height: 1000px;
+  box-sizing: border-box;
+  padding: 30px 50px;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-
-  img {
-    width: 100%;
-    height: 320px;
-    object-fit: cover;
-  }
 `;
 
-const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
-  match
-}) => {
+const GroupSelectPage = () => {
   return (
-    <GroupPageContainer>
+    <GroupSelectPageContainer>
       <GlobalStyle />
       <InitUserData />
-      <InitGroupData groupIdx={Number(match.params.groupidx)} />
       <InitSocket />
       <Gnb type="group" />
       <SideBar isLeft={true}>
@@ -65,16 +49,14 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
         <GroupSideBar />
       </SideBar>
       <ContentsContainer>
-        <img src={os} alt="그룹 이미지" />
-        <GroupNavBar />
-        <About />
-        <ProblemList />
+        <GroupSelectTitle />
+        <GroupSelectList />
       </ContentsContainer>
       <SideBar isLeft={false}>
         <ChatSideBar />
       </SideBar>
-    </GroupPageContainer>
+    </GroupSelectPageContainer>
   );
 };
 
-export default GroupPage;
+export default GroupSelectPage;
