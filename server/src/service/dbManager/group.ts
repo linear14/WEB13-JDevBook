@@ -17,4 +17,17 @@ const getGroup = async (groupIdx: number) => {
   return group;
 };
 
-export { getGroupList, getGroup };
+const toggleUserGroup = async function (useridx: number, groupidx: number) {
+  const [userGroup, created] = await db.models.UserGroup.findOrCreate({
+    where: { useridx: useridx, groupidx: groupidx },
+    logging: false
+  });
+  if (!created)
+    await db.models.UserGroup.destroy({
+      where: { useridx: useridx, groupidx: groupidx },
+      logging: false
+    });
+  return created;
+};
+
+export { getGroupList, getGroup, toggleUserGroup };

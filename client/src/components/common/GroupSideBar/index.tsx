@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
+import { groupListState, myJoinedGroupState } from 'recoil/store';
 import palette from 'theme/palette';
-import { defaultCover } from 'images';
 import { iconSearch } from 'images/icons';
+import { IGroup } from 'types/group';
+
+import JoinedGroupCard from './JoinedGroupCard';
 
 const GroupSideBarContainer = styled.div`
   flex: 1;
@@ -44,56 +47,28 @@ const GroupList = styled.ul`
   flex-direction: column;
 `;
 
-const GroupItem = styled(Link)`
-  display: flex;
-  text-decoration: none;
-  color: ${palette.black};
-  padding: 5px;
-  margin: 0 0 20px 0;
-  font-weight: bold;
-
-  img {
-    width: 50px;
-    height: 50px;
-    margin: 0 20px 0 0;
-    border-radius: 10px;
-  }
-
-  &:hover {
-    border-radius: 10px;
-    background: ${palette.lightgray};
-    transition: all 0.2s;
-  }
-
-  &:active {
-    background: ${palette.gray};
-  }
-`;
-
-type tempGroupType = {
-  groupName: string;
-  imgSrc: string;
-};
-
-const tempGroup = [
-  {
-    groupName: '운영체제',
-    imgSrc: defaultCover
-  },
-  {
-    groupName: '자료구조',
-    imgSrc: defaultCover
-  }
-];
-
 const GroupSideBar = () => {
-  const [group, setGroup] = useState<tempGroupType[]>(tempGroup);
+  const groupList = useRecoilValue(groupListState);
+  const joinedGroupIdx = useRecoilValue(myJoinedGroupState);
+  const [joinedGroup, setJoinedGroup] = useState<IGroup[]>([]);
+  const [searchGroup, setSearchGroup] = useState<IGroup[]>([]);
 
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGroup(
-      tempGroup.filter((group) => group.groupName.includes(e.target.value))
+    setSearchGroup(
+      joinedGroup.filter((group) => group.title.includes(e.target.value))
     );
   };
+
+  useEffect(() => {
+    if (joinedGroupIdx !== null) {
+      setJoinedGroup(
+        groupList.filter((group) => joinedGroupIdx.includes(group.idx))
+      );
+      setSearchGroup(
+        groupList.filter((group) => joinedGroupIdx.includes(group.idx))
+      );
+    }
+  }, [joinedGroupIdx]);
 
   return (
     <GroupSideBarContainer className="no-drag">
@@ -102,11 +77,8 @@ const GroupSideBar = () => {
         <input type="text" placeholder="그룹 검색" onChange={searchHandler} />
       </SearchBarWrap>
       <GroupList>
-        {group.map((group, idx) => (
-          <GroupItem key={idx} to="/group">
-            <img src={group.imgSrc} alt="cover 아이콘" />
-            <p>{group.groupName}</p>
-          </GroupItem>
+        {searchGroup.map((searchGroup, idx) => (
+          <JoinedGroupCard key={idx} group={searchGroup} />
         ))}
       </GroupList>
     </GroupSideBarContainer>

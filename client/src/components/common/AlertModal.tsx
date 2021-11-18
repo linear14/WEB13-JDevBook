@@ -27,17 +27,16 @@ const onAnimation = keyframes`
 const AlertModalWrap = styled.div<{ bgColor?: string; modalState: boolean }>`
   position: fixed;
   top: -70px;
-  transform: translatex(-50%);
-
-  left: 50%; //720px;
+  left: 50%;
   width: 500px;
   height: 50px;
+  transform: translateX(-50%);
   z-index: 7;
 
   border-radius: 8px;
   background-color: ${(props) => props.bgColor ?? `${palette.blue}`};
   color: ${palette.white};
-  animation: ${onAnimation} 2.5s ease;
+  animation: ${onAnimation} 2s ease;
 
   display: ${(props) => (props.modalState ? `flex` : `none`)};
   justify-content: center;

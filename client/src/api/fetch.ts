@@ -144,6 +144,13 @@ const fetchApi = {
   getGroup: async (groupIdx: number) => {
     const response = await fetch(`/api/groups/${groupIdx}`);
     return await response.json();
+  },
+
+  joinGroup: async (userIdx: number, groupIdx: number) => {
+    const response = await fetch(`/api/joingroup/${userIdx}/${groupIdx}`, {
+      method: 'POST'
+    });
+    return await response.json();
   }
 };
 

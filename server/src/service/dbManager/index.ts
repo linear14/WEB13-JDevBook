@@ -15,8 +15,7 @@ import {
 } from './user';
 import { searchUsers } from './search';
 import { getProblems, insertSolvedProblem } from './problem';
-import { getGroupList, getGroup } from './group';
-import { CommentData } from '../../types/interface';
+import { getGroupList, getGroup, toggleUserGroup } from './group';
 import { setChatList, getChatList } from './chat';
 import { setGroupChatList, getGroupChatList } from './groupchat';
 import { getGroupUsers, getGroupUsersName } from './usergroup';
@@ -63,6 +62,7 @@ const dbManager = {
   getGroupList,
   getGroup,
   getUserJoinedGroups,
+  toggleUserGroup,
 
   getGroupUsers,
   getGroupUsersName,
