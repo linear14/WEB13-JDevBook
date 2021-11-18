@@ -1,4 +1,4 @@
-import { CommentData } from 'types/interface';
+import { CommentData } from '../../types/interface';
 import db from '../../models';
 import './index';
 
