@@ -43,7 +43,7 @@ const HeaderContent = styled.div`
 const Header = ({ nickname, profile, createdAt, secret }: PostHeaderProps) => {
   return (
     <HeaderContainer>
-      <ClickableProfileImage size={'40px'} />
+      <ClickableProfileImage userName={nickname} size={'40px'} />
       <HeaderContent>
         <p>{nickname}</p>
         <div>

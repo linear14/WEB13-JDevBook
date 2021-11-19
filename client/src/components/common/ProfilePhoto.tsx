@@ -10,10 +10,12 @@ const StyledProfilePhoto = styled.img<ProfilePhotoProps>`
   border-radius: 50%;
 `;
 
-const ProfilePhoto = ({ src, size }: ProfilePhotoProps) => {
+const ProfilePhoto = ({ userName, size }: ProfilePhotoProps) => {
+  const profileImgURL = `https://github.com/${userName}.png`;
+
   return (
     <StyledProfilePhoto
-      src={src || defaultProfile}
+      src={userName !== '' ? profileImgURL : defaultProfile}
       size={size}
       alt="프로필 사진"
       className="no-drag"

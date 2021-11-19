@@ -194,13 +194,13 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
   };
 
   useEffect(() => {
-      socket.emit('enter group notify', {
-          groupidx: groupIdx
-      });
-      socket.off('get group users');
-      socket.on('get group users', (data:string[]) => {
-        setAllUsers(data);
-      });
+    socket.emit('enter group notify', {
+      groupidx: groupIdx
+    });
+    socket.off('get group users');
+    socket.on('get group users', (data: string[]) => {
+      setAllUsers(data);
+    });
   }, []);
 
   useEffect(() => {
@@ -218,17 +218,20 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
     });
 
     socket.off('receive group message');
-    socket.on('receive group message', (data: { sender:string, groupidx:number, msg:string }) => {
-      const { sender, groupidx, msg } = data;
-      if (groupidx === groupIdx) {
-        setMessageList((messageList: string[]) => messageList.concat(msg));
-      }
+    socket.on(
+      'receive group message',
+      (data: { sender: string; groupidx: number; msg: string }) => {
+        const { sender, groupidx, msg } = data;
+        if (groupidx === groupIdx) {
+          setMessageList((messageList: string[]) => messageList.concat(msg));
+        }
 
-      document.querySelector('.group-chat-list')?.scrollBy({
-        top: document.querySelector('.group-chat-list')?.scrollHeight,
-        behavior: 'smooth'
-      });
-    });
+        document.querySelector('.group-chat-list')?.scrollBy({
+          top: document.querySelector('.group-chat-list')?.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    );
   }, [socket, groupIdx]);
 
   function ShowReceiverInfoFlag(idx: number, msg: string) {
@@ -240,11 +243,8 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
   }
 
   const UserList = allUsers.map((user: string, idx: number) => (
-    <CurrentUserBox
-      key={idx}
-      className="User"
-    >
-      <ClickableProfileImage size={'30px'} />
+    <CurrentUserBox key={idx} className="User">
+      <ClickableProfileImage userName={user} size={'30px'} />
       {user}
     </CurrentUserBox>
   ));
@@ -260,7 +260,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
         sender={currentUserName}
         flag={ShowReceiverInfoFlag(idx, msg)}
       >
-        <ClickableProfileImage size={'30px'} />
+        <ClickableProfileImage userName={msg.split(':')[0]} size={'30px'} />
         <ReceiverName>{msg.split(':')[0]}</ReceiverName>
       </ReceiverDiv>
       <MessageText currentUserName={currentUserName} sender={msg.split(':')[0]}>

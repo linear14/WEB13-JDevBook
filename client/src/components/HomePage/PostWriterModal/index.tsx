@@ -33,6 +33,7 @@ const PostWriterModalOverlay = styled.div<{ modalState: boolean }>`
   background-color: rgba(0, 0, 0, 0.2);
 
   display: ${(props) => (props.modalState ? 'flex' : 'none')};
+  overscroll-behavior: none;
 `;
 
 const ModalAnimation = keyframes`
@@ -59,6 +60,7 @@ const PostWriterModalInner = styled.div<{ modalState: boolean }>`
   display: ${(props) => (props.modalState ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
+  overscroll-behavior: none;
 `;
 
 const Line = styled.div`

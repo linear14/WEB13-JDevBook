@@ -18,7 +18,8 @@ const Animation = keyframes`
 const CommentsWrap = styled.div`
   display: flex;
   align-items: center;
-  padding: ${style.padding.small} ${style.padding.small} 0 ${style.padding.small};
+  padding: ${style.padding.small} ${style.padding.small} 0
+    ${style.padding.small};
 
   animation-name: ${Animation};
   animation-duration: 0.5s;
@@ -79,7 +80,7 @@ const Comment = ({ postIdx }: { postIdx: number }) => {
       postidx: postIdx,
       comments: value
     });
-    
+
     if (addCommentRes.check) {
       setCommentList((commentList: IComment[]) =>
         commentList.concat(
@@ -112,7 +113,7 @@ const Comment = ({ postIdx }: { postIdx: number }) => {
 
   const comments = commentList.map((comment: IComment, idx: number) => (
     <CommentsWrap key={idx}>
-      <ClickableProfileImage size={'30px'} />
+      <ClickableProfileImage userName={currentUserName} size={'30px'} />
       <CommentBox>
         <CommentContent>
           <CommentTitle>{comment.writer}</CommentTitle>
@@ -137,7 +138,7 @@ const Comment = ({ postIdx }: { postIdx: number }) => {
           }}
         >
           <CommentInputWrapper>
-            <ClickableProfileImage size={'30px'} />
+            <ClickableProfileImage userName={currentUserName} size={'30px'} />
             <CommentInput
               type="text"
               autoComplete="off"
