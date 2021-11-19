@@ -46,11 +46,11 @@
 
 ### Frontend
 
-![](https://img.shields.io/badge/React-17.0.33-%2361DAFB?style=flat-square&logo=react) ![](https://img.shields.io/badge/Create--React--App-grey?style=flat-square&logo=react) ![](https://img.shields.io/badge/Typescript-4.4.4-%233178C6?style=flat-square&logo=typescript) ![](https://img.shields.io/badge/React--router--dom-5.3.2-%23CA4245?style=flat-square&logo=reactrouter) ![](https://img.shields.io/badge/Recoil-%3F%3F%3F-%2361DAFB?style=flat-square&logo=react) ![](https://img.shields.io/badge/styled--components-5.1.15-%23DB7093?style=flat-square&logo=styled-components)
+![](https://img.shields.io/badge/React-17.0.33-%2361DAFB?style=flat-square&logo=react) ![](https://img.shields.io/badge/Create--React--App-grey?style=flat-square&logo=react) ![](https://img.shields.io/badge/Typescript-4.4.4-%233178C6?style=flat-square&logo=typescript) ![](https://img.shields.io/badge/React--router--dom-5.3.2-%23CA4245?style=flat-square&logo=reactrouter) ![](https://img.shields.io/badge/Recoil-0.4.1-%2361DAFB?style=flat-square&logo=react) ![](https://img.shields.io/badge/styled--components-5.1.15-%23DB7093?style=flat-square&logo=styled-components)
 
 ### Backend
 
-![](https://img.shields.io/badge/node-14.17.3-%23339933?style=flat-square&logo=node.js) ![](https://img.shields.io/badge/Typescript-4.4.4-%233178C6?style=flat-square&logo=typescript) ![](https://img.shields.io/badge/express-4.16.1-%23000000?style=flat-square&logo=express) ![](https://img.shields.io/badge/socket--io-%3F%3F%3F-%23010101?style=flat-square&logo=socket.io) ![](https://img.shields.io/badge/sequelize-%3F%3F%3F-%2352B0E7?style=flat-square&logo=sequelize)
+![](https://img.shields.io/badge/node-14.17.3-%23339933?style=flat-square&logo=node.js) ![](https://img.shields.io/badge/Typescript-4.4.4-%233178C6?style=flat-square&logo=typescript) ![](https://img.shields.io/badge/express-4.16.1-%23000000?style=flat-square&logo=express) ![](https://img.shields.io/badge/socket--io-4.3.1-%23010101?style=flat-square&logo=socket.io) ![](https://img.shields.io/badge/sequelize-6.9.0-%2352B0E7?style=flat-square&logo=sequelize)
 
 ### Infra
 
@@ -58,7 +58,7 @@
 
 ### 테스트
 
-![](https://img.shields.io/badge/-Jest-%23C21325?style=flat-square&logo=jest&logoColor=white) ![](https://img.shields.io/badge/-Mocha-%238D6748?style=flat-square&logo=mocha&logoColor=white)
+![](https://img.shields.io/badge/-Jest-%23C21325?style=flat-square&logo=jest&logoColor=white)
 
 ### 협업 툴
 
