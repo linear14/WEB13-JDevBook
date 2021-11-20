@@ -4,7 +4,6 @@ import { useRecoilValue } from 'recoil';
 
 import {
   GroupNavState,
-  rightModalStates,
   userDataStates,
   usersocketStates,
   loginState
@@ -209,7 +208,6 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
   const groupNavState = useRecoilValue(GroupNavState);
   const [messageList, setMessageList] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
-  const rightModalState = useRecoilValue(rightModalStates);
   const [allUsers, setAllUsers] = useState<string[]>([]);
   const loginStateArray = useRecoilValue(loginState);
 
@@ -232,9 +230,9 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
     socket.emit('enter group notify', {
       groupidx: groupIdx
     });
-    socket.off('get group users');
     socket.on('get group users', (data: string[]) => {
       setAllUsers(data);
+      socket.off('get group users');
     });
   }, []);
 
