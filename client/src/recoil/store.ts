@@ -166,3 +166,8 @@ export const uploadImgList = atom({
   key: 'uploadImgList',
   default: [] as string[]
 });
+
+export const loginState = atom({
+  key: 'loginState',
+  default: [] as string[]
+})
