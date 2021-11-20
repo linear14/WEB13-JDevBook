@@ -214,6 +214,10 @@ const ChatSideBar = () => {
           messageList.concat(filteredMsgs)
         );
         socket.off('get previous chats');
+        document.querySelector('.chat-list')?.scrollBy({
+          top: document.querySelector('.chat-list')?.scrollHeight,
+          behavior: 'smooth'
+        });
       });
 
       socket.off('send chat initial');

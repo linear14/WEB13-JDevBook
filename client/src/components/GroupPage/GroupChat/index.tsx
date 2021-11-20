@@ -178,7 +178,6 @@ const CurrentUserWrapper = styled.div`
   overflow-x: hidden;
   overflow-y: scroll;
   overscroll-behavior: none;
-  
   &::-webkit-scrollbar {
     display: none;
   }
@@ -228,6 +227,10 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
         messageList.concat(filteredMsgs)
       );
       socket.off('get previous group chats');
+      document.querySelector('.group-chat-list')?.scrollBy({
+        top: document.querySelector('.group-chat-list')?.scrollHeight,
+        behavior: 'smooth'
+      });
     });
 
     socket.off('receive group message');
@@ -238,7 +241,6 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
         if (groupidx === groupIdx) {
           setMessageList((messageList: string[]) => messageList.concat(msg));
         }
-
         document.querySelector('.group-chat-list')?.scrollBy({
           top: document.querySelector('.group-chat-list')?.scrollHeight,
           behavior: 'smooth'
