@@ -18,7 +18,8 @@ const Animation = keyframes`
 const CommentsWrap = styled.div`
   display: flex;
   align-items: center;
-  padding: ${style.padding.small} ${style.padding.small} 0 ${style.padding.small};
+  padding: ${style.padding.small} ${style.padding.small} 0
+    ${style.padding.small};
 
   animation-name: ${Animation};
   animation-duration: 0.5s;
@@ -66,10 +67,19 @@ const CommentInput = styled.input`
   padding-left: ${style.padding.normal};
 `;
 
-const Comment = ({ postIdx }: { postIdx: number }) => {
+const Comment = ({
+  postIdx,
+  commentsNum,
+  setCommentsNum
+}: {
+  postIdx: number;
+  commentsNum: number;
+  setCommentsNum: React.Dispatch<number>;
+}) => {
   const [value, setValue] = useState<string>('');
   const [commentList, setCommentList] = useState<IComment[]>([]);
   const currentUserName = useRecoilValue(userDataStates).name;
+  const socket = useRecoilValue(usersocketStates);
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -79,7 +89,7 @@ const Comment = ({ postIdx }: { postIdx: number }) => {
       postidx: postIdx,
       comments: value
     });
-    
+
     if (addCommentRes.check) {
       setCommentList((commentList: IComment[]) =>
         commentList.concat(
@@ -89,6 +99,12 @@ const Comment = ({ postIdx }: { postIdx: number }) => {
           })
         )
       );
+
+      socket.emit('send number of comments notify', { postidx: postIdx });
+      socket.on('get number of comments', (commentsNum) => {
+        setCommentsNum(commentsNum);
+        socket.off('get number of comments');
+      });
     }
   };
 
