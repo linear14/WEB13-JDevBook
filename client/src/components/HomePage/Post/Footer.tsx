@@ -29,7 +29,7 @@ const FooterContainer = styled.div`
   }
 `;
 
-const Comments = styled.p`
+const Comments = styled.div`
   cursor: pointer;
   font-size: 0.95rem;
   color: #999999;
@@ -37,7 +37,7 @@ const Comments = styled.p`
 
 const CommentsNum = styled.div``;
 
-const Footer = ({ likenum, commentFlag, setCommentFlag }: PostFooterProps) => {
+const Footer = ({ likenum, commentFlag, setCommentFlag, postIdx, commentsNum, setCommentsNum }: PostFooterProps) => {
   return (
     <FooterContainer>
       <div>
@@ -46,7 +46,7 @@ const Footer = ({ likenum, commentFlag, setCommentFlag }: PostFooterProps) => {
       </div>
       <Comments onClick={() => setCommentFlag(!commentFlag)}>
         <CommentsNum onClick={() => setCommentFlag(!commentFlag)}>
-          777 Comments
+          댓글 {commentsNum} 개
         </CommentsNum>
       </Comments>
     </FooterContainer>
