@@ -6,7 +6,8 @@ import {
   GroupNavState,
   rightModalStates,
   userDataStates,
-  usersocketStates
+  usersocketStates,
+  loginState
 } from 'recoil/store';
 
 import palette from 'theme/palette';
@@ -168,7 +169,6 @@ const CurrentUserBox = styled.div`
   align-items: center;
   height: 50px;
   border-radius: 10px;
-  margin-left: ${style.margin.small};
 `;
 
 const CurrentUserWrapper = styled.div`
@@ -181,6 +181,28 @@ const CurrentUserWrapper = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+
+  img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+
+    margin-left: ${style.margin.small};
+    margin-right: ${style.margin.small};
+  }
+`;
+
+const LoginState = styled.div<{ user: string; loginStateArray: any }>`
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  margin-right: ${style.margin.small};
+  ${(props) =>
+    `background-color: ${
+      props.loginStateArray?.includes(props.user)
+        ? `${palette.green}`
+        : `${palette.darkgray}`
+    };`}
 `;
 
 const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
@@ -189,6 +211,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
   const [value, setValue] = useState<string>('');
   const rightModalState = useRecoilValue(rightModalStates);
   const [allUsers, setAllUsers] = useState<string[]>([]);
+  const loginStateArray = useRecoilValue(loginState);
 
   const socket = useRecoilValue(usersocketStates);
   const currentUserName = useRecoilValue(userDataStates).name;
@@ -260,6 +283,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
   const UserList = allUsers.map((user: string, idx: number) => (
     <CurrentUserBox key={idx} className="User">
       <ClickableProfileImage size={'30px'} />
+      <LoginState user={user} loginStateArray={loginStateArray} />
       {user}
     </CurrentUserBox>
   ));
