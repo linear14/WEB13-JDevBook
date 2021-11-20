@@ -148,13 +148,13 @@ const Post = ({ post }: { post: PostData }) => {
   }, []);
 
   useEffect(() => {
-    async function getNumberOfComments(postidx:number) {
+    async function getNumberOfComments(postidx: number) {
       const numberOfComments = await fetchApi.getCommentsNum(postidx);
       setCommentsNum(numberOfComments);
-    };
+    }
     getNumberOfComments(postIdx);
     console.log(commentsNum);
-  }, [commentsNum]);  
+  }, [commentsNum]);
 
   return (
     <PostContainer>
@@ -207,7 +207,13 @@ const Post = ({ post }: { post: PostData }) => {
         </Button>
       </ButtonsWrap>
       <Divider />
-      {commentFlag && <Comment postIdx={postIdx} />}
+      {commentFlag && (
+        <Comment
+          postIdx={postIdx}
+          commentsNum={commentsNum}
+          setCommentsNum={setCommentsNum}
+        />
+      )}
     </PostContainer>
   );
 };
