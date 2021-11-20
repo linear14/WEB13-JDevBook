@@ -35,6 +35,8 @@ const Comments = styled.p`
   color: #999999;
 `;
 
+const CommentsNum = styled.div``;
+
 const Footer = ({ likenum, commentFlag, setCommentFlag }: PostFooterProps) => {
   return (
     <FooterContainer>
@@ -42,12 +44,10 @@ const Footer = ({ likenum, commentFlag, setCommentFlag }: PostFooterProps) => {
         <img src={likeBadge} alt="likeBadge" />
         <p>{likenum.toString()}</p>
       </div>
-      <Comments
-        onClick={() =>
-          commentFlag ? setCommentFlag(false) : setCommentFlag(true)
-        }
-      >
-        {/* 777 Comments */}
+      <Comments onClick={() => setCommentFlag(!commentFlag)}>
+        <CommentsNum onClick={() => setCommentFlag(!commentFlag)}>
+          777 Comments
+        </CommentsNum>
       </Comments>
     </FooterContainer>
   );
