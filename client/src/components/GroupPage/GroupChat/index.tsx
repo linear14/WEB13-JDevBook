@@ -171,6 +171,18 @@ const CurrentUserBox = styled.div`
   margin-left: ${style.margin.small};
 `;
 
+const CurrentUserWrapper = styled.div`
+  width: inherit;
+  height: 300px;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
 const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
   const groupNavState = useRecoilValue(GroupNavState);
   const [messageList, setMessageList] = useState<string[]>([]);
@@ -194,13 +206,13 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
   };
 
   useEffect(() => {
-      socket.emit('enter group notify', {
-          groupidx: groupIdx
-      });
-      socket.off('get group users');
-      socket.on('get group users', (data:string[]) => {
-        setAllUsers(data);
-      });
+    socket.emit('enter group notify', {
+      groupidx: groupIdx
+    });
+    socket.off('get group users');
+    socket.on('get group users', (data: string[]) => {
+      setAllUsers(data);
+    });
   }, []);
 
   useEffect(() => {
@@ -218,17 +230,20 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
     });
 
     socket.off('receive group message');
-    socket.on('receive group message', (data: { sender:string, groupidx:number, msg:string }) => {
-      const { sender, groupidx, msg } = data;
-      if (groupidx === groupIdx) {
-        setMessageList((messageList: string[]) => messageList.concat(msg));
-      }
+    socket.on(
+      'receive group message',
+      (data: { sender: string; groupidx: number; msg: string }) => {
+        const { sender, groupidx, msg } = data;
+        if (groupidx === groupIdx) {
+          setMessageList((messageList: string[]) => messageList.concat(msg));
+        }
 
-      document.querySelector('.group-chat-list')?.scrollBy({
-        top: document.querySelector('.group-chat-list')?.scrollHeight,
-        behavior: 'smooth'
-      });
-    });
+        document.querySelector('.group-chat-list')?.scrollBy({
+          top: document.querySelector('.group-chat-list')?.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    );
   }, [socket, groupIdx]);
 
   function ShowReceiverInfoFlag(idx: number, msg: string) {
@@ -240,10 +255,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
   }
 
   const UserList = allUsers.map((user: string, idx: number) => (
-    <CurrentUserBox
-      key={idx}
-      className="User"
-    >
+    <CurrentUserBox key={idx} className="User">
       <ClickableProfileImage size={'30px'} />
       {user}
     </CurrentUserBox>
@@ -272,7 +284,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
   return (
     <ChatSideBarContainer groupChatFlag={groupNavState.groupChat}>
       <CurrentUserTitle>이 그룹에 가입한 유저</CurrentUserTitle>
-      {UserList}
+      <CurrentUserWrapper>{UserList}</CurrentUserWrapper>
       <Divider />
       <ChatTitle>{'모두 에게 보내는 편지'}</ChatTitle>
       <ChatList className="group-chat-list">{chatList}</ChatList>
