@@ -52,7 +52,7 @@ const ChatSideBarContainer = styled.div<{
           ${CloseChatAnimation}
         `};
   animation-duration: 0.5s;
-
+  overscroll-behavior: none;
   background-color: ${palette.white};
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
 `;

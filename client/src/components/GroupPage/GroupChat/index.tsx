@@ -177,7 +177,8 @@ const CurrentUserWrapper = styled.div`
 
   overflow-x: hidden;
   overflow-y: scroll;
-
+  overscroll-behavior: none;
+  
   &::-webkit-scrollbar {
     display: none;
   }
