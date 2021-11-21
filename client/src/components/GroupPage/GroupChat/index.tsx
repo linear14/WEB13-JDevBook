@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 
 import {
   GroupNavState,
@@ -18,13 +18,13 @@ import { IMessage, ISocketMessage, ISuccessiveMessage } from 'types/message';
 const ClickableProfileImage = styled(ProfilePhoto)``;
 
 const OpenChatAnimation = keyframes`
-  0% { opacity: 0; transform: translateX(100px); display:none;}
-  100% { opacity: 1; transform: translateX(0px); display:flex;}
+  0% { opacity: 0; transform: translateX(100px); }
+  100% { opacity: 1; transform: translateX(0px); }
 `;
 
 const CloseChatAnimation = keyframes`
-  0% { opacity: 1; transform: translateX(0px); display:flex;}
-  100% { opacity: 0; transform: translateX(100px); display:none;}
+  0% { opacity: 1; transform: translateX(0px); }
+  100% { opacity: 0; transform: translateX(100px); }
 `;
 
 const ChatSideBarContainer = styled.div<{ groupChatFlag: boolean }>`
@@ -207,7 +207,7 @@ const LoginState = styled.div<{ user: string; loginStateArray: any }>`
 `;
 
 const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
-  const groupNavState = useRecoilValue(GroupNavState);
+  const [groupNavState, setGroupNavState] = useRecoilState(GroupNavState);
   const [messageList, setMessageList] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
   const [allUsers, setAllUsers] = useState<string[]>([]);
@@ -271,6 +271,10 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
       }
     );
   }, [socket, groupIdx]);
+
+  useEffect(() => {
+    return () => setGroupNavState({ ...groupNavState, groupChat: false });
+  }, []);
 
   function ShowReceiverInfoFlag(idx: number, msg: string) {
     if (idx === 0) return msg.split(':')[0] === currentUserName ? true : false;

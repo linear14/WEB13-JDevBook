@@ -19,13 +19,13 @@ import { IMessage, ISocketMessage, ISuccessiveMessage } from 'types/message';
 const ClickableProfileImage = styled(ProfilePhoto)``;
 
 const OpenChatAnimation = keyframes`
-  0% { opacity: 0; transform: translateX(100px); display:none;}
-  100% { opacity: 1; transform: translateX(0px); display:flex;}
+  0% { opacity: 0; transform: translateX(100px); }
+  100% { opacity: 1; transform: translateX(0px); }
 `;
 
 const CloseChatAnimation = keyframes`
-  0% { opacity: 1; transform: translateX(0px); display: flex; }
-  100% { opacity: 0; transform: translateX(100px); display: none; }
+  0% { opacity: 1; transform: translateX(0px); }
+  100% { opacity: 0; transform: translateX(100px); }
 `;
 
 const ChatSideBarContainer = styled.div<{
@@ -37,7 +37,7 @@ const ChatSideBarContainer = styled.div<{
   right: 0;
   display: flex;
   flex-direction: column;
-  width: inherit;
+  width: 340px;
   height: calc(100% - 56px);
 
   visibility: ${(props) =>
