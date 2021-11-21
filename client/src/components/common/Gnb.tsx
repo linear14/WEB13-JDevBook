@@ -40,8 +40,10 @@ import {
 
 const GnbContainer = styled.div`
   width: 100%;
+  min-width: 720px;
   height: 56px;
-  position: fixed;
+  position: sticky;
+  top: 0;
   z-index: 1;
   display: flex;
   justify-content: space-between;
