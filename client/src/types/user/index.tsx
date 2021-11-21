@@ -3,3 +3,10 @@ export interface SolvedRates {
   solvedRate: number;
   problemCount: number;
 }
+
+export interface IProfile {
+  idx: number;
+  nickname: string;
+  cover: string;
+  bio: string;
+}

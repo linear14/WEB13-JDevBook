@@ -1,6 +1,8 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+
+import palette from 'theme/palette';
 
 import {
   Gnb,
@@ -11,37 +13,56 @@ import {
   InitUserData,
   InitSocket
 } from 'components/common';
+import { ProfileBar, ProfileCover } from 'components/ProfilePage';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${palette.lightgray};
+  }
+`;
 
 const ProfilePageContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const ContentsWrap = styled.div`
+
+const PageLayout = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-interface MatchParams {
-  userID: string;
-}
+const ContentsContainer = styled.div<{ contentsState: boolean }>`
+  width: 100%;
+  min-width: 720px;
+  margin: 0 10px;
 
-const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
+  display: ${(props) => (props.contentsState ? 'flex' : 'none')};
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   match
 }) => {
   return (
     <ProfilePageContainer>
+      <GlobalStyle />
       <InitUserData />
       <InitSocket />
       <Gnb />
-      <ContentsWrap>
+      <PageLayout>
         <SideBar isLeft={true}>
           <InfoSideBar />
           <GroupSideBar />
         </SideBar>
+        <ContentsContainer contentsState={true}>
+          <ProfileCover src="" />
+          <ProfileBar />
+        </ContentsContainer>
         <SideBar isLeft={false}>
           <ChatSideBar />
         </SideBar>
-      </ContentsWrap>
+      </PageLayout>
     </ProfilePageContainer>
   );
 };
