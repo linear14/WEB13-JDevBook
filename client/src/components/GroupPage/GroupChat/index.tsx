@@ -18,21 +18,22 @@ import { IMessage, ISocketMessage, ISuccessiveMessage } from 'types/message';
 const ClickableProfileImage = styled(ProfilePhoto)``;
 
 const OpenChatAnimation = keyframes`
-  0% { opacity: 0; transform: translateX(100px); }
-  100% { opacity: 1; transform: translateX(0px); }
+  0% { opacity: 0; transform: translateX(100px); display:none;}
+  100% { opacity: 1; transform: translateX(0px); display:flex;}
 `;
 
 const CloseChatAnimation = keyframes`
-  0% { opacity: 1; transform: translateX(0px); }
-  100% { opacity: 0; transform: translateX(100px); }
+  0% { opacity: 1; transform: translateX(0px); display:flex;}
+  100% { opacity: 0; transform: translateX(100px); display:none;}
 `;
 
 const ChatSideBarContainer = styled.div<{ groupChatFlag: boolean }>`
   position: aboslute;
+  top: 0;
   display: flex;
   flex-direction: column;
   width: inherit;
-  height: ${(props) => (props.groupChatFlag ? `inherit` : `0px`)};
+  height: inherit;
 
   visibility: ${(props) => (props.groupChatFlag ? `` : `hidden`)};
   transition: ${(props) => (props.groupChatFlag ? `` : `all .5s`)};
@@ -45,6 +46,7 @@ const ChatSideBarContainer = styled.div<{ groupChatFlag: boolean }>`
           ${CloseChatAnimation}
         `};
   animation-duration: 0.5s;
+  animation-fill-mode: forwards;
 
   background-color: ${palette.white};
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
