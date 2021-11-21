@@ -46,7 +46,10 @@ const InitUserData = (/*{ history }: RouteComponentProps*/) => {
           BTUseruseridx: { ...data }
         });
         setSolvedProblems(
-          data.BTMUserProblemuseridx.map((item: IProblem) => item.idx)
+          data.BTMUserProblemuseridx.map((item: IProblem) => ({
+            idx: item.idx,
+            groupIdx: item.groupidx
+          }))
         );
         if (groupList.length === 0) setGroupList(fetchGroupList);
         setJoinedGroups(

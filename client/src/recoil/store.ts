@@ -5,6 +5,7 @@ import { Socket } from 'socket.io-client';
 import { Alert } from 'types/common';
 import { IGroup } from 'types/group';
 import { PostData } from 'types/post';
+import { ISolvedProblem } from 'types/problem';
 import { SolvedRates } from 'types/user';
 
 export const modalStateStore = atom({
@@ -123,7 +124,7 @@ export const alertState = atom<Alert>({
     modalState: false
   }
 });
-export const solvedProblemState = atom<number[]>({
+export const solvedProblemState = atom<ISolvedProblem[]>({
   key: 'solvedProblem',
   default: []
 });
@@ -138,7 +139,7 @@ export const rateState = atom<SolvedRates>({
   default: {
     prevRate: 0,
     solvedRate: 0,
-    problemCount: 0
+    totalProblemsCount: 0
   }
 });
 
