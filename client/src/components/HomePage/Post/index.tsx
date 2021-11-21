@@ -153,7 +153,6 @@ const Post = ({ post }: { post: PostData }) => {
       setCommentsNum(numberOfComments);
     }
     getNumberOfComments(postIdx);
-    console.log(commentsNum);
   }, [commentsNum]);
 
   return (
