@@ -13,6 +13,7 @@ import {
   IsLoginPage,
   GroupSelectPage
 } from 'pages';
+import { ChatSideBar } from 'components/common';
 
 const Router = () => {
   const [login, setLogin] = useState(false);
@@ -60,6 +61,7 @@ const Router = () => {
         />
         <Route path="/*" component={NotFoundPage} />
       </Switch>
+      <ChatSideBar />
     </BrowserRouter>
   );
 };

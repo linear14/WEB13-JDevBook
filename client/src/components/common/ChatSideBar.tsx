@@ -32,12 +32,13 @@ const ChatSideBarContainer = styled.div<{
   rightModalFlag: boolean;
   messageFlag: boolean;
 }>`
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 56px;
+  right: 0;
   display: flex;
   flex-direction: column;
   width: inherit;
-  height: inherit;
+  height: calc(100% - 56px);
 
   visibility: ${(props) =>
     props.rightModalFlag && props.messageFlag ? `` : `hidden`};
