@@ -117,12 +117,10 @@ const ProfileEditModal = () => {
       return alertMessage('내용을 입력하세요.', palette.alert);
     }
     setProfileData({ ...profileData, bio: bio.trim() });
-    setBio('');
     setModalState({ ...modalState, editProfile: false });
   };
 
   const cancelBtnHandler = (e: React.MouseEvent) => {
-    setBio(profileData.bio || '');
     setModalState({ ...modalState, editProfile: false });
   };
 
@@ -141,6 +139,10 @@ const ProfileEditModal = () => {
       setBio(contents);
     }
   };
+
+  useEffect(() => {
+    setBio(profileData.bio || '');
+  }, [profileData.bio]);
 
   return (
     <EditModalWrap modalState={modalState.editProfile}>
