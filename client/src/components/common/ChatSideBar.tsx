@@ -263,7 +263,7 @@ const ChatSideBar = () => {
         sender={currentUserName}
         flag={ShowReceiverInfoFlag(idx, msg)}
       >
-        <ClickableProfileImage size={'30px'} />
+        <ClickableProfileImage userName={msg.split(':')[0]} size={'30px'} />
         <ReceiverName>{msg.split(':')[0]}</ReceiverName>
       </ReceiverDiv>
       <MessageText currentUserName={currentUserName} sender={msg.split(':')[0]}>
