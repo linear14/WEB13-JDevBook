@@ -17,15 +17,15 @@ const getAllUsers = async () => {
 };
 
 const getAllUsersObj = async () => {
-  const users = await db.models.User.findAll({logging:false});
+  const users = await db.models.User.findAll({ logging: false });
   const usersIdxArray = users.map((data) => data.get().idx);
   const usersNameArray = users.map((data) => data.get().nickname);
-  const usersObj:any = {};
-  for(let i=0 ; i<usersIdxArray.length ; i++) {
+  const usersObj: any = {};
+  for (let i = 0; i < usersIdxArray.length; i++) {
     usersObj[usersIdxArray[i]] = usersNameArray[i];
   }
   return usersObj;
-}
+};
 
 const getUserName = async function (idx: number) {
   const username = await db.models.User.findOne({
@@ -67,6 +67,14 @@ const getUserLoginState = async function (name: string) {
   return user?.get().loginstate;
 };
 
+const getProfile = async function (userName: string) {
+  const profile = await db.models.User.findOne({
+    where: { nickname: userName },
+    logging: false
+  });
+  return profile?.get();
+};
+
 export {
   getUserData,
   getAllUsers,
@@ -75,5 +83,6 @@ export {
   setUserLoginState,
   getUserLoginState,
   getUserJoinedGroups,
-  getAllUsersObj
+  getAllUsersObj,
+  getProfile
 };

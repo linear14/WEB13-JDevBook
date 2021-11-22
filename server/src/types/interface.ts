@@ -139,6 +139,6 @@ export interface IUserSocket {
 export interface IProfile {
   idx: number;
   nickname: string;
-  cover: string;
-  bio: string;
+  cover?: string;
+  bio?: string;
 }

@@ -11,7 +11,8 @@ import {
   setUserLoginState,
   getUserLoginState,
   getUserJoinedGroups,
-  getAllUsersObj
+  getAllUsersObj,
+  getProfile
 } from './user';
 import { searchUsers } from './search';
 import { getProblems, insertSolvedProblem } from './problem';
@@ -70,7 +71,9 @@ const dbManager = {
 
   setGroupChatList,
   getGroupChatList,
-  getAllUsersObj
+  getAllUsersObj,
+
+  getProfile
 };
 
 export default dbManager;

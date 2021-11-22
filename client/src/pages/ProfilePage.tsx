@@ -47,7 +47,6 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   return (
     <ProfilePageContainer>
       <GlobalStyle />
-      <InitUserData />
       <InitSocket />
       <Gnb />
       <PageLayout>
