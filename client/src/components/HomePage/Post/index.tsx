@@ -118,6 +118,7 @@ const Post = ({ post }: { post: PostData }) => {
   const [likeFlag, setLikeFlag] = useState<boolean>(false);
   const [likeNum, setLikeNum] = useState<number>(0);
   const [commentFlag, setCommentFlag] = useState<boolean>(false);
+  const [commentsNum, setCommentsNum] = useState<number>(0);
 
   const {
     idx: postIdx,
@@ -145,6 +146,14 @@ const Post = ({ post }: { post: PostData }) => {
     post.likeFlag ? setLikeFlag(true) : setLikeFlag(false);
     setLikeNum(post.likenum);
   }, []);
+
+  useEffect(() => {
+    async function getNumberOfComments(postidx: number) {
+      const numberOfComments = await fetchApi.getCommentsNum(postidx);
+      setCommentsNum(numberOfComments);
+    }
+    getNumberOfComments(postIdx);
+  }, [commentsNum]);
 
   return (
     <PostContainer>
@@ -177,6 +186,9 @@ const Post = ({ post }: { post: PostData }) => {
         likenum={likeNum}
         commentFlag={commentFlag}
         setCommentFlag={setCommentFlag}
+        postIdx={postIdx}
+        commentsNum={commentsNum}
+        setCommentsNum={setCommentsNum}
       />
       <Divider />
       <ButtonsWrap>
@@ -194,7 +206,13 @@ const Post = ({ post }: { post: PostData }) => {
         </Button>
       </ButtonsWrap>
       <Divider />
-      {commentFlag && <Comment postIdx={postIdx} />}
+      {commentFlag && (
+        <Comment
+          postIdx={postIdx}
+          commentsNum={commentsNum}
+          setCommentsNum={setCommentsNum}
+        />
+      )}
     </PostContainer>
   );
 };

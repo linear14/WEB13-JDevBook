@@ -29,25 +29,25 @@ const FooterContainer = styled.div`
   }
 `;
 
-const Comments = styled.p`
+const Comments = styled.div`
   cursor: pointer;
   font-size: 0.95rem;
   color: #999999;
 `;
 
-const Footer = ({ likenum, commentFlag, setCommentFlag }: PostFooterProps) => {
+const CommentsNum = styled.div``;
+
+const Footer = ({ likenum, commentFlag, setCommentFlag, postIdx, commentsNum, setCommentsNum }: PostFooterProps) => {
   return (
     <FooterContainer>
       <div>
         <img src={likeBadge} alt="likeBadge" />
         <p>{likenum.toString()}</p>
       </div>
-      <Comments
-        onClick={() =>
-          commentFlag ? setCommentFlag(false) : setCommentFlag(true)
-        }
-      >
-        {/* 777 Comments */}
+      <Comments onClick={() => setCommentFlag(!commentFlag)}>
+        <CommentsNum onClick={() => setCommentFlag(!commentFlag)}>
+          댓글 {commentsNum} 개
+        </CommentsNum>
       </Comments>
     </FooterContainer>
   );

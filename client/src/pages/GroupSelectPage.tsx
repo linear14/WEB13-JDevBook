@@ -7,7 +7,6 @@ import {
   Gnb,
   SideBar,
   InfoSideBar,
-  ChatSideBar,
   GroupSideBar,
   InitUserData,
   InitSocket
@@ -57,9 +56,6 @@ const GroupSelectPage = () => {
           <GroupSelectTitle />
           <GroupSelectList />
         </ContentsContainer>
-        <SideBar isLeft={false}>
-          <ChatSideBar />
-        </SideBar>
       </PageLayout>
     </GroupSelectPageContainer>
   );

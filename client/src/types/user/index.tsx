@@ -1,7 +1,7 @@
 export interface SolvedRates {
   prevRate: number;
   solvedRate: number;
-  problemCount: number;
+  totalProblemsCount: number;
 }
 
 export interface IProfile {
