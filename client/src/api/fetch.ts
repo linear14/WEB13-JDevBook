@@ -26,11 +26,14 @@ const fetchApi = {
 
   getPosts: async (
     lastIdx: number = -1,
-    count: number = 10
+    count: number = 10,
+    username?: string
   ): Promise<PostData[]> => {
-    const response = await fetch(
-      `/api/posts?lastIdx=${lastIdx}&count=${count}`
-    );
+    const response = username
+      ? await fetch(
+          `/api/posts?username=${username}&lastIdx=${lastIdx}&count=${count}`
+        )
+      : await fetch(`/api/posts?lastIdx=${lastIdx}&count=${count}`);
     const getPostsList = await response.json();
     return getPostsList.map((cur: any) =>
       cur.BTMLikepostidx.length === 0
