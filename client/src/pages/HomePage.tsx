@@ -28,17 +28,21 @@ const HomePageContainer = styled.div`
 
 const PageLayout = styled.div`
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 `;
 
 const PostContainer = styled.div`
-  width: 100%;
+  width: calc(100vw - 680px);
   min-width: 720px;
   margin: 0 10px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 1380px) {
+    width: 100%;
+  }
 `;
 
 const HomePage = () => {
