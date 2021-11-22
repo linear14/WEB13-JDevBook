@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import palette from 'theme/palette';
@@ -7,7 +7,7 @@ import ProfileInfo from 'components/ProfilePage/ProfileBar/ProfileInfo';
 import ProfilePhoto from 'components/ProfilePage/ProfileBar/ProfilePhoto';
 import ProfileEdit from 'components/ProfilePage/ProfileBar/ProfileEdit';
 import { useRecoilValue } from 'recoil';
-import { profileState } from 'recoil/store';
+import { profileState, userDataStates } from 'recoil/store';
 
 const GroupNavContainer = styled.div`
   width: 100%;

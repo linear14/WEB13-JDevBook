@@ -85,7 +85,6 @@ const SaveBtn = styled.div`
 const ProfileEditModal = () => {
   const [profileData, setProfileData] = useRecoilState(profileState);
   const [modalState, setModalState] = useRecoilState(modalStateStore);
-  const userData = useRecoilValue(userDataStates);
   const [bio, setBio] = useState<string>('');
   const alertMessage = useAlertModal();
 
