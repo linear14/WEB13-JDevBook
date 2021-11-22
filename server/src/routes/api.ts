@@ -8,7 +8,8 @@ import {
   DBUser,
   PostAddData,
   PostUpdateData,
-  CommentData
+  CommentData,
+  IProfile
 } from '../types/interface';
 import { upload } from '../service/objectStorage';
 const oauth = require('../config/oauth.json');
@@ -76,6 +77,21 @@ router.get(
     } catch (err) {
       console.error(err);
       res.json([]);
+    }
+  }
+);
+
+router.put(
+  '/users/:useridx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userIdx = Number(req.params.useridx);
+      const userUpdateData: IProfile = req.body;
+      await dbManager.updateProfile(userUpdateData, userIdx);
+      res.json({ check: true });
+    } catch (err) {
+      console.error(err);
+      res.json({ check: false });
     }
   }
 );
