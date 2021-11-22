@@ -14,6 +14,7 @@ import {
   InitSocket
 } from 'components/common';
 import { ProfileBar, ProfileCover, PostList } from 'components/ProfilePage';
+import { PostWriterModal } from 'components/HomePage';
 
 const GlobalStyle = createGlobalStyle`
   body {

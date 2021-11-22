@@ -191,7 +191,7 @@ const Post = ({ post }: { post: PostData }) => {
         setCommentsNum={setCommentsNum}
       />
       <Divider />
-      <ButtonsWrap>
+      <ButtonsWrap className="no-drag">
         <Button isLike={likeFlag} onClick={likeToggle}>
           <LikeIcon />
           <p>좋아요</p>

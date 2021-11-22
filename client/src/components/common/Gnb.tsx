@@ -167,7 +167,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   const history = useHistory();
 
   return (
-    <GnbContainer>
+    <GnbContainer className="no-drag">
       <FlexWrap>
         {modalState.searchUser ? <UserSearchModal /> : <UserSearchBar />}
       </FlexWrap>

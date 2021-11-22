@@ -64,7 +64,7 @@ export const Alert = ({
         setCount(0);
       }}
     >
-      {getMessage(count)}의 새로운 메세지
+      {getMessage(count)}의 새로운 게시글
     </AlertModalWrap>
   );
 };

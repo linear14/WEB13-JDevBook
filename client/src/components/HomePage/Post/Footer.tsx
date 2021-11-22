@@ -37,9 +37,16 @@ const Comments = styled.div`
 
 const CommentsNum = styled.div``;
 
-const Footer = ({ likenum, commentFlag, setCommentFlag, postIdx, commentsNum, setCommentsNum }: PostFooterProps) => {
+const Footer = ({
+  likenum,
+  commentFlag,
+  setCommentFlag,
+  postIdx,
+  commentsNum,
+  setCommentsNum
+}: PostFooterProps) => {
   return (
-    <FooterContainer>
+    <FooterContainer className="no-drag">
       <div>
         <img src={likeBadge} alt="likeBadge" />
         <p>{likenum.toString()}</p>
