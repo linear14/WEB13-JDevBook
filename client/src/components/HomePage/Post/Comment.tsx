@@ -130,7 +130,7 @@ const Comment = ({
 
   const comments = commentList.map((comment: IComment, idx: number) => (
     <CommentsWrap key={idx}>
-      <ClickableProfileImage userName={currentUserName} size={'30px'} />
+      <ClickableProfileImage userName={comment.writer} size={'30px'} />
       <CommentBox>
         <CommentContent>
           <CommentTitle>{comment.writer}</CommentTitle>
