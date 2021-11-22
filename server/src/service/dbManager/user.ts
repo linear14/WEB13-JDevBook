@@ -75,6 +75,15 @@ const updateProfile = async (userUpdateData: IProfile, userIdx: number) => {
   );
 };
 
+const getProfile = async (name: string) => {
+  const user = await db.models.User.findOne({
+    where: { nickname: name },
+    logging: false
+  });
+
+  return user?.get();
+};
+
 export {
   getUserData,
   getAllUsers,
@@ -84,5 +93,6 @@ export {
   getUserLoginState,
   getUserJoinedGroups,
   getAllUsersObj,
-  updateProfile
+  updateProfile,
+  getProfile
 };
