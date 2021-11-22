@@ -92,6 +92,25 @@ const ProfileCover = ({
     const s3fileRes = await fetchApi.uploadImg(imglist);
 
     if (!s3fileRes.save) return alertMessage('이미지 업로드 실패');
+
+    // fetch, db 건들고 userdata 업데이트 하고
+    // src는 해당 유저 getUserData도 만들어야겠네
+    const { check } = await fetchApi.updateProfile({
+      idx: userData.idx,
+      nickname: userData.name,
+      // profile은 github링크로 사용
+      bio: userData.bio,
+      cover: s3fileRes.file.location
+    });
+
+    if (check) {
+      setUserData({
+        ...userData,
+        cover: s3fileRes.file.location
+      });
+    } else {
+      return alertMessage('프로필 업데이트를 하지 못했습니다.', palette.alert);
+    }
   };
 
   return (
