@@ -1,5 +1,6 @@
 import { CommentData } from 'types/comment';
 import { PostData, PostAddData, PostUpdateData } from 'types/post';
+import { IProfile } from 'types/user';
 
 const fetchApi = {
   getLoginlink: async (): Promise<string> => {
@@ -157,7 +158,20 @@ const fetchApi = {
       method: 'POST'
     });
     return await response.json();
-  }
+  },
+
+  updateProfile: async (userUpdateData: IProfile) => {
+    const response = await fetch(`/api/users/${userUpdateData.idx}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userUpdateData)
+    });
+    return await response.json();
+  },
+
+  getUserData: async (userName: string) => {}
 };
 
 export default fetchApi;
