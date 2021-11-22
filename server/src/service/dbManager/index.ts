@@ -11,7 +11,8 @@ import {
   setUserLoginState,
   getUserLoginState,
   getUserJoinedGroups,
-  getAllUsersObj
+  getAllUsersObj,
+  updateProfile
 } from './user';
 import { searchUsers } from './search';
 import { getProblems, insertSolvedProblem } from './problem';
@@ -36,6 +37,7 @@ const dbManager = {
   getAllUsers,
   getUserName,
   getUseridx,
+  updateProfile,
 
   setUserLoginState,
   getUserLoginState,
