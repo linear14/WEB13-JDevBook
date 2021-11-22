@@ -247,7 +247,8 @@ const ImgUploadModal = () => {
     const s3fileRes = await fetchApi.uploadImg(imglist);
 
     if (!s3fileRes.save) {
-      alertMessage('이미지 업로드 실패');
+      if (s3fileRes.file) alertMessage('이미지 업로드 실패', palette.alert);
+      else alertMessage('1MB 이하만 가능합니다.', palette.alert);
       return setIsImgUploading(uploadNum - 1);
     }
 
