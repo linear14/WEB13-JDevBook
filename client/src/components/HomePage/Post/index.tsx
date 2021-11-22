@@ -9,7 +9,11 @@ import palette from 'theme/palette';
 import style from 'theme/style';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { modalStateStore, userDataStates } from 'recoil/store';
+import {
+  modalStateStore,
+  userDataStates,
+  usersocketStates
+} from 'recoil/store';
 import Header from './Header';
 import OptionModal from './OptionModal';
 import Body from './Body';
@@ -119,7 +123,8 @@ const Post = ({ post }: { post: PostData }) => {
   const [likeNum, setLikeNum] = useState<number>(0);
   const [commentFlag, setCommentFlag] = useState<boolean>(false);
   const [commentsNum, setCommentsNum] = useState<number>(post.commentnum);
-  
+  const socket = useRecoilValue(usersocketStates);
+
   const {
     idx: postIdx,
     secret,
@@ -146,7 +151,20 @@ const Post = ({ post }: { post: PostData }) => {
     post.likeFlag ? setLikeFlag(true) : setLikeFlag(false);
     setLikeNum(post.likenum);
   }, []);
-  
+
+  useEffect(() => {
+    socket.emit('send number of comments notify', { postidx: postIdx });
+  }, [commentsNum]);
+  socket.on(
+    'get number of comments',
+    (data: { postidx: number; commentsNum: number }) => {
+      const { postidx, commentsNum } = data;
+      if (postIdx === postidx) {
+        setCommentsNum(commentsNum);
+      }
+    }
+  );
+
   return (
     <PostContainer>
       {postUserIdx === myIdx && (
