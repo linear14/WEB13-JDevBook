@@ -20,11 +20,7 @@ const SideBarContainer = styled.div<SideBarProps>`
             display: none;
           }
         `
-      : css`
-          @media screen and (max-width: 1040px) {
-            display: none;
-          }
-        `};
+      : ``};
 `;
 
 const SideBar = ({ isLeft, children }: SideBarProps) => {

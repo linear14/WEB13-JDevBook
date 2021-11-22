@@ -28,7 +28,6 @@ const HomePageContainer = styled.div`
 
 const PageLayout = styled.div`
   display: flex;
-  /* justify-content: space-between; */
 `;
 
 const PostContainer = styled.div`
