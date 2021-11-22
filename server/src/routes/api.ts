@@ -97,6 +97,16 @@ router.put(
 );
 
 router.get(
+  '/users/:username',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const name: string = req.params.username;
+    const userdata: DBUser = await dbManager.getProfile(name);
+    if (userdata === undefined) res.json({ data: '', error: true });
+    else res.json({ data: userdata, error: false });
+  }
+);
+
+router.get(
   '/posts',
   async (
     req: Request<{}, {}, {}, { lastIdx: number; count: number }>,
