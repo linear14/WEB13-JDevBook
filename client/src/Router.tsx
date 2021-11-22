@@ -53,7 +53,7 @@ const Router = () => {
           }
         />
         <Route
-          path="/profile/:userId"
+          path="/profile/:username"
           exact
           render={(props) =>
             login ? <ProfilePage {...props} /> : <IsLoginPage />

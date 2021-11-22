@@ -23,14 +23,18 @@ const BodyColor = createGlobalStyle`
 
 const HomePageContainer = styled.div`
   display: flex;
-  justify-content: center;
-  padding-bottom: 56px;
+  flex-direction: column;
+`;
+
+const PageLayout = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const PostContainer = styled.div`
-  position: relative;
-  top: 56px;
-  width: 680px;
+  width: 100%;
+  min-width: 720px;
+  margin: 0 10px;
 
   display: flex;
   flex-direction: column;
@@ -45,15 +49,17 @@ const HomePage = () => {
       <InitUserData />
       <InitSocket />
       <Gnb type="home" rightModalType="" />
-      <SideBar isLeft={true}>
-        <InfoSideBar />
-        <GroupSideBar />
-      </SideBar>
-      <PostContainer>
-        <PostWriter />
-        <PostList />
-      </PostContainer>
-      {imageViewerState.isOpen && <ImageViewer />}
+      <PageLayout>
+        <SideBar isLeft={true}>
+          <InfoSideBar />
+          <GroupSideBar />
+        </SideBar>
+        <PostContainer>
+          <PostWriter />
+          <PostList />
+        </PostContainer>
+        {imageViewerState.isOpen && <ImageViewer />}
+      </PageLayout>
     </HomePageContainer>
   );
 };

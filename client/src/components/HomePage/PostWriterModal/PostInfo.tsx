@@ -59,7 +59,7 @@ const PostInfo = () => {
 
   return (
     <PostInfoWrap>
-      <ProfilePhoto src="" size="44px" />
+      <ProfilePhoto userName="" size="44px" />
       <div>{userdata.name}</div>
       <SecretSelector onClick={secretToggleHandler}>{secretStr}</SecretSelector>
     </PostInfoWrap>

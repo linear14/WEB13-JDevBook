@@ -5,8 +5,8 @@ import { Socket } from 'socket.io-client';
 import { Alert } from 'types/common';
 import { IGroup } from 'types/group';
 import { PostData } from 'types/post';
+import { SolvedRates, IProfile } from 'types/user';
 import { ISolvedProblem } from 'types/problem';
-import { SolvedRates } from 'types/user';
 
 export const modalStateStore = atom({
   key: 'modalState',
@@ -166,6 +166,16 @@ export const groupState = atom<IGroup>({
 export const uploadImgList = atom({
   key: 'uploadImgList',
   default: [] as string[]
+});
+
+export const profileState = atom<IProfile>({
+  key: 'profileState',
+  default: {
+    idx: 0,
+    nickname: '',
+    cover: '',
+    bio: ''
+  }
 });
 
 export const loginState = atom({

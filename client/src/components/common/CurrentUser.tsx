@@ -104,7 +104,7 @@ const CurrentUser = () => {
       className="User"
       onClick={() => setChatWith(user)}
     >
-      <ClickableProfileImage size={'30px'} />
+      <ClickableProfileImage userName={user} size={'30px'} />
       <LoginState user={user} loginStateArray={loginStateArray} />
       {user}
     </CurrentUserBox>

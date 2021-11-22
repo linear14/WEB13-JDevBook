@@ -89,6 +89,7 @@ const InfoSideBar = () => {
   const joinedGroups = useRecoilValue(myJoinedGroupState);
   const solvedProblem = useRecoilValue(solvedProblemState);
   const [rate, setRate] = useRecoilState(rateState);
+  const profileURL = `/profile/${userdata.name}`;
 
   const prevRateUpdate = (e: React.AnimationEvent) => {
     setRate((prev) => ({ ...prev, prevRate: rate.solvedRate }));
@@ -120,8 +121,8 @@ const InfoSideBar = () => {
 
   return (
     <InfoSideBarContainer className="no-drag">
-      <ProfileWrap to="/profile/shin">
-        <ProfilePhoto src="" />
+      <ProfileWrap to={profileURL}>
+        <ProfilePhoto userName={userdata.name} />
         <p>{userdata.name}</p>
       </ProfileWrap>
       <SolvedTitle>문제 정답률</SolvedTitle>

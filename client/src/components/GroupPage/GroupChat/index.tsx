@@ -286,7 +286,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
 
   const UserList = allUsers.map((user: string, idx: number) => (
     <CurrentUserBox key={idx} className="User">
-      <ClickableProfileImage size={'30px'} />
+      <ClickableProfileImage userName={user} size={'30px'} />
       <LoginState user={user} loginStateArray={loginStateArray} />
       {user}
     </CurrentUserBox>
@@ -303,7 +303,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
         sender={currentUserName}
         flag={ShowReceiverInfoFlag(idx, msg)}
       >
-        <ClickableProfileImage size={'30px'} />
+        <ClickableProfileImage userName={msg.split(':')[0]} size={'30px'} />
         <ReceiverName>{msg.split(':')[0]}</ReceiverName>
       </ReceiverDiv>
       <MessageText currentUserName={currentUserName} sender={msg.split(':')[0]}>
