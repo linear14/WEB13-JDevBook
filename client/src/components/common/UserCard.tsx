@@ -37,7 +37,7 @@ const UserCard = ({ user }: SearchedUserProps) => {
   return (
     <NavLink to={`/profile/${user.idx}`}>
       <CardWrap>
-        <ProfilePhoto size="36px" />
+        <ProfilePhoto userName={user.nickname} size="36px" />
         <p>{user.nickname}</p>
       </CardWrap>
     </NavLink>

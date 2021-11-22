@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 
+import { profileState } from 'recoil/store';
 import palette from 'theme/palette';
 
 import {
@@ -19,8 +21,6 @@ import {
   ProfileCover,
   InitProfileData
 } from 'components/ProfilePage';
-import { useRecoilValue } from 'recoil';
-import { profileState } from 'recoil/store';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -52,6 +52,11 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   match
 }) => {
   const profileData = useRecoilValue(profileState);
+  const resetProfileData = useResetRecoilState(profileState);
+
+  useEffect(() => {
+    return () => resetProfileData();
+  }, []);
 
   return (
     <ProfilePageContainer>

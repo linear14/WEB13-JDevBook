@@ -4,7 +4,7 @@ import { profileState } from 'recoil/store';
 import { IProfile } from 'types/user';
 import fetchApi from 'api/fetch';
 
-const useProfileData = () => {
+const useResetProfile = () => {
   const resetProfile = useResetRecoilState(profileState);
   const [profileData, setProfileData] = useRecoilState(profileState);
 
@@ -19,4 +19,4 @@ const useProfileData = () => {
   };
 };
 
-export default useProfileData;
+export default useResetProfile;

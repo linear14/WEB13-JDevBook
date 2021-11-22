@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
+
 import {
   solvedProblemState,
   userDataStates,
@@ -9,9 +10,10 @@ import {
   myJoinedGroupState
 } from 'recoil/store';
 import palette from 'theme/palette';
+import fetchApi from 'api/fetch';
+import useResetProfile from 'hooks/useResetProfile';
 
 import { ProfilePhoto } from 'components/common';
-import fetchApi from 'api/fetch';
 
 const InfoSideBarContainer = styled.div`
   height: 200px;
@@ -90,6 +92,11 @@ const InfoSideBar = () => {
   const solvedProblem = useRecoilValue(solvedProblemState);
   const [rate, setRate] = useRecoilState(rateState);
   const profileURL = `/profile/${userdata.name}`;
+  const resetProfile = useResetProfile();
+
+  const photoClickHandler = (e: React.MouseEvent) => {
+    resetProfile(userdata.name);
+  };
 
   const prevRateUpdate = (e: React.AnimationEvent) => {
     setRate((prev) => ({ ...prev, prevRate: rate.solvedRate }));
@@ -121,7 +128,7 @@ const InfoSideBar = () => {
 
   return (
     <InfoSideBarContainer className="no-drag">
-      <ProfileWrap to={profileURL}>
+      <ProfileWrap to={profileURL} onClick={photoClickHandler}>
         <ProfilePhoto userName={userdata.name} />
         <p>{userdata.name}</p>
       </ProfileWrap>

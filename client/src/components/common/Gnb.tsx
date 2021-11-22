@@ -2,6 +2,7 @@ import React, { Dispatch } from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
+
 import {
   modalStateStore,
   rightModalStates,
@@ -10,7 +11,6 @@ import {
   GroupNavState
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
-
 import {
   GnbProps,
   FlexProps,
@@ -37,6 +37,7 @@ import {
   UserSearchModal,
   ProfilePhoto
 } from 'components/common';
+import useResetProfile from 'hooks/useResetProfile';
 
 const GnbContainer = styled.div`
   width: 100%;
@@ -166,6 +167,11 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   const [groupNavState, setGroupNavState] = useRecoilState(GroupNavState);
   const history = useHistory();
   const profileURL = `/profile/${userdata.name}`;
+  const resetProfile = useResetProfile();
+
+  const photoClickHandler = (e: React.MouseEvent) => {
+    resetProfile(userdata.name);
+  };
 
   return (
     <GnbContainer>
@@ -185,7 +191,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
         </Link>
       </FlexWrap>
       <FlexWrap>
-        <Link to={profileURL}>
+        <Link to={profileURL} onClick={photoClickHandler}>
           <ProfileWrap>
             <ProfilePhoto userName={userdata.name} size="28px" />
             <p>{userdata.name}</p>

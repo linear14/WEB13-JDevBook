@@ -1,5 +1,5 @@
 export interface ProfilePhotoProps {
-  userName?: string;
+  userName: string;
   size?: string;
 }
 
