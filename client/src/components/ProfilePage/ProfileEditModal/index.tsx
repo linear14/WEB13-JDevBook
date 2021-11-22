@@ -30,15 +30,20 @@ const EditModalWrap = styled.div<{ modalState: boolean }>`
 
   display: ${(props) => (props.modalState ? 'flex' : 'none')};
   flex-direction: column;
-  align-items: flex-end;
   animation: ${EditModalAnimation} 0.2s;
+`;
+
+const BioTitle = styled.div`
+  padding-left: ${style.padding.small};
+
+  color: ${palette.darkgray};
 `;
 
 const BioArea = styled.textarea`
   width: 300px;
   height: 100px;
   box-sizing: border-box;
-  padding: ${style.padding.normal};
+  padding: ${style.padding.small};
   margin-bottom: ${style.margin.small};
 
   border: none;
@@ -60,6 +65,7 @@ const BioArea = styled.textarea`
 
 const BtnWrap = styled.div`
   display: flex;
+  justify-content: flex-end;
 `;
 
 const StyledBtn = styled.div<{ saveBtn: boolean }>`
@@ -116,7 +122,7 @@ const ProfileEditModal = () => {
   };
 
   const cancelBtnHandler = (e: React.MouseEvent) => {
-    setBio('');
+    setBio(profileData.bio || '');
     setModalState({ ...modalState, editProfile: false });
   };
 
@@ -138,6 +144,7 @@ const ProfileEditModal = () => {
 
   return (
     <EditModalWrap modalState={modalState.editProfile}>
+      <BioTitle>자기소개</BioTitle>
       <BioArea
         onChange={inputContents}
         onKeyUp={bioLengthCheck}

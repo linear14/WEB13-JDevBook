@@ -14,7 +14,7 @@ const ProfileEditWrap = styled.div<{ editState: boolean }>`
 const ProfileEditBtn = styled.div`
   width: 120px;
   height: 20px;
-  margin-right: 40px;
+  margin-right: 20px;
   padding: 8px ${style.padding.normal};
 
   border-radius: 8px;
