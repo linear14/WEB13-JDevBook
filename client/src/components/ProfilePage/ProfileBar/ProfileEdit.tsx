@@ -1,4 +1,6 @@
 import React from 'react';
+import { useRecoilState } from 'recoil';
+import { modalStateStore } from 'recoil/store';
 import styled from 'styled-components';
 
 import palette from 'theme/palette';
@@ -35,9 +37,15 @@ const ProfileEditBtn = styled.div`
 `;
 
 const ProfileEdit = () => {
+  const [modalState, setModalState] = useRecoilState(modalStateStore);
+
+  const toggleModalHandler = (e: React.MouseEvent) => {
+    setModalState({ ...modalState, editProfile: !modalState.editProfile });
+  };
+
   return (
-    <ProfileEditWrap>
-      <ProfileEditBtn>프로필 편집</ProfileEditBtn>
+    <ProfileEditWrap className="no-drag">
+      <ProfileEditBtn onClick={toggleModalHandler}>프로필 편집</ProfileEditBtn>
     </ProfileEditWrap>
   );
 };

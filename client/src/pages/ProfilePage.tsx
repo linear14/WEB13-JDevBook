@@ -19,7 +19,8 @@ import {
 import {
   ProfileBar,
   ProfileCover,
-  InitProfileData
+  InitProfileData,
+  ProfileEditModal
 } from 'components/ProfilePage';
 
 const GlobalStyle = createGlobalStyle`
@@ -74,6 +75,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
         <ContentsContainer contentsState={true}>
           <ProfileCover src={profileData.cover || ''} />
           <ProfileBar />
+          <ProfileEditModal />
         </ContentsContainer>
         <SideBar isLeft={false}>
           <ChatSideBar />

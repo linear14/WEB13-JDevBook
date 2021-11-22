@@ -17,7 +17,8 @@ export const modalStateStore = atom({
       inPhoto: false,
       index: -1,
       isEnroll: true
-    }
+    },
+    editProfile: false
   }
 });
 
