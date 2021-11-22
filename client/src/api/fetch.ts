@@ -105,6 +105,12 @@ const fetchApi = {
     return getCommentsList;
   },
 
+  getCommentsNum: async (postidx: number) => {
+    const response = await fetch(`/api/comments/${postidx}`);
+    const getCommentsList = await response.json();
+    return getCommentsList.length;
+  },
+
   addComments: async (addComment: CommentData) => {
     const response = await fetch(`/api/comments`, {
       method: 'POST',

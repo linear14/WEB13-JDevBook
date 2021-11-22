@@ -32,11 +32,13 @@ const ChatSideBarContainer = styled.div<{
   rightModalFlag: boolean;
   messageFlag: boolean;
 }>`
+  position: fixed;
+  top: 56px;
+  right: 0;
   display: flex;
   flex-direction: column;
-  width: inherit;
-  height: ${(props) =>
-    props.rightModalFlag && props.messageFlag ? `inherit` : `0px`};
+  width: 340px;
+  height: calc(100% - 56px);
 
   visibility: ${(props) =>
     props.rightModalFlag && props.messageFlag ? `` : `hidden`};
@@ -52,7 +54,9 @@ const ChatSideBarContainer = styled.div<{
           ${CloseChatAnimation}
         `};
   animation-duration: 0.5s;
+  animation-fill-mode: forwards;
 
+  overscroll-behavior: none;
   background-color: ${palette.white};
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
 `;
@@ -214,6 +218,10 @@ const ChatSideBar = () => {
           messageList.concat(filteredMsgs)
         );
         socket.off('get previous chats');
+        document.querySelector('.chat-list')?.scrollBy({
+          top: document.querySelector('.chat-list')?.scrollHeight,
+          behavior: 'smooth'
+        });
       });
 
       socket.off('send chat initial');

@@ -2,7 +2,7 @@ import db from '../../models';
 
 import { toggleLikePosts, updateLikeNum } from './like';
 import { getPosts, addPost, updatePost, deletePost } from './post';
-import { getComments, addComment } from './comment';
+import { getComments, getCommentsNum, addComment } from './comment';
 import {
   getUserData,
   getAllUsers,
@@ -55,6 +55,7 @@ const dbManager = {
 
   addComment,
   getComments,
+  getCommentsNum,
 
   getProblems,
   insertSolvedProblem,

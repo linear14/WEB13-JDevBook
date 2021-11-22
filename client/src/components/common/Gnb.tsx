@@ -40,8 +40,10 @@ import {
 
 const GnbContainer = styled.div`
   width: 100%;
+  min-width: 720px;
   height: 56px;
-  position: fixed;
+  position: sticky;
+  top: 0;
   z-index: 1;
   display: flex;
   justify-content: space-between;
@@ -184,7 +186,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
       <FlexWrap>
         <Link to="/profile/1">
           <ProfileWrap>
-            <ProfilePhoto size="28px" />
+            <ProfilePhoto userName={userdata.name} size="28px" />
             <p>{userdata.name}</p>
           </ProfileWrap>
         </Link>

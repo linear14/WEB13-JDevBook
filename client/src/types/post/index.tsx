@@ -37,6 +37,9 @@ export interface PostFooterProps {
   likenum: number;
   commentFlag: boolean;
   setCommentFlag: React.Dispatch<boolean>;
+  postIdx: number;
+  commentsNum: number;
+  setCommentsNum: React.Dispatch<number>;
 }
 
 export interface PostImageInfo {

@@ -10,9 +10,6 @@ import {
   Gnb,
   SideBar,
   InfoSideBar,
-  ChatSideBar,
-  AlarmSideBar,
-  SelectorSideBar,
   GroupSideBar,
   InitUserData,
   InitSocket
@@ -26,18 +23,26 @@ const BodyColor = createGlobalStyle`
 
 const HomePageContainer = styled.div`
   display: flex;
-  justify-content: center;
-  padding-bottom: 56px;
+  flex-direction: column;
+`;
+
+const PageLayout = styled.div`
+  display: flex;
+  /* justify-content: space-between; */
 `;
 
 const PostContainer = styled.div`
-  position: relative;
-  top: 56px;
-  width: 680px;
+  width: calc(100vw - 680px);
+  min-width: 720px;
+  margin: 0 10px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 1380px) {
+    width: 100%;
+  }
 `;
 
 const HomePage = () => {
@@ -48,18 +53,17 @@ const HomePage = () => {
       <InitUserData />
       <InitSocket />
       <Gnb type="home" rightModalType="" />
-      <SideBar isLeft={true}>
-        <InfoSideBar />
-        <GroupSideBar />
-      </SideBar>
-      <PostContainer>
-        <PostWriter />
-        <PostList />
-      </PostContainer>
-      <SideBar isLeft={false}>
-        <ChatSideBar />
-      </SideBar>
-      {imageViewerState.isOpen && <ImageViewer />}
+      <PageLayout>
+        <SideBar isLeft={true}>
+          <InfoSideBar />
+          <GroupSideBar />
+        </SideBar>
+        <PostContainer>
+          <PostWriter />
+          <PostList />
+        </PostContainer>
+        {imageViewerState.isOpen && <ImageViewer />}
+      </PageLayout>
     </HomePageContainer>
   );
 };

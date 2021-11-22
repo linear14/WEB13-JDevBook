@@ -16,6 +16,14 @@ const getComments = async function (postidx: number) {
   return prevComments;
 };
 
+const getCommentsNum = async function (postidx: number) {
+  const commentsNum = await db.models.Comment.findAll({
+    where: { postidx: postidx },
+    logging: false
+  });
+  return commentsNum.length;
+};
+
 const addComment = async function (addComment: CommentData) {
   const user = await db.models.User.findOne({
     where: { nickname: addComment.sender },
@@ -30,4 +38,4 @@ const addComment = async function (addComment: CommentData) {
   return result.get();
 };
 
-export { getComments, addComment };
+export { getComments, getCommentsNum, addComment };

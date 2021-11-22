@@ -5,7 +5,8 @@ import { Socket } from 'socket.io-client';
 import { Alert } from 'types/common';
 import { IGroup } from 'types/group';
 import { PostData } from 'types/post';
-import { SolvedRates } from 'types/user';
+import { SolvedRates, IProfile } from 'types/user';
+import { ISolvedProblem } from 'types/problem';
 
 export const modalStateStore = atom({
   key: 'modalState',
@@ -123,7 +124,7 @@ export const alertState = atom<Alert>({
     modalState: false
   }
 });
-export const solvedProblemState = atom<number[]>({
+export const solvedProblemState = atom<ISolvedProblem[]>({
   key: 'solvedProblem',
   default: []
 });
@@ -138,7 +139,7 @@ export const rateState = atom<SolvedRates>({
   default: {
     prevRate: 0,
     solvedRate: 0,
-    problemCount: 0
+    totalProblemsCount: 0
   }
 });
 
@@ -166,3 +167,18 @@ export const uploadImgList = atom({
   key: 'uploadImgList',
   default: [] as string[]
 });
+
+export const profileState = atom<IProfile>({
+  key: 'profileState',
+  default: {
+    idx: 0,
+    nickname: '',
+    cover: '',
+    bio: ''
+  }
+});
+
+export const loginState = atom({
+  key: 'loginState',
+  default: [] as string[]
+})
