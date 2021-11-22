@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -64,10 +64,22 @@ const CoverImageEditBtn = styled.div`
 `;
 
 const ProfileCover = ({ src }: { src: string }) => {
+  const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   return (
     <ProfileCoverWrap imgsrc={src || defaultGroup}>
       {/* <img src={src || defaultGroup} alt="프로필 커버 이미지" /> */}
-      <CoverImageEditBtn>이미지 편집</CoverImageEditBtn>
+      <CoverImageEditBtn onClick={() => inputfile.current.click()}>
+        이미지 편집
+      </CoverImageEditBtn>
+      <input
+        type="file"
+        accept="image/*"
+        ref={inputfile}
+        // onChange={() => {
+        //   uploadOneFile(inputfile.current.files, isImgUploading);
+        // }}
+        style={{ display: 'none' }}
+      />
     </ProfileCoverWrap>
   );
 };
