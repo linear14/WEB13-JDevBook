@@ -13,6 +13,7 @@ import {
 import palette from 'theme/palette';
 import fetchApi from 'api/fetch';
 import useAlertModal from 'hooks/useAlertModal';
+import style from 'theme/style';
 
 const ModalAnimation = keyframes`
   0% {
@@ -48,7 +49,6 @@ const ImgUploadWrap = styled.div`
   background-color: ${palette.lightgray};
 
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   overflow-y: scroll;
@@ -139,24 +139,26 @@ const WhatWorkModal = styled.div`
 `;
 
 const ImgPreview = styled.div`
-  /* width: 300px;
-  height: 200px; */
-
   display: none;
-  flex-direction: row;
-  justify-content: center;
   align-items: center;
 
   div.imgset {
     display: flex;
-    flex-direction: row;
   }
 
   img {
-    width: 120px;
-    height: 100%;
-    max-height: 180px;
-    padding: 10px;
+    position: relative;
+    width: 146px;
+    height: 146px;
+    right: 14px;
+    object-fit: contain;
+    margin-right: 8px;
+    box-sizing: border-box;
+    padding: ${style.padding.smallest};
+
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 5px;
+    background-color: ${palette.white};
+    border-radius: 8px;
 
     &:hover {
       cursor: pointer;
@@ -175,14 +177,13 @@ const ImgPreview = styled.div`
 
 const CloseOneImg = styled.div<{ imgsrc: string | undefined }>`
   display: ${({ imgsrc }) => (imgsrc ? 'flex' : 'none')};
-  position: relative;
-  top: 10px;
-  left: 30px;
+  position: absolute;
+  margin: 6px 0 0 106px;
   z-index: 3;
 
   &:hover {
     cursor: pointer;
-    color: red;
+    color: ${palette.alert};
   }
   &:active {
     cursor: pointer;

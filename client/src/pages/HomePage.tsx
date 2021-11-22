@@ -61,8 +61,8 @@ const HomePage = () => {
           <PostWriter />
           <PostList />
         </PostContainer>
-        {imageViewerState.isOpen && <ImageViewer />}
       </PageLayout>
+      {imageViewerState.isOpen && <ImageViewer />}
     </HomePageContainer>
   );
 };
