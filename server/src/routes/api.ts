@@ -328,4 +328,17 @@ router.get(
   }
 );
 
+router.post(
+  '/profile/bio',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userName, bio } = req.body;
+      await dbManager.updateBio(userName, bio);
+      res.json(true);
+    } catch (err) {
+      res.json(false);
+    }
+  }
+);
+
 module.exports = router;
