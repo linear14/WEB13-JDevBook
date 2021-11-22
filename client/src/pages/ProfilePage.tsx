@@ -51,6 +51,17 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   const userData = useRecoilValue(userDataStates);
 
   useEffect(() => {
+    (async () => {
+      const { data: profile, error } = await fetchApi.getProfile(
+        match.params.username
+      );
+      if (!error) {
+        setImgsrc(profile.cover);
+      }
+    })();
+  }, [match.params.username]);
+
+  useEffect(() => {
     if (match.params.username === userData.name) setImgsrc(userData.cover);
   }, [userData.cover]);
 
