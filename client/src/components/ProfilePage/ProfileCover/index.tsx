@@ -63,13 +63,19 @@ const CoverImageEditBtn = styled.div`
   }
 `;
 
-const ProfileCover = ({ src, name }: { src: string; name: string }) => {
+const ProfileCover = ({
+  src,
+  profileName
+}: {
+  src: string;
+  profileName: string;
+}) => {
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const username = useRecoilValue(userDataStates).name;
   const alertMessage = useAlertModal();
 
   const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (username !== name)
+    if (username !== profileName)
       return alertMessage('프로필 소유자가 아닙니다.', palette.alert);
     inputfile.current.click();
   };
