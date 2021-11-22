@@ -80,6 +80,18 @@ const ProfileCover = ({
     inputfile.current.click();
   };
 
+  const uploadOneFile = () => {
+    const filelist: FileList | null = inputfile.current.files;
+    if (!filelist || filelist.length === 0)
+      return alertMessage('파일을 가져오지 못했습니다.', palette.alert);
+
+    if (filelist[0].type.match(/image\/*/) === null)
+      return alertMessage('이미지 파일이 아닙니다.', palette.alert);
+
+    const imglist: FileList = filelist; //inputfile.current.files;
+    alert(imglist);
+  };
+
   return (
     <ProfileCoverWrap imgsrc={src || defaultGroup}>
       {/* <img src={src || defaultGroup} alt="프로필 커버 이미지" /> */}
@@ -88,9 +100,7 @@ const ProfileCover = ({
         type="file"
         accept="image/*"
         ref={inputfile}
-        // onChange={() => {
-        //   uploadOneFile(inputfile.current.files, isImgUploading);
-        // }}
+        onChange={uploadOneFile}
         style={{ display: 'none' }}
       />
     </ProfileCoverWrap>
