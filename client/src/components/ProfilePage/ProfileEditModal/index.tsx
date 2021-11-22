@@ -94,7 +94,7 @@ const ProfileEditModal = () => {
 
   const saveBtnHandler = async (e: React.MouseEvent) => {
     if (bio.length !== 0) {
-      const result = await fetchApi.updateBio(profileData.nickname, bio);
+      const result = await fetchApi.updateBio(profileData.nickname, bio.trim());
       result
         ? alertMessage('성공적으로 수정되었습니다!')
         : alertMessage(
@@ -102,15 +102,32 @@ const ProfileEditModal = () => {
             palette.alert
           );
     }
-    setProfileData({ ...profileData, bio: bio });
+    setProfileData({ ...profileData, bio: bio.trim() });
     setModalState({ ...modalState, editProfile: false });
     setBio('');
+  };
+
+  const bioLengthCheck = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const maxLength = 100;
+
+    if (bio.length > maxLength) {
+      let contents = bio;
+      alertMessage(
+        `자기소개는 ${maxLength}글자를 넘을 수 없습니다.`,
+        palette.alert
+      );
+      while (contents.length > maxLength) {
+        contents = contents.slice(0, -1);
+      }
+      setBio(contents);
+    }
   };
 
   return (
     <EditModalWrap modalState={modalState.editProfile}>
       <BioArea
         onChange={inputContents}
+        onKeyUp={bioLengthCheck}
         value={bio}
         placeholder="자기소개를 적어주세요."
       />

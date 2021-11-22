@@ -21,6 +21,8 @@ const ProfileTitle = styled.div`
 `;
 
 const ProfileBio = styled.div`
+  box-sizing: border-box;
+  padding-right: ${style.padding.large};
   color: ${palette.black};
 `;
 

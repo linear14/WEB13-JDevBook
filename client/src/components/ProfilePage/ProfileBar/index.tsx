@@ -9,11 +9,11 @@ import ProfileEdit from 'components/ProfilePage/ProfileBar/ProfileEdit';
 import { useRecoilValue } from 'recoil';
 import { profileState, userDataStates } from 'recoil/store';
 
-const GroupNavContainer = styled.div`
+const ProfileBarContainer = styled.div`
   width: 100%;
   min-width: 720px;
   max-width: 908px;
-  height: 180px;
+  height: 204px;
   box-sizing: border-box;
   padding: 28px;
 
@@ -30,11 +30,11 @@ const ProfileBar = () => {
   const profileData = useRecoilValue(profileState);
 
   return (
-    <GroupNavContainer>
+    <ProfileBarContainer>
       <ProfilePhoto userName={profileData.nickname} />
       <ProfileInfo />
       <ProfileEdit />
-    </GroupNavContainer>
+    </ProfileBarContainer>
   );
 };
 
