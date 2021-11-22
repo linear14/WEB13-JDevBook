@@ -11,13 +11,16 @@ import {
   ChatSideBar,
   GroupSideBar,
   InitUserData,
-  InitSocket
+  InitSocket,
+  LoadingModal
 } from 'components/common';
 import {
   ProfileBar,
   ProfileCover,
   InitProfileData
 } from 'components/ProfilePage';
+import { useRecoilValue } from 'recoil';
+import { profileState } from 'recoil/store';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -48,12 +51,15 @@ const ContentsContainer = styled.div<{ contentsState: boolean }>`
 const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   match
 }) => {
+  const profileData = useRecoilValue(profileState);
+
   return (
     <ProfilePageContainer>
       <GlobalStyle />
       <InitUserData />
       <InitProfileData userName={match.params.username} />
       <InitSocket />
+      <LoadingModal modalState={profileData.idx === 0} />
       <Gnb />
       <PageLayout>
         <SideBar isLeft={true}>
@@ -61,7 +67,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
           <GroupSideBar />
         </SideBar>
         <ContentsContainer contentsState={true}>
-          <ProfileCover src="" />
+          <ProfileCover src={profileData.cover || ''} />
           <ProfileBar />
         </ContentsContainer>
         <SideBar isLeft={false}>

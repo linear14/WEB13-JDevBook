@@ -30,8 +30,10 @@ const ProfileInfo = () => {
 
   return (
     <ProfileInfoWrap>
-      <ProfileTitle>유저명</ProfileTitle>
-      <ProfileBio>안녕하세요 유저명입니다.</ProfileBio>
+      <ProfileTitle>{profileData.nickname}</ProfileTitle>
+      <ProfileBio>
+        {profileData.bio || '프로필 편집을 눌러 자기소개를 입력해보세요!'}
+      </ProfileBio>
     </ProfileInfoWrap>
   );
 };

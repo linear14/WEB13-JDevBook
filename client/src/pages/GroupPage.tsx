@@ -91,9 +91,7 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
           <About />
           <ProblemList groupIdx={Number(match.params.groupidx)} />
         </ContentsContainer>
-        {/* <SideBar isLeft={false}> */}
         <GroupChat groupIdx={Number(match.params.groupidx)} />
-        {/* </SideBar> */}
       </PageLayout>
     </GroupPageContainer>
   );

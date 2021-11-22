@@ -7,6 +7,8 @@ import style from 'theme/style';
 import ProfileInfo from 'components/ProfilePage/ProfileBar/ProfileInfo';
 import ProfilePhoto from 'components/ProfilePage/ProfileBar/ProfilePhoto';
 import ProfileEdit from 'components/ProfilePage/ProfileBar/ProfileEdit';
+import { useRecoilValue } from 'recoil';
+import { profileState } from 'recoil/store';
 
 const GroupNavContainer = styled.div`
   width: 100%;
@@ -26,9 +28,11 @@ const GroupNavContainer = styled.div`
 `;
 
 const ProfileBar = () => {
+  const profileData = useRecoilValue(profileState);
+
   return (
     <GroupNavContainer>
-      <ProfilePhoto userName="shinn338" />
+      <ProfilePhoto userName={profileData.nickname} />
       <ProfileInfo />
       <ProfileEdit />
     </GroupNavContainer>
