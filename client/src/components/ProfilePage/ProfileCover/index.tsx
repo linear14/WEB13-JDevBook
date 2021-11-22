@@ -91,7 +91,11 @@ const ProfileCover = ({
     const imglist: FileList = filelist; //inputfile.current.files;
     const s3fileRes = await fetchApi.uploadImg(imglist);
 
-    if (!s3fileRes.save) return alertMessage('이미지 업로드 실패');
+    if (!s3fileRes.save) {
+      if (s3fileRes.file)
+        return alertMessage('이미지 업로드 실패', palette.alert);
+      else return alertMessage('1MB 이하만 가능합니다.', palette.alert);
+    }
 
     const { check } = await fetchApi.updateProfile({
       idx: userData.idx,
