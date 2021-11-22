@@ -184,7 +184,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
         </Link>
       </FlexWrap>
       <FlexWrap>
-        <Link to="/profile/1">
+        <Link to={`/profile/${userdata.name}`}>
           <ProfileWrap>
             <ProfilePhoto userName={userdata.name} size="28px" />
             <p>{userdata.name}</p>
