@@ -40,7 +40,7 @@ const PostContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  @media screen and (max-width: 1380px) {
+  @media screen and (max-width: 1040px) {
     width: 100%;
   }
 `;

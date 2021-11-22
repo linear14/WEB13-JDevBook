@@ -16,7 +16,7 @@ const SideBarContainer = styled.div<SideBarProps>`
   ${(props) =>
     props.isLeft
       ? css`
-          @media screen and (max-width: 1380px) {
+          @media screen and (max-width: 1040px) {
             display: none;
           }
         `
