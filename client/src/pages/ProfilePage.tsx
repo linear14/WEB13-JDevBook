@@ -13,7 +13,11 @@ import {
   InitUserData,
   InitSocket
 } from 'components/common';
-import { ProfileBar, ProfileCover } from 'components/ProfilePage';
+import {
+  ProfileBar,
+  ProfileCover,
+  InitProfileData
+} from 'components/ProfilePage';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -47,6 +51,8 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   return (
     <ProfilePageContainer>
       <GlobalStyle />
+      <InitUserData />
+      <InitProfileData userName={match.params.username} />
       <InitSocket />
       <Gnb />
       <PageLayout>

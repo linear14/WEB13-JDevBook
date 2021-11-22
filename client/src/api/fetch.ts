@@ -157,6 +157,11 @@ const fetchApi = {
       method: 'POST'
     });
     return await response.json();
+  },
+
+  getProfile: async (userName: string) => {
+    const response = await fetch(`/api/profile/${userName}`);
+    return await response.json();
   }
 };
 

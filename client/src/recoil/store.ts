@@ -173,12 +173,12 @@ export const profileState = atom<IProfile>({
   default: {
     idx: 0,
     nickname: '',
-    cover: '',
-    bio: ''
+    cover: null,
+    bio: null
   }
 });
 
 export const loginState = atom({
   key: 'loginState',
   default: [] as string[]
-})
+});
