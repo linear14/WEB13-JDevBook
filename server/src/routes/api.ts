@@ -11,7 +11,7 @@ import {
   CommentData,
   IProfile
 } from '../types/interface';
-import { upload } from '../service/objectStorage';
+import { upload, uploadFile } from '../service/objectStorage';
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
@@ -216,12 +216,11 @@ router.post(
 
 router.post(
   '/uploadimg',
-  upload.single('imgfile'), // multer-s3 location 추가됨
+  uploadFile, // file 크기 제한 에러핸들링, multer-s3 location 추가됨
   async (req: Request, res: Response, next: NextFunction) => {
     const s3file = req.file;
     if (s3file) res.json({ file: s3file, save: true });
-    else res.json({ save: false });
-    // type 생각하면 형식 똑같이 해야되나?
+    else res.json({ file: true, save: false });
   }
 );
 
