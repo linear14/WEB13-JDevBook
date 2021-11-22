@@ -84,8 +84,11 @@ const PostList = () => {
   };
 
   useEffect(() => {
-    setPosts([]);
     fetchInit();
+
+    return (() => {
+      setPosts([]);
+    })
   }, []);
 
   const getNextProblem = (idx: number) => {
