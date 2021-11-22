@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Children } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -65,12 +65,16 @@ const CoverImageEditBtn = styled.div`
 
 const ProfileCover = ({ src }: { src: string }) => {
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const username = useRecoilValue(userDataStates).name;
+
+  const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
+    inputfile.current.click();
+  };
+
   return (
     <ProfileCoverWrap imgsrc={src || defaultGroup}>
       {/* <img src={src || defaultGroup} alt="프로필 커버 이미지" /> */}
-      <CoverImageEditBtn onClick={() => inputfile.current.click()}>
-        이미지 편집
-      </CoverImageEditBtn>
+      <CoverImageEditBtn onClick={openFileModal}>이미지 편집</CoverImageEditBtn>
       <input
         type="file"
         accept="image/*"
