@@ -43,6 +43,13 @@ const limits = {
 
 export const upload = multer({ storage: storageS3, limits: limits });
 
+export const uploadFile = (req: Request, res: Response, next: NextFunction) => {
+  upload.single('imgfile')(req, res, (err) => {
+    if (err) return res.json({ file: false, save: false });
+    else next();
+  });
+};
+
 export const objectStorage = {
   makeBucket: async (bucket_name: string) => {
     await S3.createBucket({
