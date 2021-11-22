@@ -6,6 +6,7 @@ import palette from 'theme/palette';
 import ProfileInfo from 'components/ProfilePage/ProfileBar/ProfileInfo';
 import ProfilePhoto from 'components/ProfilePage/ProfileBar/ProfilePhoto';
 import ProfileEdit from 'components/ProfilePage/ProfileBar/ProfileEdit';
+import ProfileEditModal from 'components/ProfilePage/ProfileEditModal';
 import { useRecoilValue } from 'recoil';
 import { profileState, userDataStates } from 'recoil/store';
 
@@ -34,6 +35,7 @@ const ProfileBar = () => {
       <ProfilePhoto userName={profileData.nickname} />
       <ProfileInfo />
       <ProfileEdit />
+      <ProfileEditModal />
     </ProfileBarContainer>
   );
 };

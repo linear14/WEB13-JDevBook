@@ -48,6 +48,8 @@ const ModalAnimation = keyframes`
 const PostWriterModalInner = styled.div<{ modalState: boolean }>`
   position: fixed;
   top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 600px;
   box-sizing: border-box;
   padding: 20px;

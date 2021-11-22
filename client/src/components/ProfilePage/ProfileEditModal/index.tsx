@@ -18,11 +18,11 @@ const EditModalAnimation = keyframes`
 `;
 
 const EditModalWrap = styled.div<{ modalState: boolean }>`
-  position: relative;
-  top: -244px;
-  left: 312px;
+  position: absolute;
   box-sizing: border-box;
   padding: ${style.padding.normal};
+  margin-left: 508px;
+  margin-top: -88px;
 
   background-color: ${palette.white};
   border-radius: 8px;

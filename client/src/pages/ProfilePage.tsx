@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 
-import { profileState } from 'recoil/store';
+import { profileState, userDataStates } from 'recoil/store';
 import palette from 'theme/palette';
 
 import {
@@ -16,11 +16,11 @@ import {
   InitSocket,
   LoadingModal
 } from 'components/common';
+import { PostWriter } from 'components/HomePage';
 import {
   ProfileBar,
   ProfileCover,
-  InitProfileData,
-  ProfileEditModal
+  InitProfileData
 } from 'components/ProfilePage';
 
 const GlobalStyle = createGlobalStyle`
@@ -40,7 +40,7 @@ const PageLayout = styled.div`
 `;
 
 const ContentsContainer = styled.div<{ contentsState: boolean }>`
-  width: 100%;
+  width: calc(100vw - 680px);
   min-width: 720px;
   margin: 0 10px;
 
@@ -49,11 +49,39 @@ const ContentsContainer = styled.div<{ contentsState: boolean }>`
   align-items: center;
 `;
 
+const InnerContainer = styled.div`
+  width: 100%;
+  min-width: 720px;
+  max-width: 908px;
+  flex: 1;
+
+  display: flex;
+`;
+
+const InfoContainer = styled.div`
+  width: 40%;
+  box-sizing: border-box;
+  padding-right: 6px;
+`;
+
+const PostContainer = styled.div`
+  width: 60%;
+  box-sizing: border-box;
+  padding-left: 6px;
+`;
+
 const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   match
 }) => {
+  const userData = useRecoilValue(userDataStates);
   const profileData = useRecoilValue(profileState);
   const resetProfileData = useResetRecoilState(profileState);
+  const [myProfile, setMyProfile] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (userData.name === profileData.nickname) setMyProfile(true);
+    else setMyProfile(false);
+  }, [profileData]);
 
   useEffect(() => {
     return () => resetProfileData();
@@ -75,7 +103,10 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
         <ContentsContainer contentsState={true}>
           <ProfileCover src={profileData.cover || ''} />
           <ProfileBar />
-          <ProfileEditModal />
+          <InnerContainer>
+            <InfoContainer></InfoContainer>
+            <PostContainer>{myProfile ? <PostWriter /> : ''}</PostContainer>
+          </InnerContainer>
         </ContentsContainer>
         <SideBar isLeft={false}>
           <ChatSideBar />

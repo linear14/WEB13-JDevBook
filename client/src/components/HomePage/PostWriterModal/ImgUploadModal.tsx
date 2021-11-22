@@ -26,7 +26,7 @@ const ModalAnimation = keyframes`
 
 const ImgUploadContainer = styled.div<{ modalState: boolean }>`
   position: fixed;
-  top: 360px;
+  top: 260px;
   width: 532px;
   height: 200px;
   box-sizing: border-box;
