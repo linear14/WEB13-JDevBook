@@ -89,7 +89,7 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
           <About />
           <ProblemList groupIdx={Number(match.params.groupidx)} />
         </ContentsContainer>
-        {groupNavState.groupChat ? <GroupChat groupIdx={Number(match.params.groupidx)} /> : ''}
+        <GroupChat groupIdx={Number(match.params.groupidx)} />
       </PageLayout>
     </GroupPageContainer>
   );
