@@ -165,6 +165,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
     useRecoilState(rightModalStates);
   const [groupNavState, setGroupNavState] = useRecoilState(GroupNavState);
   const history = useHistory();
+  const profileURL = `/profile/${userdata.name}`;
 
   return (
     <GnbContainer>
@@ -184,7 +185,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
         </Link>
       </FlexWrap>
       <FlexWrap>
-        <Link to="/profile/1">
+        <Link to={profileURL}>
           <ProfileWrap>
             <ProfilePhoto userName={userdata.name} size="28px" />
             <p>{userdata.name}</p>
