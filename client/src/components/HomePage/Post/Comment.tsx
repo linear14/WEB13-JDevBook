@@ -101,10 +101,12 @@ const Comment = ({
       );
 
       socket.emit('send number of comments notify', { postidx: postIdx });
-      socket.on('get number of comments', (commentsNum) => {
-        setCommentsNum(commentsNum);
-        socket.off('get number of comments');
-      });
+      socket.off('get number of comments');
+      socket.on('get number of comments', (data:{postidx:number, commentsNum:number}) => {
+        const { postidx, commentsNum } = data;
+        if(postIdx === postidx)
+          setCommentsNum(commentsNum);
+    });
     }
   };
 
