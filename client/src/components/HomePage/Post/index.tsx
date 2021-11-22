@@ -118,8 +118,8 @@ const Post = ({ post }: { post: PostData }) => {
   const [likeFlag, setLikeFlag] = useState<boolean>(false);
   const [likeNum, setLikeNum] = useState<number>(0);
   const [commentFlag, setCommentFlag] = useState<boolean>(false);
-  const [commentsNum, setCommentsNum] = useState<number>(0);
-
+  const [commentsNum, setCommentsNum] = useState<number>(post.commentnum);
+  
   const {
     idx: postIdx,
     secret,
@@ -146,15 +146,7 @@ const Post = ({ post }: { post: PostData }) => {
     post.likeFlag ? setLikeFlag(true) : setLikeFlag(false);
     setLikeNum(post.likenum);
   }, []);
-
-  useEffect(() => {
-    async function getNumberOfComments(postidx: number) {
-      const numberOfComments = await fetchApi.getCommentsNum(postidx);
-      setCommentsNum(numberOfComments);
-    }
-    getNumberOfComments(postIdx);
-  }, [commentsNum]);
-
+  
   return (
     <PostContainer>
       {postUserIdx === myIdx && (
