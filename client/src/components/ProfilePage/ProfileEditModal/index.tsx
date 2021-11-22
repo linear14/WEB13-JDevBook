@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { modalStateStore } from 'recoil/store';
+import { modalStateStore, profileState, userDataStates } from 'recoil/store';
 import palette from 'theme/palette';
 import style from 'theme/style';
 import useAlertModal from 'hooks/useAlertModal';
+import fetchApi from 'api/fetch';
 
 const EditModalAnimation = keyframes`
   0% {
@@ -82,7 +83,9 @@ const SaveBtn = styled.div`
 `;
 
 const ProfileEditModal = () => {
+  const [profileData, setProfileData] = useRecoilState(profileState);
   const [modalState, setModalState] = useRecoilState(modalStateStore);
+  const userData = useRecoilValue(userDataStates);
   const [bio, setBio] = useState<string>('');
   const alertMessage = useAlertModal();
 
@@ -90,8 +93,17 @@ const ProfileEditModal = () => {
     setBio(e.target.value);
   };
 
-  const saveBtnHandler = (e: React.MouseEvent) => {
-    if (bio.length !== 0) alertMessage('성공적으로 수정되었습니다!');
+  const saveBtnHandler = async (e: React.MouseEvent) => {
+    if (bio.length !== 0) {
+      const result = await fetchApi.updateBio(profileData.nickname, bio);
+      result
+        ? alertMessage('성공적으로 수정되었습니다!')
+        : alertMessage(
+            '알 수 없는 이유로 수정에 실패하였습니다.',
+            palette.alert
+          );
+    }
+    setProfileData({ ...profileData, bio: bio });
     setModalState({ ...modalState, editProfile: false });
     setBio('');
   };
@@ -101,7 +113,7 @@ const ProfileEditModal = () => {
       <BioArea
         onChange={inputContents}
         value={bio}
-        placeholder="자기소개를 적어주세요"
+        placeholder="자기소개를 적어주세요."
       />
       <SaveBtn onClick={saveBtnHandler}>저장</SaveBtn>
     </EditModalWrap>

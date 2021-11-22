@@ -162,6 +162,18 @@ const fetchApi = {
   getProfile: async (userName: string) => {
     const response = await fetch(`/api/profile/${userName}`);
     return await response.json();
+  },
+
+  updateBio: async (userName: string, bio: string) => {
+    const response = await fetch(`/api/profile/bio`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userName: userName, bio: bio })
+    });
+
+    return await response.json();
   }
 };
 
