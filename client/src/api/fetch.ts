@@ -172,6 +172,7 @@ const fetchApi = {
   },
 
   getProfile: async (userName: string) => {
+    // { data: userdata, error: false }
     const response = await fetch(`/api/users/${userName}`);
     return await response.json();
   }
