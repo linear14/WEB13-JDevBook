@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import palette from 'theme/palette';
-import style from 'theme/style';
 
 import ProfileInfo from 'components/ProfilePage/ProfileBar/ProfileInfo';
 import ProfilePhoto from 'components/ProfilePage/ProfileBar/ProfilePhoto';
