@@ -10,9 +10,6 @@ import {
   Gnb,
   SideBar,
   InfoSideBar,
-  ChatSideBar,
-  AlarmSideBar,
-  SelectorSideBar,
   GroupSideBar,
   InitUserData,
   InitSocket
@@ -56,9 +53,6 @@ const HomePage = () => {
         <PostWriter />
         <PostList />
       </PostContainer>
-      <SideBar isLeft={false}>
-        <ChatSideBar />
-      </SideBar>
       {imageViewerState.isOpen && <ImageViewer />}
     </HomePageContainer>
   );

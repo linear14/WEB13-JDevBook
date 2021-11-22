@@ -11,7 +11,6 @@ import {
   Gnb,
   SideBar,
   InfoSideBar,
-  ChatSideBar,
   GroupSideBar,
   InitUserData,
   InitSocket,
@@ -83,7 +82,6 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
         <ProblemList groupIdx={Number(match.params.groupidx)} />
       </ContentsContainer>
       <SideBar isLeft={false}>
-        <ChatSideBar />
         <GroupChat groupIdx={Number(match.params.groupidx)} />
       </SideBar>
     </GroupPageContainer>

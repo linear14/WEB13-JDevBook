@@ -4,7 +4,6 @@ import { IUserSocket } from '../types/interface';
 
 const UserObj: IUserSocket = {};
 
-
 const socketIO = (server: any) => {
   const io = new Server(server);
   io.on('connection', (socket: Socket) => {
@@ -13,10 +12,13 @@ const socketIO = (server: any) => {
     // });
 
     // 유저 접속 부분
-    socket.on('login notify', async (userData:{socketId:string, userName: string}) => {
-      UserObj[userData.socketId] = userData.userName;
-      io.emit('get current users', UserObj);
-    });
+    socket.on(
+      'login notify',
+      async (userData: { socketId: string; userName: string }) => {
+        UserObj[userData.socketId] = userData.userName;
+        io.emit('get current users', UserObj);
+      }
+    );
 
     // 1:1 채팅 이전 메시지 가져오는 부분
     socket.on('send chat initial', async (receivedData) => {
@@ -50,24 +52,19 @@ const socketIO = (server: any) => {
       }
     });
 
-
     socket.on('post_added', () => {
       socket.broadcast.emit('post_added');
     });
 
-
     // 그룹 유저들 가져오는 부분
-    // socket.on('asd', (dd) => {
-    //   console.log(dd);
-    //   const asd = dbManager.getGroupUsers(dd.groupidx); 
-    //   console.log(asd);
-    // })
-    socket.on('enter group notify', async(receivedData) => {
-      const {groupidx} = receivedData;
+    socket.on('enter group notify', async (receivedData) => {
+      const { groupidx } = receivedData;
       const getGroupUsersIdx = await dbManager.getGroupUsers(groupidx);
-      const getGroupUsersName = await dbManager.getGroupUsersName(getGroupUsersIdx);
+      const getGroupUsersName = await dbManager.getGroupUsersName(
+        getGroupUsersIdx
+      );
       io.emit('get group users', getGroupUsersName);
-    })
+    });
 
     socket.on('send group message', async (receivedData) => {
       const { sender, groupidx, message } = receivedData;
@@ -78,7 +75,7 @@ const socketIO = (server: any) => {
         sender: sender,
         groupidx: groupidx,
         msg: msg
-      })
+      });
     });
 
     socket.on('send group chat initial', async (receivedData) => {
@@ -93,6 +90,11 @@ const socketIO = (server: any) => {
       io.to(socket.id).emit('get previous group chats', filteredMsgs);
     });
 
+    socket.on('send number of comments notify', async (receivedData) => {
+      const { postidx } = receivedData;
+      const commentsNum = await dbManager.getCommentsNum(postidx);
+      io.emit('get number of comments', commentsNum);
+    });
 
     // 유저 로그아웃 부분
     socket.on('disconnect', () => {

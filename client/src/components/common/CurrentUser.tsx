@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { usersocketStates, userDataStates, chatWith } from 'recoil/store';
+import { usersocketStates, userDataStates, chatWith, loginState } from 'recoil/store';
 
 import getData from 'api/fetch';
 import { defaultProfile } from 'images';
@@ -19,6 +19,7 @@ const CurrentUserWrapper = styled.div`
 
   overflow-x: hidden;
   overflow-y: scroll;
+  overscroll-behavior: none;
 
   &::-webkit-scrollbar {
     display: none;
@@ -66,7 +67,7 @@ const CurrentUser = () => {
   const [chatReceiver, setChatWith] = useRecoilState(chatWith);
   const currentUserName = useRecoilValue(userDataStates).name;
   const [usersLoginState, setUsersLoginState] = useState<UserSocket>({});
-  const [loginStateArray, setLoginStateArray] = useState<string[]>();
+  const [loginStateArray, setLoginStateArray] = useRecoilState(loginState);
 
   useEffect(() => {
     const fetchJob = setTimeout(async () => {
