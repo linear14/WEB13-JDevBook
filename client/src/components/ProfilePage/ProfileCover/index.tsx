@@ -9,28 +9,65 @@ import useAlertModal from 'hooks/useAlertModal';
 import fetchApi from 'api/fetch';
 import { defaultGroup } from 'images/groupimg';
 
-const ProfileCoverWrap = styled.div`
+const ProfileCoverWrap = styled.div<{ imgsrc: string }>`
   width: 100%;
   min-width: 720px;
   max-width: 908px;
   height: 320px;
+  background-image: url(${({ imgsrc }) => imgsrc});
+  background-size: cover; // 100% 320px;
 
   display: flex;
+  //flex-direction: column;
   justify-content: flex-end;
 
-  img {
+  /* img {
     width: 100%;
     min-width: 720px;
     max-width: 908px;
     height: 320px;
     object-fit: cover;
+  } */
+`;
+
+const CoverImageEditBtn = styled.div`
+  /* position: absolute;
+  top: 45vh;
+  left: 70vw; */
+  /* position: fixed;
+  right: 10%; */
+  position: relative;
+  top: 80%;
+  right: 2.8%;
+  width: 120px;
+  height: 20px;
+  margin-right: 40px;
+  padding: 8px ${style.padding.normal};
+
+  border-radius: 8px;
+  background-color: ${palette.blue};
+  color: ${palette.white};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(95%);
+  }
+
+  &:active {
+    filter: brightness(90%);
+    font-size: 15px;
   }
 `;
 
 const ProfileCover = ({ src }: { src: string }) => {
   return (
-    <ProfileCoverWrap>
-      <img src={src || defaultGroup} alt="프로필 커버 이미지" />
+    <ProfileCoverWrap imgsrc={src || defaultGroup}>
+      {/* <img src={src || defaultGroup} alt="프로필 커버 이미지" /> */}
+      <CoverImageEditBtn>이미지 편집</CoverImageEditBtn>
     </ProfileCoverWrap>
   );
 };
