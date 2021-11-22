@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
-import { modalStateStore, profileState, userDataStates } from 'recoil/store';
+import { modalStateStore, profileState } from 'recoil/store';
 import palette from 'theme/palette';
 import style from 'theme/style';
 import useAlertModal from 'hooks/useAlertModal';
@@ -58,14 +58,20 @@ const BioArea = styled.textarea`
   }
 `;
 
-const SaveBtn = styled.div`
-  width: 80px;
+const BtnWrap = styled.div`
+  display: flex;
+`;
+
+const StyledBtn = styled.div<{ saveBtn: boolean }>`
+  width: 60px;
   height: 20px;
   padding: 8px ${style.padding.normal};
+  margin: 0 ${style.margin.smallest};
 
   border-radius: 8px;
-  background-color: ${palette.green};
-  color: ${palette.white};
+  background-color: ${(props) =>
+    props.saveBtn ? palette.green : palette.gray};
+  color: ${(props) => (props.saveBtn ? palette.white : palette.black)};
 
   display: flex;
   justify-content: center;
@@ -101,10 +107,17 @@ const ProfileEditModal = () => {
             '알 수 없는 이유로 수정에 실패하였습니다.',
             palette.alert
           );
+    } else {
+      return alertMessage('내용을 입력하세요.', palette.alert);
     }
     setProfileData({ ...profileData, bio: bio.trim() });
-    setModalState({ ...modalState, editProfile: false });
     setBio('');
+    setModalState({ ...modalState, editProfile: false });
+  };
+
+  const cancelBtnHandler = (e: React.MouseEvent) => {
+    setBio('');
+    setModalState({ ...modalState, editProfile: false });
   };
 
   const bioLengthCheck = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -131,7 +144,14 @@ const ProfileEditModal = () => {
         value={bio}
         placeholder="자기소개를 적어주세요."
       />
-      <SaveBtn onClick={saveBtnHandler}>저장</SaveBtn>
+      <BtnWrap>
+        <StyledBtn onClick={saveBtnHandler} saveBtn={true}>
+          저장
+        </StyledBtn>
+        <StyledBtn onClick={cancelBtnHandler} saveBtn={false}>
+          취소
+        </StyledBtn>
+      </BtnWrap>
     </EditModalWrap>
   );
 };
