@@ -70,7 +70,7 @@ const PostList = ({ username }: { username: string }) => {
     return () => {
       setPosts([]);
     };
-  }, []);
+  }, [username]);
 
   return (
     <>
