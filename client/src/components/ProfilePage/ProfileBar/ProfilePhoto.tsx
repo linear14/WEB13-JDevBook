@@ -30,7 +30,11 @@ const ProfilePhoto = ({ userName }: { userName: string }) => {
 
   return (
     <ProfilePhotoWrap>
-      <StyledProfilePhoto src={profileImgURL} alt="프로필 사진" />
+      <StyledProfilePhoto
+        src={profileImgURL}
+        alt="프로필 사진"
+        className="no-drag"
+      />
     </ProfilePhotoWrap>
   );
 };

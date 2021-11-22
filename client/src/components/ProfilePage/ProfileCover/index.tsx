@@ -23,7 +23,11 @@ const ProfileCoverWrap = styled.div`
 const ProfileCover = ({ src }: { src: string }) => {
   return (
     <ProfileCoverWrap>
-      <img src={src || defaultGroup} alt="프로필 커버 이미지" />
+      <img
+        src={src || defaultGroup}
+        alt="프로필 커버 이미지"
+        className="no-drag"
+      />
     </ProfileCoverWrap>
   );
 };

@@ -31,7 +31,7 @@ const ProfileInfo = () => {
   return (
     <ProfileInfoWrap>
       <ProfileTitle>{profileData.nickname}</ProfileTitle>
-      <ProfileBio>
+      <ProfileBio className="no-drag">
         {profileData.bio || '프로필 편집을 눌러 자기소개를 입력해보세요!'}
       </ProfileBio>
     </ProfileInfoWrap>
