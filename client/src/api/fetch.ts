@@ -171,7 +171,10 @@ const fetchApi = {
     return await response.json();
   },
 
-  getUserData: async (userName: string) => {}
+  getProfile: async (userName: string) => {
+    const response = await fetch(`/api/users/${userName}`);
+    return await response.json();
+  }
 };
 
 export default fetchApi;
