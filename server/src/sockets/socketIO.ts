@@ -93,7 +93,10 @@ const socketIO = (server: any) => {
     socket.on('send number of comments notify', async (receivedData) => {
       const { postidx } = receivedData;
       const commentsNum = await dbManager.getCommentsNum(postidx);
-      io.emit('get number of comments', commentsNum);
+      io.emit('get number of comments', {
+        postidx: postidx,
+        commentsNum: commentsNum
+      });
     });
 
     // 유저 로그아웃 부분
