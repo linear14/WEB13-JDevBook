@@ -38,7 +38,7 @@ const CoverImageEditBtn = styled.div`
   right: 10%; */
   position: relative;
   top: 80%;
-  right: 2.8%;
+  right: 28px;
   width: 120px;
   height: 20px;
   margin-right: 40px;
@@ -93,8 +93,6 @@ const ProfileCover = ({
 
     if (!s3fileRes.save) return alertMessage('이미지 업로드 실패');
 
-    // fetch, db 건들고 userdata 업데이트 하고
-    // src는 해당 유저 getUserData도 만들어야겠네
     const { check } = await fetchApi.updateProfile({
       idx: userData.idx,
       nickname: userData.name,
