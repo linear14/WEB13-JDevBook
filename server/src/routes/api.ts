@@ -83,17 +83,24 @@ router.get(
 router.get(
   '/posts',
   async (
-    req: Request<{}, {}, {}, { lastIdx: number; count: number }>,
+    req: Request<
+      {},
+      {},
+      {},
+      { lastIdx: number; count: number; username: string }
+    >,
     res: Response,
     next: NextFunction
   ) => {
     try {
       const myIdx = req.session.useridx;
-      const { lastIdx, count } = req.query;
+      const { lastIdx, count, username } = req.query;
+      const userIdx = username ? await dbManager.getUseridx(username) : null;
       const posts = await dbManager.getPosts(
         myIdx,
         Number(lastIdx),
-        Number(count)
+        Number(count),
+        userIdx
       );
       res.json(posts);
     } catch (err) {
