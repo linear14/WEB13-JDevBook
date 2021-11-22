@@ -80,7 +80,7 @@ const GroupJoinBtn = styled.div`
 
 const GroupEnterBtn = styled(Link)`
   width: 100%;
-  height: 30px;
+  height: 35px;
 
   border-radius: 8px;
   background-color: ${palette.green};
