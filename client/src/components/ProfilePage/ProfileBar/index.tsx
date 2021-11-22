@@ -25,11 +25,11 @@ const GroupNavContainer = styled.div`
   display: flex;
 `;
 
-const ProfileBar = () => {
+const ProfileBar = ({ profileName }: { profileName: string }) => {
   return (
     <GroupNavContainer>
-      <ProfilePhoto userName="shinn338" />
-      <ProfileInfo />
+      <ProfilePhoto userName={profileName} />
+      <ProfileInfo userName={profileName} />
       <ProfileEdit />
     </GroupNavContainer>
   );

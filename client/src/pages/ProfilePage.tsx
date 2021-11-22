@@ -57,7 +57,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
         </SideBar>
         <ContentsContainer contentsState={true}>
           <ProfileCover src="" profileName={`${match.params.username}`} />
-          <ProfileBar />
+          <ProfileBar profileName={`${match.params.username}`} />
         </ContentsContainer>
         <SideBar isLeft={false}>
           <ChatSideBar />
