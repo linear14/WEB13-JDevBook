@@ -71,16 +71,16 @@ const ProfileCover = ({
   profileName: string;
 }) => {
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const username = useRecoilValue(userDataStates).name;
+  const [userData, setUserData] = useRecoilState(userDataStates);
   const alertMessage = useAlertModal();
 
   const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (username !== profileName)
+    if (userData.name !== profileName)
       return alertMessage('프로필 소유자가 아닙니다.', palette.alert);
     inputfile.current.click();
   };
 
-  const uploadOneFile = () => {
+  const uploadOneFile = async () => {
     const filelist: FileList | null = inputfile.current.files;
     if (!filelist || filelist.length === 0)
       return alertMessage('파일을 가져오지 못했습니다.', palette.alert);
@@ -89,7 +89,9 @@ const ProfileCover = ({
       return alertMessage('이미지 파일이 아닙니다.', palette.alert);
 
     const imglist: FileList = filelist; //inputfile.current.files;
-    alert(imglist);
+    const s3fileRes = await fetchApi.uploadImg(imglist);
+
+    if (!s3fileRes.save) return alertMessage('이미지 업로드 실패');
   };
 
   return (
