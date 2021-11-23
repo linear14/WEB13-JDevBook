@@ -67,13 +67,13 @@ const InnerContainer = styled.div`
 const InfoContainer = styled.div`
   width: 100%;
   box-sizing: border-box;
-  padding-right: 6px;
+  padding-right: 12px;
 `;
 
 const PostContainer = styled.div`
   width: 544px;
   box-sizing: border-box;
-  padding-left: 6px;
+  padding-left: 12px;
 `;
 
 const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
@@ -91,7 +91,9 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   }, [profileData, userData]);
 
   useEffect(() => {
-    return () => resetProfileData();
+    return () => {
+      resetProfileData();
+    };
   }, []);
 
   const [imgsrc, setImgsrc] = useState('');
