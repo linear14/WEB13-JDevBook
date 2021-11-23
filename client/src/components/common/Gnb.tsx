@@ -8,7 +8,8 @@ import {
   rightModalStates,
   solvedProblemState,
   userDataStates,
-  GroupNavState
+  GroupNavState,
+  alarmState
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 import {
@@ -157,6 +158,21 @@ const IconWrap = styled.div<IconProps>`
   }
 `;
 
+const AlarmBadge = styled.div`
+  position:absolute;
+  top:13px;
+  right:71px;
+
+  width:12px;
+  line-height:12px;
+  border-radius: 100%;
+  text-align: center;
+  
+  background-color: red;
+  color: white;
+  font-size: 8px;
+`;
+
 const Gnb = ({ type, rightModalType }: GnbProps) => {
   const modalState = useRecoilValue(modalStateStore);
   const [userdata, setUserdata] = useRecoilState(userDataStates);
@@ -164,6 +180,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   const [rightModalState, setRightModalState] =
     useRecoilState(rightModalStates);
   const [groupNavState, setGroupNavState] = useRecoilState(GroupNavState);
+  const [alarmNum, setAlarmNum] = useRecoilState(alarmState);
   const history = useHistory();
   const resetProfile = useResetProfile();
 
@@ -207,10 +224,12 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
         />
         <IconWrap
           img={rightModalState.alarmFlag ? gnbAlarmActive : gnbAlarm}
-          onClick={() =>
-            ChangeFlag(rightModalState, setRightModalState, 'alarmFlag')
-          }
+          onClick={() => {
+            ChangeFlag(rightModalState, setRightModalState, 'alarmFlag');
+            setAlarmNum(0);
+          }}
         />
+        <AlarmBadge>{alarmNum ? alarmNum : null}</AlarmBadge>
         <IconWrap
           img={gnbLogout}
           onClick={async () => {
