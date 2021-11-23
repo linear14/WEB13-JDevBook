@@ -38,7 +38,7 @@ const CoverImageEditBtn = styled.div`
   right: 10%; */
   position: relative;
   top: 80%;
-  right: 28px;
+  right: 8px;
   width: 120px;
   height: 20px;
   margin-right: 40px;
