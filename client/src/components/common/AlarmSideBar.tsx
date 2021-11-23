@@ -73,20 +73,29 @@ const AlarmText = styled.div`
 `;
 
 const AlarmSideBar = () => {
-  const [alarmList, setAlarmList] = useState<string[]>(['linear14:post','linear14:chat']);
+  const [alarmList, setAlarmList] = useState<string[]>([]);
   const rightModalState = useRecoilValue(rightModalStates);
   const currentUserName = useRecoilValue(userDataStates).name;
   const socket = useRecoilValue(usersocketStates);
 
+
+  
   socket.off('get alarm info');
   socket.on('get alarm info', (data:{sender: string, receiver: string, type: string}) => {
     if(data.receiver === currentUserName && data.sender !== currentUserName)
       setAlarmList((alarmList: string[]) => alarmList.concat(`${data.sender}:${data.type}`));
-  });
-
+    });
+    
   useEffect(() => {
-
-  }, []);
+    if(currentUserName !== '' && socket !== null){
+      setAlarmList([]);
+      socket.emit('send alarm initial', {receiver:currentUserName});
+      socket.on('get previous alarms', (previousAlarms: string[]) => {
+        setAlarmList((alarmList: string[]) => alarmList.concat(previousAlarms));
+        socket.off('get previous alarms');
+      });
+    }
+  }, [currentUserName]);
 
   const alarmListView = alarmList.map((alarm, idx) => (
     // username : alarm.split(':')[0]
@@ -108,7 +117,7 @@ const AlarmSideBar = () => {
     //   <ClickableProfileImage userName={'idiot-kitto'} size={'60px'} />
     //   <AlarmText>나에게 알림이 도착했습니다.</AlarmText>
     // </AlarmBox>
-  ));
+  )).reverse();
 
   return (
     <AlarmSideBarContainer

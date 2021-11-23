@@ -28,12 +28,12 @@ const socketIO = (server: any) => {
       const { senderidx, receiveridx, previousMsg } =
         await dbManager.getChatList(sender, receiver);
 
-      const filteredMsgs: string[] = previousMsg.map((msg) => {
+      const filteredAlarms: string[] = previousMsg.map((msg) => {
         if (msg.senderidx === senderidx) return `${sender}: ${msg.content}`;
         else return `${receiver}: ${msg.content}`; // msg.senderidx === receiveridx
       });
 
-      io.to(socket.id).emit('get previous chats', filteredMsgs);
+      io.to(socket.id).emit('get previous chats', filteredAlarms);
     });
 
     // 1:1 채팅 메시지 송수신 부분
@@ -97,6 +97,13 @@ const socketIO = (server: any) => {
         postidx: postidx,
         commentsNum: commentsNum
       });
+    });
+
+    // 이전 알림 가져오는 부분
+    socket.on('send alarm initial', async (receivedData) => {
+      const { receiver } = receivedData;
+      const previousAlarms = await dbManager.getAlarmList(receiver);
+      io.emit('get previous alarms', previousAlarms);
     });
 
     // 알람 부분
