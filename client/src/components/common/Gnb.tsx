@@ -191,15 +191,17 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
     resetProfile(userdata.name);
   };
 
-  useEffect(() => {
-  }, [alarmNum]);
+  useEffect(() => {}, [alarmNum]);
 
   socket.off('get alarm');
-  socket.on('get alarm', (data:{sender: string, receiver: string, type: string}) => {
-    if(data.receiver === userdata.name && data.sender !== userdata.name)
-      setAlarmNum(alarmNum + 1);
-  });
-  
+  socket.on(
+    'get alarm',
+    (data: { sender: string; receiver: string; type: string }) => {
+      if (data.receiver === userdata.name && data.sender !== userdata.name)
+        setAlarmNum(alarmNum + 1);
+    }
+  );
+
   return (
     <GnbContainer className="no-drag">
       <FlexWrap>
@@ -239,14 +241,14 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           onClick={() => {
             ChangeFlag(rightModalState, setRightModalState, 'alarmFlag');
             setAlarmNum(0);
-            socket.emit('make alarms check', {receiver:userdata.name});
+            socket.emit('make alarms check', { receiver: userdata.name });
           }}
         />
         <AlarmBadge
           onClick={() => {
             ChangeFlag(rightModalState, setRightModalState, 'alarmFlag');
             setAlarmNum(0);
-            socket.emit('make alarms check', {receiver:userdata.name});
+            socket.emit('make alarms check', { receiver: userdata.name });
           }}
         >
           {alarmNum ? alarmNum : null}
@@ -254,6 +256,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
         <IconWrap
           img={gnbLogout}
           onClick={async () => {
+            ChangeFlag(rightModalState, setRightModalState, '');
             await fetchApi.logout();
             setUserdata({
               idx: -1,
