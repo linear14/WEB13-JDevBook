@@ -9,6 +9,7 @@ const LoadingModalContainer = styled.div<{ modalState: boolean }>`
   height: 100vh;
   z-index: 5;
 
+  background-color: ${palette.white};
   display: ${(props) => (props.modalState ? 'flex' : 'none')};
   flex-direction: column;
   justify-content: center;
