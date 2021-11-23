@@ -159,15 +159,16 @@ const IconWrap = styled.div<IconProps>`
 `;
 
 const AlarmBadge = styled.div`
-  position:absolute;
-  top:13px;
-  right:71px;
+  position: absolute;
+  top: 13px;
+  right: 71px;
 
-  width:12px;
-  line-height:12px;
+  width: 12px;
+  line-height: 12px;
   border-radius: 100%;
   text-align: center;
-  
+
+  cursor: pointer;
   background-color: red;
   color: white;
   font-size: 8px;
@@ -229,7 +230,14 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
             setAlarmNum(0);
           }}
         />
-        <AlarmBadge>{alarmNum ? alarmNum : null}</AlarmBadge>
+        <AlarmBadge
+          onClick={() => {
+            ChangeFlag(rightModalState, setRightModalState, 'alarmFlag');
+            setAlarmNum(0);
+          }}
+        >
+          {alarmNum ? alarmNum : null}
+        </AlarmBadge>
         <IconWrap
           img={gnbLogout}
           onClick={async () => {
