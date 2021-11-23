@@ -55,6 +55,7 @@ export interface DBPost extends DBCUD {
   useridx: number;
   secret: boolean;
   likenum: number;
+  commentnum: number;
   contents: string;
   picture1: string;
   picture2: string;

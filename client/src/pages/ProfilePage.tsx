@@ -13,7 +13,9 @@ import {
   InitUserData,
   InitSocket
 } from 'components/common';
-import { ProfileBar, ProfileCover } from 'components/ProfilePage';
+
+import { ProfileBar, ProfileCover, PostList } from 'components/ProfilePage';
+import { PostWriterModal } from 'components/HomePage';
 import fetchApi from 'api/fetch';
 import { useRecoilValue } from 'recoil';
 import { userDataStates } from 'recoil/store';
@@ -79,6 +81,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
         <ContentsContainer contentsState={true}>
           <ProfileCover src={imgsrc} profileName={match.params.username} />
           <ProfileBar profileName={match.params.username} />
+          <PostList username={match.params.username} />
         </ContentsContainer>
         <SideBar isLeft={false}>
           <ChatSideBar />

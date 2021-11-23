@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { GroupNavState } from 'recoil/store';
 
 import { groupState } from 'recoil/store';
 import { defaultGroup } from 'images/groupimg';
@@ -63,6 +64,7 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
 }) => {
   const groupData = useRecoilValue(groupState);
   const resetGroupData = useResetRecoilState(groupState);
+  const groupNavState = useRecoilValue(GroupNavState);
 
   useEffect(() => {
     return () => resetGroupData();
@@ -87,9 +89,7 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
           <About />
           <ProblemList groupIdx={Number(match.params.groupidx)} />
         </ContentsContainer>
-        <SideBar isLeft={false}>
-          <GroupChat groupIdx={Number(match.params.groupidx)} />
-        </SideBar>
+        <GroupChat groupIdx={Number(match.params.groupidx)} />
       </PageLayout>
     </GroupPageContainer>
   );

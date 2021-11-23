@@ -174,7 +174,7 @@ const PostWriterModal = () => {
               : post
           );
 
-      if (isEnrollMode()) {
+      if (isEnrollMode() && !secret) {
         socket.emit('post_added');
       }
       alertSuccess();
