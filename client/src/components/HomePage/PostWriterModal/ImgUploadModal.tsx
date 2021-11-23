@@ -2,7 +2,7 @@ import React, { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { FiUpload } from 'react-icons/fi';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { imageViewerState as ivState, uploadImgList } from 'recoil/store';
 
 import {
@@ -64,13 +64,6 @@ const ImgUploadWrap = styled.div`
 
   &:hover {
     cursor: pointer;
-    /* background-color: ${palette.darkgray};
-    filter: brightness(95%);
-    transition: all 0.1s; */
-  }
-
-  &:active {
-    //filter: brightness(90%);
   }
 `;
 
@@ -205,10 +198,7 @@ const ImgUploadModal = () => {
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgUploadWrapRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgPreviewModal = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const uploadButtonRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const workModalRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-
-  let dropfile: FileList[] = [];
 
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
