@@ -33,6 +33,7 @@ const dbManager = {
       .then(async () => {
         if (force) {
           await this.createInitGroup();
+          await this.createInitProblem();
         }
         console.log('Connection has been established successfully.');
       })
@@ -43,6 +44,14 @@ const dbManager = {
 
   createInitGroup: async function () {
     const result = await db.models.Group.bulkCreate(group, {
+      logging: false,
+      returning: true
+    });
+    //return result.get();
+  },
+
+  createInitProblem: async function () {
+    const result = await db.models.Problem.bulkCreate(problemOS, {
       logging: false,
       returning: true
     });
