@@ -2,6 +2,7 @@ import React, { Dispatch } from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
+
 import {
   modalStateStore,
   rightModalStates,
@@ -10,7 +11,6 @@ import {
   GroupNavState
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
-
 import {
   GnbProps,
   FlexProps,
@@ -28,8 +28,7 @@ import {
   gnbMessageActive,
   gnbAlarm,
   gnbAlarmActive,
-  gnbSelector,
-  gnbSelectorActive
+  gnbLogout
 } from 'images/icons';
 
 import {
@@ -37,6 +36,7 @@ import {
   UserSearchModal,
   ProfilePhoto
 } from 'components/common';
+import useResetProfile from 'hooks/useResetProfile';
 
 const GnbContainer = styled.div`
   width: 100%;
@@ -165,9 +165,14 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
     useRecoilState(rightModalStates);
   const [groupNavState, setGroupNavState] = useRecoilState(GroupNavState);
   const history = useHistory();
+  const resetProfile = useResetProfile();
+
+  const photoClickHandler = (e: React.MouseEvent) => {
+    resetProfile(userdata.name);
+  };
 
   return (
-    <GnbContainer>
+    <GnbContainer className="no-drag">
       <FlexWrap>
         {modalState.searchUser ? <UserSearchModal /> : <UserSearchBar />}
       </FlexWrap>
@@ -184,7 +189,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
         </Link>
       </FlexWrap>
       <FlexWrap>
-        <Link to="/profile/1">
+        <Link to={`/profile/${userdata.name}`} onClick={photoClickHandler}>
           <ProfileWrap>
             <ProfilePhoto userName={userdata.name} size="28px" />
             <p>{userdata.name}</p>
@@ -207,7 +212,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           }
         />
         <IconWrap
-          img={rightModalState.selectorFlag ? gnbSelectorActive : gnbSelector}
+          img={gnbLogout}
           onClick={async () => {
             await fetchApi.logout();
             setUserdata({

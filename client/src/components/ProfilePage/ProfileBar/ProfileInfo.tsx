@@ -13,16 +13,17 @@ const ProfileInfoWrap = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
 `;
 
 const ProfileTitle = styled.div`
+  margin-bottom: ${style.margin.normal};
   font-size: ${style.font.title};
 `;
 
 const ProfileBio = styled.div`
-  color: ${palette.darkgray};
+  box-sizing: border-box;
+  padding-right: ${style.padding.large};
+  color: ${palette.black};
 `;
 
 const ProfileInfo = () => {
@@ -30,8 +31,10 @@ const ProfileInfo = () => {
 
   return (
     <ProfileInfoWrap>
-      <ProfileTitle>유저명</ProfileTitle>
-      <ProfileBio>안녕하세요 유저명입니다.</ProfileBio>
+      <ProfileTitle>{profileData.nickname}</ProfileTitle>
+      <ProfileBio className="no-drag">
+        {profileData.bio || '자기소개를 입력해서 자신을 표현해보세요!'}
+      </ProfileBio>
     </ProfileInfoWrap>
   );
 };

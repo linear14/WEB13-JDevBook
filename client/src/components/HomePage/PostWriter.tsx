@@ -13,9 +13,9 @@ const PostWriterBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 680px;
+  width: 100%;
   box-sizing: border-box;
-  margin: 35px 0 0 0;
+  margin: 12px 0 0 0;
 
   padding: 0 12px;
   border-radius: 8px;

@@ -1,5 +1,6 @@
 import { CommentData } from 'types/comment';
 import { PostData, PostAddData, PostUpdateData } from 'types/post';
+import { IProfile } from 'types/user';
 
 const fetchApi = {
   getLoginlink: async (): Promise<string> => {
@@ -26,11 +27,14 @@ const fetchApi = {
 
   getPosts: async (
     lastIdx: number = -1,
-    count: number = 10
+    count: number = 10,
+    username?: string
   ): Promise<PostData[]> => {
-    const response = await fetch(
-      `/api/posts?lastIdx=${lastIdx}&count=${count}`
-    );
+    const response = username
+      ? await fetch(
+          `/api/posts?username=${username}&lastIdx=${lastIdx}&count=${count}`
+        )
+      : await fetch(`/api/posts?lastIdx=${lastIdx}&count=${count}`);
     const getPostsList = await response.json();
     return getPostsList.map((cur: any) =>
       cur.BTMLikepostidx.length === 0
@@ -155,6 +159,33 @@ const fetchApi = {
   joinGroup: async (userIdx: number, groupIdx: number) => {
     const response = await fetch(`/api/joingroup/${userIdx}/${groupIdx}`, {
       method: 'POST'
+    });
+    return await response.json();
+  },
+
+  getProfile: async (userName: string) => {
+    const response = await fetch(`/api/profile/${userName}`);
+    return await response.json();
+  },
+
+  updateBio: async (userName: string, bio: string) => {
+    const response = await fetch(`/api/profile/bio`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userName: userName, bio: bio })
+    });
+    return await response.json();
+  },
+
+  updateProfile: async (userUpdateData: IProfile) => {
+    const response = await fetch(`/api/users/${userUpdateData.idx}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userUpdateData)
     });
     return await response.json();
   }

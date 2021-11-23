@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 
+import { imageViewerState, profileState, userDataStates } from 'recoil/store';
 import palette from 'theme/palette';
+import fetchApi from 'api/fetch';
 
 import {
   Gnb,
@@ -11,9 +14,16 @@ import {
   ChatSideBar,
   GroupSideBar,
   InitUserData,
-  InitSocket
+  InitSocket,
+  LoadingModal
 } from 'components/common';
-import { ProfileBar, ProfileCover } from 'components/ProfilePage';
+import { PostWriter, ImageViewer } from 'components/HomePage';
+import {
+  ProfileBar,
+  ProfileCover,
+  InitProfileData,
+  PostList
+} from 'components/ProfilePage';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -32,7 +42,7 @@ const PageLayout = styled.div`
 `;
 
 const ContentsContainer = styled.div<{ contentsState: boolean }>`
-  width: 100%;
+  width: calc(100vw - 680px);
   min-width: 720px;
   margin: 0 10px;
 
@@ -41,14 +51,69 @@ const ContentsContainer = styled.div<{ contentsState: boolean }>`
   align-items: center;
 `;
 
+const InnerContainer = styled.div`
+  width: 100%;
+  min-width: 720px;
+  max-width: 908px;
+  flex: 1;
+
+  display: flex;
+`;
+
+const InfoContainer = styled.div`
+  width: 366px;
+  box-sizing: border-box;
+  padding-right: 6px;
+`;
+
+const PostContainer = styled.div`
+  width: 544px;
+  box-sizing: border-box;
+  padding-left: 6px;
+`;
+
 const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   match
 }) => {
+  const userData = useRecoilValue(userDataStates);
+  const profileData = useRecoilValue(profileState);
+  const resetProfileData = useResetRecoilState(profileState);
+  const imageViewer = useRecoilValue(imageViewerState);
+  const [myProfile, setMyProfile] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (userData.name === profileData.nickname) setMyProfile(true);
+    else setMyProfile(false);
+  }, [profileData]);
+
+  useEffect(() => {
+    return () => resetProfileData();
+  }, []);
+
+  const [imgsrc, setImgsrc] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      const { data: profile, error } = await fetchApi.getProfile(
+        match.params.username
+      );
+      if (!error) {
+        setImgsrc(profile.cover);
+      }
+    })();
+  }, [match.params.username]);
+
+  useEffect(() => {
+    if (match.params.username === userData.name) setImgsrc(userData.cover);
+  }, [userData.cover]);
+
   return (
     <ProfilePageContainer>
       <GlobalStyle />
       <InitUserData />
+      <InitProfileData userName={match.params.username} />
       <InitSocket />
+      <LoadingModal modalState={profileData.idx === 0} />
       <Gnb />
       <PageLayout>
         <SideBar isLeft={true}>
@@ -56,13 +121,21 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
           <GroupSideBar />
         </SideBar>
         <ContentsContainer contentsState={true}>
-          <ProfileCover src="" />
+          <ProfileCover src={imgsrc} profileName={match.params.username} />
           <ProfileBar />
+          <InnerContainer>
+            <InfoContainer></InfoContainer>
+            <PostContainer>
+              {myProfile ? <PostWriter /> : ''}
+              <PostList username={match.params.username} />
+            </PostContainer>
+          </InnerContainer>
         </ContentsContainer>
         <SideBar isLeft={false}>
           <ChatSideBar />
         </SideBar>
       </PageLayout>
+      {imageViewer.isOpen && <ImageViewer />}
     </ProfilePageContainer>
   );
 };

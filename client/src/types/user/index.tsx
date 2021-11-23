@@ -7,6 +7,6 @@ export interface SolvedRates {
 export interface IProfile {
   idx: number;
   nickname: string;
-  cover: string;
-  bio: string;
+  cover: string | null;
+  bio: string | null;
 }

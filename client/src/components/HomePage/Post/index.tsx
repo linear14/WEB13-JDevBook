@@ -9,7 +9,11 @@ import palette from 'theme/palette';
 import style from 'theme/style';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { modalStateStore, userDataStates } from 'recoil/store';
+import {
+  modalStateStore,
+  userDataStates,
+  usersocketStates
+} from 'recoil/store';
 import Header from './Header';
 import OptionModal from './OptionModal';
 import Body from './Body';
@@ -18,8 +22,8 @@ import fetchApi from 'api/fetch';
 import Comment from './Comment';
 
 const PostContainer = styled.div`
-  width: 680px;
-  min-width: 680px;
+  width: 100%;
+  /* min-width: 680px; */
   position: relative;
   border-radius: 8px;
   box-sizing: border-box;
@@ -118,7 +122,8 @@ const Post = ({ post }: { post: PostData }) => {
   const [likeFlag, setLikeFlag] = useState<boolean>(false);
   const [likeNum, setLikeNum] = useState<number>(0);
   const [commentFlag, setCommentFlag] = useState<boolean>(false);
-  const [commentsNum, setCommentsNum] = useState<number>(0);
+  const [commentsNum, setCommentsNum] = useState<number>(post.commentnum);
+  const socket = useRecoilValue(usersocketStates);
 
   const {
     idx: postIdx,
@@ -148,12 +153,17 @@ const Post = ({ post }: { post: PostData }) => {
   }, []);
 
   useEffect(() => {
-    async function getNumberOfComments(postidx: number) {
-      const numberOfComments = await fetchApi.getCommentsNum(postidx);
-      setCommentsNum(numberOfComments);
-    }
-    getNumberOfComments(postIdx);
+    socket.emit('send number of comments notify', { postidx: postIdx });
   }, [commentsNum]);
+  socket.on(
+    'get number of comments',
+    (data: { postidx: number; commentsNum: number }) => {
+      const { postidx, commentsNum } = data;
+      if (postIdx === postidx) {
+        setCommentsNum(commentsNum);
+      }
+    }
+  );
 
   return (
     <PostContainer>
@@ -191,7 +201,7 @@ const Post = ({ post }: { post: PostData }) => {
         setCommentsNum={setCommentsNum}
       />
       <Divider />
-      <ButtonsWrap>
+      <ButtonsWrap className="no-drag">
         <Button isLike={likeFlag} onClick={likeToggle}>
           <LikeIcon />
           <p>좋아요</p>

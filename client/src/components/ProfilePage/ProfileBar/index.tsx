@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import palette from 'theme/palette';
-import style from 'theme/style';
 
 import ProfileInfo from 'components/ProfilePage/ProfileBar/ProfileInfo';
 import ProfilePhoto from 'components/ProfilePage/ProfileBar/ProfilePhoto';
 import ProfileEdit from 'components/ProfilePage/ProfileBar/ProfileEdit';
+import ProfileEditModal from 'components/ProfilePage/ProfileEditModal';
+import { useRecoilValue } from 'recoil';
+import { profileState, userDataStates } from 'recoil/store';
 
-const GroupNavContainer = styled.div`
+const ProfileBarContainer = styled.div`
   width: 100%;
   min-width: 720px;
   max-width: 908px;
-  height: 180px;
+  height: 204px;
   box-sizing: border-box;
   padding: 28px;
 
@@ -26,12 +28,15 @@ const GroupNavContainer = styled.div`
 `;
 
 const ProfileBar = () => {
+  const profileData = useRecoilValue(profileState);
+
   return (
-    <GroupNavContainer>
-      <ProfilePhoto userName="shinn338" />
+    <ProfileBarContainer>
+      <ProfilePhoto userName={profileData.nickname} />
       <ProfileInfo />
       <ProfileEdit />
-    </GroupNavContainer>
+      <ProfileEditModal />
+    </ProfileBarContainer>
   );
 };
 

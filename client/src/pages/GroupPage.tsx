@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { GroupNavState } from 'recoil/store';
 
 import { groupState } from 'recoil/store';
 import { defaultGroup } from 'images/groupimg';
@@ -37,17 +38,20 @@ const GroupPageContainer = styled.div`
 
 const PageLayout = styled.div`
   display: flex;
-  justify-content: space-between;
 `;
 
 const ContentsContainer = styled.div<{ contentsState: boolean }>`
-  width: 100%;
+  width: calc(100vw - 680px);
   min-width: 720px;
   margin: 0 10px;
 
   display: ${(props) => (props.contentsState ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 1040px) {
+    width: 100%;
+  }
 
   img {
     width: 100%;
@@ -63,6 +67,7 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
 }) => {
   const groupData = useRecoilValue(groupState);
   const resetGroupData = useResetRecoilState(groupState);
+  const groupNavState = useRecoilValue(GroupNavState);
 
   useEffect(() => {
     return () => resetGroupData();
@@ -87,9 +92,7 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
           <About />
           <ProblemList groupIdx={Number(match.params.groupidx)} />
         </ContentsContainer>
-        <SideBar isLeft={false}>
-          <GroupChat groupIdx={Number(match.params.groupidx)} />
-        </SideBar>
+        <GroupChat groupIdx={Number(match.params.groupidx)} />
       </PageLayout>
     </GroupPageContainer>
   );

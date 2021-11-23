@@ -17,7 +17,8 @@ export const modalStateStore = atom({
       inPhoto: false,
       index: -1,
       isEnroll: true
-    }
+    },
+    editProfile: false
   }
 });
 
@@ -83,6 +84,7 @@ export const postModalDataStates = atom<PostData>({
     secret: false,
     contents: '',
     likenum: 0,
+    commentnum: 0,
     likeFlag: false,
     picture1: null,
     picture2: null,
@@ -173,12 +175,12 @@ export const profileState = atom<IProfile>({
   default: {
     idx: 0,
     nickname: '',
-    cover: '',
-    bio: ''
+    cover: null,
+    bio: null
   }
 });
 
 export const loginState = atom({
   key: 'loginState',
   default: [] as string[]
-})
+});

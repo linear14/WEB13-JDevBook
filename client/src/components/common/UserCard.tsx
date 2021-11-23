@@ -4,7 +4,10 @@ import styled from 'styled-components';
 import { SearchedUserProps } from 'types/GNB';
 import palette from 'theme/palette';
 
-import { ProfilePhoto } from 'components/common';
+import { useRecoilState } from 'recoil';
+import { modalStateStore } from 'recoil/store';
+import ProfilePhoto from 'components/common/ProfilePhoto';
+const ClickableProfileImage = styled(ProfilePhoto)``;
 
 const CardWrap = styled.div`
   width: 100%;
@@ -34,10 +37,14 @@ const NavLink = styled(Link)`
 `;
 
 const UserCard = ({ user }: SearchedUserProps) => {
+  const [modalState, setModalState] = useRecoilState(modalStateStore);
   return (
-    <NavLink to={`/profile/${user.idx}`}>
+    <NavLink
+      to={`/profile/${user.nickname}`}
+      onClick={() => setModalState({ ...modalState, searchUser: false })}
+    >
       <CardWrap>
-        <ProfilePhoto size="36px" />
+        <ProfilePhoto userName={user.nickname} size="36px" />
         <p>{user.nickname}</p>
       </CardWrap>
     </NavLink>

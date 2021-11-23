@@ -208,7 +208,7 @@ const UserSearchModal = () => {
   }, [input]);
 
   return (
-    <UserSearchModalContainer ref={modal}>
+    <UserSearchModalContainer className="no-drag" ref={modal}>
       <ModalHeader>
         <HoverRound
           onClick={(e) => {

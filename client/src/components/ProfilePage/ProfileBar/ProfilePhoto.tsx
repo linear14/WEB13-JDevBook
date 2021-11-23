@@ -5,7 +5,7 @@ import palette from 'theme/palette';
 
 const ProfilePhotoWrap = styled.div`
   position: relative;
-  top: -120px;
+  top: -130px;
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -30,7 +30,11 @@ const ProfilePhoto = ({ userName }: { userName: string }) => {
 
   return (
     <ProfilePhotoWrap>
-      <StyledProfilePhoto src={profileImgURL} alt="프로필 사진" />
+      <StyledProfilePhoto
+        src={profileImgURL}
+        alt="프로필 사진"
+        className="no-drag"
+      />
     </ProfilePhotoWrap>
   );
 };

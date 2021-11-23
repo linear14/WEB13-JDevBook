@@ -28,12 +28,13 @@ const CloseChatAnimation = keyframes`
 `;
 
 const ChatSideBarContainer = styled.div<{ groupChatFlag: boolean }>`
-  position: aboslute;
-  top: 0;
+  position: fixed;
+  top: 56px;
+  right: 0;
   display: flex;
   flex-direction: column;
-  width: inherit;
-  height: inherit;
+  width: 340px;
+  height: calc(100% - 56px);
 
   visibility: ${(props) => (props.groupChatFlag ? `` : `hidden`)};
   transition: ${(props) => (props.groupChatFlag ? `` : `all .5s`)};
@@ -174,7 +175,7 @@ const CurrentUserBox = styled.div`
 
 const CurrentUserWrapper = styled.div`
   width: inherit;
-  height: 300px;
+  height: 200px;
 
   overflow-x: hidden;
   overflow-y: scroll;

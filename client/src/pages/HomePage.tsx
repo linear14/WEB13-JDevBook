@@ -28,21 +28,27 @@ const HomePageContainer = styled.div`
 
 const PageLayout = styled.div`
   display: flex;
-  /* justify-content: space-between; */
 `;
 
 const PostContainer = styled.div`
   width: calc(100vw - 680px);
   min-width: 720px;
-  margin: 0 10px;
+  margin: 12px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  @media screen and (max-width: 1380px) {
+  @media screen and (max-width: 1040px) {
     width: 100%;
   }
+`;
+
+const InnerContainer = styled.div`
+  width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const HomePage = () => {
@@ -59,11 +65,13 @@ const HomePage = () => {
           <GroupSideBar />
         </SideBar>
         <PostContainer>
-          <PostWriter />
-          <PostList />
+          <InnerContainer>
+            <PostWriter />
+            <PostList />
+          </InnerContainer>
         </PostContainer>
-        {imageViewerState.isOpen && <ImageViewer />}
       </PageLayout>
+      {imageViewerState.isOpen && <ImageViewer />}
     </HomePageContainer>
   );
 };

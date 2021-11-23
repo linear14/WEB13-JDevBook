@@ -179,8 +179,10 @@ const Divider = styled.div`
   width: calc(100% - 32px);
   height: 1px;
   background: #dddddd;
-  margin: ${style.margin.normal} ${style.margin.large} ${style.margin.normal}
-    ${style.margin.large};
+  margin: (
+    ${style.margin.normal} ${style.margin.large} ${style.margin.normal}
+      ${style.margin.large}
+  );
 `;
 
 const ChatSideBar = () => {
@@ -263,7 +265,7 @@ const ChatSideBar = () => {
         sender={currentUserName}
         flag={ShowReceiverInfoFlag(idx, msg)}
       >
-        <ClickableProfileImage size={'30px'} />
+        <ClickableProfileImage userName={msg.split(':')[0]} size={'30px'} />
         <ReceiverName>{msg.split(':')[0]}</ReceiverName>
       </ReceiverDiv>
       <MessageText currentUserName={currentUserName} sender={msg.split(':')[0]}>

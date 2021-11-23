@@ -55,7 +55,7 @@ const PostList = () => {
     const fetchPosts = await fetchApi.getPosts();
     const fetchProblems = await fetchApi.getProblems();
     const result = await Promise.all([fetchPosts, fetchProblems]);
-    setPosts((prev) => prev.concat(result[0]));
+    setPosts(result[0]);
     setProblems(result[1]);
     problemOrders.current = arrayUtil.shuffle(
       Array(result[1].length)
@@ -84,8 +84,11 @@ const PostList = () => {
   };
 
   useEffect(() => {
-    setPosts([]);
     fetchInit();
+
+    return () => {
+      setPosts([]);
+    };
   }, []);
 
   const getNextProblem = (idx: number) => {
@@ -95,9 +98,16 @@ const PostList = () => {
       : null;
   };
 
+  const reloadList = () => {
+    window.scrollTo({ top: 0 });
+    setPosts([]);
+    setProblems([]);
+    fetchInit();
+  };
+
   return (
     <>
-      <NewPostAlert />
+      <NewPostAlert reloadList={reloadList} />
       <PostListContainer>
         {Array(posts.length)
           .fill(undefined)
