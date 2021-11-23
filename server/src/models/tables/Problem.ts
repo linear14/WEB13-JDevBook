@@ -31,6 +31,9 @@ export default class Problem extends Model<Problem> {
   @Column({ allowNull: false, type: DataType.STRING(1024) })
   question!: string;
 
+  @Column({ allowNull: true, type: DataType.STRING(1024) })
+  explanation!: string;
+
   @Column({ allowNull: false })
   answer!: boolean;
 
