@@ -92,7 +92,7 @@ const ProfileCover = () => {
       else return alertMessage('1MB 이하만 가능합니다.', palette.alert);
     }
 
-    const { check } = await fetchApi.updateProfile({
+    const { check }: { check: boolean } = await fetchApi.updateProfile({
       idx: userData.idx,
       nickname: userData.name,
       // profile은 github링크로 사용
