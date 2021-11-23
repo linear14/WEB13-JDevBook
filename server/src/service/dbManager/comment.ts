@@ -30,11 +30,19 @@ const addComment = async function (addComment: CommentData) {
     logging: false
   });
   const userIdx: number = user?.get().idx ? user?.get().idx : -1;
-
-  const result = await db.models.Comment.create({
-    ...addComment,
-    useridx: userIdx
+  
+  await db.models.Post.increment(['commentnum'], {
+    where: { idx: addComment.postidx },
+    logging: false
   });
+
+  const result = await db.models.Comment.create(
+    {
+      ...addComment,
+      useridx: userIdx
+    },
+    { logging: false }
+  );
   return result.get();
 };
 

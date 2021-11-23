@@ -37,18 +37,27 @@ const Comments = styled.div`
 
 const CommentsNum = styled.div``;
 
-const Footer = ({ likenum, commentFlag, setCommentFlag, postIdx, commentsNum, setCommentsNum }: PostFooterProps) => {
+const Footer = ({
+  likenum,
+  commentFlag,
+  setCommentFlag,
+  postIdx,
+  commentsNum,
+  setCommentsNum
+}: PostFooterProps) => {
   return (
     <FooterContainer>
       <div>
         <img src={likeBadge} alt="likeBadge" />
         <p>{likenum.toString()}</p>
       </div>
-      <Comments onClick={() => setCommentFlag(!commentFlag)}>
-        <CommentsNum onClick={() => setCommentFlag(!commentFlag)}>
-          댓글 {commentsNum} 개
-        </CommentsNum>
-      </Comments>
+      {commentsNum ? (
+        <Comments onClick={() => setCommentFlag(!commentFlag)}>
+          <CommentsNum onClick={() => setCommentFlag(!commentFlag)}>
+            댓글 {commentsNum} 개
+          </CommentsNum>
+        </Comments>
+      ) : null}
     </FooterContainer>
   );
 };

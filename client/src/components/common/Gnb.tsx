@@ -28,8 +28,7 @@ import {
   gnbMessageActive,
   gnbAlarm,
   gnbAlarmActive,
-  gnbSelector,
-  gnbSelectorActive
+  gnbLogout
 } from 'images/icons';
 
 import {
@@ -207,7 +206,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           }
         />
         <IconWrap
-          img={rightModalState.selectorFlag ? gnbSelectorActive : gnbSelector}
+          img={gnbLogout}
           onClick={async () => {
             await fetchApi.logout();
             setUserdata({
