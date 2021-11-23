@@ -104,6 +104,8 @@ const socketIO = (server: any) => {
       const { receiver } = receivedData;
       const previousAlarms = await dbManager.getAlarmList(receiver);
       io.emit('get previous alarms', previousAlarms);
+      const uncheckedAlarmsNum = await dbManager.getUncheckedAlarmsNum(receiver);
+      io.emit('get number of unchecked alarms', uncheckedAlarmsNum);
     });
 
     // 알람 부분
@@ -115,6 +117,10 @@ const socketIO = (server: any) => {
       io.emit('get alarm info', receivedData);
     });
 
+    socket.on('make alarms check', async (receivedData) => {
+      const {receiver} = receivedData;
+      await dbManager.setAlarmCheck(receiver);
+    });
     // 유저 로그아웃 부분
     socket.on('disconnect', () => {
       socket.get = false;

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { rightModalStates, usersocketStates, userDataStates } from 'recoil/store';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { rightModalStates, usersocketStates, userDataStates, alarmState,
+} from 'recoil/store';
 
 import ProfilePhoto from 'components/common/ProfilePhoto';
 import palette from 'theme/palette';
@@ -76,10 +77,9 @@ const AlarmSideBar = () => {
   const [alarmList, setAlarmList] = useState<string[]>([]);
   const rightModalState = useRecoilValue(rightModalStates);
   const currentUserName = useRecoilValue(userDataStates).name;
+  const [alarmNum, setAlarmNum] = useRecoilState(alarmState);
   const socket = useRecoilValue(usersocketStates);
 
-
-  
   socket.off('get alarm info');
   socket.on('get alarm info', (data:{sender: string, receiver: string, type: string}) => {
     if(data.receiver === currentUserName && data.sender !== currentUserName)
@@ -94,15 +94,14 @@ const AlarmSideBar = () => {
         setAlarmList((alarmList: string[]) => alarmList.concat(previousAlarms));
         socket.off('get previous alarms');
       });
+      socket.on('get number of unchecked alarms', (data:number) => {
+        setAlarmNum(data);
+        socket.off('get number of unchecked alarms');
+      })
     }
   }, [currentUserName]);
 
   const alarmListView = alarmList.map((alarm, idx) => (
-    // username : alarm.split(':')[0]
-    // type = alarm.split(':')[1]
-    // 내 게시물에 누가 댓글이 달았습니다. type: post / username: username
-    // 누구로부터 메시지가 도착했습니다. type: chat / username: username
-
     <AlarmBox key={idx}>
       <ClickableProfileImage userName={alarm.split(':')[0]} size={'60px'} />
       <AlarmText>
@@ -111,12 +110,6 @@ const AlarmSideBar = () => {
           : `${alarm.split(':')[0]} 님으로부터 메시지가 도착했습니다.`}
       </AlarmText>
     </AlarmBox>
-
-    // dummy
-    // <AlarmBox key={idx}>
-    //   <ClickableProfileImage userName={'idiot-kitto'} size={'60px'} />
-    //   <AlarmText>나에게 알림이 도착했습니다.</AlarmText>
-    // </AlarmBox>
   )).reverse();
 
   return (
