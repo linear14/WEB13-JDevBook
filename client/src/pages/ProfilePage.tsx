@@ -38,7 +38,6 @@ const ProfilePageContainer = styled.div`
 
 const PageLayout = styled.div`
   display: flex;
-  justify-content: space-between;
 `;
 
 const ContentsContainer = styled.div<{ contentsState: boolean }>`
@@ -49,6 +48,10 @@ const ContentsContainer = styled.div<{ contentsState: boolean }>`
   display: ${(props) => (props.contentsState ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 1040px) {
+    width: 100%;
+  }
 `;
 
 const InnerContainer = styled.div`
@@ -61,7 +64,7 @@ const InnerContainer = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  width: 366px;
+  width: 100%;
   box-sizing: border-box;
   padding-right: 6px;
 `;
@@ -133,9 +136,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
             </PostContainer>
           </InnerContainer>
         </ContentsContainer>
-        <SideBar isLeft={false}>
-          <ChatSideBar />
-        </SideBar>
+        <ChatSideBar />
       </PageLayout>
       {imageViewer.isOpen && <ImageViewer />}
     </ProfilePageContainer>
