@@ -280,6 +280,19 @@ router.post(
 );
 
 router.get(
+  '/problems/solved/:username',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userName = req.params.username;
+      const result = await dbManager.getSolvedProblems(userName);
+      res.json(result);
+    } catch (err) {
+      res.json(false);
+    }
+  }
+);
+
+router.get(
   '/groups',
   async (req: Request, res: Response, next: NextFunction) => {
     try {

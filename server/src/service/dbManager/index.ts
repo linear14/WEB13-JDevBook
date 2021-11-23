@@ -16,7 +16,7 @@ import {
   getProfile
 } from './user';
 import { searchUsers } from './search';
-import { getProblems, insertSolvedProblem } from './problem';
+import { getProblems, insertSolvedProblem, getSolvedProblems } from './problem';
 import { getGroupList, getGroup, toggleUserGroup } from './group';
 import { setChatList, getChatList } from './chat';
 import { setGroupChatList, getGroupChatList } from './groupchat';
@@ -64,6 +64,7 @@ const dbManager = {
 
   getProblems,
   insertSolvedProblem,
+  getSolvedProblems,
 
   getGroupList,
   getGroup,
