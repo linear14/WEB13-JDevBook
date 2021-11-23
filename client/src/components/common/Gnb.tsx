@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
@@ -9,7 +9,8 @@ import {
   solvedProblemState,
   userDataStates,
   GroupNavState,
-  alarmState
+  alarmState,
+  usersocketStates
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 import {
@@ -182,12 +183,20 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
     useRecoilState(rightModalStates);
   const [groupNavState, setGroupNavState] = useRecoilState(GroupNavState);
   const [alarmNum, setAlarmNum] = useRecoilState(alarmState);
+  const socket = useRecoilValue(usersocketStates);
   const history = useHistory();
   const resetProfile = useResetProfile();
 
   const photoClickHandler = (e: React.MouseEvent) => {
     resetProfile(userdata.name);
   };
+
+  useEffect(() => {
+    socket.off('get alarm');
+    socket.on('get alarm', () => {
+      setAlarmNum(alarmNum + 1);
+    });
+  }, [alarmNum]);
 
   return (
     <GnbContainer className="no-drag">
