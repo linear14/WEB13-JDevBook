@@ -84,7 +84,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   useEffect(() => {
     if (userData.name === profileData.nickname) setMyProfile(true);
     else setMyProfile(false);
-  }, [profileData]);
+  }, [profileData, userData]);
 
   useEffect(() => {
     return () => resetProfileData();
@@ -113,7 +113,9 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
       <InitUserData />
       <InitProfileData userName={match.params.username} />
       <InitSocket />
-      <LoadingModal modalState={profileData.idx === 0} />
+      <LoadingModal
+        modalState={profileData.idx === 0 || userData.name === ''}
+      />
       <Gnb />
       <PageLayout>
         <SideBar isLeft={true}>
