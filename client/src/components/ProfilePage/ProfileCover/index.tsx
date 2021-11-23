@@ -30,7 +30,7 @@ const ProfileCoverWrap = styled.div<{ imgsrc: string }>`
   } */
 `;
 
-const CoverImageEditBtn = styled.div`
+const CoverImageEditBtn = styled.div<{ mine: boolean }>`
   /* position: absolute;
   top: 45vh;
   left: 70vw; */
@@ -48,7 +48,7 @@ const CoverImageEditBtn = styled.div`
   background-color: ${palette.blue};
   color: ${palette.white};
 
-  display: flex;
+  display: ${({ mine }) => (mine ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
 
@@ -79,7 +79,6 @@ const ProfileCover = () => {
 
   const uploadOneFile = () => {
     if (imgEdit) return alertMessage('이미지 업로드 중입니다.', palette.alert);
-
     setImgEdit(true);
     getFile();
   };
@@ -131,7 +130,12 @@ const ProfileCover = () => {
       imgsrc={profileData.cover || defaultGroup}
       className="no-drag"
     >
-      <CoverImageEditBtn onClick={openFileModal}>이미지 편집</CoverImageEditBtn>
+      <CoverImageEditBtn
+        mine={userData.name === profileData.nickname}
+        onClick={openFileModal}
+      >
+        이미지 편집
+      </CoverImageEditBtn>
       <input
         type="file"
         accept="image/*"
