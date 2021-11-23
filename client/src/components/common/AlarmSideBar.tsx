@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { rightModalStates } from 'recoil/store';
+import { rightModalStates, usersocketStates } from 'recoil/store';
 
 import ProfilePhoto from 'components/common/ProfilePhoto';
 import palette from 'theme/palette';
@@ -59,15 +59,12 @@ const AlarmSideBarContainer = styled.div<{
   }
 `;
 
-const AlarmWrapper = styled.div`
-
-`;
 const AlarmBox = styled.div`
-  display:flex;
+  display: flex;
   padding: 8px 8px 8px 8px;
   :hover {
     background-color: ${palette.lightgray};
-    border-radius:10px;
+    border-radius: 10px;
   }
 `;
 const AlarmText = styled.div`
@@ -76,25 +73,40 @@ const AlarmText = styled.div`
 `;
 
 const AlarmSideBar = () => {
+  const [alarmList, setAlarmList] = useState<string[]>(['a']);
   const rightModalState = useRecoilValue(rightModalStates);
+  const socket = useRecoilValue(usersocketStates);
+
+  useEffect(() => {}, []);
+
+  const alarmListView = alarmList.map((alarm, idx) => (
+    // username : alarm.split(':')[0]
+    // type = alarm.split(':')[1]
+    // 내 게시물에 누가 댓글이 달았습니다. type: post / username: username
+    // 누구로부터 메시지가 도착했습니다. type: chat / username: username
+
+    <AlarmBox key={idx}>
+      <ClickableProfileImage userName={alarm.split(':')[0]} size={'60px'} />
+      <AlarmText>
+        {alarm.split(':')[1] === 'post'
+          ? `${alarm.split(':')[0]} 님이 내 게시물에 댓글을 달았습니다.`
+          : `${alarm.split(':')[0]} 님으로부터 메시지가 도착했습니다.`}
+      </AlarmText>
+    </AlarmBox>
+
+    // dummy
+    // <AlarmBox key={idx}>
+    //   <ClickableProfileImage userName={'idiot-kitto'} size={'60px'} />
+    //   <AlarmText>나에게 알림이 도착했습니다.</AlarmText>
+    // </AlarmBox>
+  ));
 
   return (
     <AlarmSideBarContainer
       rightModalFlag={rightModalState.rightModalFlag}
       alarmFlag={rightModalState.alarmFlag}
     >
-      <AlarmWrapper>
-        <AlarmBox>
-          <ClickableProfileImage userName={'idiot-kitto'} size={'60px'} />
-          <AlarmText>나에게 알림이 도착했습니다.</AlarmText>
-        </AlarmBox>
-      </AlarmWrapper>
-      <AlarmWrapper>
-        <AlarmBox>
-          <ClickableProfileImage userName={'idiot-kitto'} size={'60px'} />
-          <AlarmText>나에게 알림이 도착했습니다.</AlarmText>
-        </AlarmBox>
-      </AlarmWrapper>
+      {alarmListView}
     </AlarmSideBarContainer>
   );
 };
