@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
 import { userDataStates, usersocketStates } from 'recoil/store';
-import { ProfilePhoto } from 'components/common';
+import { ClickableProfilePhoto } from 'components/common';
 import palette from 'theme/palette';
 import style from 'theme/style';
 import { IComment } from 'types/comment';
@@ -24,8 +24,6 @@ const CommentsWrap = styled.div`
   animation-name: ${Animation};
   animation-duration: 0.5s;
 `;
-
-const ClickableProfileImage = styled(ProfilePhoto)``;
 
 const CommentBox = styled.div`
   display: inline-block;
@@ -102,11 +100,13 @@ const Comment = ({
 
       socket.emit('send number of comments notify', { postidx: postIdx });
       socket.off('get number of comments');
-      socket.on('get number of comments', (data:{postidx:number, commentsNum:number}) => {
-        const { postidx, commentsNum } = data;
-        if(postIdx === postidx)
-          setCommentsNum(commentsNum);
-    });
+      socket.on(
+        'get number of comments',
+        (data: { postidx: number; commentsNum: number }) => {
+          const { postidx, commentsNum } = data;
+          if (postIdx === postidx) setCommentsNum(commentsNum);
+        }
+      );
     }
   };
 
@@ -130,7 +130,7 @@ const Comment = ({
 
   const comments = commentList.map((comment: IComment, idx: number) => (
     <CommentsWrap key={idx}>
-      <ClickableProfileImage userName={comment.writer} size={'30px'} />
+      <ClickableProfilePhoto userName={comment.writer} size={'30px'} />
       <CommentBox>
         <CommentContent>
           <CommentTitle>{comment.writer}</CommentTitle>
@@ -155,7 +155,7 @@ const Comment = ({
           }}
         >
           <CommentInputWrapper>
-            <ClickableProfileImage userName={currentUserName} size={'30px'} />
+            <ClickableProfilePhoto userName={currentUserName} size={'30px'} />
             <CommentInput
               type="text"
               autoComplete="off"

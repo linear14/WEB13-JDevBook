@@ -12,11 +12,9 @@ import {
 import CurrentUser from './CurrentUser';
 import palette from 'theme/palette';
 import style from 'theme/style';
-import ProfilePhoto from 'components/common/ProfilePhoto';
 import { iconSubmit, iconSubmitActive } from 'images/icons';
 import { IMessage, ISocketMessage, ISuccessiveMessage } from 'types/message';
-
-const ClickableProfileImage = styled(ProfilePhoto)``;
+import { ClickableProfilePhoto } from 'components/common';
 
 const OpenChatAnimation = keyframes`
   0% { opacity: 0; transform: translateX(100px); }
@@ -265,7 +263,7 @@ const ChatSideBar = () => {
         sender={currentUserName}
         flag={ShowReceiverInfoFlag(idx, msg)}
       >
-        <ClickableProfileImage userName={msg.split(':')[0]} size={'30px'} />
+        <ClickableProfilePhoto userName={msg.split(':')[0]} size={'30px'} />
         <ReceiverName>{msg.split(':')[0]}</ReceiverName>
       </ReceiverDiv>
       <MessageText currentUserName={currentUserName} sender={msg.split(':')[0]}>
