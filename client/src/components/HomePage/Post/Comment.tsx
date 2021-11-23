@@ -70,11 +70,13 @@ const CommentInput = styled.input`
 const Comment = ({
   postIdx,
   commentsNum,
-  setCommentsNum
+  setCommentsNum,
+  nickname
 }: {
   postIdx: number;
   commentsNum: number;
   setCommentsNum: React.Dispatch<number>;
+  nickname: string;
 }) => {
   const [value, setValue] = useState<string>('');
   const [commentList, setCommentList] = useState<IComment[]>([]);
@@ -102,11 +104,18 @@ const Comment = ({
 
       socket.emit('send number of comments notify', { postidx: postIdx });
       socket.off('get number of comments');
-      socket.on('get number of comments', (data:{postidx:number, commentsNum:number}) => {
-        const { postidx, commentsNum } = data;
-        if(postIdx === postidx)
-          setCommentsNum(commentsNum);
-    });
+      socket.on(
+        'get number of comments',
+        (data: { postidx: number; commentsNum: number }) => {
+          const { postidx, commentsNum } = data;
+          if (postIdx === postidx) setCommentsNum(commentsNum);
+        }
+      );
+      socket.emit('send alarm', {
+        sender: currentUserName,
+        receiver: nickname,
+        type: 'post'
+      });
     }
   };
 
