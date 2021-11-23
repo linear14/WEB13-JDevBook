@@ -192,12 +192,14 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   };
 
   useEffect(() => {
-    socket.off('get alarm');
-    socket.on('get alarm', () => {
-      setAlarmNum(alarmNum + 1);
-    });
   }, [alarmNum]);
 
+  socket.off('get alarm');
+  socket.on('get alarm', (data:{sender: string, receiver: string, type: string}) => {
+    if(data.receiver === userdata.name && data.sender !== userdata.name)
+      setAlarmNum(alarmNum + 1);
+  });
+  
   return (
     <GnbContainer className="no-drag">
       <FlexWrap>
