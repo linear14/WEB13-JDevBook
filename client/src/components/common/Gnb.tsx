@@ -239,12 +239,14 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           onClick={() => {
             ChangeFlag(rightModalState, setRightModalState, 'alarmFlag');
             setAlarmNum(0);
+            socket.emit('make alarms check', {receiver:userdata.name});
           }}
         />
         <AlarmBadge
           onClick={() => {
             ChangeFlag(rightModalState, setRightModalState, 'alarmFlag');
             setAlarmNum(0);
+            socket.emit('make alarms check', {receiver:userdata.name});
           }}
         >
           {alarmNum ? alarmNum : null}
