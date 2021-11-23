@@ -27,6 +27,7 @@ const PostList = ({ username }: { username: string }) => {
   const [isFetching, setFetching] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const observerRef = useRef<IntersectionObserver>();
+  const abortController = useRef<AbortController | null>(null);
 
   const observer = (element: HTMLDivElement) => {
     if (isFetching) return;
@@ -47,13 +48,23 @@ const PostList = ({ username }: { username: string }) => {
   };
 
   const fetchPostsMore = async (lastIdx: number = -1, count: number = 10) => {
-    setFetching(true);
-    const result = await fetchApi.getPosts(lastIdx, count, username);
-    if (result.length < count) {
-      setHasMore(false);
+    try {
+      abortController.current = new AbortController();
+      setFetching(true);
+      const result = await fetchApi.getPosts(
+        lastIdx,
+        count,
+        username,
+        abortController.current.signal
+      );
+      if (result.length < count) {
+        setHasMore(false);
+      }
+      setPosts((prev) => prev.concat(result));
+      setFetching(false);
+    } finally {
+      abortController.current = null;
     }
-    setPosts((prev) => prev.concat(result));
-    setFetching(false);
   };
 
   const getSkeletons = (count: number) => {
@@ -68,6 +79,10 @@ const PostList = ({ username }: { username: string }) => {
     fetchPostsMore();
 
     return () => {
+      if (abortController.current) {
+        abortController.current.abort();
+        abortController.current = null;
+      }
       setPosts([]);
     };
   }, [username]);
