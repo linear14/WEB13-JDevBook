@@ -201,6 +201,12 @@ const ChatSideBar = () => {
         receiver: chatReceiver,
         message: value
       });
+
+      socket.emit('send alarm', {
+        sender: currentUserName,
+        receiver: chatReceiver,
+        type: 'chat'
+      });
     }
   };
 
