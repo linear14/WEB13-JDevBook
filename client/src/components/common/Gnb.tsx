@@ -267,6 +267,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
               login: false
             });
             resetSolvedProblemState();
+            socket.emit('disconnect notify');
             history.push('/');
           }}
         />

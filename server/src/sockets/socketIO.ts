@@ -122,6 +122,13 @@ const socketIO = (server: any) => {
       await dbManager.setAlarmCheck(receiver);
     });
     // 유저 로그아웃 부분
+    socket.on('disconnect notify', () => {
+      socket.get = false;
+      delete UserObj[socket.id];
+      io.emit('get current users', UserObj);
+      console.log(`${socket.name}:${socket.id} disconnected`);
+    });
+
     socket.on('disconnect', () => {
       socket.get = false;
       delete UserObj[socket.id];
