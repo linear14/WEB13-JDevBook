@@ -180,7 +180,7 @@ const fetchApi = {
   },
 
   updateProfile: async (userUpdateData: IProfile) => {
-    const response = await fetch(`/api/users/${userUpdateData.idx}`, {
+    const response = await fetch(`/api/profile/${userUpdateData.idx}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
