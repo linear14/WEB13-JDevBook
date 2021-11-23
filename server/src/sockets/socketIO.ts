@@ -99,6 +99,13 @@ const socketIO = (server: any) => {
       });
     });
 
+    // 알람 부분
+    socket.on('send alarm', async (receivedData) => {
+      const { sender, receiver, type } = receivedData;
+      io.emit('get alarm', receivedData);
+      io.emit('get alarm info');
+    });
+
     // 유저 로그아웃 부분
     socket.on('disconnect', () => {
       socket.get = false;
