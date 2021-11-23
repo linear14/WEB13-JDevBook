@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { GroupNavState } from 'recoil/store';
 
 import { groupState } from 'recoil/store';
 import { defaultGroup } from 'images/groupimg';
@@ -37,7 +38,6 @@ const GroupPageContainer = styled.div`
 
 const PageLayout = styled.div`
   display: flex;
-  justify-content: space-between;
 `;
 
 const ContentsContainer = styled.div<{ contentsState: boolean }>`
@@ -67,6 +67,7 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
 }) => {
   const groupData = useRecoilValue(groupState);
   const resetGroupData = useResetRecoilState(groupState);
+  const groupNavState = useRecoilValue(GroupNavState);
 
   useEffect(() => {
     return () => resetGroupData();

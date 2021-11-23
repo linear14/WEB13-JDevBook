@@ -28,8 +28,7 @@ import {
   gnbMessageActive,
   gnbAlarm,
   gnbAlarmActive,
-  gnbSelector,
-  gnbSelectorActive
+  gnbLogout
 } from 'images/icons';
 
 import {
@@ -166,7 +165,6 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
     useRecoilState(rightModalStates);
   const [groupNavState, setGroupNavState] = useRecoilState(GroupNavState);
   const history = useHistory();
-  const profileURL = `/profile/${userdata.name}`;
   const resetProfile = useResetProfile();
 
   const photoClickHandler = (e: React.MouseEvent) => {
@@ -174,7 +172,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   };
 
   return (
-    <GnbContainer>
+    <GnbContainer className="no-drag">
       <FlexWrap>
         {modalState.searchUser ? <UserSearchModal /> : <UserSearchBar />}
       </FlexWrap>
@@ -191,7 +189,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
         </Link>
       </FlexWrap>
       <FlexWrap>
-        <Link to={profileURL} onClick={photoClickHandler}>
+        <Link to={`/profile/${userdata.name}`} onClick={photoClickHandler}>
           <ProfileWrap>
             <ProfilePhoto userName={userdata.name} size="28px" />
             <p>{userdata.name}</p>
@@ -214,7 +212,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           }
         />
         <IconWrap
-          img={rightModalState.selectorFlag ? gnbSelectorActive : gnbSelector}
+          img={gnbLogout}
           onClick={async () => {
             await fetchApi.logout();
             setUserdata({

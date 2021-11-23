@@ -12,8 +12,10 @@ const useResetProfile = () => {
   const resetProfileData = async (userName: string) => {
     resetProfile();
     setModalState({ ...modalState, editProfile: false });
-    const fetchProfileData: IProfile = await fetchApi.getProfile(userName);
-    setProfileData(fetchProfileData);
+    const { data: fetchProfileData, error } = await fetchApi.getProfile(
+      userName
+    );
+    if (!error) setProfileData(fetchProfileData);
   };
 
   return (userName: string) => {

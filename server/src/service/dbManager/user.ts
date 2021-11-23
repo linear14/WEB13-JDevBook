@@ -1,4 +1,5 @@
 import db from '../../models';
+import { IProfile } from '../../types/interface';
 
 const getUserData = async (username: string) => {
   const [user, created] = await db.models.User.findOrCreate({
@@ -82,6 +83,13 @@ const updateBio = async (userName: string, bio: string) => {
   );
 };
 
+const updateProfile = async (userUpdateData: IProfile, userIdx: number) => {
+  await db.models.User.update(
+    { bio: userUpdateData.bio, cover: userUpdateData.cover },
+    { where: { idx: userIdx }, logging: false }
+  );
+};
+
 export {
   getUserData,
   getAllUsers,
@@ -91,6 +99,7 @@ export {
   getUserLoginState,
   getUserJoinedGroups,
   getAllUsersObj,
-  getProfile,
-  updateBio
+  updateBio,
+  updateProfile,
+  getProfile
 };

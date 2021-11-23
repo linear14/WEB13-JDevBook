@@ -2,5 +2,12 @@ import InitProfileData from 'components/ProfilePage/InitProfileData';
 import ProfileBar from 'components/ProfilePage/ProfileBar';
 import ProfileCover from 'components/ProfilePage/ProfileCover';
 import ProfileEditModal from './ProfileEditModal';
+import PostList from 'components/ProfilePage/PostList';
 
-export { InitProfileData, ProfileBar, ProfileCover, ProfileEditModal };
+export {
+  InitProfileData,
+  ProfileBar,
+  ProfileCover,
+  PostList,
+  ProfileEditModal
+};

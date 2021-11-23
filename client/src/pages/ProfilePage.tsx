@@ -3,8 +3,9 @@ import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 
-import { profileState, userDataStates } from 'recoil/store';
+import { imageViewerState, profileState, userDataStates } from 'recoil/store';
 import palette from 'theme/palette';
+import fetchApi from 'api/fetch';
 
 import {
   Gnb,
@@ -16,11 +17,12 @@ import {
   InitSocket,
   LoadingModal
 } from 'components/common';
-import { PostWriter } from 'components/HomePage';
+import { PostWriter, ImageViewer } from 'components/HomePage';
 import {
   ProfileBar,
   ProfileCover,
-  InitProfileData
+  InitProfileData,
+  PostList
 } from 'components/ProfilePage';
 
 const GlobalStyle = createGlobalStyle`
@@ -59,13 +61,13 @@ const InnerContainer = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  width: 40%;
+  width: 366px;
   box-sizing: border-box;
   padding-right: 6px;
 `;
 
 const PostContainer = styled.div`
-  width: 60%;
+  width: 544px;
   box-sizing: border-box;
   padding-left: 6px;
 `;
@@ -76,6 +78,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   const userData = useRecoilValue(userDataStates);
   const profileData = useRecoilValue(profileState);
   const resetProfileData = useResetRecoilState(profileState);
+  const imageViewer = useRecoilValue(imageViewerState);
   const [myProfile, setMyProfile] = useState<boolean>(false);
 
   useEffect(() => {
@@ -86,6 +89,23 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   useEffect(() => {
     return () => resetProfileData();
   }, []);
+
+  const [imgsrc, setImgsrc] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      const { data: profile, error } = await fetchApi.getProfile(
+        match.params.username
+      );
+      if (!error) {
+        setImgsrc(profile.cover);
+      }
+    })();
+  }, [match.params.username]);
+
+  useEffect(() => {
+    if (match.params.username === userData.name) setImgsrc(userData.cover);
+  }, [userData.cover]);
 
   return (
     <ProfilePageContainer>
@@ -101,17 +121,21 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
           <GroupSideBar />
         </SideBar>
         <ContentsContainer contentsState={true}>
-          <ProfileCover src={profileData.cover || ''} />
+          <ProfileCover src={imgsrc} profileName={match.params.username} />
           <ProfileBar />
           <InnerContainer>
             <InfoContainer></InfoContainer>
-            <PostContainer>{myProfile ? <PostWriter /> : ''}</PostContainer>
+            <PostContainer>
+              {myProfile ? <PostWriter /> : ''}
+              <PostList username={match.params.username} />
+            </PostContainer>
           </InnerContainer>
         </ContentsContainer>
         <SideBar isLeft={false}>
           <ChatSideBar />
         </SideBar>
       </PageLayout>
+      {imageViewer.isOpen && <ImageViewer />}
     </ProfilePageContainer>
   );
 };

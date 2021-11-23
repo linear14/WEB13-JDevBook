@@ -84,6 +84,7 @@ export const postModalDataStates = atom<PostData>({
     secret: false,
     contents: '',
     likenum: 0,
+    commentnum: 0,
     likeFlag: false,
     picture1: null,
     picture2: null,
