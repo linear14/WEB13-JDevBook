@@ -22,7 +22,8 @@ import {
   ProfileBar,
   ProfileCover,
   InitProfileData,
-  PostList
+  PostList,
+  ProfileInfoBar
 } from 'components/ProfilePage';
 
 const GlobalStyle = createGlobalStyle`
@@ -129,7 +130,9 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
           <ProfileCover src={imgsrc} profileName={match.params.username} />
           <ProfileBar />
           <InnerContainer>
-            <InfoContainer></InfoContainer>
+            <InfoContainer>
+              <ProfileInfoBar />
+            </InfoContainer>
             <PostContainer>
               {myProfile ? <PostWriter /> : ''}
               <PostList username={match.params.username} />
