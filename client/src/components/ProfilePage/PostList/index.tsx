@@ -60,7 +60,7 @@ const PostList = ({ username }: { username: string }) => {
     return Array(count)
       .fill(undefined)
       .map((v, i) => {
-        return <Skeleton key={`s${i}`} />;
+        return <Skeleton key={`s${i}`} isProfile />;
       });
   };
 
