@@ -168,19 +168,8 @@ const fetchApi = {
     return await response.json();
   },
 
-  updateBio: async (userName: string, bio: string) => {
-    const response = await fetch(`/api/profile/bio`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ userName: userName, bio: bio })
-    });
-    return await response.json();
-  },
-
   updateProfile: async (userUpdateData: IProfile) => {
-    const response = await fetch(`/api/users/${userUpdateData.idx}`, {
+    const response = await fetch(`/api/profile/${userUpdateData.idx}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

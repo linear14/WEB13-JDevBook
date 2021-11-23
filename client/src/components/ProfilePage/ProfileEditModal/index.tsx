@@ -106,8 +106,11 @@ const ProfileEditModal = () => {
 
   const saveBtnHandler = async (e: React.MouseEvent) => {
     if (bio.length !== 0) {
-      const result = await fetchApi.updateBio(profileData.nickname, bio.trim());
-      result
+      const result = await fetchApi.updateProfile({
+        ...profileData,
+        bio: bio.trim()
+      });
+      result !== undefined
         ? alertMessage('성공적으로 수정되었습니다!')
         : alertMessage(
             '알 수 없는 이유로 수정에 실패하였습니다.',
