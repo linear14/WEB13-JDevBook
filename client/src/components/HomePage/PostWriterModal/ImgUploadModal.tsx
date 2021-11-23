@@ -211,14 +211,19 @@ const ImgUploadModal = () => {
   const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
     if (imgList.length >= 3)
       return alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
+    if (isImgUploading > 0)
+      return alertMessage('이미지 업로드 중입니다.', palette.alert);
 
     inputfile.current.click();
   };
 
-  const uploadOneFile = (filelist: FileList | null, uploadNum: number) => {
-    if (imgList.length >= 3) {
+  const uploadOneFile = (filelist: FileList | null) => {
+    if (imgList.length >= 3)
       return alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
-    }
+    if (isImgUploading > 0)
+      return alertMessage('이미지 업로드 중입니다.', palette.alert);
+
+    const uploadNum = isImgUploading;
     setIsImgUploading(uploadNum + 1);
     getFile(filelist, uploadNum + 1);
   };
@@ -330,7 +335,7 @@ const ImgUploadModal = () => {
         }}
         onDrop={(e) => {
           dragDropEvent(e, palette.lightgray);
-          uploadOneFile(e.dataTransfer.files, isImgUploading);
+          uploadOneFile(e.dataTransfer.files);
         }}
       >
         <CloseBtn onClick={imgUploadModalOff}>
@@ -347,7 +352,7 @@ const ImgUploadModal = () => {
             accept="image/*"
             ref={inputfile}
             onChange={() => {
-              uploadOneFile(inputfile.current.files, isImgUploading);
+              uploadOneFile(inputfile.current.files);
             }}
             style={{ display: 'none' }}
           />
