@@ -19,12 +19,9 @@ const insertSolvedProblem = async (useridx: number, problemidx: number) => {
 };
 
 const getSolvedProblems = async (userName: string) => {
-  const userData = await db.models.User.findOne({
+  const solvedProblems = await db.models.User.findAll({
+    include: [db.models.Problem],
     where: { nickname: userName },
-    logging: false
-  });
-  const solvedProblems = await db.models.UserProblem.findAll({
-    where: { useridx: userData?.get().idx },
     logging: false
   });
 

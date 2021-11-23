@@ -11,7 +11,7 @@ import {
   CommentData,
   IProfile
 } from '../types/interface';
-import { upload, uploadFile } from '../service/objectStorage';
+import { uploadFile } from '../service/objectStorage';
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
@@ -251,6 +251,24 @@ router.get(
   }
 );
 
+router.get(
+  '/problems/joined/:useridx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userIdx = Number(req.params.useridx);
+      const groups = await dbManager.getUserJoinedGroups(userIdx);
+      const groupIndices = JSON.parse(JSON.stringify(groups)).map(
+        (item: any) => item.groupidx
+      );
+      const problems = await dbManager.getProblems(groupIndices);
+      res.json(problems);
+    } catch (err) {
+      console.error(err);
+      res.json([]);
+    }
+  }
+);
+
 router.post(
   '/comments',
   async (req: Request, res: Response, next: NextFunction) => {
@@ -311,6 +329,20 @@ router.get(
     try {
       const groupIdx: number = Number(req.params.groupidx);
       const group = await dbManager.getGroup(groupIdx);
+      res.json(group);
+    } catch (err) {
+      console.error(err);
+      res.json([]);
+    }
+  }
+);
+
+router.get(
+  '/groups/joined/:useridx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userIdx: number = Number(req.params.useridx);
+      const group = await dbManager.getUserJoinedGroups(userIdx);
       res.json(group);
     } catch (err) {
       console.error(err);
