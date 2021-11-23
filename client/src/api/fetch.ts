@@ -146,6 +146,16 @@ const fetchApi = {
     return await response.json();
   },
 
+  getSolvedProblems: async (userName: string) => {
+    const response = await fetch(`/api/problems/solved/${userName}`);
+    return await response.json();
+  },
+
+  getJoinedProblems: async (userIdx: number) => {
+    const response = await fetch(`/api/problems/joined/${userIdx}`);
+    return await response.json();
+  },
+
   getGroupList: async () => {
     const response = await fetch('/api/groups');
     return await response.json();
@@ -153,6 +163,11 @@ const fetchApi = {
 
   getGroup: async (groupIdx: number) => {
     const response = await fetch(`/api/groups/${groupIdx}`);
+    return await response.json();
+  },
+
+  getJoinedGroups: async (userIdx: number) => {
+    const response = await fetch(`/api/groups/joined/${userIdx}`);
     return await response.json();
   },
 
