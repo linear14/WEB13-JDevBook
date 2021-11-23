@@ -25,13 +25,13 @@ const ProfileBio = styled.div`
   color: ${palette.darkgray};
 `;
 
-const ProfileInfo = () => {
+const ProfileInfo = ({ userName }: { userName: string }) => {
   const profileData = useRecoilValue(profileState);
 
   return (
     <ProfileInfoWrap>
-      <ProfileTitle>유저명</ProfileTitle>
-      <ProfileBio>안녕하세요 유저명입니다.</ProfileBio>
+      <ProfileTitle>{userName}</ProfileTitle>
+      <ProfileBio>안녕하세요 {userName}입니다.</ProfileBio>
     </ProfileInfoWrap>
   );
 };

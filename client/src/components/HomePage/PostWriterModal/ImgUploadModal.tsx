@@ -234,20 +234,21 @@ const ImgUploadModal = () => {
 
   const getFile = async (filelist: FileList | null, uploadNum: number) => {
     if (!filelist || filelist.length === 0) {
-      setIsImgUploading(uploadNum - 1);
-      return alertMessage('파일을 가져오지 못했습니다.', palette.alert);
+      alertMessage('파일을 가져오지 못했습니다.', palette.alert);
+      return setIsImgUploading(uploadNum - 1);
     }
 
     if (filelist[0].type.match(/image\/*/) === null) {
-      setIsImgUploading(uploadNum - 1);
-      return alertMessage('이미지 파일이 아닙니다.', palette.alert);
+      alertMessage('이미지 파일이 아닙니다.', palette.alert);
+      return setIsImgUploading(uploadNum - 1);
     }
 
     const imglist: FileList = filelist; //inputfile.current.files;
     const s3fileRes = await fetchApi.uploadImg(imglist);
 
     if (!s3fileRes.save) {
-      alertMessage('이미지 업로드 실패');
+      if (s3fileRes.file) alertMessage('이미지 업로드 실패', palette.alert);
+      else alertMessage('1MB 이하만 가능합니다.', palette.alert);
       return setIsImgUploading(uploadNum - 1);
     }
 

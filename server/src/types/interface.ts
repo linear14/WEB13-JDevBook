@@ -136,3 +136,10 @@ export interface IGroup {
 export interface IUserSocket {
   [key: string]: string;
 }
+
+export interface IProfile {
+  idx: number;
+  nickname: string;
+  cover: string;
+  bio: string;
+}

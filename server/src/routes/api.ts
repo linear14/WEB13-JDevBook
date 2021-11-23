@@ -8,9 +8,10 @@ import {
   DBUser,
   PostAddData,
   PostUpdateData,
-  CommentData
+  CommentData,
+  IProfile
 } from '../types/interface';
-import { upload } from '../service/objectStorage';
+import { upload, uploadFile } from '../service/objectStorage';
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
@@ -77,6 +78,31 @@ router.get(
       console.error(err);
       res.json([]);
     }
+  }
+);
+
+router.put(
+  '/users/:useridx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userIdx = Number(req.params.useridx);
+      const userUpdateData: IProfile = req.body;
+      await dbManager.updateProfile(userUpdateData, userIdx);
+      res.json({ check: true });
+    } catch (err) {
+      console.error(err);
+      res.json({ check: false });
+    }
+  }
+);
+
+router.get(
+  '/users/:username',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const name: string = req.params.username;
+    const userdata: DBUser = await dbManager.getProfile(name);
+    if (userdata === undefined) res.json({ data: '', error: true });
+    else res.json({ data: userdata, error: false });
   }
 );
 
@@ -197,12 +223,11 @@ router.post(
 
 router.post(
   '/uploadimg',
-  upload.single('imgfile'), // multer-s3 location 추가됨
+  uploadFile, // file 크기 제한 에러핸들링, multer-s3 location 추가됨
   async (req: Request, res: Response, next: NextFunction) => {
     const s3file = req.file;
     if (s3file) res.json({ file: s3file, save: true });
-    else res.json({ save: false });
-    // type 생각하면 형식 똑같이 해야되나?
+    else res.json({ file: true, save: false });
   }
 );
 

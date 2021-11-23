@@ -1,5 +1,6 @@
 import { CommentData } from 'types/comment';
 import { PostData, PostAddData, PostUpdateData } from 'types/post';
+import { IProfile } from 'types/user';
 
 const fetchApi = {
   getLoginlink: async (): Promise<string> => {
@@ -159,6 +160,23 @@ const fetchApi = {
     const response = await fetch(`/api/joingroup/${userIdx}/${groupIdx}`, {
       method: 'POST'
     });
+    return await response.json();
+  },
+
+  updateProfile: async (userUpdateData: IProfile) => {
+    const response = await fetch(`/api/users/${userUpdateData.idx}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userUpdateData)
+    });
+    return await response.json();
+  },
+
+  getProfile: async (userName: string) => {
+    // { data: userdata, error: false }
+    const response = await fetch(`/api/users/${userName}`);
     return await response.json();
   }
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
 
@@ -13,8 +13,12 @@ import {
   InitUserData,
   InitSocket
 } from 'components/common';
+
 import { ProfileBar, ProfileCover, PostList } from 'components/ProfilePage';
 import { PostWriterModal } from 'components/HomePage';
+import fetchApi from 'api/fetch';
+import { useRecoilValue } from 'recoil';
+import { userDataStates } from 'recoil/store';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -45,6 +49,24 @@ const ContentsContainer = styled.div<{ contentsState: boolean }>`
 const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   match
 }) => {
+  const [imgsrc, setImgsrc] = useState('');
+  const userData = useRecoilValue(userDataStates);
+
+  useEffect(() => {
+    (async () => {
+      const { data: profile, error } = await fetchApi.getProfile(
+        match.params.username
+      );
+      if (!error) {
+        setImgsrc(profile.cover);
+      }
+    })();
+  }, [match.params.username]);
+
+  useEffect(() => {
+    if (match.params.username === userData.name) setImgsrc(userData.cover);
+  }, [userData.cover]);
+
   return (
     <ProfilePageContainer>
       <GlobalStyle />
@@ -57,8 +79,8 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
           <GroupSideBar />
         </SideBar>
         <ContentsContainer contentsState={true}>
-          <ProfileCover src="" />
-          <ProfileBar />
+          <ProfileCover src={imgsrc} profileName={match.params.username} />
+          <ProfileBar profileName={match.params.username} />
           <PostList username={match.params.username} />
         </ContentsContainer>
         <SideBar isLeft={false}>
