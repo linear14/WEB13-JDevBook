@@ -43,7 +43,7 @@ const PageLayout = styled.div`
 const ContentsContainer = styled.div<{ contentsState: boolean }>`
   width: calc(100vw - 680px);
   min-width: 720px;
-  margin: 0 10px;
+  margin: 0 12px;
 
   display: ${(props) => (props.contentsState ? 'flex' : 'none')};
   flex-direction: column;

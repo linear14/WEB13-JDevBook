@@ -17,7 +17,7 @@ const PostWriterBox = styled.div`
   box-sizing: border-box;
   margin: 24px 0 0 0;
 
-  padding: 0 12px;
+  padding: 4px 16px;
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 5px;
   background-color: ${palette.white};
@@ -114,7 +114,7 @@ const PostWriter = () => {
     <>
       <PostWriterBox className="no-drag">
         <InputWrap>
-          <ProfilePhoto size="40px" userName={userdata.name} />
+          <ProfilePhoto size="44px" userName={userdata.name} />
           <ModalCallBtn onClick={postWriterModalOn}>
             {userdata.name}님, 무슨 생각을 하고 계신가요?
           </ModalCallBtn>
