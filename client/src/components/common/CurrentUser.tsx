@@ -15,7 +15,7 @@ const ClickableProfileImage = styled(ProfilePhoto)``;
 
 const CurrentUserWrapper = styled.div`
   width: inherit;
-  height: 300px;
+  height: 200px;
 
   overflow-x: hidden;
   overflow-y: scroll;

@@ -51,11 +51,13 @@ const Footer = ({
         <img src={likeBadge} alt="likeBadge" />
         <p>{likenum.toString()}</p>
       </div>
-      <Comments onClick={() => setCommentFlag(!commentFlag)}>
-        <CommentsNum onClick={() => setCommentFlag(!commentFlag)}>
-          댓글 {commentsNum} 개
-        </CommentsNum>
-      </Comments>
+      {commentsNum ? (
+        <Comments onClick={() => setCommentFlag(!commentFlag)}>
+          <CommentsNum onClick={() => setCommentFlag(!commentFlag)}>
+            댓글 {commentsNum} 개
+          </CommentsNum>
+        </Comments>
+      ) : null}
     </FooterContainer>
   );
 };

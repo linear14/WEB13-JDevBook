@@ -12,6 +12,7 @@ export interface PostUpdateData extends PostBody {
 export interface PostAddData extends PostUpdateData {
   useridx: number;
   likenum: number;
+  commentnum: number;
 }
 
 export interface PostData extends PostAddData {
