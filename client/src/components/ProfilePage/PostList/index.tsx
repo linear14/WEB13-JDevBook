@@ -9,7 +9,7 @@ import { Post } from 'components/HomePage';
 import { Skeleton } from 'components/common';
 
 const PostListContainer = styled.div`
-  width: 100%;
+  width: 538px;
   /* min-width: 680px; */
   position: relative;
   box-sizing: border-box;
@@ -77,7 +77,7 @@ const PostList = ({ username }: { username: string }) => {
       <PostListContainer>
         {posts.map((post) => (
           <div key={post.idx}>
-            <Post key={post.idx} post={post} />
+            <Post key={post.idx} post={post} isProfile />
           </div>
         ))}
         {isFetching && getSkeletons(3)}

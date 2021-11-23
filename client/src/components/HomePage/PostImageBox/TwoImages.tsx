@@ -5,10 +5,16 @@ import { PostImageInfo } from 'types/post';
 import ActiveImageBox from './ActiveImageBox';
 import { CropCenter, FlexWrap } from './styles';
 
-const TwoImages = ({ postImages }: { postImages: PostImageInfo[] }) => {
+const TwoImages = ({
+  postImages,
+  isProfile
+}: {
+  postImages: PostImageInfo[];
+  isProfile: boolean;
+}) => {
   if (postImages.length !== 2) return <div></div>;
 
-  const boxLength = 340;
+  const boxLength = isProfile ? 269 : 340;
 
   const { url: url1, originalWidth: ow1, originalHeight: oh1 } = postImages[0];
   const { url: url2, originalWidth: ow2, originalHeight: oh2 } = postImages[1];

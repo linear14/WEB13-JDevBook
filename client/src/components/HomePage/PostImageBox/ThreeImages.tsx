@@ -5,14 +5,16 @@ import { CropCenter, FlexWrap } from './styles';
 import ActiveImageBox from './ActiveImageBox';
 
 const ThreeImagesHorizontal = ({
-  postImages
+  postImages,
+  isProfile
 }: {
   postImages: PostImageInfo[];
+  isProfile: boolean;
 }) => {
   if (postImages.length !== 3) return <div></div>;
 
-  const boxLengthHalf = 340;
-  const boxLengthFull = 680;
+  const boxLengthHalf = isProfile ? 269 : 340;
+  const boxLengthFull = isProfile ? 538 : 680;
 
   const { url: url1, originalWidth: ow1, originalHeight: oh1 } = postImages[0];
   const { url: url2, originalWidth: ow2, originalHeight: oh2 } = postImages[1];
@@ -77,14 +79,16 @@ const ThreeImagesHorizontal = ({
 };
 
 const ThreeImagesVertical = ({
-  postImages
+  postImages,
+  isProfile
 }: {
   postImages: PostImageInfo[];
+  isProfile: boolean;
 }) => {
   if (postImages.length !== 3) return <div></div>;
 
-  const boxLengthHalf = 340;
-  const boxLengthFull = 680;
+  const boxLengthHalf = isProfile ? 269 : 340;
+  const boxLengthFull = isProfile ? 538 : 680;
 
   const { url: url1, originalWidth: ow1, originalHeight: oh1 } = postImages[0];
   const { url: url2, originalWidth: ow2, originalHeight: oh2 } = postImages[1];

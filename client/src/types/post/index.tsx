@@ -52,6 +52,7 @@ export interface PostImageInfo {
 export interface PostImageBoxProps {
   imageCount: number;
   images: PostImageInfo[] | null;
+  isProfile: boolean;
 }
 
 export interface PostImageBoxStyle {
