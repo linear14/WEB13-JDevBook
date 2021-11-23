@@ -15,7 +15,7 @@ const PostWriterBox = styled.div`
   align-items: center;
   width: 100%;
   box-sizing: border-box;
-  margin: 12px 0 0 0;
+  margin: 24px 0 0 0;
 
   padding: 0 12px;
   border-radius: 8px;
