@@ -62,15 +62,17 @@ const AlarmSideBarContainer = styled.div<{
 
 const AlarmBox = styled.div`
   display: flex;
-  padding: 8px 8px 8px 8px;
+  padding: ${style.padding.normal} ${style.padding.normal} ${style.padding.normal} ${style.padding.normal};
   :hover {
     background-color: ${palette.lightgray};
     border-radius: 10px;
   }
 `;
 const AlarmText = styled.div`
-  margin-left: 4px;
+  margin-top: ${style.margin.small};
+  margin-left: ${style.margin.small};
   word-break: break-word;
+  font-size: 14px;
 `;
 
 const AlarmSideBar = () => {
