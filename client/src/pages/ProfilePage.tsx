@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { imageViewerState, profileState, userDataStates } from 'recoil/store';
 import palette from 'theme/palette';
@@ -75,7 +75,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   match
 }) => {
   const userData = useRecoilValue(userDataStates);
-  const [profileData, setProfileData] = useRecoilState(profileState);
+  const profileData = useRecoilValue(profileState);
   const resetProfileData = useResetRecoilState(profileState);
   const imageViewer = useRecoilValue(imageViewerState);
   const [myProfile, setMyProfile] = useState<boolean>(false);
@@ -88,11 +88,6 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   useEffect(() => {
     return () => resetProfileData();
   }, []);
-
-  // useEffect(() => {
-  //   if (profileData.nickname === userData.name)
-  //     setProfileData({ ...profileData, cover: userData.cover });
-  // }, [userData.cover]);
 
   return (
     <ProfilePageContainer>
