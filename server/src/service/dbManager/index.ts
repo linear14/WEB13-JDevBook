@@ -22,17 +22,31 @@ import { getGroupList, getGroup, toggleUserGroup } from './group';
 import { setChatList, getChatList } from './chat';
 import { setGroupChatList, getGroupChatList } from './groupchat';
 import { getGroupUsers, getGroupUsersName } from './usergroup';
+const problemOS = require('../../config/problem_os.json');
+const group = require('../../config/initgroup.json');
 
 const dbManager = {
-  sync: async () => {
+  sync: async function () {
+    const force: boolean = false;
     await db
-      .sync({ force: false, logging: false })
-      .then(() => {
+      .sync({ force: force, logging: false })
+      .then(async () => {
+        if (force) {
+          await this.createInitGroup();
+        }
         console.log('Connection has been established successfully.');
       })
       .catch((error: any) => {
         console.error('Unable to connect to the database:', error);
       });
+  },
+
+  createInitGroup: async function () {
+    const result = await db.models.Group.bulkCreate(group, {
+      logging: false,
+      returning: true
+    });
+    //return result.get();
   },
 
   getUserData,
