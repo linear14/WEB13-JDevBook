@@ -49,6 +49,13 @@ export interface PostImageInfo {
   originalHeight: number;
 }
 
+export interface PostImagesInfo {
+  width: number;
+  height: number;
+  index: number;
+  urls: string[];
+}
+
 export interface PostImageBoxProps {
   imageCount: number;
   images: PostImageInfo[] | null;
@@ -62,9 +69,4 @@ export interface PostImageBoxStyle {
   rightBorder?: boolean;
   topBorder?: boolean;
   bottomBorder?: boolean;
-}
-
-export interface PostImageBoxStyleWithSource extends PostImageBoxStyle {
-  index: number;
-  urls: string[];
 }

@@ -36,23 +36,11 @@ const TwoImages = ({
 
   return (
     <FlexWrap>
-      <CropCenter width={boxLength} height={boxLength}>
-        <ActiveImageBox
-          index={0}
-          width={w1}
-          height={h1}
-          urls={urls}
-          rightBorder
-        />
+      <CropCenter width={boxLength} height={boxLength} rightBorder>
+        <ActiveImageBox index={0} width={w1} height={h1} urls={urls} />
       </CropCenter>
-      <CropCenter width={boxLength} height={boxLength}>
-        <ActiveImageBox
-          index={1}
-          width={w2}
-          height={h2}
-          urls={urls}
-          leftBorder
-        />
+      <CropCenter width={boxLength} height={boxLength} leftBorder>
+        <ActiveImageBox index={1} width={w2} height={h2} urls={urls} />
       </CropCenter>
     </FlexWrap>
   );
