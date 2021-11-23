@@ -12,6 +12,12 @@ const InitProfileData = ({ userName }: { userName: string }) => {
   const fetchProfile = async (userName: string) => {
     const { data: profile, error } = await fetchApi.getProfile(userName);
     if (!error) setprofileData(profile);
+    //       setProfileData({
+    //         idx: profile.idx,
+    //         nickname: profile.nickname,
+    //         cover: profile.cover,
+    //         bio: profile.bio
+    //       });
   };
 
   useEffect(() => {
