@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Children } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
@@ -105,10 +105,7 @@ const ProfileCover = () => {
         ...userData,
         cover: s3fileRes.file.location
       });
-      // setProfileData({
-      //   ...profileData,
-      //   cover: s3fileRes.file.location
-      // });
+      setProfileData({ ...profileData, cover: s3fileRes.file.location });
     } else {
       return alertMessage('프로필 업데이트를 하지 못했습니다.', palette.alert);
     }

@@ -5,7 +5,6 @@ import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { imageViewerState, profileState, userDataStates } from 'recoil/store';
 import palette from 'theme/palette';
-import fetchApi from 'api/fetch';
 
 import {
   Gnb,
@@ -91,25 +90,9 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   }, []);
 
   // useEffect(() => {
-  //   (async () => {
-  //     const { data: profile, error } = await fetchApi.getProfile(
-  //       match.params.username
-  //     );
-  //     if (!error) {
-  //       setProfileData({
-  //         idx: profile.idx,
-  //         nickname: profile.nickname,
-  //         cover: profile.cover,
-  //         bio: profile.bio
-  //       });
-  //     }
-  //   })();
-  // }, [match.params.username]);
-
-  useEffect(() => {
-    if (profileData.nickname === userData.name)
-      setProfileData({ ...profileData, cover: userData.cover });
-  }, [userData.cover]);
+  //   if (profileData.nickname === userData.name)
+  //     setProfileData({ ...profileData, cover: userData.cover });
+  // }, [userData.cover]);
 
   return (
     <ProfilePageContainer>
