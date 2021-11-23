@@ -5,8 +5,11 @@ import { mainLogo } from 'images';
 import palette from 'theme/palette';
 
 const LoadingModalContainer = styled.div<{ modalState: boolean }>`
-  width: 100vw;
-  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 5;
 
   background-color: ${palette.white};
