@@ -1,14 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
-import {
-  myJoinedGroupState,
-  solvedProblemState,
-  rateState,
-  profileState
-} from 'recoil/store';
-import { IGroup } from 'types/group';
+import { profileState } from 'recoil/store';
+import { ISolvedProblem, IProblem } from 'types/problem';
+import { IUserWithSolved, IUserGroup } from 'types/user';
 import palette from 'theme/palette';
 import fetchApi from 'api/fetch';
 
@@ -70,34 +66,98 @@ const InnerBarGraph = styled.span<{ solvedRate: number }>`
 
 const ProfileInfoBar = () => {
   const profileData = useRecoilValue(profileState);
-  const [joinedGroups, setJoinedGroups] = useState<number[]>([1]);
-  const [solvedProblem, setSolvedProblem] = useState<
-    { idx: number; groupidx: number }[]
-  >([]);
-  const [rate, setRate] = useState<number>(0);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [joinedGroups, setJoinedGroups] = useState<number[] | null>(null);
+  const [solvedProblem, setSolvedProblem] = useState<ISolvedProblem[]>([]);
+  const [totalProblemsCount, setTotalProblemsCount] = useState<number>(0);
+  const [solvedRate, setSolvedRate] = useState<number | null>(null);
 
-  // const getSolvedRate = useCallback(() => {
-  //   const solvedLength = solvedProblem.filter((item) =>
-  //     joinedGroups?.includes(item.groupIdx)
-  //   ).length;
-  //   return rate.totalProblemsCount === 0
-  //     ? 0
-  //     : Number(((solvedLength / rate.totalProblemsCount) * 100).toFixed(1));
-  // }, [solvedProblem, rate.totalProblemsCount, joinedGroups]);
+  const getSolvedProblem = async () => {
+    const result: IUserWithSolved[] = await fetchApi.getSolvedProblems(
+      profileData.nickname
+    );
+    console.log(result);
+    if (result.length > 0) {
+      setSolvedProblem(
+        result[0].BTMUserProblemuseridx.map((cur) => ({
+          idx: cur.idx,
+          groupIdx: cur.groupidx
+        }))
+      );
+    } else {
+      setSolvedProblem([]);
+    }
+  };
+
+  const getTotalProblemsCount = async () => {
+    const result: IProblem[] = await fetchApi.getJoinedProblems(
+      profileData.idx
+    );
+    if (result.length > 0) {
+      setTotalProblemsCount(result.length);
+    } else {
+      setTotalProblemsCount(0);
+    }
+  };
+
+  const getJoinedGroup = async () => {
+    const result: IUserGroup[] = await fetchApi.getJoinedGroups(
+      profileData.idx
+    );
+    if (result.length > 0) {
+      setJoinedGroups(result.map((cur) => cur.groupidx));
+    } else {
+      setJoinedGroups([]);
+    }
+  };
+
+  const getSolvedRate = () => {
+    const solvedLength = solvedProblem.filter((item) =>
+      joinedGroups?.includes(item.groupIdx)
+    ).length;
+    return totalProblemsCount === 0
+      ? 0
+      : Number(((solvedLength / totalProblemsCount) * 100).toFixed(1));
+  };
+
+  const getData = async () => {
+    await getSolvedProblem();
+    await getTotalProblemsCount();
+    await getJoinedGroup();
+  };
+
+  const resetData = () => {
+    setSolvedProblem([]);
+    setTotalProblemsCount(0);
+    setJoinedGroups(null);
+    setSolvedRate(null);
+  };
 
   useEffect(() => {
-    // const solvedRate = getSolvedRate();
-    setRate(88);
-  }, []);
+    if (!isFetching) {
+      setIsFetching(true);
+      resetData();
+    }
+  }, [profileData.idx]);
+
+  useEffect(() => {
+    getData();
+  }, [joinedGroups === null && profileData.nickname !== '']);
+
+  useEffect(() => {
+    const fetchSolvedRate = getSolvedRate();
+    setSolvedRate(fetchSolvedRate);
+    setIsFetching(false);
+  }, [joinedGroups]);
 
   return (
-    <ProfileBarContainer>
+    <ProfileBarContainer className="no-drag">
       <SolvedTitle>문제 정답률</SolvedTitle>
-      {joinedGroups && joinedGroups.length === 0 && <NoGroup />}
+      {joinedGroups && !isFetching && joinedGroups.length === 0 && <NoGroup />}
       {joinedGroups && joinedGroups.length > 0 && (
         <SolvedBarGraph>
-          <InnerBarGraph solvedRate={rate}>
-            {rate !== 0 && `${rate}%`}
+          <InnerBarGraph solvedRate={solvedRate || 0}>
+            {solvedRate}%
           </InnerBarGraph>
         </SolvedBarGraph>
       )}
