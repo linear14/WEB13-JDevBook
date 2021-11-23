@@ -22,7 +22,7 @@ import { getGroupList, getGroup, toggleUserGroup } from './group';
 import { setChatList, getChatList } from './chat';
 import { setGroupChatList, getGroupChatList } from './groupchat';
 import { getGroupUsers, getGroupUsersName } from './usergroup';
-import { addAlarm } from './alarm';
+import { addAlarm, getAlarmList } from './alarm';
 
 const dbManager = {
   sync: async () => {
@@ -80,7 +80,8 @@ const dbManager = {
   getGroupChatList,
   getAllUsersObj,
 
-  addAlarm
+  addAlarm,
+  getAlarmList
 };
 
 export default dbManager;
