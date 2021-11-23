@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { rightModalStates, usersocketStates } from 'recoil/store';
+import { rightModalStates, usersocketStates, userDataStates } from 'recoil/store';
 
 import ProfilePhoto from 'components/common/ProfilePhoto';
 import palette from 'theme/palette';
@@ -73,11 +73,20 @@ const AlarmText = styled.div`
 `;
 
 const AlarmSideBar = () => {
-  const [alarmList, setAlarmList] = useState<string[]>(['a']);
+  const [alarmList, setAlarmList] = useState<string[]>(['linear14:post','linear14:chat']);
   const rightModalState = useRecoilValue(rightModalStates);
+  const currentUserName = useRecoilValue(userDataStates).name;
   const socket = useRecoilValue(usersocketStates);
 
-  useEffect(() => {}, []);
+  socket.off('get alarm info');
+  socket.on('get alarm info', (data:{sender: string, receiver: string, type: string}) => {
+    if(data.receiver === currentUserName && data.sender !== currentUserName)
+      setAlarmList((alarmList: string[]) => alarmList.concat(`${data.sender}:${data.type}`));
+  });
+
+  useEffect(() => {
+
+  }, []);
 
   const alarmListView = alarmList.map((alarm, idx) => (
     // username : alarm.split(':')[0]

@@ -103,7 +103,7 @@ const socketIO = (server: any) => {
     socket.on('send alarm', async (receivedData) => {
       const { sender, receiver, type } = receivedData;
       io.emit('get alarm', receivedData);
-      io.emit('get alarm info');
+      io.emit('get alarm info', receivedData);
     });
 
     // 유저 로그아웃 부분
