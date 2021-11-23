@@ -91,7 +91,6 @@ const InfoSideBar = () => {
   const joinedGroups = useRecoilValue(myJoinedGroupState);
   const solvedProblem = useRecoilValue(solvedProblemState);
   const [rate, setRate] = useRecoilState(rateState);
-  const profileURL = `/profile/${userdata.name}`;
   const resetProfile = useResetProfile();
 
   const photoClickHandler = (e: React.MouseEvent) => {
@@ -128,7 +127,7 @@ const InfoSideBar = () => {
 
   return (
     <InfoSideBarContainer className="no-drag">
-      <ProfileWrap to={profileURL} onClick={photoClickHandler}>
+      <ProfileWrap to={`/profile/${userdata.name}`} onClick={photoClickHandler}>
         <ProfilePhoto userName={userdata.name} />
         <p>{userdata.name}</p>
       </ProfileWrap>
