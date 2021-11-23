@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
@@ -67,26 +67,40 @@ const ProfileCover = () => {
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [userData, setUserData] = useRecoilState(userDataStates);
   const [profileData, setProfileData] = useRecoilState(profileState);
+  const [imgEdit, setImgEdit] = useState<boolean>(false);
   const alertMessage = useAlertModal();
 
   const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
     if (userData.name !== profileData.nickname)
       return alertMessage('프로필 소유자가 아닙니다.', palette.alert);
+    if (imgEdit) return alertMessage('이미지 업로드 중입니다.', palette.alert);
     inputfile.current.click();
   };
 
-  const uploadOneFile = async () => {
-    const filelist: FileList | null = inputfile.current.files;
-    if (!filelist || filelist.length === 0)
-      return alertMessage('파일을 가져오지 못했습니다.', palette.alert);
+  const uploadOneFile = () => {
+    if (imgEdit) return alertMessage('이미지 업로드 중입니다.', palette.alert);
 
-    if (filelist[0].type.match(/image\/*/) === null)
+    setImgEdit(true);
+    getFile();
+  };
+
+  const getFile = async () => {
+    const filelist: FileList | null = inputfile.current.files;
+    if (!filelist || filelist.length === 0) {
+      setImgEdit(false);
+      return alertMessage('파일을 가져오지 못했습니다.', palette.alert);
+    }
+
+    if (filelist[0].type.match(/image\/*/) === null) {
+      setImgEdit(false);
       return alertMessage('이미지 파일이 아닙니다.', palette.alert);
+    }
 
     const imglist: FileList = filelist; //inputfile.current.files;
     const s3fileRes = await fetchApi.uploadImg(imglist);
 
     if (!s3fileRes.save) {
+      setImgEdit(false);
       if (s3fileRes.file)
         return alertMessage('이미지 업로드 실패', palette.alert);
       else return alertMessage('1MB 이하만 가능합니다.', palette.alert);
@@ -100,6 +114,7 @@ const ProfileCover = () => {
       cover: s3fileRes.file.location
     });
 
+    setImgEdit(false);
     if (check) {
       setUserData({
         ...userData,
