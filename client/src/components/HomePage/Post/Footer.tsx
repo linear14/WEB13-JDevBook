@@ -46,7 +46,7 @@ const Footer = ({
   setCommentsNum
 }: PostFooterProps) => {
   return (
-    <FooterContainer>
+    <FooterContainer className="no-drag">
       <div>
         <img src={likeBadge} alt="likeBadge" />
         <p>{likenum.toString()}</p>

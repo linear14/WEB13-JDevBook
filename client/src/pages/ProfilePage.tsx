@@ -13,7 +13,8 @@ import {
   InitUserData,
   InitSocket
 } from 'components/common';
-import { ProfileBar, ProfileCover } from 'components/ProfilePage';
+import { ProfileBar, ProfileCover, PostList } from 'components/ProfilePage';
+import { PostWriterModal } from 'components/HomePage';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -58,6 +59,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
         <ContentsContainer contentsState={true}>
           <ProfileCover src="" />
           <ProfileBar />
+          <PostList username={match.params.username} />
         </ContentsContainer>
         <SideBar isLeft={false}>
           <ChatSideBar />
