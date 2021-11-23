@@ -38,17 +38,20 @@ const GroupPageContainer = styled.div`
 
 const PageLayout = styled.div`
   display: flex;
-  justify-content: space-between;
 `;
 
 const ContentsContainer = styled.div<{ contentsState: boolean }>`
-  width: 100%;
+  width: calc(100vw - 680px);
   min-width: 720px;
   margin: 0 10px;
 
   display: ${(props) => (props.contentsState ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 1040px) {
+    width: 100%;
+  }
 
   img {
     width: 100%;

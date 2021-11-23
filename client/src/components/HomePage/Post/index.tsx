@@ -22,8 +22,8 @@ import fetchApi from 'api/fetch';
 import Comment from './Comment';
 
 const PostContainer = styled.div`
-  width: 680px;
-  min-width: 680px;
+  width: 100%;
+  /* min-width: 680px; */
   position: relative;
   border-radius: 8px;
   box-sizing: border-box;

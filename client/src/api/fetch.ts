@@ -163,6 +163,22 @@ const fetchApi = {
     return await response.json();
   },
 
+  getProfile: async (userName: string) => {
+    const response = await fetch(`/api/profile/${userName}`);
+    return await response.json();
+  },
+
+  updateBio: async (userName: string, bio: string) => {
+    const response = await fetch(`/api/profile/bio`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userName: userName, bio: bio })
+    });
+    return await response.json();
+  },
+
   updateProfile: async (userUpdateData: IProfile) => {
     const response = await fetch(`/api/users/${userUpdateData.idx}`, {
       method: 'PUT',
@@ -171,12 +187,6 @@ const fetchApi = {
       },
       body: JSON.stringify(userUpdateData)
     });
-    return await response.json();
-  },
-
-  getProfile: async (userName: string) => {
-    // { data: userdata, error: false }
-    const response = await fetch(`/api/users/${userName}`);
     return await response.json();
   }
 };

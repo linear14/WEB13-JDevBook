@@ -12,6 +12,7 @@ import {
   getUserLoginState,
   getUserJoinedGroups,
   getAllUsersObj,
+  updateBio,
   updateProfile,
   getProfile
 } from './user';
@@ -41,6 +42,7 @@ const dbManager = {
 
   updateProfile,
   getProfile,
+  updateBio,
 
   setUserLoginState,
   getUserLoginState,

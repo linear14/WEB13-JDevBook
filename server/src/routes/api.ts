@@ -81,31 +81,6 @@ router.get(
   }
 );
 
-router.put(
-  '/users/:useridx',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const userIdx = Number(req.params.useridx);
-      const userUpdateData: IProfile = req.body;
-      await dbManager.updateProfile(userUpdateData, userIdx);
-      res.json({ check: true });
-    } catch (err) {
-      console.error(err);
-      res.json({ check: false });
-    }
-  }
-);
-
-router.get(
-  '/users/:username',
-  async (req: Request, res: Response, next: NextFunction) => {
-    const name: string = req.params.username;
-    const userdata: DBUser = await dbManager.getProfile(name);
-    if (userdata === undefined) res.json({ data: '', error: true });
-    else res.json({ data: userdata, error: false });
-  }
-);
-
 router.get(
   '/posts',
   async (
@@ -342,6 +317,44 @@ router.post(
     } catch (err) {
       res.json(false);
     }
+  }
+);
+
+router.post(
+  '/profile/bio',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userName, bio } = req.body;
+      await dbManager.updateBio(userName, bio);
+      res.json(true);
+    } catch (err) {
+      res.json(false);
+    }
+  }
+);
+
+router.put(
+  '/profile/:useridx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userIdx = Number(req.params.useridx);
+      const userUpdateData: IProfile = req.body;
+      await dbManager.updateProfile(userUpdateData, userIdx);
+      res.json({ check: true });
+    } catch (err) {
+      console.error(err);
+      res.json({ check: false });
+    }
+  }
+);
+
+router.get(
+  '/profile/:username',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const name: string = req.params.username;
+    const userdata: DBUser = await dbManager.getProfile(name);
+    if (userdata === undefined) res.json({ data: '', error: true });
+    else res.json({ data: userdata, error: false });
   }
 );
 

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef, Children } from 'react';
 import styled from 'styled-components';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
-import { userDataStates, myJoinedGroupState, groupState } from 'recoil/store';
+import { userDataStates } from 'recoil/store';
+import { defaultGroup } from 'images/groupimg';
+import fetchApi from 'api/fetch';
 import palette from 'theme/palette';
 import style from 'theme/style';
 import useAlertModal from 'hooks/useAlertModal';
-import fetchApi from 'api/fetch';
-import { defaultGroup } from 'images/groupimg';
 
 const ProfileCoverWrap = styled.div<{ imgsrc: string }>`
   width: 100%;
@@ -116,8 +116,7 @@ const ProfileCover = ({
   };
 
   return (
-    <ProfileCoverWrap imgsrc={src || defaultGroup}>
-      {/* <img src={src || defaultGroup} alt="프로필 커버 이미지" /> */}
+    <ProfileCoverWrap imgsrc={src || defaultGroup} className="no-drag">
       <CoverImageEditBtn onClick={openFileModal}>이미지 편집</CoverImageEditBtn>
       <input
         type="file"

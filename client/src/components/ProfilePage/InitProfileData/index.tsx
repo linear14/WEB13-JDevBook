@@ -10,8 +10,8 @@ const InitProfileData = ({ userName }: { userName: string }) => {
   const resetprofileData = useResetRecoilState(profileState);
 
   const fetchProfile = async (userName: string) => {
-    // const profile: IProfile = null;
-    // setprofileData(profile);
+    const { data: profile, error } = await fetchApi.getProfile(userName);
+    if (!error) setprofileData(profile);
   };
 
   useEffect(() => {

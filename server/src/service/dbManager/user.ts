@@ -68,20 +68,26 @@ const getUserLoginState = async function (name: string) {
   return user?.get().loginstate;
 };
 
+const getProfile = async (userName: string) => {
+  const profile = await db.models.User.findOne({
+    where: { nickname: userName },
+    logging: false
+  });
+  return profile?.get();
+};
+
+const updateBio = async (userName: string, bio: string) => {
+  await db.models.User.update(
+    { bio: bio },
+    { where: { nickname: userName }, logging: false }
+  );
+};
+
 const updateProfile = async (userUpdateData: IProfile, userIdx: number) => {
   await db.models.User.update(
     { bio: userUpdateData.bio, cover: userUpdateData.cover },
     { where: { idx: userIdx }, logging: false }
   );
-};
-
-const getProfile = async (name: string) => {
-  const user = await db.models.User.findOne({
-    where: { nickname: name },
-    logging: false
-  });
-
-  return user?.get();
 };
 
 export {
@@ -93,6 +99,7 @@ export {
   getUserLoginState,
   getUserJoinedGroups,
   getAllUsersObj,
+  updateBio,
   updateProfile,
   getProfile
 };

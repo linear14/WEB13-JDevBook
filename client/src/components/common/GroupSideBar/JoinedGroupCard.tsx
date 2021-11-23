@@ -2,12 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import fetchApi from 'api/fetch';
 import { defaultGroup } from 'images/groupimg';
 import { IGroup } from 'types/group';
 import palette from 'theme/palette';
-import { useRecoilState, useResetRecoilState } from 'recoil';
-import { groupState } from 'recoil/store';
 import useResetGroup from 'hooks/useResetGroup';
 
 const JoinedGroupCardWrap = styled(Link)`

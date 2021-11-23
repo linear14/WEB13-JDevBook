@@ -9,7 +9,6 @@ import { modalStateStore } from 'recoil/store';
 import ProfilePhoto from 'components/common/ProfilePhoto';
 const ClickableProfileImage = styled(ProfilePhoto)``;
 
-
 const CardWrap = styled.div`
   width: 100%;
   display: flex;
@@ -45,7 +44,7 @@ const UserCard = ({ user }: SearchedUserProps) => {
       onClick={() => setModalState({ ...modalState, searchUser: false })}
     >
       <CardWrap>
-        <ClickableProfileImage userName={user.nickname} size={'30px'} />
+        <ProfilePhoto userName={user.nickname} size="36px" />
         <p>{user.nickname}</p>
       </CardWrap>
     </NavLink>

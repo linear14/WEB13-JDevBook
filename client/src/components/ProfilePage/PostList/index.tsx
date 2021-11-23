@@ -9,8 +9,8 @@ import { Post } from 'components/HomePage';
 import { Skeleton } from 'components/common';
 
 const PostListContainer = styled.div`
-  width: 680px;
-  min-width: 680px;
+  width: 100%;
+  /* min-width: 680px; */
   position: relative;
   box-sizing: border-box;
   margin-bottom: 48px;
