@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { imageViewerState, profileState, userDataStates } from 'recoil/store';
 import palette from 'theme/palette';
@@ -76,7 +76,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   match
 }) => {
   const userData = useRecoilValue(userDataStates);
-  const profileData = useRecoilValue(profileState);
+  const [profileData, setProfileData] = useRecoilState(profileState);
   const resetProfileData = useResetRecoilState(profileState);
   const imageViewer = useRecoilValue(imageViewerState);
   const [myProfile, setMyProfile] = useState<boolean>(false);
@@ -90,21 +90,25 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
     return () => resetProfileData();
   }, []);
 
-  const [imgsrc, setImgsrc] = useState('');
+  // useEffect(() => {
+  //   (async () => {
+  //     const { data: profile, error } = await fetchApi.getProfile(
+  //       match.params.username
+  //     );
+  //     if (!error) {
+  //       setProfileData({
+  //         idx: profile.idx,
+  //         nickname: profile.nickname,
+  //         cover: profile.cover,
+  //         bio: profile.bio
+  //       });
+  //     }
+  //   })();
+  // }, [match.params.username]);
 
   useEffect(() => {
-    (async () => {
-      const { data: profile, error } = await fetchApi.getProfile(
-        match.params.username
-      );
-      if (!error) {
-        setImgsrc(profile.cover);
-      }
-    })();
-  }, [match.params.username]);
-
-  useEffect(() => {
-    if (match.params.username === userData.name) setImgsrc(userData.cover);
+    if (profileData.nickname === userData.name)
+      setProfileData({ ...profileData, cover: userData.cover });
   }, [userData.cover]);
 
   return (
@@ -121,7 +125,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
           <GroupSideBar />
         </SideBar>
         <ContentsContainer contentsState={true}>
-          <ProfileCover src={imgsrc} profileName={match.params.username} />
+          <ProfileCover />
           <ProfileBar />
           <InnerContainer>
             <InfoContainer></InfoContainer>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, Children } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { userDataStates } from 'recoil/store';
+import { profileState, userDataStates } from 'recoil/store';
 import { defaultGroup } from 'images/groupimg';
 import fetchApi from 'api/fetch';
 import palette from 'theme/palette';
@@ -63,19 +63,14 @@ const CoverImageEditBtn = styled.div`
   }
 `;
 
-const ProfileCover = ({
-  src,
-  profileName
-}: {
-  src: string;
-  profileName: string;
-}) => {
+const ProfileCover = () => {
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [userData, setUserData] = useRecoilState(userDataStates);
+  const [profileData, setProfileData] = useRecoilState(profileState);
   const alertMessage = useAlertModal();
 
   const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (userData.name !== profileName)
+    if (userData.name !== profileData.nickname)
       return alertMessage('프로필 소유자가 아닙니다.', palette.alert);
     inputfile.current.click();
   };
@@ -110,13 +105,20 @@ const ProfileCover = ({
         ...userData,
         cover: s3fileRes.file.location
       });
+      // setProfileData({
+      //   ...profileData,
+      //   cover: s3fileRes.file.location
+      // });
     } else {
       return alertMessage('프로필 업데이트를 하지 못했습니다.', palette.alert);
     }
   };
 
   return (
-    <ProfileCoverWrap imgsrc={src || defaultGroup} className="no-drag">
+    <ProfileCoverWrap
+      imgsrc={profileData.cover || defaultGroup}
+      className="no-drag"
+    >
       <CoverImageEditBtn onClick={openFileModal}>이미지 편집</CoverImageEditBtn>
       <input
         type="file"
