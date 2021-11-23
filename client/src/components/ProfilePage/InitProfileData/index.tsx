@@ -25,7 +25,7 @@ const InitProfileData = ({ userName }: { userName: string }) => {
   useEffect(() => {
     resetprofileData();
     fetchProfile(userName);
-  }, []);
+  }, [userName]);
 
   return <></>;
 };
