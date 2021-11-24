@@ -239,6 +239,11 @@ const ImgUploadModal = () => {
       return setIsImgUploading(uploadNum - 1);
     }
 
+    if (filelist[0].size > 1024 * 1024) {
+      alertMessage('1MB 이하만 가능합니다.', palette.alert);
+      return setIsImgUploading(uploadNum - 1);
+    }
+
     const imglist: FileList = filelist; //inputfile.current.files;
     const s3fileRes = await fetchApi.uploadImg(imglist);
 
