@@ -49,7 +49,7 @@ const ProfileEdit = () => {
   useEffect(() => {
     if (userData.name === profileData.nickname) setMyProfile(true);
     else setMyProfile(false);
-  }, [profileData]);
+  }, [profileData, userData]);
 
   return (
     <ProfileEditWrap myProfile={myProfile} className="no-drag">

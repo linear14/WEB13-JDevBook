@@ -30,6 +30,7 @@ const ModalHeader = styled(FlexBox)`
 
 const MainLogo = styled.img`
   width: 40px;
+  display: flex;
 `;
 
 const UserSearchBarContainer = styled.div`

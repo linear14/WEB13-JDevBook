@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdMoreHoriz } from 'react-icons/md';
 
-import { LikeIcon, LikeIconActive, CommentIcon } from 'images/icons';
+import { LikeIcon, CommentIcon } from 'images/icons';
 import { PostData } from 'types/post';
 
 import palette from 'theme/palette';
-import style from 'theme/style';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
@@ -23,7 +22,6 @@ import Comment from './Comment';
 
 const PostContainer = styled.div`
   width: 100%;
-  /* min-width: 680px; */
   position: relative;
   border-radius: 8px;
   box-sizing: border-box;
@@ -116,7 +114,13 @@ const Divider = styled.div`
   margin-right: 16px;
 `;
 
-const Post = ({ post }: { post: PostData }) => {
+const Post = ({
+  post,
+  isProfile = false
+}: {
+  post: PostData;
+  isProfile?: boolean;
+}) => {
   const [modalState, setModalState] = useRecoilState(modalStateStore);
   const { idx: myIdx } = useRecoilValue(userDataStates);
   const [likeFlag, setLikeFlag] = useState<boolean>(false);
@@ -187,10 +191,8 @@ const Post = ({ post }: { post: PostData }) => {
         secret={secret}
       />
       <Body
-        contents={contents}
-        picture1={picture1}
-        picture2={picture2}
-        picture3={picture3}
+        postBody={{ contents, picture1, picture2, picture3 }}
+        isProfile={isProfile}
       />
       <Footer
         likenum={likeNum}
@@ -221,6 +223,7 @@ const Post = ({ post }: { post: PostData }) => {
           postIdx={postIdx}
           commentsNum={commentsNum}
           setCommentsNum={setCommentsNum}
+          nickname={nickname}
         />
       )}
     </PostContainer>

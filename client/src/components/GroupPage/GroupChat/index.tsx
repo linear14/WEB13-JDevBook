@@ -11,11 +11,9 @@ import {
 
 import palette from 'theme/palette';
 import style from 'theme/style';
-import ProfilePhoto from 'components/common/ProfilePhoto';
+import { ClickableProfilePhoto } from 'components/common';
 import { iconSubmit, iconSubmitActive } from 'images/icons';
 import { IMessage, ISocketMessage, ISuccessiveMessage } from 'types/message';
-
-const ClickableProfileImage = styled(ProfilePhoto)``;
 
 const OpenChatAnimation = keyframes`
   0% { opacity: 0; transform: translateX(100px); }
@@ -287,7 +285,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
 
   const UserList = allUsers.map((user: string, idx: number) => (
     <CurrentUserBox key={idx} className="User">
-      <ClickableProfileImage userName={user} size={'30px'} />
+      <ClickableProfilePhoto userName={user} size={'30px'} />
       <LoginState user={user} loginStateArray={loginStateArray} />
       {user}
     </CurrentUserBox>
@@ -304,7 +302,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
         sender={currentUserName}
         flag={ShowReceiverInfoFlag(idx, msg)}
       >
-        <ClickableProfileImage userName={msg.split(':')[0]} size={'30px'} />
+        <ClickableProfilePhoto userName={msg.split(':')[0]} size={'30px'} />
         <ReceiverName>{msg.split(':')[0]}</ReceiverName>
       </ReceiverDiv>
       <MessageText currentUserName={currentUserName} sender={msg.split(':')[0]}>

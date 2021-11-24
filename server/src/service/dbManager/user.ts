@@ -76,13 +76,6 @@ const getProfile = async (userName: string) => {
   return profile?.get();
 };
 
-const updateBio = async (userName: string, bio: string) => {
-  await db.models.User.update(
-    { bio: bio },
-    { where: { nickname: userName }, logging: false }
-  );
-};
-
 const updateProfile = async (userUpdateData: IProfile, userIdx: number) => {
   await db.models.User.update(
     { bio: userUpdateData.bio, cover: userUpdateData.cover },
@@ -99,7 +92,6 @@ export {
   getUserLoginState,
   getUserJoinedGroups,
   getAllUsersObj,
-  updateBio,
   updateProfile,
   getProfile
 };

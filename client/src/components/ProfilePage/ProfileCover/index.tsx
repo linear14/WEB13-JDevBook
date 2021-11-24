@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, Children } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { userDataStates } from 'recoil/store';
+import { profileState, userDataStates } from 'recoil/store';
 import { defaultGroup } from 'images/groupimg';
 import fetchApi from 'api/fetch';
 import palette from 'theme/palette';
@@ -30,7 +30,7 @@ const ProfileCoverWrap = styled.div<{ imgsrc: string }>`
   } */
 `;
 
-const CoverImageEditBtn = styled.div`
+const CoverImageEditBtn = styled.div<{ mine: boolean }>`
   /* position: absolute;
   top: 45vh;
   left: 70vw; */
@@ -38,7 +38,7 @@ const CoverImageEditBtn = styled.div`
   right: 10%; */
   position: relative;
   top: 80%;
-  right: 28px;
+  right: 8px;
   width: 120px;
   height: 20px;
   margin-right: 40px;
@@ -48,7 +48,7 @@ const CoverImageEditBtn = styled.div`
   background-color: ${palette.blue};
   color: ${palette.white};
 
-  display: flex;
+  display: ${({ mine }) => (mine ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
 
@@ -63,41 +63,49 @@ const CoverImageEditBtn = styled.div`
   }
 `;
 
-const ProfileCover = ({
-  src,
-  profileName
-}: {
-  src: string;
-  profileName: string;
-}) => {
+const ProfileCover = () => {
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [userData, setUserData] = useRecoilState(userDataStates);
+  const [profileData, setProfileData] = useRecoilState(profileState);
+  const [imgEdit, setImgEdit] = useState<boolean>(false);
   const alertMessage = useAlertModal();
 
   const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (userData.name !== profileName)
+    if (userData.name !== profileData.nickname)
       return alertMessage('프로필 소유자가 아닙니다.', palette.alert);
+    if (imgEdit) return alertMessage('이미지 업로드 중입니다.', palette.alert);
     inputfile.current.click();
   };
 
-  const uploadOneFile = async () => {
-    const filelist: FileList | null = inputfile.current.files;
-    if (!filelist || filelist.length === 0)
-      return alertMessage('파일을 가져오지 못했습니다.', palette.alert);
+  const uploadOneFile = () => {
+    if (imgEdit) return alertMessage('이미지 업로드 중입니다.', palette.alert);
+    setImgEdit(true);
+    getFile();
+  };
 
-    if (filelist[0].type.match(/image\/*/) === null)
+  const getFile = async () => {
+    const filelist: FileList | null = inputfile.current.files;
+    if (!filelist || filelist.length === 0) {
+      setImgEdit(false);
+      return alertMessage('파일을 가져오지 못했습니다.', palette.alert);
+    }
+
+    if (filelist[0].type.match(/image\/*/) === null) {
+      setImgEdit(false);
       return alertMessage('이미지 파일이 아닙니다.', palette.alert);
+    }
 
     const imglist: FileList = filelist; //inputfile.current.files;
     const s3fileRes = await fetchApi.uploadImg(imglist);
 
     if (!s3fileRes.save) {
+      setImgEdit(false);
       if (s3fileRes.file)
         return alertMessage('이미지 업로드 실패', palette.alert);
       else return alertMessage('1MB 이하만 가능합니다.', palette.alert);
     }
 
-    const { check } = await fetchApi.updateProfile({
+    const { check }: { check: boolean } = await fetchApi.updateProfile({
       idx: userData.idx,
       nickname: userData.name,
       // profile은 github링크로 사용
@@ -105,19 +113,29 @@ const ProfileCover = ({
       cover: s3fileRes.file.location
     });
 
+    setImgEdit(false);
     if (check) {
       setUserData({
         ...userData,
         cover: s3fileRes.file.location
       });
+      setProfileData({ ...profileData, cover: s3fileRes.file.location });
     } else {
       return alertMessage('프로필 업데이트를 하지 못했습니다.', palette.alert);
     }
   };
 
   return (
-    <ProfileCoverWrap imgsrc={src || defaultGroup} className="no-drag">
-      <CoverImageEditBtn onClick={openFileModal}>이미지 편집</CoverImageEditBtn>
+    <ProfileCoverWrap
+      imgsrc={profileData.cover || defaultGroup}
+      className="no-drag"
+    >
+      <CoverImageEditBtn
+        mine={userData.name === profileData.nickname}
+        onClick={openFileModal}
+      >
+        이미지 편집
+      </CoverImageEditBtn>
       <input
         type="file"
         accept="image/*"

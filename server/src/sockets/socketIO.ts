@@ -28,12 +28,12 @@ const socketIO = (server: any) => {
       const { senderidx, receiveridx, previousMsg } =
         await dbManager.getChatList(sender, receiver);
 
-      const filteredMsgs: string[] = previousMsg.map((msg) => {
+      const filteredAlarms: string[] = previousMsg.map((msg) => {
         if (msg.senderidx === senderidx) return `${sender}: ${msg.content}`;
         else return `${receiver}: ${msg.content}`; // msg.senderidx === receiveridx
       });
 
-      io.to(socket.id).emit('get previous chats', filteredMsgs);
+      io.to(socket.id).emit('get previous chats', filteredAlarms);
     });
 
     // 1:1 채팅 메시지 송수신 부분
@@ -99,7 +99,36 @@ const socketIO = (server: any) => {
       });
     });
 
+    // 이전 알림 가져오는 부분
+    socket.on('send alarm initial', async (receivedData) => {
+      const { receiver } = receivedData;
+      const previousAlarms = await dbManager.getAlarmList(receiver);
+      io.emit('get previous alarms', previousAlarms);
+      const uncheckedAlarmsNum = await dbManager.getUncheckedAlarmsNum(receiver);
+      io.emit('get number of unchecked alarms', uncheckedAlarmsNum);
+    });
+
+    // 알람 부분
+    socket.on('send alarm', async (receivedData) => {
+      const { sender, receiver, type } = receivedData;
+      const msg: string = `${sender}:${type}`;
+      await dbManager.addAlarm(receiver, msg);
+      io.emit('get alarm', receivedData);
+      io.emit('get alarm info', receivedData);
+    });
+
+    socket.on('make alarms check', async (receivedData) => {
+      const {receiver} = receivedData;
+      await dbManager.setAlarmCheck(receiver);
+    });
     // 유저 로그아웃 부분
+    socket.on('disconnect notify', () => {
+      socket.get = false;
+      delete UserObj[socket.id];
+      io.emit('get current users', UserObj);
+      console.log(`${socket.name}:${socket.id} disconnected`);
+    });
+
     socket.on('disconnect', () => {
       socket.get = false;
       delete UserObj[socket.id];

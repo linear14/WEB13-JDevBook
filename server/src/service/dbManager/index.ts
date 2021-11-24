@@ -12,27 +12,56 @@ import {
   getUserLoginState,
   getUserJoinedGroups,
   getAllUsersObj,
-  updateBio,
   updateProfile,
   getProfile
 } from './user';
 import { searchUsers } from './search';
-import { getProblems, insertSolvedProblem } from './problem';
+import { getProblems, insertSolvedProblem, getSolvedProblems } from './problem';
 import { getGroupList, getGroup, toggleUserGroup } from './group';
 import { setChatList, getChatList } from './chat';
 import { setGroupChatList, getGroupChatList } from './groupchat';
 import { getGroupUsers, getGroupUsersName } from './usergroup';
+import {
+  addAlarm,
+  getAlarmList,
+  setAlarmCheck,
+  getUncheckedAlarmsNum
+} from './alarm';
+
+const problemOS = require('../../config/problem_os.json');
+const group = require('../../config/initgroup.json');
 
 const dbManager = {
-  sync: async () => {
+  sync: async function () {
+    const force: boolean = false;
     await db
-      .sync({ force: false, logging: false })
-      .then(() => {
+      .sync({ force: force, logging: false })
+      .then(async () => {
+        if (force) {
+          await this.createInitGroup();
+          await this.createInitProblem();
+        }
         console.log('Connection has been established successfully.');
       })
       .catch((error: any) => {
         console.error('Unable to connect to the database:', error);
       });
+  },
+
+  createInitGroup: async function () {
+    const result = await db.models.Group.bulkCreate(group, {
+      logging: false,
+      returning: true
+    });
+    //return result.get();
+  },
+
+  createInitProblem: async function () {
+    const result = await db.models.Problem.bulkCreate(problemOS, {
+      logging: false,
+      returning: true
+    });
+    //return result.get();
   },
 
   getUserData,
@@ -42,7 +71,6 @@ const dbManager = {
 
   updateProfile,
   getProfile,
-  updateBio,
 
   setUserLoginState,
   getUserLoginState,
@@ -66,6 +94,7 @@ const dbManager = {
 
   getProblems,
   insertSolvedProblem,
+  getSolvedProblems,
 
   getGroupList,
   getGroup,
@@ -77,7 +106,12 @@ const dbManager = {
 
   setGroupChatList,
   getGroupChatList,
-  getAllUsersObj
+  getAllUsersObj,
+
+  addAlarm,
+  getAlarmList,
+  setAlarmCheck,
+  getUncheckedAlarmsNum
 };
 
 export default dbManager;

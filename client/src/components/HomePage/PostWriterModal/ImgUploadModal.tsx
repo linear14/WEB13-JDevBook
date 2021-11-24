@@ -2,7 +2,7 @@ import React, { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { FiUpload } from 'react-icons/fi';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { imageViewerState as ivState, uploadImgList } from 'recoil/store';
 
 import {
@@ -64,13 +64,6 @@ const ImgUploadWrap = styled.div`
 
   &:hover {
     cursor: pointer;
-    /* background-color: ${palette.darkgray};
-    filter: brightness(95%);
-    transition: all 0.1s; */
-  }
-
-  &:active {
-    //filter: brightness(90%);
   }
 `;
 
@@ -205,10 +198,7 @@ const ImgUploadModal = () => {
   const inputfile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgUploadWrapRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const imgPreviewModal = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const uploadButtonRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const workModalRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-
-  let dropfile: FileList[] = [];
 
   const imgUploadModalOff = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -221,14 +211,19 @@ const ImgUploadModal = () => {
   const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
     if (imgList.length >= 3)
       return alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
+    if (isImgUploading > 0)
+      return alertMessage('이미지 업로드 중입니다.', palette.alert);
 
     inputfile.current.click();
   };
 
-  const uploadOneFile = (filelist: FileList | null, uploadNum: number) => {
-    if (imgList.length >= 3) {
+  const uploadOneFile = (filelist: FileList | null) => {
+    if (imgList.length >= 3)
       return alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
-    }
+    if (isImgUploading > 0)
+      return alertMessage('이미지 업로드 중입니다.', palette.alert);
+
+    const uploadNum = isImgUploading;
     setIsImgUploading(uploadNum + 1);
     getFile(filelist, uploadNum + 1);
   };
@@ -340,7 +335,7 @@ const ImgUploadModal = () => {
         }}
         onDrop={(e) => {
           dragDropEvent(e, palette.lightgray);
-          uploadOneFile(e.dataTransfer.files, isImgUploading);
+          uploadOneFile(e.dataTransfer.files);
         }}
       >
         <CloseBtn onClick={imgUploadModalOff}>
@@ -357,7 +352,7 @@ const ImgUploadModal = () => {
             accept="image/*"
             ref={inputfile}
             onChange={() => {
-              uploadOneFile(inputfile.current.files, isImgUploading);
+              uploadOneFile(inputfile.current.files);
             }}
             style={{ display: 'none' }}
           />

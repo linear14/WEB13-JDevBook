@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useRecoilState } from 'recoil';
 
@@ -33,7 +33,7 @@ const PageLayout = styled.div`
 const PostContainer = styled.div`
   width: calc(100vw - 680px);
   min-width: 720px;
-  margin: 12px;
+  margin: 0 12px;
 
   display: flex;
   flex-direction: column;
@@ -53,6 +53,13 @@ const InnerContainer = styled.div`
 
 const HomePage = () => {
   const [imageViewerState, setImageViewerState] = useRecoilState(ivState);
+
+  useEffect(() => {
+    return () => {
+      window.scrollTo({ top: 0 });
+    };
+  }, []);
+
   return (
     <HomePageContainer>
       <BodyColor />

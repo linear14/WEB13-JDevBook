@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
@@ -8,7 +8,9 @@ import {
   rightModalStates,
   solvedProblemState,
   userDataStates,
-  GroupNavState
+  GroupNavState,
+  alarmState,
+  usersocketStates
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 import {
@@ -157,6 +159,22 @@ const IconWrap = styled.div<IconProps>`
   }
 `;
 
+const AlarmBadge = styled.div`
+  position: absolute;
+  top: 13px;
+  right: 71px;
+
+  width: 12px;
+  line-height: 12px;
+  border-radius: 100%;
+  text-align: center;
+
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  font-size: 8px;
+`;
+
 const Gnb = ({ type, rightModalType }: GnbProps) => {
   const modalState = useRecoilValue(modalStateStore);
   const [userdata, setUserdata] = useRecoilState(userDataStates);
@@ -164,12 +182,25 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   const [rightModalState, setRightModalState] =
     useRecoilState(rightModalStates);
   const [groupNavState, setGroupNavState] = useRecoilState(GroupNavState);
+  const [alarmNum, setAlarmNum] = useRecoilState(alarmState);
+  const socket = useRecoilValue(usersocketStates);
   const history = useHistory();
   const resetProfile = useResetProfile();
 
   const photoClickHandler = (e: React.MouseEvent) => {
     resetProfile(userdata.name);
   };
+
+  useEffect(() => {}, [alarmNum]);
+
+  socket.off('get alarm');
+  socket.on(
+    'get alarm',
+    (data: { sender: string; receiver: string; type: string }) => {
+      if (data.receiver === userdata.name && data.sender !== userdata.name)
+        setAlarmNum(alarmNum + 1);
+    }
+  );
 
   return (
     <GnbContainer className="no-drag">
@@ -207,13 +238,25 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
         />
         <IconWrap
           img={rightModalState.alarmFlag ? gnbAlarmActive : gnbAlarm}
-          onClick={() =>
-            ChangeFlag(rightModalState, setRightModalState, 'alarmFlag')
-          }
+          onClick={() => {
+            ChangeFlag(rightModalState, setRightModalState, 'alarmFlag');
+            setAlarmNum(0);
+            socket.emit('make alarms check', { receiver: userdata.name });
+          }}
         />
+        <AlarmBadge
+          onClick={() => {
+            ChangeFlag(rightModalState, setRightModalState, 'alarmFlag');
+            setAlarmNum(0);
+            socket.emit('make alarms check', { receiver: userdata.name });
+          }}
+        >
+          {alarmNum ? alarmNum : null}
+        </AlarmBadge>
         <IconWrap
           img={gnbLogout}
           onClick={async () => {
+            ChangeFlag(rightModalState, setRightModalState, '');
             await fetchApi.logout();
             setUserdata({
               idx: -1,
@@ -224,6 +267,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
               login: false
             });
             resetSolvedProblemState();
+            socket.emit('disconnect notify');
             history.push('/');
           }}
         />
