@@ -109,7 +109,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
           <InfoSideBar />
           <GroupSideBar />
         </SideBar>
-        <ContentsContainer contentsState={true}>
+        <ContentsContainer contentsState={profileData.idx !== 0}>
           <ProfileCover />
           <ProfileBar />
           <InnerContainer>
