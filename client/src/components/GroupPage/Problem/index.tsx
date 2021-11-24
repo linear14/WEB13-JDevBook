@@ -65,6 +65,7 @@ const AnswerButton = styled.div`
   font-size: 24px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 12px;
   transition: 0.2s ease-out;
+  cursor: pointer;
 
   & + & {
     margin-left: 24px;
