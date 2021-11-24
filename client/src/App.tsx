@@ -27,13 +27,14 @@ const GlobalStyle = createGlobalStyle`
           color: ${(props) => props.theme.darkgray};
         }
       }
+      body {
+        margin: 0;
+      }
     `;
   }}
   
 
-  body {
-    margin: 0;
-  }
+
 `;
 
 const App = () => {
