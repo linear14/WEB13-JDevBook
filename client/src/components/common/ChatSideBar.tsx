@@ -170,7 +170,7 @@ const ReceiverDiv = styled.div<ISuccessiveMessage>`
 `;
 
 const ReceiverName = styled.div`
-  margin-left: ${style.margin.smallest};
+  margin-left: ${style.margin.small};
   line-height:30px;
 `;
 
