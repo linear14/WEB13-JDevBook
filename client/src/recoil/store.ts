@@ -188,4 +188,4 @@ export const loginState = atom({
 export const alarmState = atom({
   key: 'alarm',
   default: 0 as number
-})
+});

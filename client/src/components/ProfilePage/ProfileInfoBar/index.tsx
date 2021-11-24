@@ -76,7 +76,6 @@ const ProfileInfoBar = () => {
     const result: IUserWithSolved[] = await fetchApi.getSolvedProblems(
       profileData.nickname
     );
-    console.log(result);
     if (result.length > 0) {
       setSolvedProblem(
         result[0].BTMUserProblemuseridx.map((cur) => ({
