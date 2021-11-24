@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { usersocketStates, userDataStates, chatWith, loginState } from 'recoil/store';
+import {
+  usersocketStates,
+  userDataStates,
+  chatWith,
+  loginState
+} from 'recoil/store';
 
 import getData from 'api/fetch';
 import { defaultProfile } from 'images';
-import ProfilePhoto from 'components/common/ProfilePhoto';
+import { ClickableProfilePhoto } from 'components/common';
 import palette from 'theme/palette';
 import style from 'theme/style';
 import { UserSocket } from 'types/common';
-
-const ClickableProfileImage = styled(ProfilePhoto)``;
 
 const CurrentUserWrapper = styled.div`
   width: inherit;
@@ -104,7 +107,7 @@ const CurrentUser = () => {
       className="User"
       onClick={() => setChatWith(user)}
     >
-      <ClickableProfileImage userName={user} size={'30px'} />
+      <ClickableProfilePhoto userName={user} size={'30px'} />
       <LoginState user={user} loginStateArray={loginStateArray} />
       {user}
     </CurrentUserBox>

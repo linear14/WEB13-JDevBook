@@ -12,11 +12,9 @@ import {
 import CurrentUser from './CurrentUser';
 import palette from 'theme/palette';
 import style from 'theme/style';
-import ProfilePhoto from 'components/common/ProfilePhoto';
 import { iconSubmit, iconSubmitActive } from 'images/icons';
 import { IMessage, ISocketMessage, ISuccessiveMessage } from 'types/message';
-
-const ClickableProfileImage = styled(ProfilePhoto)``;
+import { ClickableProfilePhoto } from 'components/common';
 
 const OpenChatAnimation = keyframes`
   0% { opacity: 0; transform: translateX(100px); }
@@ -179,10 +177,8 @@ const Divider = styled.div`
   width: calc(100% - 32px);
   height: 1px;
   background: #dddddd;
-  margin: (
-    ${style.margin.normal} ${style.margin.large} ${style.margin.normal}
-      ${style.margin.large}
-  );
+  margin: ${style.margin.normal} ${style.margin.large} ${style.margin.normal}
+    ${style.margin.large};
 `;
 
 const ChatSideBar = () => {
@@ -202,6 +198,12 @@ const ChatSideBar = () => {
         sender: currentUserName,
         receiver: chatReceiver,
         message: value
+      });
+
+      socket.emit('send alarm', {
+        sender: currentUserName,
+        receiver: chatReceiver,
+        type: 'chat'
       });
     }
   };
@@ -265,7 +267,7 @@ const ChatSideBar = () => {
         sender={currentUserName}
         flag={ShowReceiverInfoFlag(idx, msg)}
       >
-        <ClickableProfileImage userName={msg.split(':')[0]} size={'30px'} />
+        <ClickableProfilePhoto userName={msg.split(':')[0]} size={'30px'} />
         <ReceiverName>{msg.split(':')[0]}</ReceiverName>
       </ReceiverDiv>
       <MessageText currentUserName={currentUserName} sender={msg.split(':')[0]}>

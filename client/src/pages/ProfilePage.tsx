@@ -10,7 +10,6 @@ import {
   Gnb,
   SideBar,
   InfoSideBar,
-  ChatSideBar,
   GroupSideBar,
   InitUserData,
   InitSocket,
@@ -113,9 +112,6 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
             </PostContainer>
           </InnerContainer>
         </ContentsContainer>
-        <SideBar isLeft={false}>
-          <ChatSideBar />
-        </SideBar>
       </PageLayout>
       {imageViewer.isOpen && <ImageViewer />}
     </ProfilePageContainer>

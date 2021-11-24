@@ -28,13 +28,15 @@ const fetchApi = {
   getPosts: async (
     lastIdx: number = -1,
     count: number = 10,
-    username?: string
+    username: string | null,
+    signal?: AbortSignal
   ): Promise<PostData[]> => {
     const response = username
       ? await fetch(
-          `/api/posts?username=${username}&lastIdx=${lastIdx}&count=${count}`
+          `/api/posts?username=${username}&lastIdx=${lastIdx}&count=${count}`,
+          { signal }
         )
-      : await fetch(`/api/posts?lastIdx=${lastIdx}&count=${count}`);
+      : await fetch(`/api/posts?lastIdx=${lastIdx}&count=${count}`, { signal });
     const getPostsList = await response.json();
     return getPostsList.map((cur: any) =>
       cur.BTMLikepostidx.length === 0
@@ -127,10 +129,10 @@ const fetchApi = {
     return await response.json();
   },
 
-  getProblems: async (groupIdx?: number) => {
+  getProblems: async (groupIdx?: number | null, signal?: AbortSignal) => {
     const response = groupIdx
-      ? await fetch(`/api/problems/${groupIdx}`)
-      : await fetch(`/api/problems`);
+      ? await fetch(`/api/problems/${groupIdx}`, { signal })
+      : await fetch(`/api/problems`, { signal });
     const problems = await response.json();
     return problems;
   },

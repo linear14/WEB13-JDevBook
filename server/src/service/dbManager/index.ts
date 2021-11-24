@@ -22,6 +22,8 @@ import { getGroupList, getGroup, toggleUserGroup } from './group';
 import { setChatList, getChatList } from './chat';
 import { setGroupChatList, getGroupChatList } from './groupchat';
 import { getGroupUsers, getGroupUsersName } from './usergroup';
+import { addAlarm, getAlarmList, setAlarmCheck, getUncheckedAlarmsNum } from './alarm';
+
 const problemOS = require('../../config/problem_os.json');
 const group = require('../../config/initgroup.json');
 
@@ -100,7 +102,12 @@ const dbManager = {
 
   setGroupChatList,
   getGroupChatList,
-  getAllUsersObj
+  getAllUsersObj,
+
+  addAlarm,
+  getAlarmList,
+  setAlarmCheck,
+  getUncheckedAlarmsNum
 };
 
 export default dbManager;
