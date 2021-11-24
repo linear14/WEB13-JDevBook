@@ -7,6 +7,7 @@ import fetchApi from 'api/fetch';
 
 import { Post } from 'components/HomePage';
 import { Skeleton } from 'components/common';
+import palette from 'theme/palette';
 
 const PostListContainer = styled.div`
   width: 538px;
@@ -20,6 +21,23 @@ const Observer = styled.div`
   width: 680px;
   height: 0px;
   background: transparent;
+`;
+
+const NoPost = styled.div`
+  width: 538px;
+  min-width: 538px;
+  height: 180px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 5px;
+  margin-top: 24px;
+  background-color: ${palette.white};
+
+  &::after {
+    content: '등록된 게시글이 없습니다';
+  }
 `;
 
 const PostList = () => {
@@ -93,11 +111,15 @@ const PostList = () => {
   return (
     <>
       <PostListContainer>
-        {posts.map((post) => (
-          <div key={post.idx}>
-            <Post key={post.idx} post={post} isProfile />
-          </div>
-        ))}
+        {posts.length === 0 && !isFetching ? (
+          <NoPost />
+        ) : (
+          posts.map((post) => (
+            <div key={post.idx}>
+              <Post key={post.idx} post={post} isProfile />
+            </div>
+          ))
+        )}
         {isFetching && getSkeletons(3)}
         <Observer ref={observer} />
       </PostListContainer>
