@@ -10,7 +10,6 @@ import { Skeleton } from 'components/common';
 
 const PostListContainer = styled.div`
   width: 538px;
-  /* min-width: 680px; */
   position: relative;
   box-sizing: border-box;
   margin-bottom: 48px;

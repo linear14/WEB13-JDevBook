@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
 import { modalStateStore, profileState } from 'recoil/store';
-import palette from 'theme/palette';
 import style from 'theme/style';
 
 import { ProfileEditModal } from 'components/ProfilePage';
@@ -11,7 +10,7 @@ import { ProfileEditModal } from 'components/ProfilePage';
 const ProfileInfoWrap = styled.div`
   flex: 1;
 
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
 
   display: flex;
   flex-direction: column;
@@ -19,13 +18,14 @@ const ProfileInfoWrap = styled.div`
 
 const ProfileTitle = styled.div`
   font-size: ${style.font.title};
+  color: ${(props) => props.theme.black};
 `;
 
 const ProfileBio = styled.div`
   box-sizing: border-box;
   margin-top: ${style.margin.normal};
   padding-right: ${style.padding.large};
-  color: ${palette.black};
+  color: ${(props) => props.theme.black};
 `;
 
 const ProfileInfo = () => {

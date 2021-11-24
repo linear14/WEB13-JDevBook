@@ -40,6 +40,7 @@ const SearchBarWrap = styled.div`
     background: none;
     border: none;
     font-size: 1rem;
+    color: ${(props) => props.theme.black};
   }
 `;
 

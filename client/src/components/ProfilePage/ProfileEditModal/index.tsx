@@ -3,7 +3,6 @@ import styled, { keyframes } from 'styled-components';
 import { useRecoilState } from 'recoil';
 
 import { modalStateStore, profileState } from 'recoil/store';
-import palette from 'theme/palette';
 import style from 'theme/style';
 import useAlertModal from 'hooks/useAlertModal';
 import fetchApi from 'api/fetch';
@@ -26,7 +25,7 @@ const EditModalWrap = styled.div<{ modalState: boolean }>`
   margin-right: 12px;
   z-index: 5;
 
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 5px;
 
@@ -38,7 +37,7 @@ const EditModalWrap = styled.div<{ modalState: boolean }>`
 const BioTitle = styled.div`
   padding-left: ${style.padding.small};
 
-  color: ${palette.darkgray};
+  color: ${(props) => props.theme.darkgray};
 `;
 
 const BioArea = styled.textarea`
@@ -48,8 +47,9 @@ const BioArea = styled.textarea`
   border: none;
   outline: none;
   resize: none;
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
   font-size: ${style.font.normal};
+  color: ${(props) => props.theme.black};
 
   overscroll-behavior: none;
   word-break: keep-all;
@@ -76,8 +76,8 @@ const StyledBtn = styled.div<{ saveBtn: boolean }>`
 
   border-radius: 8px;
   background-color: ${(props) =>
-    props.saveBtn ? palette.green : palette.gray};
-  color: ${(props) => (props.saveBtn ? palette.white : palette.black)};
+    props.saveBtn ? props.theme.green : props.theme.gray};
+  color: ${(props) => (props.saveBtn ? props.theme.white : props.theme.black)};
 
   display: flex;
   justify-content: center;

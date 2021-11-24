@@ -5,7 +5,6 @@ import { useRecoilState } from 'recoil';
 import { profileState, userDataStates } from 'recoil/store';
 import { defaultGroup } from 'images/groupimg';
 import fetchApi from 'api/fetch';
-import palette from 'theme/palette';
 import style from 'theme/style';
 import useAlertModal from 'hooks/useAlertModal';
 
@@ -45,8 +44,8 @@ const CoverImageEditBtn = styled.div<{ mine: boolean }>`
   padding: 8px ${style.padding.normal};
 
   border-radius: 8px;
-  background-color: ${palette.blue};
-  color: ${palette.white};
+  background-color: ${(props) => props.theme.blue};
+  color: ${(props) => props.theme.white};
 
   display: ${({ mine }) => (mine ? 'flex' : 'none')};
   justify-content: center;
