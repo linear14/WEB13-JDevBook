@@ -10,25 +10,25 @@ import { themeState } from 'recoil/store';
 import InitTheme from 'components/common/InitTheme';
 
 const GlobalStyle = createGlobalStyle`
-${({ theme }) => {
-  return css`
-    * {
-      font-weight: bold;
-      font-family: 'Spoqa Han Sans Neo';
-      ::placeholder,
-      ::-webkit-input-placeholder {
+  ${({}) => {
+    return css`
+      * {
         font-weight: bold;
         font-family: 'Spoqa Han Sans Neo';
-        color: ${(props) => props.theme.darkgray};
+        ::placeholder,
+        ::-webkit-input-placeholder {
+          font-weight: bold;
+          font-family: 'Spoqa Han Sans Neo';
+          color: ${(props) => props.theme.darkgray};
+        }
+        :-ms-input-placeholder {
+          font-weight: bold;
+          font-family: 'Spoqa Han Sans Neo';
+          color: ${(props) => props.theme.darkgray};
+        }
       }
-      :-ms-input-placeholder {
-        font-weight: bold;
-        font-family: 'Spoqa Han Sans Neo';
-        color: ${(props) => props.theme.darkgray};
-      }
-    }
-  `;
-}}
+    `;
+  }}
   
 
   body {
