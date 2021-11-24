@@ -315,6 +315,7 @@ const ChatSideBar = () => {
         >
           <ChatInput
             type="text"
+            spellCheck="false"
             autoComplete="off"
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setValue(e.target.value)

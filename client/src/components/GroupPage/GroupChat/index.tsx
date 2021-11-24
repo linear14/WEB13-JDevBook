@@ -333,6 +333,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
         <ChatInputWrapper>
           <ChatInput
             type="text"
+            spellCheck="false"
             autoComplete="off"
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setValue(e.target.value)
