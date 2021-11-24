@@ -5,7 +5,6 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { imageViewerState, profileState, userDataStates } from 'recoil/store';
 import palette from 'theme/palette';
-import fetchApi from 'api/fetch';
 
 import {
   Gnb,
@@ -89,23 +88,6 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
     return () => resetProfileData();
   }, []);
 
-  const [imgsrc, setImgsrc] = useState('');
-
-  useEffect(() => {
-    (async () => {
-      const { data: profile, error } = await fetchApi.getProfile(
-        match.params.username
-      );
-      if (!error) {
-        setImgsrc(profile.cover);
-      }
-    })();
-  }, [match.params.username]);
-
-  useEffect(() => {
-    if (match.params.username === userData.name) setImgsrc(userData.cover);
-  }, [userData.cover]);
-
   return (
     <ProfilePageContainer>
       <GlobalStyle />
@@ -120,7 +102,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
           <GroupSideBar />
         </SideBar>
         <ContentsContainer contentsState={true}>
-          <ProfileCover src={imgsrc} profileName={match.params.username} />
+          <ProfileCover />
           <ProfileBar />
           <InnerContainer>
             <InfoContainer></InfoContainer>
