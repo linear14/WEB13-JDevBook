@@ -55,6 +55,7 @@ const ChatSideBarContainer = styled.div<{
 
   overscroll-behavior: none;
   background-color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme.black};
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
 `;
 
@@ -114,18 +115,17 @@ const MessageText = styled.div<IMessage>`
   text-align: left;
   max-width: 150px;
 
-  ${(props) =>
-    `color: ${props.currentUserName === props.sender ? 'white;' : 'black;'}`}
-  ${(props) =>
-    `background-color: ${
-      props.currentUserName === props.sender
-        ? props.theme.green
-        : props.theme.lightgray
-    }`}
+  color: ${(props) =>
+    props.currentUserName === props.sender
+      ? props.theme.white
+      : props.theme.black};
+  background-color: ${(props) =>
+    props.currentUserName === props.sender
+      ? props.theme.green
+      : props.theme.lightgray};
 
   margin-top: ${style.margin.smallest};
-  padding: ${style.padding.smallest} ${style.padding.normal}
-    ${style.padding.smallest} ${style.padding.normal};
+  padding: ${style.padding.smallest} ${style.padding.normal};
 `;
 
 const ChatInputWrapper = styled.div<{

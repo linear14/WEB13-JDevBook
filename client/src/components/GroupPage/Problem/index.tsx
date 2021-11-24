@@ -40,6 +40,7 @@ const GroupTitle = styled.div`
 `;
 
 const QuestionBox = styled.div`
+  color: ${(props) => props.theme.black};
   position: relative;
   padding: 16px 24px 0px;
   border-radius: 8px;

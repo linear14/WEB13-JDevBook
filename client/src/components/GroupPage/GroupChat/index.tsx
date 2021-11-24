@@ -45,6 +45,7 @@ const ChatSideBarContainer = styled.div<{ groupChatFlag: boolean }>`
         `};
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
+  color: ${(props) => props.theme.black};
 
   background-color: ${(props) => props.theme.white};
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
@@ -100,16 +101,16 @@ const MessageText = styled.div<IMessage>`
   text-align: left;
   max-width: 150px;
 
-  ${(props) =>
-    `color: ${props.currentUserName === props.sender ? 'white;' : 'black;'}`}
-  ${(props) =>
-    `background-color: ${
-      props.currentUserName === props.sender
-        ? props.theme.green
-        : props.theme.lightgray
-    }`}
-  
-    margin-top: ${style.margin.smallest};
+  color: ${(props) =>
+    props.currentUserName === props.sender
+      ? props.theme.white
+      : props.theme.black};
+  background-color: ${(props) =>
+    props.currentUserName === props.sender
+      ? props.theme.green
+      : props.theme.lightgray};
+
+  margin-top: ${style.margin.smallest};
   padding: ${style.padding.smallest} ${style.padding.normal};
 `;
 

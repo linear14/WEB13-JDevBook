@@ -63,8 +63,8 @@ const AlarmSideBarContainer = styled.div<{
 
 const AlarmBox = styled.div`
   display: flex;
-  padding: ${style.padding.normal} ${style.padding.normal}
-    ${style.padding.normal} ${style.padding.normal};
+  padding: ${style.padding.normal};
+  color: ${(props) => props.theme.black};
   :hover {
     background-color: ${(props) => props.theme.lightgray};
     border-radius: 10px;
