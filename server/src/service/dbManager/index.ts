@@ -49,19 +49,25 @@ const dbManager = {
   },
 
   createInitGroup: async function () {
-    const result = await db.models.Group.bulkCreate(group, {
-      logging: false,
-      returning: true
-    });
-    //return result.get();
+    try {
+      await db.models.Group.bulkCreate(group, {
+        logging: false,
+        returning: true
+      });
+    } catch (e) {
+      console.error(e);
+    }
   },
 
   createInitProblem: async function () {
-    const result = await db.models.Problem.bulkCreate(problemOS, {
-      logging: false,
-      returning: true
-    });
-    //return result.get();
+    try {
+      await db.models.Problem.bulkCreate(problemOS, {
+        logging: false,
+        returning: true
+      });
+    } catch (e) {
+      console.error(e);
+    }
   },
 
   getUserData,
