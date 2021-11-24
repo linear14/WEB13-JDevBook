@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
+import React, { BaseSyntheticEvent, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { FiUpload } from 'react-icons/fi';

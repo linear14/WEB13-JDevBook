@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import {
   modalStateStore,
@@ -38,7 +38,7 @@ const OptionModalContainer = styled.div`
 const OptionModal = ({ post }: { post: PostData }) => {
   const [modalState, setModalState] = useRecoilState(modalStateStore);
   const [postList, setPostList] = useRecoilState(postListStore);
-  const [postData, setPostData] = useRecoilState(postModalDataStates);
+  const setPostData = useSetRecoilState(postModalDataStates);
   const resetModalState = useResetRecoilState(modalStateStore);
 
   const modal = React.useRef<HTMLDivElement>(null);

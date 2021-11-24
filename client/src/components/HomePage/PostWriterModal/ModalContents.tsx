@@ -9,7 +9,6 @@ import {
 } from 'recoil/store';
 import palette from 'theme/palette';
 import style from 'theme/style';
-import textUtil from 'utils/textUtil';
 
 import useAlertModal from 'hooks/useAlertModal';
 

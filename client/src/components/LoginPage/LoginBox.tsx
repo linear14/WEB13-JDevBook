@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 import { GithubLoginButton } from 'react-social-login-buttons';
@@ -6,7 +5,6 @@ import { GithubLoginButton } from 'react-social-login-buttons';
 import mainLogo from '../../images/main-logo.png';
 import fetchApi from 'api/fetch';
 import palette from 'theme/palette';
-import { useHistory } from 'react-router-dom';
 
 const Box = styled.div`
   display: flex;
@@ -37,16 +35,14 @@ const Text = styled.div`
 `;
 
 const LoginBox = (): JSX.Element => {
-  //const history = useHistory();
   return (
     <Box className="no-drag">
       <div>
         <MainLogo src={mainLogo} />
         <Text>개발자라면 Github 아이디는 가지고 계시죠?</Text>
         <GithubLoginButton
-          onClick={
-            async () => (window.location.href = await fetchApi.getLoginlink())
-            // https://github.~~로 가는거라 history가 안되는거 같은데 의견부탁
+          onClick={async () =>
+            (window.location.href = await fetchApi.getLoginlink())
           }
         />
       </div>

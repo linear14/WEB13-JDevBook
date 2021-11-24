@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useRecoilState } from 'recoil';
 
