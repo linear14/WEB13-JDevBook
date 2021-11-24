@@ -103,7 +103,7 @@ const GnbTab = styled.div<TabProps>`
       `}
   }
 
-  @media screen and (max-width: 840px) {
+  @media screen and (max-width: 852px) {
     width: 36px;
     height: 48px;
   }
