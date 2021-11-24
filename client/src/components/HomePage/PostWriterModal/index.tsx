@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import palette from 'theme/palette';
 import {
   isImgUploadingState,
   modalStateStore,
@@ -56,7 +55,7 @@ const PostWriterModalInner = styled.div<{ modalState: boolean }>`
   z-index: 6;
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 8px;
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
   animation: ${ModalAnimation} 0.2s 1;
 
   display: ${(props) => (props.modalState ? 'flex' : 'none')};
@@ -67,7 +66,7 @@ const PostWriterModalInner = styled.div<{ modalState: boolean }>`
 
 const Line = styled.div`
   width: 100%;
-  border-color: ${palette.gray};
+  border-color: ${(props) => props.theme.gray};
   border-width: 1px;
   border-style: solid;
   margin: 12px 0;
@@ -79,8 +78,8 @@ const PostBtn = styled.div`
   margin-top: 16px;
 
   border-radius: 8px;
-  background-color: ${palette.green};
-  color: ${palette.white};
+  background-color: ${(props) => props.theme.green};
+  color: ${(props) => props.theme.white};
 
   display: flex;
   justify-content: center;
@@ -102,7 +101,6 @@ const PostWriterModal = () => {
   const postData = useRecoilValue(postModalDataStates);
   const isImgUploading = useRecoilValue(isImgUploadingState);
   const [postList, setPostList] = useRecoilState(postListStore);
-  const [alertModal, setAlertModal] = useRecoilState(alertState);
   const imgList = useRecoilValue(uploadImgList);
   const socket = useRecoilValue(usersocketStates);
   const closePostModal = useClosePostModal();
@@ -178,9 +176,16 @@ const PostWriterModal = () => {
     }
   };
 
+  const modalClose = (e: React.MouseEvent) => {
+    closePostModal();
+  };
+
   return (
     <>
-      <PostWriterModalOverlay modalState={modalState.post.writer} />
+      <PostWriterModalOverlay
+        modalState={modalState.post.writer}
+        onClick={modalClose}
+      />
       <PostWriterModalInner
         modalState={modalState.post.writer}
         className="no-drag"

@@ -10,7 +10,6 @@ import {
   modalStateStore,
   postModalDataStates
 } from 'recoil/store';
-import palette from 'theme/palette';
 import fetchApi from 'api/fetch';
 import useAlertModal from 'hooks/useAlertModal';
 import style from 'theme/style';
@@ -35,7 +34,7 @@ const ImgUploadContainer = styled.div<{ modalState: boolean }>`
   border-style: solid;
   border-width: 1px;
   border-radius: 8px;
-  border-color: ${palette.darkgray};
+  border-color: ${(props) => props.theme.darkgray};
   animation: ${ModalAnimation} 0.2s 1;
 
   display: ${(props) => (props.modalState ? 'block' : 'none')};
@@ -46,7 +45,7 @@ const ImgUploadWrap = styled.div`
   height: 100%;
 
   border-radius: 8px;
-  background-color: ${palette.lightgray};
+  background-color: ${(props) => props.theme.lightgray};
 
   display: flex;
   justify-content: center;
@@ -59,7 +58,7 @@ const ImgUploadWrap = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${palette.gray};
+    background-color: ${(props) => props.theme.gray};
   }
 
   &:hover {
@@ -79,9 +78,9 @@ const CloseBtn = styled.div`
   border-radius: 50%;
   border-style: solid;
   border-width: 1px;
-  border-color: ${palette.darkgray};
-  background-color: ${palette.white};
-  color: ${palette.darkgray};
+  border-color: ${(props) => props.theme.darkgray};
+  background-color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme.darkgray};
 
   display: flex;
   justify-content: center;
@@ -96,7 +95,7 @@ const CloseBtn = styled.div`
   &:active {
     width: 35px;
     height: 35px;
-    background-color: ${palette.gray};
+    background-color: ${(props) => props.theme.gray};
   }
 `;
 
@@ -115,7 +114,7 @@ const WhatWorkModal = styled.div`
     margin-bottom: 5px;
 
     border-radius: 50%;
-    background-color: ${palette.gray};
+    background-color: ${(props) => props.theme.gray};
 
     display: flex;
     justify-content: center;
@@ -150,7 +149,7 @@ const ImgPreview = styled.div`
     padding: ${style.padding.smallest};
 
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 5px;
-    background-color: ${palette.white};
+    background-color: ${(props) => props.theme.white};
     border-radius: 8px;
 
     &:hover {
@@ -173,10 +172,11 @@ const CloseOneImg = styled.div<{ imgsrc: string | undefined }>`
   position: absolute;
   margin: 6px 0 0 106px;
   z-index: 3;
+  color: ${(props) => props.theme.black};
 
   &:hover {
     cursor: pointer;
-    color: ${palette.alert};
+    color: ${(props) => props.theme.alert};
   }
   &:active {
     cursor: pointer;
@@ -325,16 +325,16 @@ const ImgUploadModal = () => {
         ref={imgUploadWrapRef}
         onClick={openFileModal}
         onDragEnter={(e) => {
-          dragDropEvent(e, palette.darkgray);
+          dragDropEvent(e, '#8a8c91');
         }}
         onDragOver={(e) => {
-          dragDropEvent(e, palette.darkgray);
+          dragDropEvent(e, '#8a8c91');
         }}
         onDragLeave={(e) => {
-          dragDropEvent(e, palette.lightgray);
+          dragDropEvent(e, '#e4e6eb');
         }}
         onDrop={(e) => {
-          dragDropEvent(e, palette.lightgray);
+          dragDropEvent(e, '#e4e6eb');
           uploadOneFile(e.dataTransfer.files);
         }}
       >

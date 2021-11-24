@@ -7,9 +7,7 @@ import {
   userDataStates,
   postModalDataStates
 } from 'recoil/store';
-import palette from 'theme/palette';
 import style from 'theme/style';
-import textUtil from 'utils/textUtil';
 
 import useAlertModal from 'hooks/useAlertModal';
 
@@ -28,8 +26,9 @@ const ContentsInput = styled.textarea<{ modalState: boolean }>`
   border: none;
   outline: none;
   resize: none;
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
   font-size: ${style.font.normal};
+  color: ${(props) => props.theme.black};
 
   overscroll-behavior: none;
   word-break: keep-all;
@@ -50,7 +49,7 @@ const ContentsBytesChecker = styled.div`
   display: flex;
   justify-content: flex-end;
 
-  color: ${palette.darkgray};
+  color: ${(props) => props.theme.darkgray};
 `;
 
 const ModalContents = () => {

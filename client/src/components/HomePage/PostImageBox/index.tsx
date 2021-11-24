@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
-import palette from 'theme/palette';
 import { PostImageBoxProps, PostImageInfo } from 'types/post';
 
 import OneImage from './OneImage';
@@ -11,7 +10,7 @@ import { ThreeImagesHorizontal, ThreeImagesVertical } from './ThreeImages';
 const SkeletonBox = styled.div<{ isProfile: boolean }>`
   width: ${({ isProfile }) => (isProfile ? '538px' : '680px')};
   height: ${({ isProfile }) => (isProfile ? '538px' : '680px')};
-  background: ${palette.lightgray};
+  background: ${(props) => props.theme.lightgray};
 `;
 
 const PostImageBox = ({ imageCount, images, isProfile }: PostImageBoxProps) => {

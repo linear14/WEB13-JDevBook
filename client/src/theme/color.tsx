@@ -17,9 +17,9 @@ export const dark = {
   lightgray: '#3A3B3C',
   green: '#87d474',
   darkgreen: '#7cc669',
-  black: '#FAFAFA',
+  black: '#d1d3d6',
   white: '#242526',
   blue: '#166FE5',
   alert: '#dc4c49',
-  skeleton: '#f0f2f5'
+  skeleton: '#454647'
 };
