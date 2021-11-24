@@ -23,7 +23,7 @@ const GroupSideBarContainer = styled.div`
 
 const SearchBarWrap = styled.div`
   height: 40px;
-  margin: 30px 50px;
+  margin: 30px 40px;
   display: flex;
   background: ${(props) => props.theme.lightgray};
   border-radius: 24px;
@@ -44,9 +44,9 @@ const SearchBarWrap = styled.div`
   }
 `;
 
-const GroupList = styled.ul`
+const GroupList = styled.div`
   flex: 1;
-  margin: 0 50px 30px 0;
+  margin: 0 40px 30px 40px;
   display: flex;
   flex-direction: column;
 `;
