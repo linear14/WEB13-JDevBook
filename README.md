@@ -84,11 +84,9 @@ Web13-JDevBook
 	└─server
 	    └─src
 	        ├─models
-		    └─tables
 	        ├─routes
 	        ├─config
 		├─service
-		     └─dbManager
 		├─types
 		├─sessions
 	        └─sockets
