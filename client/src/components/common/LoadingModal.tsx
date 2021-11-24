@@ -2,7 +2,6 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { mainLogo } from 'images';
-import palette from 'theme/palette';
 
 const fadeIn = keyframes`
   0%{
@@ -23,7 +22,7 @@ const LoadingModalContainer = styled.div<{ modalState: boolean }>`
   width: calc(100vw - 696px);
   height: calc(100vh - 64px);
 
-  background-color: ${palette.lightgray};
+  background-color: ${(props) => props.theme.lightgray};
   display: ${(props) => (props.modalState ? 'flex' : 'none')};
   flex-direction: column;
   justify-content: center;
@@ -53,7 +52,7 @@ const LoadingLogo = styled.img`
 
 const LoadingTitle = styled.div`
   font-size: 50px;
-  color: ${palette.green};
+  color: ${(props) => props.theme.green};
 `;
 
 const LoadingModal = ({ modalState }: { modalState: boolean }) => {

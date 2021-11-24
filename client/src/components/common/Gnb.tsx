@@ -55,7 +55,8 @@ const GnbContainer = styled.div`
   padding-right: 16px;
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
+
   a {
     text-decoration: none;
   }
@@ -92,20 +93,23 @@ const GnbTab = styled.div<TabProps>`
   transition: 0.1s ease-in;
 
   &:hover {
-    background-color: ${palette.lightgray};
+    background-color: ${(props) => props.theme.lightgray};
     border-radius: 8px;
   }
 
   &:active {
-    background-color: ${palette.gray};
+    background-color: ${(props) => props.theme.gray};
   }
 
   svg path {
     ${({ current }) =>
-      current &&
-      css`
-        fill: ${palette.green};
-      `}
+      current
+        ? css`
+            fill: ${(props) => props.theme.green};
+          `
+        : css`
+            fill: ${(props) => props.theme.darkgray};
+          `}
   }
 `;
 
@@ -117,16 +121,16 @@ const ProfileWrap = styled.div`
   padding-right: 12px;
 
   &:hover {
-    background-color: ${palette.lightgray};
+    background-color: ${(props) => props.theme.lightgray};
     border-radius: 24px;
   }
 
   &:active {
-    background-color: ${palette.gray};
+    background-color: ${(props) => props.theme.gray};
   }
 
   p {
-    color: ${palette.black};
+    color: ${(props) => props.theme.black};
     margin-left: 8px;
     font-size: 1rem;
     font-weight: bold;
@@ -136,7 +140,7 @@ const ProfileWrap = styled.div`
 const IconWrap = styled.div<IconProps>`
   width: 40px;
   height: 40px;
-  background: ${palette.lightgray};
+  background: ${(props) => props.theme.lightgray};
   border-radius: 100%;
   display: flex;
   justify-content: center;
@@ -152,11 +156,11 @@ const IconWrap = styled.div<IconProps>`
   }
 
   &:hover {
-    background-color: ${palette.lightgray};
+    background-color: ${(props) => props.theme.lightgray};
   }
 
   &:active {
-    background-color: ${palette.gray};
+    background-color: ${(props) => props.theme.gray};
   }
 `;
 
@@ -171,7 +175,7 @@ const AlarmBadge = styled.div`
   text-align: center;
 
   cursor: pointer;
-  background-color: red;
+  background-color: ${(props) => props.theme.alert};
   color: white;
   font-size: 8px;
 `;
@@ -195,7 +199,7 @@ const ToggleBar = styled.div`
   height: 30%;
 
   border-radius: 20px;
-  background-color: ${palette.gray};
+  background-color: ${(props) => props.theme.gray};
 `;
 
 const turnDark = keyframes`
@@ -217,18 +221,18 @@ const turnLight = keyframes`
   }
 `;
 
-const ToggleBtn = styled.div<{ theme: string }>`
+const ToggleBtn = styled.div<{ themeState: string }>`
   position: absolute;
   top: -6px;
-  left: ${(props) => (props.theme === 'dark' ? '22px' : '-2px')};
+  left: ${(props) => (props.themeState === 'dark' ? '22px' : '-2px')};
   width: 20px;
   height: 20px;
 
   border-radius: 50%;
   background-color: ${(props) =>
-    props.theme === 'dark' ? palette.darkgray : palette.green};
+    props.themeState === 'dark' ? props.theme.darkgray : props.theme.green};
   animation: ${(props) =>
-    props.theme === 'dark'
+    props.themeState === 'dark'
       ? css`
           ${turnDark} ease 0.5s
         `
@@ -289,7 +293,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
       <FlexWrap>
         <ToggleBtnWrap onClick={themeToggleHandler}>
           <ToggleBar>
-            <ToggleBtn theme={theme} />
+            <ToggleBtn themeState={theme} />
           </ToggleBar>
         </ToggleBtnWrap>
         <Link to={`/profile/${userdata.name}`} onClick={photoClickHandler}>

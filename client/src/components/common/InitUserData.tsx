@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import fetchApi from 'api/fetch';
 
@@ -14,8 +14,8 @@ import { useHistory } from 'react-router-dom';
 import { IProblem } from 'types/problem';
 import { IGroup } from 'types/group';
 
-const InitUserData = (/*{ history }: RouteComponentProps*/) => {
-  const [userdata, setUserdata] = useRecoilState(userDataStates);
+const InitUserData = () => {
+  const setUserdata = useSetRecoilState(userDataStates);
   const [postData, setPostData] = useRecoilState(postModalDataStates);
   const [groupList, setGroupList] = useRecoilState(groupListState);
   const setSolvedProblems = useSetRecoilState(solvedProblemState);

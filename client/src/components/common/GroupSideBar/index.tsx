@@ -7,7 +7,6 @@ import {
   myJoinedGroupState,
   GroupNavState
 } from 'recoil/store';
-import palette from 'theme/palette';
 import { iconSearch } from 'images/icons';
 import { IGroup } from 'types/group';
 
@@ -16,7 +15,7 @@ import JoinedGroupCard from './JoinedGroupCard';
 const GroupSideBarContainer = styled.div`
   flex: 1;
   width: inherit;
-  background: ${palette.white};
+  background: ${(props) => props.theme.white};
   display: flex;
   flex-direction: column;
   box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 3px;
@@ -26,7 +25,7 @@ const SearchBarWrap = styled.div`
   height: 40px;
   margin: 30px 50px;
   display: flex;
-  background: ${palette.lightgray};
+  background: ${(props) => props.theme.lightgray};
   border-radius: 24px;
 
   img {

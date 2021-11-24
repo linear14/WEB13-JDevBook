@@ -9,7 +9,6 @@ import {
 } from 'recoil/store';
 
 import { ClickableProfilePhoto } from 'components/common';
-import palette from 'theme/palette';
 import style from 'theme/style';
 
 const OpenAlarmAnimation = keyframes`
@@ -51,7 +50,7 @@ const AlarmSideBarContainer = styled.div<{
   animation-fill-mode: forwards;
 
   overscroll-behavior: none;
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
 
   overflow-x: hidden;
@@ -67,7 +66,7 @@ const AlarmBox = styled.div`
   padding: ${style.padding.normal} ${style.padding.normal}
     ${style.padding.normal} ${style.padding.normal};
   :hover {
-    background-color: ${palette.lightgray};
+    background-color: ${(props) => props.theme.lightgray};
     border-radius: 10px;
   }
 `;

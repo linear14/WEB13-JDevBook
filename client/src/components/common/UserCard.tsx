@@ -18,12 +18,12 @@ const CardWrap = styled.div`
   p {
     margin-left: 16px;
     font-size: 0.95rem;
-    color: ${palette.black};
+    color: ${(props) => props.theme.black};
     text-decoration: none;
   }
 
   &:hover {
-    background: ${palette.lightgray};
+    background: ${(props) => props.theme.lightgray};
     border-radius: 8px;
   }
 `;

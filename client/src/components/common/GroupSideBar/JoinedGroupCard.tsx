@@ -4,14 +4,13 @@ import styled from 'styled-components';
 
 import { defaultGroup } from 'images/groupimg';
 import { IGroup } from 'types/group';
-import palette from 'theme/palette';
 import useResetGroup from 'hooks/useResetGroup';
 
 const JoinedGroupCardWrap = styled(Link)`
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: ${palette.black};
+  color: ${(props) => props.theme.black};
   padding: 5px;
   margin: 0 0 20px 0;
   font-weight: bold;
@@ -26,12 +25,12 @@ const JoinedGroupCardWrap = styled(Link)`
 
   &:hover {
     border-radius: 10px;
-    background: ${palette.lightgray};
+    background: ${(props) => props.theme.lightgray};
     transition: all 0.2s;
   }
 
   &:active {
-    background: ${palette.gray};
+    background: ${(props) => props.theme.gray};
   }
 `;
 
