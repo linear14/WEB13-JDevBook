@@ -80,6 +80,14 @@ const AlarmText = styled.div`
   font-size: 14px;
 `;
 
+const AlarmTextPreview = styled.div`
+  width: 248px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow : ellipsis;
+  opacity: 0.4;
+`;
+
 const AlarmSideBar = () => {
   const [alarmList, setAlarmList] = useState<string[]>([]);
   const rightModalState = useRecoilValue(rightModalStates);
@@ -90,13 +98,22 @@ const AlarmSideBar = () => {
   socket.off('get alarm info');
   socket.on(
     'get alarm info',
-    (data: { sender: string; receiver: string; type: string }) => {
-      if (data.receiver === currentUserName && data.sender !== currentUserName)
+    (data: {
+      sender: string;
+      receiver: string;
+      type: string;
+      text: string;
+    }) => {
+      if (
+        data.receiver === currentUserName &&
+        data.sender !== currentUserName
+      ) {
         setAlarmList((alarmList: string[]) =>
-          alarmList.concat(`${data.sender}:${data.type}`)
+          alarmList.concat(`${data.sender}:${data.type}:${data.text}`)
         );
-      
-      if(data.receiver === currentUserName && data.type === 'post') {
+      }
+
+      if (data.receiver === currentUserName && data.type === 'post') {
         const audio = new Audio(commentAudio);
         audio.volume = 0.2;
         audio.play();
@@ -107,7 +124,6 @@ const AlarmSideBar = () => {
       }
     }
   );
-
 
   useEffect(() => {
     if (currentUserName !== '' && socket !== null) {
@@ -130,8 +146,9 @@ const AlarmSideBar = () => {
         <ClickableProfilePhoto userName={alarm.split(':')[0]} size={'60px'} />
         <AlarmText>
           {alarm.split(':')[1] === 'post'
-            ? `${alarm.split(':')[0]} 님이 내 게시물에 댓글을 달았습니다.`
-            : `${alarm.split(':')[0]} 님으로부터 메시지가 도착했습니다.`}
+            ? `${alarm.split(':')[0]} 님이 내 게시물에 댓글을 달았습니다. `
+            : `${alarm.split(':')[0]} 님으로부터 메시지가 도착했습니다. `}
+          <AlarmTextPreview>{alarm.split(':')[2]}</AlarmTextPreview>
         </AlarmText>
       </AlarmBox>
     ))
