@@ -1,5 +1,5 @@
 import React, { Dispatch, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
 
@@ -10,7 +10,8 @@ import {
   userDataStates,
   GroupNavState,
   alarmState,
-  usersocketStates
+  usersocketStates,
+  themeState
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 import {
@@ -175,6 +176,67 @@ const AlarmBadge = styled.div`
   font-size: 8px;
 `;
 
+const ToggleBtnWrap = styled.div`
+  width: 50px;
+  height: 25px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ToggleBar = styled.div`
+  position: relative;
+  width: 80%;
+  height: 30%;
+
+  border-radius: 20px;
+  background-color: ${palette.gray};
+`;
+
+const turnDark = keyframes`
+  0%{
+    left: -2px;
+  }
+  100%{
+    left: 22px;
+    background-color: ${palette.darkgray};
+  }
+`;
+const turnLight = keyframes`
+  0%{
+    left: 22px;
+  }
+  100%{
+    left: -2px;
+    background-color: ${palette.green};
+  }
+`;
+
+const ToggleBtn = styled.div<{ theme: string }>`
+  position: absolute;
+  top: -6px;
+  left: ${(props) => (props.theme === 'dark' ? '22px' : '-2px')};
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+  background-color: ${(props) =>
+    props.theme === 'dark' ? palette.darkgray : palette.green};
+  animation: ${(props) =>
+    props.theme === 'dark'
+      ? css`
+          ${turnDark} ease 0.5s
+        `
+      : css`
+          ${turnLight} ease 0.5s
+        `};
+`;
+
 const Gnb = ({ type, rightModalType }: GnbProps) => {
   const modalState = useRecoilValue(modalStateStore);
   const [userdata, setUserdata] = useRecoilState(userDataStates);
@@ -183,12 +245,17 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
     useRecoilState(rightModalStates);
   const [groupNavState, setGroupNavState] = useRecoilState(GroupNavState);
   const [alarmNum, setAlarmNum] = useRecoilState(alarmState);
+  const [theme, setTheme] = useRecoilState(themeState);
   const socket = useRecoilValue(usersocketStates);
   const history = useHistory();
   const resetProfile = useResetProfile();
 
   const photoClickHandler = (e: React.MouseEvent) => {
     resetProfile(userdata.name);
+  };
+
+  const themeToggleHandler = (e: React.MouseEvent) => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
   useEffect(() => {}, [alarmNum]);
@@ -220,6 +287,11 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
         </Link>
       </FlexWrap>
       <FlexWrap>
+        <ToggleBtnWrap onClick={themeToggleHandler}>
+          <ToggleBar>
+            <ToggleBtn theme={theme} />
+          </ToggleBar>
+        </ToggleBtnWrap>
         <Link to={`/profile/${userdata.name}`} onClick={photoClickHandler}>
           <ProfileWrap>
             <ProfilePhoto userName={userdata.name} size="28px" />

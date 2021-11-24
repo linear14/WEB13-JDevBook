@@ -189,3 +189,8 @@ export const alarmState = atom({
   key: 'alarm',
   default: 0 as number
 });
+
+export const themeState = atom<string>({
+  key: 'theme',
+  default: 'light'
+});
