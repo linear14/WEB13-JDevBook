@@ -110,8 +110,9 @@ const socketIO = (server: any) => {
 
     // 알람 부분
     socket.on('send alarm', async (receivedData) => {
-      const { sender, receiver, type } = receivedData;
-      const msg: string = `${sender}:${type}`;
+      const { sender, receiver, type, text } = receivedData;      
+      const msg = `${sender}:${type}:${text}`;
+      
       await dbManager.addAlarm(receiver, msg);
       io.emit('get alarm', receivedData);
       io.emit('get alarm info', receivedData);
