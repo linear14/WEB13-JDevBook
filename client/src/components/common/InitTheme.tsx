@@ -8,13 +8,11 @@ import { light, dark } from 'theme/color';
 const InitTheme: React.FC = ({ children }) => {
   const [theme, setTheme] = useRecoilState(themeState);
 
-  const isBrowserDarkMode =
-    window.matchMedia &&
-    window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  let initTheme = isBrowserDarkMode ? 'dark' : 'light';
-
   useEffect(() => {
+    const isBrowserDarkMode =
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let initTheme = isBrowserDarkMode ? 'dark' : 'light';
     setTheme(initTheme);
   }, []);
 
