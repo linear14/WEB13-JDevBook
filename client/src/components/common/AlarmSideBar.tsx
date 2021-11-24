@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { rightModalStates, usersocketStates, userDataStates, alarmState,
+import {
+  rightModalStates,
+  usersocketStates,
+  userDataStates,
+  alarmState
 } from 'recoil/store';
 
-import ProfilePhoto from 'components/common/ProfilePhoto';
+import { ClickableProfilePhoto } from 'components/common';
 import palette from 'theme/palette';
 import style from 'theme/style';
-
-const ClickableProfileImage = styled(ProfilePhoto)``;
 
 const OpenAlarmAnimation = keyframes`
   0% { opacity: 0; transform: translateX(100px); }
@@ -62,7 +64,8 @@ const AlarmSideBarContainer = styled.div<{
 
 const AlarmBox = styled.div`
   display: flex;
-  padding: ${style.padding.normal} ${style.padding.normal} ${style.padding.normal} ${style.padding.normal};
+  padding: ${style.padding.normal} ${style.padding.normal}
+    ${style.padding.normal} ${style.padding.normal};
   :hover {
     background-color: ${palette.lightgray};
     border-radius: 10px;
@@ -83,36 +86,43 @@ const AlarmSideBar = () => {
   const socket = useRecoilValue(usersocketStates);
 
   socket.off('get alarm info');
-  socket.on('get alarm info', (data:{sender: string, receiver: string, type: string}) => {
-    if(data.receiver === currentUserName && data.sender !== currentUserName)
-      setAlarmList((alarmList: string[]) => alarmList.concat(`${data.sender}:${data.type}`));
-    });
-    
+  socket.on(
+    'get alarm info',
+    (data: { sender: string; receiver: string; type: string }) => {
+      if (data.receiver === currentUserName && data.sender !== currentUserName)
+        setAlarmList((alarmList: string[]) =>
+          alarmList.concat(`${data.sender}:${data.type}`)
+        );
+    }
+  );
+
   useEffect(() => {
-    if(currentUserName !== '' && socket !== null){
+    if (currentUserName !== '' && socket !== null) {
       setAlarmList([]);
-      socket.emit('send alarm initial', {receiver:currentUserName});
+      socket.emit('send alarm initial', { receiver: currentUserName });
       socket.on('get previous alarms', (previousAlarms: string[]) => {
         setAlarmList((alarmList: string[]) => alarmList.concat(previousAlarms));
         socket.off('get previous alarms');
       });
-      socket.on('get number of unchecked alarms', (data:number) => {
+      socket.on('get number of unchecked alarms', (data: number) => {
         setAlarmNum(data);
         socket.off('get number of unchecked alarms');
-      })
+      });
     }
   }, [currentUserName]);
 
-  const alarmListView = alarmList.map((alarm, idx) => (
-    <AlarmBox key={idx}>
-      <ClickableProfileImage userName={alarm.split(':')[0]} size={'60px'} />
-      <AlarmText>
-        {alarm.split(':')[1] === 'post'
-          ? `${alarm.split(':')[0]} 님이 내 게시물에 댓글을 달았습니다.`
-          : `${alarm.split(':')[0]} 님으로부터 메시지가 도착했습니다.`}
-      </AlarmText>
-    </AlarmBox>
-  )).reverse();
+  const alarmListView = alarmList
+    .map((alarm, idx) => (
+      <AlarmBox key={idx}>
+        <ClickableProfilePhoto userName={alarm.split(':')[0]} size={'60px'} />
+        <AlarmText>
+          {alarm.split(':')[1] === 'post'
+            ? `${alarm.split(':')[0]} 님이 내 게시물에 댓글을 달았습니다.`
+            : `${alarm.split(':')[0]} 님으로부터 메시지가 도착했습니다.`}
+        </AlarmText>
+      </AlarmBox>
+    ))
+    .reverse();
 
   return (
     <AlarmSideBarContainer
