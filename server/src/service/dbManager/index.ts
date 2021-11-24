@@ -20,7 +20,11 @@ import { getProblems, insertSolvedProblem, getSolvedProblems } from './problem';
 import { getGroupList, getGroup, toggleUserGroup } from './group';
 import { setChatList, getChatList } from './chat';
 import { setGroupChatList, getGroupChatList } from './groupchat';
-import { getGroupUsers, getGroupUsersName } from './usergroup';
+import {
+  getGroupUsers,
+  getGroupUsersName,
+  getUserNumInGroup
+} from './usergroup';
 import {
   addAlarm,
   getAlarmList,
@@ -103,6 +107,7 @@ const dbManager = {
 
   getGroupUsers,
   getGroupUsersName,
+  getUserNumInGroup,
 
   setGroupChatList,
   getGroupChatList,
