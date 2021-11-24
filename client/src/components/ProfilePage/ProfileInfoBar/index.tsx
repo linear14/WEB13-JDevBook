@@ -137,7 +137,7 @@ const ProfileInfoBar = () => {
       setIsFetching(true);
       resetData();
     }
-  }, [profileData.idx]);
+  }, [profileData.idx !== 0]);
 
   useEffect(() => {
     getData();
