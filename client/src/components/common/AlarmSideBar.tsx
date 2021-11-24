@@ -8,6 +8,8 @@ import {
   alarmState
 } from 'recoil/store';
 
+import messageAudio from '../../sounds/message-notify.mp3';
+import commentAudio from '../../sounds/comment-notify.mp3';
 import { ClickableProfilePhoto } from 'components/common';
 import palette from 'theme/palette';
 import style from 'theme/style';
@@ -93,8 +95,17 @@ const AlarmSideBar = () => {
         setAlarmList((alarmList: string[]) =>
           alarmList.concat(`${data.sender}:${data.type}`)
         );
+      
+      if(data.receiver === currentUserName && data.type === 'post') {
+        const audio = new Audio(commentAudio);
+        audio.play();
+      } else if (data.receiver === currentUserName && data.type === 'chat') {
+        const audio = new Audio(messageAudio);
+        audio.play();
+      }
     }
   );
+
 
   useEffect(() => {
     if (currentUserName !== '' && socket !== null) {
