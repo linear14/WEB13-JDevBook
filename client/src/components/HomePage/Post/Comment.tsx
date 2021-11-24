@@ -114,7 +114,8 @@ const Comment = ({
         socket.emit('send alarm', {
           sender: currentUserName,
           receiver: nickname,
-          type: 'post'
+          type: 'post',
+          text: value
         });
       }
     }
