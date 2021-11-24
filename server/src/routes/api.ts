@@ -11,7 +11,7 @@ import {
   CommentData,
   IProfile
 } from '../types/interface';
-import { upload, uploadFile } from '../service/objectStorage';
+import { uploadFile } from '../service/objectStorage';
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
@@ -251,6 +251,24 @@ router.get(
   }
 );
 
+router.get(
+  '/problems/joined/:useridx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userIdx = Number(req.params.useridx);
+      const groups = await dbManager.getUserJoinedGroups(userIdx);
+      const groupIndices = JSON.parse(JSON.stringify(groups)).map(
+        (item: any) => item.groupidx
+      );
+      const problems = await dbManager.getProblems(groupIndices);
+      res.json(problems);
+    } catch (err) {
+      console.error(err);
+      res.json([]);
+    }
+  }
+);
+
 router.post(
   '/comments',
   async (req: Request, res: Response, next: NextFunction) => {
@@ -273,6 +291,19 @@ router.post(
       const { problemIdx } = req.body;
       await dbManager.insertSolvedProblem(userIdx, Number(problemIdx));
       res.json(true);
+    } catch (err) {
+      res.json(false);
+    }
+  }
+);
+
+router.get(
+  '/problems/solved/:username',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userName = req.params.username;
+      const result = await dbManager.getSolvedProblems(userName);
+      res.json(result);
     } catch (err) {
       res.json(false);
     }
@@ -306,6 +337,20 @@ router.get(
   }
 );
 
+router.get(
+  '/groups/joined/:useridx',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userIdx: number = Number(req.params.useridx);
+      const group = await dbManager.getUserJoinedGroups(userIdx);
+      res.json(group);
+    } catch (err) {
+      console.error(err);
+      res.json([]);
+    }
+  }
+);
+
 router.post(
   '/joingroup/:useridx/:postidx',
   async (req: Request, res: Response, next: NextFunction) => {
@@ -314,19 +359,6 @@ router.post(
       const postidx = Number(req.params.postidx);
       const result = await dbManager.toggleUserGroup(useridx, postidx);
       res.json(result);
-    } catch (err) {
-      res.json(false);
-    }
-  }
-);
-
-router.post(
-  '/profile/bio',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { userName, bio } = req.body;
-      await dbManager.updateBio(userName, bio);
-      res.json(true);
     } catch (err) {
       res.json(false);
     }

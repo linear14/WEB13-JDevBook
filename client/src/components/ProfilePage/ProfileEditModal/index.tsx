@@ -22,7 +22,7 @@ const EditModalWrap = styled.div<{ modalState: boolean }>`
   box-sizing: border-box;
   padding: ${style.padding.normal};
   margin-left: 508px;
-  margin-top: -88px;
+  margin-top: -80px;
 
   background-color: ${palette.white};
   border-radius: 8px;
@@ -44,7 +44,6 @@ const BioArea = styled.textarea`
   height: 100px;
   box-sizing: border-box;
   padding: ${style.padding.small};
-  margin-bottom: ${style.margin.small};
 
   border: none;
   outline: none;
@@ -106,8 +105,11 @@ const ProfileEditModal = () => {
 
   const saveBtnHandler = async (e: React.MouseEvent) => {
     if (bio.length !== 0) {
-      const result = await fetchApi.updateBio(profileData.nickname, bio.trim());
-      result
+      const result = await fetchApi.updateProfile({
+        ...profileData,
+        bio: bio.trim()
+      });
+      result !== undefined
         ? alertMessage('성공적으로 수정되었습니다!')
         : alertMessage(
             '알 수 없는 이유로 수정에 실패하였습니다.',

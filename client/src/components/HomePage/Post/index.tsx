@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdMoreHoriz } from 'react-icons/md';
 
-import { LikeIcon, LikeIconActive, CommentIcon } from 'images/icons';
+import { LikeIcon, CommentIcon } from 'images/icons';
 import { PostData } from 'types/post';
 
 import palette from 'theme/palette';
-import style from 'theme/style';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
@@ -23,7 +22,6 @@ import Comment from './Comment';
 
 const PostContainer = styled.div`
   width: 100%;
-  /* min-width: 680px; */
   position: relative;
   border-radius: 8px;
   box-sizing: border-box;

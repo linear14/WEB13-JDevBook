@@ -16,6 +16,14 @@ const StyledProfilePhoto = styled.img<{ size?: string }>`
   width: ${(props) => props.size || '70px'};
   height: ${(props) => props.size || '70px'};
   border-radius: 50%;
+
+  &:hover {
+    filter: brightness(90%);
+  }
+
+  &:active {
+    filter: brightness(80%);
+  }
 `;
 
 const ProfilePhoto = ({ userName, size }: ProfilePhotoProps) => {

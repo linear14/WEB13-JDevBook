@@ -20,7 +20,8 @@ import {
   ProfileBar,
   ProfileCover,
   InitProfileData,
-  PostList
+  PostList,
+  ProfileInfoBar
 } from 'components/ProfilePage';
 
 const GlobalStyle = createGlobalStyle`
@@ -36,17 +37,20 @@ const ProfilePageContainer = styled.div`
 
 const PageLayout = styled.div`
   display: flex;
-  justify-content: space-between;
 `;
 
 const ContentsContainer = styled.div<{ contentsState: boolean }>`
   width: calc(100vw - 680px);
   min-width: 720px;
-  margin: 0 10px;
+  margin: 0 12px;
 
   display: ${(props) => (props.contentsState ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 1040px) {
+    width: 100%;
+  }
 `;
 
 const InnerContainer = styled.div`
@@ -59,15 +63,15 @@ const InnerContainer = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  width: 366px;
+  width: 100%;
   box-sizing: border-box;
-  padding-right: 6px;
+  padding-right: 12px;
 `;
 
 const PostContainer = styled.div`
   width: 544px;
   box-sizing: border-box;
-  padding-left: 6px;
+  padding-left: 12px;
 `;
 
 const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
@@ -82,10 +86,12 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   useEffect(() => {
     if (userData.name === profileData.nickname) setMyProfile(true);
     else setMyProfile(false);
-  }, [profileData]);
+  }, [profileData, userData]);
 
   useEffect(() => {
-    return () => resetProfileData();
+    return () => {
+      resetProfileData();
+    };
   }, []);
 
   return (
@@ -94,7 +100,9 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
       <InitUserData />
       <InitProfileData userName={match.params.username} />
       <InitSocket />
-      <LoadingModal modalState={profileData.idx === 0} />
+      <LoadingModal
+        modalState={profileData.idx === 0 || userData.name === ''}
+      />
       <Gnb />
       <PageLayout>
         <SideBar isLeft={true}>
@@ -105,7 +113,9 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
           <ProfileCover />
           <ProfileBar />
           <InnerContainer>
-            <InfoContainer></InfoContainer>
+            <InfoContainer>
+              <ProfileInfoBar />
+            </InfoContainer>
             <PostContainer>
               {myProfile ? <PostWriter /> : ''}
               <PostList username={match.params.username} />

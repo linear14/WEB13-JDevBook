@@ -33,7 +33,7 @@ const PageLayout = styled.div`
 const PostContainer = styled.div`
   width: calc(100vw - 680px);
   min-width: 720px;
-  margin: 12px;
+  margin: 0 12px;
 
   display: flex;
   flex-direction: column;
