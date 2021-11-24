@@ -95,6 +95,11 @@ const ProfileCover = () => {
       return alertMessage('이미지 파일이 아닙니다.', palette.alert);
     }
 
+    if (filelist[0].size > 1024 * 1024) {
+      setImgEdit(false);
+      return alertMessage('1MB 이하만 가능합니다.', palette.alert);
+    }
+
     const imglist: FileList = filelist; //inputfile.current.files;
     const s3fileRes = await fetchApi.uploadImg(imglist);
 
