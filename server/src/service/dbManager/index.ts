@@ -29,6 +29,7 @@ import {
 } from './alarm';
 
 const problemOS = require('../../config/problem_os.json');
+const problemDS = require('../../config/problem_ds.json');
 const group = require('../../config/initgroup.json');
 
 const dbManager = {
@@ -62,6 +63,10 @@ const dbManager = {
   createInitProblem: async function () {
     try {
       await db.models.Problem.bulkCreate(problemOS, {
+        logging: false,
+        returning: true
+      });
+      await db.models.Problem.bulkCreate(problemDS, {
         logging: false,
         returning: true
       });
