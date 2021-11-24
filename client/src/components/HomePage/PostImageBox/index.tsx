@@ -9,8 +9,8 @@ import TwoImages from './TwoImages';
 import { ThreeImagesHorizontal, ThreeImagesVertical } from './ThreeImages';
 
 const SkeletonBox = styled.div<{ isProfile: boolean }>`
-  width: ${({ isProfile }) => (isProfile ? '538px' : '680px')};
-  height: ${({ isProfile }) => (isProfile ? '538px' : '680px')};
+  width: ${({ isProfile }) => (isProfile ? '532px' : '680px')};
+  height: ${({ isProfile }) => (isProfile ? '532px' : '680px')};
   background: ${palette.lightgray};
 `;
 

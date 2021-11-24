@@ -10,7 +10,7 @@ import { Skeleton } from 'components/common';
 import palette from 'theme/palette';
 
 const PostListContainer = styled.div`
-  width: 538px;
+  width: 532px;
   /* min-width: 680px; */
   position: relative;
   box-sizing: border-box;
@@ -24,8 +24,8 @@ const Observer = styled.div`
 `;
 
 const NoPost = styled.div`
-  width: 538px;
-  min-width: 538px;
+  width: 532px;
+  min-width: 532px;
   height: 180px;
   border-radius: 8px;
   display: flex;
