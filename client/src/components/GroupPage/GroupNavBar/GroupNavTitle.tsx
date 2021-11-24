@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
 import { groupState } from 'recoil/store';
 import palette from 'theme/palette';
 import style from 'theme/style';
+import fetchApi from 'api/fetch';
 
 const GroupNavTitleWrap = styled.div`
   padding-left: 40px;
@@ -23,16 +24,30 @@ const GroupTitle = styled.div`
 `;
 
 const GroupMemberNum = styled.div`
+  height: 0;
   color: ${palette.darkgray};
 `;
 
 const GroupNavTitle = () => {
   const groupData = useRecoilValue(groupState);
+  const [userNum, setUserNum] = useState<number>();
+
+  const getUserNum = async () => {
+    const fetchUserNum = await fetchApi.getUserNumInGroup(groupData.idx);
+    setUserNum(fetchUserNum);
+  };
+
+  useEffect(() => {
+    getUserNum();
+    return () => {
+      setUserNum(0);
+    };
+  }, [groupData.idx !== 0]);
 
   return (
     <GroupNavTitleWrap>
       <GroupTitle>{groupData.title}</GroupTitle>
-      <GroupMemberNum>멤버 n명</GroupMemberNum>
+      <GroupMemberNum>{userNum ? `멤버 ${userNum}명` : ``}</GroupMemberNum>
     </GroupNavTitleWrap>
   );
 };
