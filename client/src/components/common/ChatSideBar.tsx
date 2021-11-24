@@ -172,6 +172,7 @@ const SubmitBtn = styled.button`
 const ReceiverDiv = styled.div<ISuccessiveMessage>`
   display: ${(props) =>
     props.receiver === props.sender || props.flag ? `none` : `flex`};
+  margin-top: ${style.margin.small};
 `;
 
 const ReceiverName = styled.div`
