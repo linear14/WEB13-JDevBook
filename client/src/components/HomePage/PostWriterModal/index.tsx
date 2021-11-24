@@ -123,29 +123,20 @@ const PostWriterModal = () => {
       `게시글이 알수없는 이유로 ${
         isEnrollMode() ? '게시' : '수정'
       }되지 않았습니다.`,
-      `${palette.alert}`
+      true
     );
   };
 
   const postDataToAPI = async () => {
     if (isImgUploading > 0)
-      return alertMessage(
-        '이미지 업로드 중입니다. 잠시 후에 게시하세요',
-        palette.alert
-      );
+      return alertMessage('이미지 업로드 중입니다. 잠시 후에 게시하세요', true);
 
     if (postData.contents === '') {
-      return alertMessage(
-        '내용이 없습니다. 내용을 입력하세요.',
-        `${palette.alert}`
-      );
+      return alertMessage('내용이 없습니다. 내용을 입력하세요.', true);
     }
 
     if (isImgUploading) {
-      return alertMessage(
-        '이미지 업로드 중입니다. 잠시 후에 게시하세요',
-        `${palette.alert}`
-      );
+      return alertMessage('이미지 업로드 중입니다. 잠시 후에 게시하세요', true);
     }
 
     const { useridx, contents, secret, likenum } = { ...postData };

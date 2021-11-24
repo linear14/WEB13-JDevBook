@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, css } from 'styled-components';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { imageViewerState, profileState, userDataStates } from 'recoil/store';
@@ -25,9 +25,13 @@ import {
 } from 'components/ProfilePage';
 
 const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: ${palette.lightgray};
-  }
+  ${({}) => {
+    return css`
+      body {
+        background-color: ${(props) => props.theme.lightgray};
+      }
+    `;
+  }}
 `;
 
 const ProfilePageContainer = styled.div`

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { userDataStates, myJoinedGroupState } from 'recoil/store';
-import palette from 'theme/palette';
 import style from 'theme/style';
 import { defaultGroup } from 'images/groupimg';
 import { IGroup } from 'types/group';
@@ -44,8 +43,8 @@ const GroupSelectorWrap = styled.div`
 
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
-  border-top: solid 1px ${palette.gray};
-  background-color: ${palette.white};
+  border-top: solid 1px ${(props) => props.theme.gray};
+  background-color: ${(props) => props.theme.white};
 
   display: flex;
   flex-direction: column;
@@ -54,6 +53,7 @@ const GroupSelectorWrap = styled.div`
 
 const GroupName = styled.div`
   font-size: ${style.font.normal};
+  color: ${(props) => props.theme.black};
 `;
 
 const GroupJoinBtn = styled.div`
@@ -61,11 +61,12 @@ const GroupJoinBtn = styled.div`
   height: 30px;
 
   border-radius: 8px;
-  background-color: ${palette.lightgray};
+  background-color: ${(props) => props.theme.lightgray};
 
   display: flex;
   justify-content: center;
   align-items: center;
+  color: ${(props) => props.theme.black};
 
   &:hover {
     cursor: pointer;
@@ -83,12 +84,12 @@ const GroupEnterBtn = styled(Link)`
   height: 30px;
 
   border-radius: 8px;
-  background-color: ${palette.green};
+  background-color: ${(props) => props.theme.green};
 
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${palette.white};
+  color: ${(props) => props.theme.white};
   text-decoration: none;
 
   &:hover {

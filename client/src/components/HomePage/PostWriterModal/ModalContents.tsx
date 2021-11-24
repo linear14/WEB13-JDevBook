@@ -69,10 +69,7 @@ const ModalContents = () => {
 
     if (contentsLength > maxLength) {
       let contents = postData.contents;
-      alertMessage(
-        `게시글은 ${maxLength}글자를 넘을 수 없습니다.`,
-        `${palette.alert}`
-      );
+      alertMessage(`게시글은 ${maxLength}글자를 넘을 수 없습니다.`, true);
       while (contents.length > maxLength) {
         contents = contents.slice(0, -1);
       }

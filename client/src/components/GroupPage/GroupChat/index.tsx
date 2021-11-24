@@ -9,11 +9,10 @@ import {
   loginState
 } from 'recoil/store';
 
-import palette from 'theme/palette';
 import style from 'theme/style';
 import { ClickableProfilePhoto } from 'components/common';
 import { iconSubmit, iconSubmitActive } from 'images/icons';
-import { IMessage, ISocketMessage, ISuccessiveMessage } from 'types/message';
+import { IMessage, ISuccessiveMessage } from 'types/message';
 
 const OpenChatAnimation = keyframes`
   0% { opacity: 0; transform: translateX(100px); }
@@ -47,14 +46,14 @@ const ChatSideBarContainer = styled.div<{ groupChatFlag: boolean }>`
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
 
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
 `;
 
 const CurrentUserTitle = styled.div`
   text-align: center;
   font-size: ${style.font.small};
-  color: ${palette.darkgray};
+  color: ${(props) => props.theme.darkgray};
 
   margin-top: ${style.margin.small};
 `;
@@ -62,7 +61,7 @@ const CurrentUserTitle = styled.div`
 const ChatTitle = styled.div`
   text-align: center;
   font-size: ${style.font.small};
-  color: ${palette.darkgray};
+  color: ${(props) => props.theme.darkgray};
 
   margin-bottom: ${style.margin.normal};
 `;
@@ -106,13 +105,12 @@ const MessageText = styled.div<IMessage>`
   ${(props) =>
     `background-color: ${
       props.currentUserName === props.sender
-        ? `${palette.green};`
-        : `${palette.lightgray};`
+        ? props.theme.green
+        : props.theme.lightgray
     }`}
   
     margin-top: ${style.margin.smallest};
-  padding: ${style.padding.smallest} ${style.padding.normal}
-    ${style.padding.smallest} ${style.padding.normal};
+  padding: ${style.padding.smallest} ${style.padding.normal};
 `;
 
 const ChatInputWrapper = styled.div`
@@ -137,7 +135,7 @@ const ChatInput = styled.input`
 
 const SubmitBtn = styled.button`
   border: none;
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
   transform: translateY(2px);
   margin-left: 16px;
 
@@ -160,8 +158,7 @@ const Divider = styled.div`
   width: calc(100% - 32px);
   height: 1px;
   background: #dddddd;
-  margin: ${style.margin.normal} ${style.margin.large} ${style.margin.normal}
-    ${style.margin.large};
+  margin: ${style.margin.normal} ${style.margin.large};
 `;
 
 const CurrentUserBox = styled.div`
@@ -200,8 +197,8 @@ const LoginState = styled.div<{ user: string; loginStateArray: any }>`
   ${(props) =>
     `background-color: ${
       props.loginStateArray?.includes(props.user)
-        ? `${palette.green}`
-        : `${palette.darkgray}`
+        ? props.theme.green
+        : props.theme.darkgray
     };`}
 `;
 

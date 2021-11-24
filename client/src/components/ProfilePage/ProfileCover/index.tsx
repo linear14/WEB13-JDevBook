@@ -72,13 +72,13 @@ const ProfileCover = () => {
 
   const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
     if (userData.name !== profileData.nickname)
-      return alertMessage('프로필 소유자가 아닙니다.', palette.alert);
-    if (imgEdit) return alertMessage('이미지 업로드 중입니다.', palette.alert);
+      return alertMessage('프로필 소유자가 아닙니다.', true);
+    if (imgEdit) return alertMessage('이미지 업로드 중입니다.', true);
     inputfile.current.click();
   };
 
   const uploadOneFile = () => {
-    if (imgEdit) return alertMessage('이미지 업로드 중입니다.', palette.alert);
+    if (imgEdit) return alertMessage('이미지 업로드 중입니다.', true);
     setImgEdit(true);
     getFile();
   };
@@ -87,12 +87,12 @@ const ProfileCover = () => {
     const filelist: FileList | null = inputfile.current.files;
     if (!filelist || filelist.length === 0) {
       setImgEdit(false);
-      return alertMessage('파일을 가져오지 못했습니다.', palette.alert);
+      return alertMessage('파일을 가져오지 못했습니다.', true);
     }
 
     if (filelist[0].type.match(/image\/*/) === null) {
       setImgEdit(false);
-      return alertMessage('이미지 파일이 아닙니다.', palette.alert);
+      return alertMessage('이미지 파일이 아닙니다.', true);
     }
 
     const imglist: FileList = filelist; //inputfile.current.files;
@@ -100,9 +100,8 @@ const ProfileCover = () => {
 
     if (!s3fileRes.save) {
       setImgEdit(false);
-      if (s3fileRes.file)
-        return alertMessage('이미지 업로드 실패', palette.alert);
-      else return alertMessage('1MB 이하만 가능합니다.', palette.alert);
+      if (s3fileRes.file) return alertMessage('이미지 업로드 실패', true);
+      else return alertMessage('1MB 이하만 가능합니다.', true);
     }
 
     const { check }: { check: boolean } = await fetchApi.updateProfile({
@@ -121,7 +120,7 @@ const ProfileCover = () => {
       });
       setProfileData({ ...profileData, cover: s3fileRes.file.location });
     } else {
-      return alertMessage('프로필 업데이트를 하지 못했습니다.', palette.alert);
+      return alertMessage('프로필 업데이트를 하지 못했습니다.', true);
     }
   };
 

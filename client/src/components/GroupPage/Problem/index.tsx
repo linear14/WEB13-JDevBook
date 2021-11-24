@@ -5,8 +5,6 @@ import { useRecoilState } from 'recoil';
 import { solvedProblemState } from 'recoil/store';
 import styled from 'styled-components';
 
-import palette from 'theme/palette';
-import style from 'theme/style';
 import { IProblem } from 'types/problem';
 
 const ProblemContainer = styled.div`
@@ -17,7 +15,7 @@ const ProblemContainer = styled.div`
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 5px;
   margin-top: 24px;
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
   box-sizing: border-box;
   padding-bottom: 32px;
 
@@ -57,7 +55,7 @@ const AnswerButton = styled.div`
   flex: 1;
   height: 64px;
   border-radius: 8px;
-  color: black;
+  color: ${(props) => props.theme.black};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,11 +68,11 @@ const AnswerButton = styled.div`
   }
 
   &:hover {
-    color: white;
+    color: ${(props) => props.theme.white};
   }
 
   &:active {
-    color: white;
+    color: ${(props) => props.theme.white};
     font-size: 22px;
     box-shadow: none;
     box-shadow: rgba(0, 0, 0, 0.03) 0px 3px 12px;
@@ -112,13 +110,13 @@ const WrongButton = styled(AnswerButton)`
 const SolvedLabel = styled.div`
   width: 100%;
   height: 48px;
-  background: ${palette.green};
+  background: ${(props) => props.theme.green};
   display: flex;
   justify-content: center;
   align-items: center;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  color: white;
+  color: ${(props) => props.theme.white};
   letter-spacing: 1px;
 
   &::after {
@@ -150,7 +148,7 @@ const Problem = ({
         fetchApi.insertSolvedProblem(problem.idx);
       }
     } else {
-      showAlert('오답입니다.', palette.alert);
+      showAlert('오답입니다.', true);
     }
   };
 

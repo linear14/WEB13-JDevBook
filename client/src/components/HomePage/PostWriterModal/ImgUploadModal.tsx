@@ -210,18 +210,18 @@ const ImgUploadModal = () => {
 
   const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
     if (imgList.length >= 3)
-      return alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
+      return alertMessage('첨부 사진은 3장까지 가능합니다.', true);
     if (isImgUploading > 0)
-      return alertMessage('이미지 업로드 중입니다.', palette.alert);
+      return alertMessage('이미지 업로드 중입니다.', true);
 
     inputfile.current.click();
   };
 
   const uploadOneFile = (filelist: FileList | null) => {
     if (imgList.length >= 3)
-      return alertMessage('첨부 사진은 3장까지 가능합니다.', palette.alert);
+      return alertMessage('첨부 사진은 3장까지 가능합니다.', true);
     if (isImgUploading > 0)
-      return alertMessage('이미지 업로드 중입니다.', palette.alert);
+      return alertMessage('이미지 업로드 중입니다.', true);
 
     const uploadNum = isImgUploading;
     setIsImgUploading(uploadNum + 1);
@@ -230,12 +230,12 @@ const ImgUploadModal = () => {
 
   const getFile = async (filelist: FileList | null, uploadNum: number) => {
     if (!filelist || filelist.length === 0) {
-      alertMessage('파일을 가져오지 못했습니다.', palette.alert);
+      alertMessage('파일을 가져오지 못했습니다.', true);
       return setIsImgUploading(uploadNum - 1);
     }
 
     if (filelist[0].type.match(/image\/*/) === null) {
-      alertMessage('이미지 파일이 아닙니다.', palette.alert);
+      alertMessage('이미지 파일이 아닙니다.', true);
       return setIsImgUploading(uploadNum - 1);
     }
 
@@ -243,8 +243,8 @@ const ImgUploadModal = () => {
     const s3fileRes = await fetchApi.uploadImg(imglist);
 
     if (!s3fileRes.save) {
-      if (s3fileRes.file) alertMessage('이미지 업로드 실패', palette.alert);
-      else alertMessage('1MB 이하만 가능합니다.', palette.alert);
+      if (s3fileRes.file) alertMessage('이미지 업로드 실패', true);
+      else alertMessage('1MB 이하만 가능합니다.', true);
       return setIsImgUploading(uploadNum - 1);
     }
 

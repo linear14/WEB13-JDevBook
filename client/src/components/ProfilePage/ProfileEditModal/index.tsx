@@ -112,12 +112,9 @@ const ProfileEditModal = () => {
       });
       result !== undefined
         ? alertMessage('성공적으로 수정되었습니다!')
-        : alertMessage(
-            '알 수 없는 이유로 수정에 실패하였습니다.',
-            palette.alert
-          );
+        : alertMessage('알 수 없는 이유로 수정에 실패하였습니다.', true);
     } else {
-      return alertMessage('내용을 입력하세요.', palette.alert);
+      return alertMessage('내용을 입력하세요.', true);
     }
     setProfileData({ ...profileData, bio: bio.trim() });
     setModalState({ ...modalState, editProfile: false });
@@ -132,10 +129,7 @@ const ProfileEditModal = () => {
 
     if (bio.length > maxLength) {
       let contents = bio;
-      alertMessage(
-        `자기소개는 ${maxLength}글자를 넘을 수 없습니다.`,
-        palette.alert
-      );
+      alertMessage(`자기소개는 ${maxLength}글자를 넘을 수 없습니다.`, true);
       while (contents.length > maxLength) {
         contents = contents.slice(0, -1);
       }

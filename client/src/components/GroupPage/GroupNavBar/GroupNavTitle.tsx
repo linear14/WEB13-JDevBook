@@ -3,14 +3,13 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
 import { groupState } from 'recoil/store';
-import palette from 'theme/palette';
 import style from 'theme/style';
 import fetchApi from 'api/fetch';
 
 const GroupNavTitleWrap = styled.div`
   padding-left: 40px;
 
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
 
   display: flex;
   flex-direction: column;
@@ -21,11 +20,12 @@ const GroupNavTitleWrap = styled.div`
 const GroupTitle = styled.div`
   margin-bottom: ${style.margin.small};
   font-size: ${style.font.title};
+  color: ${(props) => props.theme.black};
 `;
 
 const GroupMemberNum = styled.div`
   height: 0;
-  color: ${palette.darkgray};
+  color: ${(props) => props.theme.darkgray};
 `;
 
 const GroupNavTitle = () => {

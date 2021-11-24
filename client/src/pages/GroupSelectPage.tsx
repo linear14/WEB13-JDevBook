@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, css } from 'styled-components';
 
 import palette from 'theme/palette';
 
@@ -14,9 +14,13 @@ import {
 import { GroupSelectTitle, GroupSelectList } from 'components/GroupSelectPage';
 
 const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: ${palette.lightgray};
-  }
+  ${({}) => {
+    return css`
+      body {
+        background-color: ${(props) => props.theme.lightgray};
+      }
+    `;
+  }}
 `;
 
 const GroupSelectPageContainer = styled.div`
