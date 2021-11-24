@@ -1,13 +1,13 @@
 import fetchApi from 'api/fetch';
 import useAlertModal from 'hooks/useAlertModal';
-import React, { useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { solvedProblemState } from 'recoil/store';
+import React, { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { GroupNavState, solvedProblemState } from 'recoil/store';
 import styled from 'styled-components';
 
 import palette from 'theme/palette';
 import { IProblem } from 'types/problem';
-import Explanation from './Exolanation';
+import Explanation from './Explanation';
 
 const ProblemContainer = styled.div`
   width: 680px;
@@ -134,6 +134,7 @@ const Problem = ({
   problem: IProblem;
   isHome?: boolean;
 }) => {
+  const groupNavState = useRecoilValue(GroupNavState);
   const [solvedProblems, setSolvedProblems] =
     useRecoilState(solvedProblemState);
   const showAlert = useAlertModal();
@@ -156,6 +157,12 @@ const Problem = ({
       showAlert('오답입니다. 더 공부 하세요!', palette.alert);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      setSolvedNow(false);
+    };
+  }, [groupNavState.problem]);
 
   return (
     <ProblemContainer>
