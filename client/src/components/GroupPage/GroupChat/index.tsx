@@ -140,6 +140,7 @@ const SubmitBtn = styled.button`
   background-color: ${palette.white};
   transform: translateY(2px);
   margin-left: 16px;
+  cursor: pointer;
 
   img {
     width: 16px;
