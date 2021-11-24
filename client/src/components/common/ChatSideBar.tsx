@@ -177,10 +177,8 @@ const Divider = styled.div`
   width: calc(100% - 32px);
   height: 1px;
   background: #dddddd;
-  margin: (
-    ${style.margin.normal} ${style.margin.large} ${style.margin.normal}
-      ${style.margin.large}
-  );
+  margin: ${style.margin.normal} ${style.margin.large} ${style.margin.normal}
+    ${style.margin.large};
 `;
 
 const ChatSideBar = () => {
@@ -200,6 +198,12 @@ const ChatSideBar = () => {
         sender: currentUserName,
         receiver: chatReceiver,
         message: value
+      });
+
+      socket.emit('send alarm', {
+        sender: currentUserName,
+        receiver: chatReceiver,
+        type: 'chat'
       });
     }
   };
