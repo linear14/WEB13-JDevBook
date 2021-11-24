@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { postListStore } from 'recoil/store';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { postListStore, profileState } from 'recoil/store';
 import styled from 'styled-components';
 
 import fetchApi from 'api/fetch';
@@ -22,12 +22,13 @@ const Observer = styled.div`
   background: transparent;
 `;
 
-const PostList = ({ username }: { username: string }) => {
+const PostList = () => {
+  const { nickname } = useRecoilValue(profileState);
   const [posts, setPosts] = useRecoilState(postListStore);
   const [isFetching, setFetching] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const observerRef = useRef<IntersectionObserver>();
-  const abortController = useRef<AbortController | null>(null);
+  const abortControllerMap = useRef<{ [name: string]: AbortController }>({});
 
   const observer = (element: HTMLDivElement) => {
     if (isFetching) return;
@@ -49,13 +50,13 @@ const PostList = ({ username }: { username: string }) => {
 
   const fetchPostsMore = async (lastIdx: number = -1, count: number = 10) => {
     try {
-      abortController.current = new AbortController();
+      abortControllerMap.current[nickname] = new AbortController();
       setFetching(true);
       const result = await fetchApi.getPosts(
         lastIdx,
         count,
-        username,
-        abortController.current.signal
+        nickname,
+        abortControllerMap.current[nickname].signal
       );
       if (result.length < count) {
         setHasMore(false);
@@ -63,7 +64,7 @@ const PostList = ({ username }: { username: string }) => {
       setPosts((prev) => prev.concat(result));
       setFetching(false);
     } finally {
-      abortController.current = null;
+      delete abortControllerMap.current[nickname];
     }
   };
 
@@ -76,16 +77,18 @@ const PostList = ({ username }: { username: string }) => {
   };
 
   useEffect(() => {
-    fetchPostsMore();
+    if (nickname) {
+      fetchPostsMore();
+    }
 
     return () => {
-      if (abortController.current) {
-        abortController.current.abort();
-        abortController.current = null;
+      if (abortControllerMap.current[nickname]) {
+        abortControllerMap.current[nickname].abort();
+        delete abortControllerMap.current[nickname];
       }
       setPosts([]);
     };
-  }, [username]);
+  }, [nickname]);
 
   return (
     <>
