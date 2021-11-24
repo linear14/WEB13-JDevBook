@@ -110,11 +110,13 @@ const Comment = ({
         }
       );
 
-      socket.emit('send alarm', {
-        sender: currentUserName,
-        receiver: nickname,
-        type: 'post'
-      });
+      if(currentUserName !== nickname) {
+        socket.emit('send alarm', {
+          sender: currentUserName,
+          receiver: nickname,
+          type: 'post'
+        });
+      }
     }
   };
 
