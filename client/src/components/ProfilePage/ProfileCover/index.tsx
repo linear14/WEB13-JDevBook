@@ -16,7 +16,7 @@ const ProfileCoverWrap = styled.div<{ imgsrc: string }>`
   height: 320px;
   background-image: url(${({ imgsrc }) => imgsrc});
   background-size: cover;
-
+  background-position: center;
   display: flex;
   justify-content: flex-end;
 `;
