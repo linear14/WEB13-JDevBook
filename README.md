@@ -76,17 +76,19 @@ Web13-JDevBook
 	│      ├─components
 	│      ├─images
 	│      ├─pages
+	│      ├─hooks
 	│      ├─utils
 	│      ├─api
+	│      ├─theme
 	│      └─recoil
 	└─server
 	    └─src
 	        ├─models
-			├─tables
+		    └─tables
 	        ├─routes
 	        ├─config
 		├─service
-			├─dbManager
+		     └─dbManager
 		├─types
 		├─sessions
 	        └─sockets
