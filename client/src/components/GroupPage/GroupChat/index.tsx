@@ -121,18 +121,21 @@ const ChatInputWrapper = styled.div`
   text-align: center;
 
   margin-top: ${style.margin.smallest};
-  margin-bottom: ${style.margin.large};
+  margin-bottom: ${style.margin.normal};
 `;
 
-const ChatInput = styled.input`
+const ChatInput = styled.textarea`
   width: 250px;
-  height: 30px;
+  height: 20px;
+  padding: 5px 5px;
 
   border: none;
   border-radius: 15px;
 
   background-color: rgb(240, 242, 245);
   padding-left: 8px;
+
+  overflow: hidden;
 `;
 
 const SubmitBtn = styled.button`
@@ -145,6 +148,7 @@ const SubmitBtn = styled.button`
   img {
     width: 16px;
     height: 16px;
+    margin-bottom: 8px;
   }
 `;
 
@@ -155,7 +159,7 @@ const ReceiverDiv = styled.div<ISuccessiveMessage>`
 
 const ReceiverName = styled.div`
   margin-left: ${style.margin.small};
-  line-height:30px;
+  line-height: 30px;
 `;
 
 const Divider = styled.div`
@@ -326,19 +330,23 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
           if (value) {
             submit(e);
             setValue('');
-          } else {
-            e.preventDefault();
           }
+          e.preventDefault();
         }}
       >
         <ChatInputWrapper>
           <ChatInput
-            type="text"
             spellCheck="false"
             autoComplete="off"
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               setValue(e.target.value)
             }
+            onKeyPress={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                document.getElementById('submit-btn')?.click();
+              }
+            }}
             value={value}
             placeholder="메시지 입력"
           />
