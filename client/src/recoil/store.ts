@@ -184,3 +184,8 @@ export const loginState = atom({
   key: 'loginState',
   default: [] as string[]
 });
+
+export const alarmState = atom({
+  key: 'alarm',
+  default: 0 as number
+})

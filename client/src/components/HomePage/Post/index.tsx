@@ -221,6 +221,7 @@ const Post = ({ post }: { post: PostData }) => {
           postIdx={postIdx}
           commentsNum={commentsNum}
           setCommentsNum={setCommentsNum}
+          nickname={nickname}
         />
       )}
     </PostContainer>
