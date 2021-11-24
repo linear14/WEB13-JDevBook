@@ -194,3 +194,8 @@ export const themeState = atom<string>({
   key: 'theme',
   default: 'light'
 });
+
+export const animationState = atom<boolean>({
+  key: 'animation',
+  default: true
+});

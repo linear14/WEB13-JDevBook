@@ -11,7 +11,8 @@ import {
   GroupNavState,
   alarmState,
   usersocketStates,
-  themeState
+  themeState,
+  animationState
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 import {
@@ -221,7 +222,7 @@ const turnLight = keyframes`
   }
 `;
 
-const ToggleBtn = styled.div<{ themeState: string }>`
+const ToggleBtn = styled.div<{ themeState: string; animationState: boolean }>`
   position: absolute;
   top: -6px;
   left: ${(props) => (props.themeState === 'dark' ? '22px' : '-2px')};
@@ -232,13 +233,14 @@ const ToggleBtn = styled.div<{ themeState: string }>`
   background-color: ${(props) =>
     props.themeState === 'dark' ? props.theme.darkgray : props.theme.green};
   animation: ${(props) =>
-    props.themeState === 'dark'
+    props.animationState &&
+    (props.themeState === 'dark'
       ? css`
           ${turnDark} ease 0.5s
         `
       : css`
           ${turnLight} ease 0.5s
-        `};
+        `)};
 `;
 
 const Gnb = ({ type, rightModalType }: GnbProps) => {
@@ -251,6 +253,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   const [alarmNum, setAlarmNum] = useRecoilState(alarmState);
   const [theme, setTheme] = useRecoilState(themeState);
   const socket = useRecoilValue(usersocketStates);
+  const [animation, setAnimaition] = useRecoilState(animationState);
   const history = useHistory();
   const resetProfile = useResetProfile();
 
@@ -259,7 +262,12 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   };
 
   const themeToggleHandler = (e: React.MouseEvent) => {
+    setAnimaition(true);
     setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  const animationEnd = (e: React.AnimationEvent) => {
+    setAnimaition(false);
   };
 
   useEffect(() => {}, [alarmNum]);
@@ -293,7 +301,11 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
       <FlexWrap>
         <ToggleBtnWrap onClick={themeToggleHandler}>
           <ToggleBar>
-            <ToggleBtn themeState={theme} />
+            <ToggleBtn
+              animationState={animation}
+              themeState={theme}
+              onAnimationEnd={animationEnd}
+            />
           </ToggleBar>
         </ToggleBtnWrap>
         <Link to={`/profile/${userdata.name}`} onClick={photoClickHandler}>
