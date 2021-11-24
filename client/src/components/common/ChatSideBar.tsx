@@ -171,6 +171,7 @@ const ReceiverDiv = styled.div<ISuccessiveMessage>`
 
 const ReceiverName = styled.div`
   margin-left: ${style.margin.smallest};
+  line-height:30px;
 `;
 
 const Divider = styled.div`
