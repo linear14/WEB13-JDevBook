@@ -203,7 +203,8 @@ const ChatSideBar = () => {
       socket.emit('send alarm', {
         sender: currentUserName,
         receiver: chatReceiver,
-        type: 'chat'
+        type: 'chat',
+        text: value
       });
     }
   };
