@@ -164,6 +164,7 @@ const Divider = styled.div`
   background: #dddddd;
   margin: ${style.margin.normal} ${style.margin.large} ${style.margin.normal}
     ${style.margin.large};
+  box-shadow: 0 0 5px 0;
 `;
 
 const CurrentUserBox = styled.div`
@@ -175,7 +176,7 @@ const CurrentUserBox = styled.div`
 
 const CurrentUserWrapper = styled.div`
   width: inherit;
-  height: 200px;
+  height: 210px;
 
   overflow-x: hidden;
   overflow-y: scroll;

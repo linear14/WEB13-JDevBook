@@ -18,7 +18,7 @@ import { UserSocket } from 'types/common';
 
 const CurrentUserWrapper = styled.div`
   width: inherit;
-  height: 200px;
+  height: 210px;
 
   overflow-x: hidden;
   overflow-y: scroll;
