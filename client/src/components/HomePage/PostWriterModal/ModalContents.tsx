@@ -32,6 +32,7 @@ const ContentsInput = styled.textarea<{ modalState: boolean }>`
   font-size: ${style.font.normal};
 
   overscroll-behavior: none;
+  word-break: keep-all;
 
   ::placeholder,
   ::-webkit-input-placeholder {

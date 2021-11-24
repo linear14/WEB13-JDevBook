@@ -52,6 +52,7 @@ const BioArea = styled.textarea`
   font-size: ${style.font.normal};
 
   overscroll-behavior: none;
+  word-break: keep-all;
 
   ::placeholder,
   ::-webkit-input-placeholder {
