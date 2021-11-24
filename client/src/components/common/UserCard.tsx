@@ -7,6 +7,7 @@ import palette from 'theme/palette';
 import { useRecoilState } from 'recoil';
 import { modalStateStore } from 'recoil/store';
 import { ProfilePhoto } from 'components/common';
+import useResetProfile from 'hooks/useResetProfile';
 
 const CardWrap = styled.div`
   width: 100%;
@@ -37,11 +38,15 @@ const NavLink = styled(Link)`
 
 const UserCard = ({ user }: SearchedUserProps) => {
   const [modalState, setModalState] = useRecoilState(modalStateStore);
+  const resetProfile = useResetProfile();
+
+  const handleCardClick = () => {
+    resetProfile(user.nickname);
+    setModalState({ ...modalState, searchUser: false });
+  };
+
   return (
-    <NavLink
-      to={`/profile/${user.nickname}`}
-      onClick={() => setModalState({ ...modalState, searchUser: false })}
-    >
+    <NavLink to={`/profile/${user.nickname}`} onClick={handleCardClick}>
       <CardWrap>
         <ProfilePhoto userName={user.nickname} size="36px" />
         <p>{user.nickname}</p>
