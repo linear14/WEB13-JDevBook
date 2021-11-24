@@ -15,6 +15,8 @@ import { ClickableProfilePhoto } from 'components/common';
 import { iconSubmit, iconSubmitActive } from 'images/icons';
 import { IMessage, ISocketMessage, ISuccessiveMessage } from 'types/message';
 
+import useAlertModal from 'hooks/useAlertModal';
+
 const OpenChatAnimation = keyframes`
   0% { opacity: 0; transform: translateX(100px); }
   100% { opacity: 1; transform: translateX(0px); }
@@ -219,9 +221,27 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
   const [value, setValue] = useState<string>('');
   const [allUsers, setAllUsers] = useState<string[]>([]);
   const loginStateArray = useRecoilValue(loginState);
-
+  
   const socket = useRecoilValue(usersocketStates);
   const currentUserName = useRecoilValue(userDataStates).name;
+  const alertMessage = useAlertModal();
+
+  const contentsBytesCheck = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const maxLength = 100;
+
+    if (value.length > maxLength) {
+      let valueCheck = value;
+      alertMessage(
+        `메시지는 ${maxLength}글자를 넘을 수 없습니다.`,
+        `${palette.alert}`
+      );
+      while (valueCheck.length > maxLength) {
+        valueCheck = valueCheck.slice(0, -1);
+      }
+      setValue(valueCheck);
+    }
+  };
+
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -339,6 +359,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
           <ChatInput
             spellCheck="false"
             autoComplete="off"
+            onKeyUp={contentsBytesCheck}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               setValue(e.target.value)
             }
