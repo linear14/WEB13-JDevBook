@@ -98,9 +98,11 @@ const AlarmSideBar = () => {
       
       if(data.receiver === currentUserName && data.type === 'post') {
         const audio = new Audio(commentAudio);
+        audio.volume = 0.2;
         audio.play();
       } else if (data.receiver === currentUserName && data.type === 'chat') {
         const audio = new Audio(messageAudio);
+        audio.volume = 0.2;
         audio.play();
       }
     }
