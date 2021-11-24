@@ -82,12 +82,12 @@ Web13-JDevBook
 	└─server
 	    └─src
 	        ├─models
-				├─tables
+			├─tables
 	        ├─routes
 	        ├─config
-			├─service
-				├─dbManager
-			├─types
-			├─sessions
+		├─service
+			├─dbManager
+		├─types
+		├─sessions
 	        └─sockets
 ```
