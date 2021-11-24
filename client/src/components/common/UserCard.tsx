@@ -6,8 +6,7 @@ import palette from 'theme/palette';
 
 import { useRecoilState } from 'recoil';
 import { modalStateStore } from 'recoil/store';
-import ProfilePhoto from 'components/common/ProfilePhoto';
-const ClickableProfileImage = styled(ProfilePhoto)``;
+import { ProfilePhoto } from 'components/common';
 
 const CardWrap = styled.div`
   width: 100%;
