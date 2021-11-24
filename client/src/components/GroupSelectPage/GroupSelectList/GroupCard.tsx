@@ -136,7 +136,7 @@ const GroupCard = ({ group }: { group: IGroup }) => {
           </GroupEnterBtn>
         ) : (
           <GroupJoinBtn onClick={joinGroup} className="no-drag">
-            그룹 추가
+            그룹 가입
           </GroupJoinBtn>
         )}
       </GroupSelectorWrap>
