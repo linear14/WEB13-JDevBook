@@ -18,11 +18,13 @@ const EditModalAnimation = keyframes`
 `;
 
 const EditModalWrap = styled.div<{ modalState: boolean }>`
-  position: absolute;
+  position: relative;
+  top: -44px;
+  height: inherit;
   box-sizing: border-box;
   padding: ${style.padding.normal};
-  margin-left: 508px;
-  margin-top: -80px;
+  margin-right: 12px;
+  z-index: 5;
 
   background-color: ${palette.white};
   border-radius: 8px;
@@ -30,7 +32,7 @@ const EditModalWrap = styled.div<{ modalState: boolean }>`
 
   display: ${(props) => (props.modalState ? 'flex' : 'none')};
   flex-direction: column;
-  animation: ${EditModalAnimation} 0.2s;
+  animation: ${EditModalAnimation} 0.1s;
 `;
 
 const BioTitle = styled.div`
@@ -40,8 +42,6 @@ const BioTitle = styled.div`
 `;
 
 const BioArea = styled.textarea`
-  width: 300px;
-  height: 100px;
   box-sizing: border-box;
   padding: ${style.padding.small};
 

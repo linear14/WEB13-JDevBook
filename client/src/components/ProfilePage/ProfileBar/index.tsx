@@ -35,7 +35,6 @@ const ProfileBar = () => {
       <ProfilePhoto userName={profileData.nickname} />
       <ProfileInfo />
       <ProfileEdit />
-      <ProfileEditModal />
     </ProfileBarContainer>
   );
 };
