@@ -45,10 +45,19 @@ const SearchBarWrap = styled.div`
 `;
 
 const GroupList = styled.div`
-  flex: 1;
+  height: 500px;
+
   margin: 0 40px 30px 40px;
   display: flex;
   flex-direction: column;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+  overscroll-behavior: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const GroupSideBar = () => {

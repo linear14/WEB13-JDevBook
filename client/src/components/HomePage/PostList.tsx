@@ -66,6 +66,9 @@ const PostList = () => {
         abortController.current.signal
       );
       const result = await Promise.all([fetchPosts, fetchProblems]);
+      if (result[0].length < 10) {
+        setHasMore(false);
+      }
       setPosts(result[0]);
       setProblems(result[1]);
       problemOrders.current = arrayUtil.shuffle(

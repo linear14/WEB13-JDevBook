@@ -1,12 +1,8 @@
-import React from 'react';
-import { RecoilRoot, useRecoilState } from 'recoil';
+import { RecoilRoot } from 'recoil';
 import Router from 'Router';
 import { createGlobalStyle, css } from 'styled-components';
 
-import palette from 'theme/palette';
-
 import { AlertModal } from 'components/common';
-import { themeState } from 'recoil/store';
 import InitTheme from 'components/common/InitTheme';
 
 const GlobalStyle = createGlobalStyle`

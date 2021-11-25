@@ -7,7 +7,6 @@ import {
   modalStateStore,
   postListStore,
   postModalDataStates,
-  alertState,
   uploadImgList,
   usersocketStates
 } from 'recoil/store';

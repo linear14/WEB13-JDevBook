@@ -79,8 +79,8 @@ const FlexWrap = styled.div<FlexProps>`
       top: 50%;
       transform: translate(-50%, -50%);
 
-      @media screen and (max-width: 800px) {
-        display: none;
+      @media screen and (max-width: 852px) {
+        margin-left: 20px;
       }
     `}
 `;
@@ -91,7 +91,7 @@ const GnbTab = styled.div<TabProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.1s ease-in;
+  transition: background-color border-radius 0.1s ease-in;
 
   &:hover {
     background-color: ${(props) => props.theme.lightgray};
@@ -111,6 +111,11 @@ const GnbTab = styled.div<TabProps>`
         : css`
             fill: ${(props) => props.theme.darkgray};
           `}
+  }
+
+  @media screen and (max-width: 852px) {
+    width: 60px;
+    height: 48px;
   }
 `;
 
@@ -135,6 +140,26 @@ const ProfileWrap = styled.div`
     margin-left: 8px;
     font-size: 1rem;
     font-weight: bold;
+  }
+
+  @media screen and (max-width: 852px) {
+    padding: 0px;
+    p {
+      display: none;
+      margin-left: 0px;
+    }
+    img {
+      width: 36px;
+      height: 36px;
+
+      &:hover {
+        filter: brightness(90%);
+      }
+
+      &:active {
+        filter: brightness(80%);
+      }
+    }
   }
 `;
 

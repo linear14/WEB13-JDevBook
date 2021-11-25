@@ -9,6 +9,8 @@ import { IComment } from 'types/comment';
 
 import fetchApi from 'api/fetch';
 
+import useAlertModal from 'hooks/useAlertModal';
+
 const Animation = keyframes`
   0% { opacity: 0; }
   100% { opacity: 1; }
@@ -81,6 +83,20 @@ const Comment = ({
   const [commentList, setCommentList] = useState<IComment[]>([]);
   const currentUserName = useRecoilValue(userDataStates).name;
   const socket = useRecoilValue(usersocketStates);
+  const alertMessage = useAlertModal();
+
+  const contentsBytesCheck = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const maxLength = 100;
+
+    if (value.length > maxLength) {
+      let valueCheck = value;
+      alertMessage(`메시지는 ${maxLength}글자를 넘을 수 없습니다.`, true);
+      while (valueCheck.length > maxLength) {
+        valueCheck = valueCheck.slice(0, -1);
+      }
+      setValue(valueCheck);
+    }
+  };
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -111,11 +127,14 @@ const Comment = ({
         }
       );
 
-      socket.emit('send alarm', {
-        sender: currentUserName,
-        receiver: nickname,
-        type: 'post'
-      });
+      if (currentUserName !== nickname) {
+        socket.emit('send alarm', {
+          sender: currentUserName,
+          receiver: nickname,
+          type: 'post',
+          text: value
+        });
+      }
     }
   };
 
@@ -168,6 +187,7 @@ const Comment = ({
             <CommentInput
               type="text"
               autoComplete="off"
+              onKeyUp={contentsBytesCheck}
               onFocus={(e: any) => {
                 setCommentList((commentList: IComment[]) =>
                   commentList.concat()

@@ -15,6 +15,8 @@ import { iconSubmit, iconSubmitActive } from 'images/icons';
 import { IMessage, ISocketMessage, ISuccessiveMessage } from 'types/message';
 import { ClickableProfilePhoto } from 'components/common';
 
+import useAlertModal from 'hooks/useAlertModal';
+
 const OpenChatAnimation = keyframes`
   0% { opacity: 0; transform: translateX(100px); }
   100% { opacity: 1; transform: translateX(0px); }
@@ -137,18 +139,21 @@ const ChatInputWrapper = styled.div<{
   text-align: center;
 
   margin-top: ${style.margin.smallest};
-  margin-bottom: ${style.margin.large};
+  margin-bottom: ${style.margin.normal};
 `;
 
-const ChatInput = styled.input`
+const ChatInput = styled.textarea`
   width: 250px;
-  height: 30px;
+  height: 20px;
+  padding: 5px 5px;
 
   border: none;
   border-radius: 15px;
 
   background-color: rgb(240, 242, 245);
   padding-left: 8px;
+
+  overflow: hidden;
 `;
 
 const SubmitBtn = styled.button`
@@ -156,20 +161,24 @@ const SubmitBtn = styled.button`
   background-color: ${(props) => props.theme.white};
   transform: translateY(2px);
   margin-left: 16px;
+  cursor: pointer;
 
   img {
     width: 16px;
     height: 16px;
+    margin-bottom: 8px;
   }
 `;
 
 const ReceiverDiv = styled.div<ISuccessiveMessage>`
   display: ${(props) =>
     props.receiver === props.sender || props.flag ? `none` : `flex`};
+  margin-top: ${style.margin.small};
 `;
 
 const ReceiverName = styled.div`
-  margin-left: ${style.margin.smallest};
+  margin-left: ${style.margin.small};
+  line-height: 30px;
 `;
 
 const Divider = styled.div`
@@ -177,16 +186,31 @@ const Divider = styled.div`
   height: 1px;
   background: #dddddd;
   margin: ${style.margin.normal} ${style.margin.large};
+  box-shadow: 0 0 5px 0;
 `;
 
 const ChatSideBar = () => {
   const [messageList, setMessageList] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
+  const alertMessage = useAlertModal();
 
   const rightModalState = useRecoilValue(rightModalStates);
   const socket = useRecoilValue(usersocketStates);
   const currentUserName = useRecoilValue(userDataStates).name;
   const chatReceiver = useRecoilValue(chatWith);
+
+  const contentsBytesCheck = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const maxLength = 100;
+
+    if (value.length > maxLength) {
+      let valueCheck = value;
+      alertMessage(`메시지는 ${maxLength}글자를 넘을 수 없습니다.`, true);
+      while (valueCheck.length > maxLength) {
+        valueCheck = valueCheck.slice(0, -1);
+      }
+      setValue(valueCheck);
+    }
+  };
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -201,7 +225,8 @@ const ChatSideBar = () => {
       socket.emit('send alarm', {
         sender: currentUserName,
         receiver: chatReceiver,
-        type: 'chat'
+        type: 'chat',
+        text: value
       });
     }
   };
@@ -299,9 +324,8 @@ const ChatSideBar = () => {
           if (value) {
             submit(e);
             setValue('');
-          } else {
-            e.preventDefault();
           }
+          e.preventDefault();
         }}
       >
         <ChatInputWrapper
@@ -309,15 +333,22 @@ const ChatSideBar = () => {
           messageFlag={rightModalState.messageFlag}
         >
           <ChatInput
-            type="text"
+            spellCheck="false"
             autoComplete="off"
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onKeyUp={contentsBytesCheck}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               setValue(e.target.value)
             }
+            onKeyPress={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                document.getElementById('submit-btn')?.click();
+              }
+            }}
             value={value}
             placeholder="메시지 입력"
           />
-          <SubmitBtn type="submit">
+          <SubmitBtn type="submit" id="submit-btn">
             <img
               src={iconSubmit}
               onMouseOver={(e) => (e.currentTarget.src = `${iconSubmitActive}`)}

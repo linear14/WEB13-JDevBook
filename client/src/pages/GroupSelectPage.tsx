@@ -1,7 +1,4 @@
-import React from 'react';
 import styled, { createGlobalStyle, css } from 'styled-components';
-
-import palette from 'theme/palette';
 
 import {
   Gnb,

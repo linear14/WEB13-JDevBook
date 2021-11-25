@@ -11,8 +11,8 @@ const OpacityAnimation = keyframes`
 `;
 
 const SkeletonContainer = styled.div<{ isProfile: boolean }>`
-  width: ${({ isProfile }) => (isProfile ? '538px' : '680px')};
-  min-width: ${({ isProfile }) => (isProfile ? '538px' : '680px')};
+  width: ${({ isProfile }) => (isProfile ? '532px' : '680px')};
+  min-width: ${({ isProfile }) => (isProfile ? '532px' : '680px')};
   position: relative;
   border-radius: 8px;
   box-sizing: border-box;

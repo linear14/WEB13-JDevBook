@@ -33,6 +33,9 @@ import {
 } from './alarm';
 
 const problemOS = require('../../config/problem_os.json');
+const problemDS = require('../../config/problem_ds.json');
+const problemBE = require('../../config/problem_be.json');
+const problemBC = require('../../config/problem_boostcamp.json');
 const group = require('../../config/initgroup.json');
 
 const dbManager = {
@@ -53,19 +56,28 @@ const dbManager = {
   },
 
   createInitGroup: async function () {
-    const result = await db.models.Group.bulkCreate(group, {
-      logging: false,
-      returning: true
-    });
-    //return result.get();
+    try {
+      await db.models.Group.bulkCreate(group, {
+        logging: false,
+        returning: true
+      });
+    } catch (e) {
+      console.error(e);
+    }
   },
 
   createInitProblem: async function () {
-    const result = await db.models.Problem.bulkCreate(problemOS, {
-      logging: false,
-      returning: true
-    });
-    //return result.get();
+    try {
+      await db.models.Problem.bulkCreate(
+        [...problemOS, ...problemDS, ...problemBE, ...problemBC],
+        {
+          logging: false,
+          returning: true
+        }
+      );
+    } catch (e) {
+      console.error(e);
+    }
   },
 
   getUserData,
