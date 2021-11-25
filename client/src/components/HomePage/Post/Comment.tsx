@@ -4,11 +4,12 @@ import { useRecoilValue } from 'recoil';
 
 import { userDataStates, usersocketStates } from 'recoil/store';
 import { ClickableProfilePhoto } from 'components/common';
-import palette from 'theme/palette';
 import style from 'theme/style';
 import { IComment } from 'types/comment';
 
 import fetchApi from 'api/fetch';
+
+import useAlertModal from 'hooks/useAlertModal';
 
 const Animation = keyframes`
   0% { opacity: 0; }
@@ -23,12 +24,13 @@ const CommentsWrap = styled.div`
 
   animation-name: ${Animation};
   animation-duration: 0.5s;
+  color: ${(props) => props.theme.black};
 `;
 
 const CommentBox = styled.div`
   display: inline-block;
   border-radius: 15px;
-  background-color: ${palette.lightgray};
+  background-color: ${(props) => props.theme.lightgray};
   margin-left: ${style.margin.normal};
   padding-left: ${style.padding.small};
   padding-right: ${style.padding.small};
@@ -60,9 +62,10 @@ const CommentInput = styled.input`
   border: none;
   border-radius: 15px;
 
-  background-color: ${palette.lightgray};
+  background-color: ${(props) => props.theme.lightgray};
   margin-left: ${style.margin.normal};
   padding-left: ${style.padding.normal};
+  color: ${(props) => props.theme.black};
 `;
 
 const Comment = ({
@@ -80,6 +83,20 @@ const Comment = ({
   const [commentList, setCommentList] = useState<IComment[]>([]);
   const currentUserName = useRecoilValue(userDataStates).name;
   const socket = useRecoilValue(usersocketStates);
+  const alertMessage = useAlertModal();
+
+  const contentsBytesCheck = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const maxLength = 100;
+
+    if (value.length > maxLength) {
+      let valueCheck = value;
+      alertMessage(`메시지는 ${maxLength}글자를 넘을 수 없습니다.`, true);
+      while (valueCheck.length > maxLength) {
+        valueCheck = valueCheck.slice(0, -1);
+      }
+      setValue(valueCheck);
+    }
+  };
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -110,11 +127,14 @@ const Comment = ({
         }
       );
 
-      socket.emit('send alarm', {
-        sender: currentUserName,
-        receiver: nickname,
-        type: 'post'
-      });
+      if (currentUserName !== nickname) {
+        socket.emit('send alarm', {
+          sender: currentUserName,
+          receiver: nickname,
+          type: 'post',
+          text: value
+        });
+      }
     }
   };
 
@@ -167,6 +187,7 @@ const Comment = ({
             <CommentInput
               type="text"
               autoComplete="off"
+              onKeyUp={contentsBytesCheck}
               onFocus={(e: any) => {
                 setCommentList((commentList: IComment[]) =>
                   commentList.concat()

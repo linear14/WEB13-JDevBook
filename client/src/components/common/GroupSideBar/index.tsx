@@ -7,7 +7,6 @@ import {
   myJoinedGroupState,
   GroupNavState
 } from 'recoil/store';
-import palette from 'theme/palette';
 import { iconSearch } from 'images/icons';
 import { IGroup } from 'types/group';
 
@@ -16,7 +15,7 @@ import JoinedGroupCard from './JoinedGroupCard';
 const GroupSideBarContainer = styled.div`
   flex: 1;
   width: inherit;
-  background: ${palette.white};
+  background: ${(props) => props.theme.white};
   display: flex;
   flex-direction: column;
   box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 3px;
@@ -24,9 +23,9 @@ const GroupSideBarContainer = styled.div`
 
 const SearchBarWrap = styled.div`
   height: 40px;
-  margin: 30px 50px;
+  margin: 30px 40px;
   display: flex;
-  background: ${palette.lightgray};
+  background: ${(props) => props.theme.lightgray};
   border-radius: 24px;
 
   img {
@@ -41,14 +40,24 @@ const SearchBarWrap = styled.div`
     background: none;
     border: none;
     font-size: 1rem;
+    color: ${(props) => props.theme.black};
   }
 `;
 
-const GroupList = styled.ul`
-  flex: 1;
-  margin: 0 50px 30px 0;
+const GroupList = styled.div`
+  height: 500px;
+
+  margin: 0 40px 30px 40px;
   display: flex;
   flex-direction: column;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+  overscroll-behavior: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const GroupSideBar = () => {
