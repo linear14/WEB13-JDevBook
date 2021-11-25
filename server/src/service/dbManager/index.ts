@@ -37,7 +37,7 @@ const problemDS = require('../../config/problem_ds.json');
 const problemBE = require('../../config/problem_be.json');
 const problemBC = require('../../config/problem_boostcamp.json');
 const problemGIT = require('../../config/problem_git.json');
-const problemSE = require('../../config/problem_se.json');
+const problemSE = require('../../config/problem_software_engineering.json');
 const group = require('../../config/initgroup.json');
 
 const dbManager = {
