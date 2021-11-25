@@ -6,7 +6,8 @@ import {
   usersocketStates,
   userDataStates,
   chatWith,
-  loginState
+  loginState,
+  usersNumState
 } from 'recoil/store';
 
 import getData from 'api/fetch';
@@ -69,6 +70,7 @@ const CurrentUser = () => {
   const currentUserName = useRecoilValue(userDataStates).name;
   const [usersLoginState, setUsersLoginState] = useState<UserSocket>({});
   const [loginStateArray, setLoginStateArray] = useRecoilState(loginState);
+  const [usersNum, setUsersNum] = useRecoilState(usersNumState);
 
   useEffect(() => {
     const fetchJob = setTimeout(async () => {
@@ -77,9 +79,10 @@ const CurrentUser = () => {
         (user: { idx: number; nickname: string }) => user.nickname
       );
       setAllUsers(usersInfo);
+      setUsersNum(usersInfo.length);
       return () => clearTimeout(fetchJob);
     }, 0);
-  }, []);
+  }, [usersLoginState]);
 
   useEffect(() => {
     if (currentUserName) {

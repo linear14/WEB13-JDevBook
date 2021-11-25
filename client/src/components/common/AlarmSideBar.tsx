@@ -53,7 +53,7 @@ const AlarmSideBarContainer = styled.div<{
 
   overscroll-behavior: none;
   background-color: ${(props) => props.theme.white};
-  box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
+  box-shadow: rgba(0, 0, 0, 0.15) -3px 3px 3px;
 
   overflow-x: hidden;
   overflow-y: scroll;
@@ -83,7 +83,7 @@ const AlarmTextPreview = styled.div`
   width: 248px;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow : ellipsis;
+  text-overflow: ellipsis;
   opacity: 0.4;
 `;
 

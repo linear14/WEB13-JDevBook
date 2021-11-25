@@ -6,6 +6,7 @@ import { userDataStates, usersocketStates } from 'recoil/store';
 import { ClickableProfilePhoto } from 'components/common';
 import style from 'theme/style';
 import { IComment } from 'types/comment';
+import textUtil from 'utils/textUtil';
 
 import fetchApi from 'api/fetch';
 
@@ -41,7 +42,17 @@ const CommentContent = styled.div`
   word-break: break-word;
 `;
 
-const CommentTitle = styled.div``;
+const CommentTitle = styled.div`
+  display:flex;
+`;
+
+const CommentDate = styled.div`
+  margin-left: 6px;
+  padding-top: 2.5px;
+  font-size: ${style.font.small};
+  opacity: 0.5;
+`;
+
 const CommentText = styled.div`
   font-weight: normal;
 `;
@@ -112,7 +123,8 @@ const Comment = ({
         commentList.concat(
           Object.assign({
             writer: currentUserName,
-            text: addCommentRes.result.comments
+            text: addCommentRes.result.comments,
+            createdAt: Date()
           })
         )
       );
@@ -145,7 +157,8 @@ const Comment = ({
       const prevCommentsArray: IComment[] = prevComments.map((data: any) =>
         Object.assign({
           writer: data.BTUseruseridx.nickname,
-          text: data.comments
+          text: data.comments,
+          createdAt: data.createdAt
         })
       );
       setCommentList((commentList: IComment[]) =>
@@ -161,7 +174,10 @@ const Comment = ({
       <ClickableProfilePhoto userName={comment.writer} size={'30px'} />
       <CommentBox>
         <CommentContent>
-          <CommentTitle>{comment.writer}</CommentTitle>
+          <CommentTitle>
+            {comment.writer}
+            <CommentDate>{textUtil.timeToString(comment.createdAt)}</CommentDate>
+          </CommentTitle>
           <CommentText>{comment.text}</CommentText>
         </CommentContent>
       </CommentBox>

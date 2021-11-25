@@ -6,7 +6,8 @@ import {
   rightModalStates,
   userDataStates,
   usersocketStates,
-  chatWith
+  chatWith,
+  usersNumState
 } from 'recoil/store';
 
 import CurrentUser from './CurrentUser';
@@ -58,7 +59,7 @@ const ChatSideBarContainer = styled.div<{
   overscroll-behavior: none;
   background-color: ${(props) => props.theme.white};
   color: ${(props) => props.theme.black};
-  box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
+  box-shadow: rgba(0, 0, 0, 0.15) -3px 3px 3px;
 `;
 
 const CurrentUserTitle = styled.div<{
@@ -150,7 +151,7 @@ const ChatInput = styled.textarea`
   border: none;
   border-radius: 15px;
 
-  background-color: rgb(240, 242, 245);
+  background-color: ${(props) => props.theme.lightgray};
   padding-left: 8px;
 
   overflow: hidden;
@@ -181,12 +182,13 @@ const ReceiverName = styled.div`
   line-height: 30px;
 `;
 
-const Divider = styled.div`
+const Divider = styled.div<{usersNum: number}>`
   width: calc(100% - 32px);
   height: 1px;
   background: #dddddd;
   margin: ${style.margin.normal} ${style.margin.large};
-  box-shadow: 0 0 5px 0;
+  
+  box-shadow: ${(props) => props.usersNum > 4 ? `0 0 5 px 0` : ``};
 `;
 
 const ChatSideBar = () => {
@@ -198,6 +200,7 @@ const ChatSideBar = () => {
   const socket = useRecoilValue(usersocketStates);
   const currentUserName = useRecoilValue(userDataStates).name;
   const chatReceiver = useRecoilValue(chatWith);
+  const usersNum = useRecoilValue(usersNumState);
 
   const contentsBytesCheck = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const maxLength = 100;
@@ -311,7 +314,7 @@ const ChatSideBar = () => {
         전체 유저
       </CurrentUserTitle>
       <CurrentUser />
-      <Divider />
+      <Divider usersNum={usersNum}/>
       <ChatTitle
         rightModalFlag={rightModalState.rightModalFlag}
         messageFlag={rightModalState.messageFlag}

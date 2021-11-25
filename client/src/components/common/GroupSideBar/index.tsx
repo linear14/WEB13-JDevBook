@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useRef, useState } from 'react';
+import styled, { css } from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
 import {
@@ -13,12 +13,12 @@ import { IGroup } from 'types/group';
 import JoinedGroupCard from './JoinedGroupCard';
 
 const GroupSideBarContainer = styled.div`
-  flex: 1;
+  height: calc(100vh - 256px);
   width: inherit;
   background: ${(props) => props.theme.white};
   display: flex;
   flex-direction: column;
-  box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 3px;
+  box-shadow: rgba(0, 0, 0, 0.15) 3px 3px 3px;
 `;
 
 const SearchBarWrap = styled.div`
@@ -45,9 +45,9 @@ const SearchBarWrap = styled.div`
 `;
 
 const GroupList = styled.div`
-  height: 500px;
+  height: 100%;
+  margin: 0 40px 70px 40px;
 
-  margin: 0 40px 30px 40px;
   display: flex;
   flex-direction: column;
 
