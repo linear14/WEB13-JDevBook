@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { IoClose } from 'react-icons/io5';

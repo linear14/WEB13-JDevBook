@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import palette from 'theme/palette';
 import {
@@ -8,7 +7,6 @@ import {
   modalStateStore,
   postListStore,
   postModalDataStates,
-  alertState,
   uploadImgList,
   usersocketStates
 } from 'recoil/store';
@@ -102,7 +100,6 @@ const PostWriterModal = () => {
   const postData = useRecoilValue(postModalDataStates);
   const isImgUploading = useRecoilValue(isImgUploadingState);
   const [postList, setPostList] = useRecoilState(postListStore);
-  const [alertModal, setAlertModal] = useRecoilState(alertState);
   const imgList = useRecoilValue(uploadImgList);
   const socket = useRecoilValue(usersocketStates);
   const closePostModal = useClosePostModal();

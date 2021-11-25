@@ -13,6 +13,7 @@ import {
 import { useHistory } from 'react-router-dom';
 import { IProblem } from 'types/problem';
 import { IGroup } from 'types/group';
+import socket from './Socket';
 
 const InitUserData = (/*{ history }: RouteComponentProps*/) => {
   const [userdata, setUserdata] = useRecoilState(userDataStates);
@@ -54,6 +55,7 @@ const InitUserData = (/*{ history }: RouteComponentProps*/) => {
           data.BTMUserGroupuseridx.map((item: IGroup) => item.idx)
         );
 
+        //socket.connect();
         //socket?.emit('name', data.nickname);
       }
     })();

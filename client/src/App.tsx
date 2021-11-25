@@ -1,4 +1,3 @@
-import React from 'react';
 import { RecoilRoot } from 'recoil';
 import Router from 'Router';
 import { createGlobalStyle } from 'styled-components';

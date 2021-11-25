@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { PostImageInfo } from 'types/post';
 import imageUtil from 'utils/imageUtil';
 
