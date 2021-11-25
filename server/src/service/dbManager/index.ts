@@ -32,9 +32,9 @@ import {
   getUncheckedAlarmsNum
 } from './alarm';
 
-const problemOS = require('../../config/problem_os.json');
-const problemDS = require('../../config/problem_ds.json');
-const problemBE = require('../../config/problem_be.json');
+const problemOS = require('../../config/problem_operating_system.json');
+const problemDS = require('../../config/problem_data_structure.json');
+const problemBE = require('../../config/problem_backend.json');
 const problemBC = require('../../config/problem_boostcamp.json');
 const group = require('../../config/initgroup.json');
 
