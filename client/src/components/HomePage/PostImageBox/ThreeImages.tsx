@@ -1,8 +1,8 @@
 import { PostImageInfo } from 'types/post';
 import imageUtil from 'utils/imageUtil';
 
-import { CropCenter, FlexWrap } from './styles';
-import ActiveImageBox from './ActiveImageBox';
+import { CropCenter, FlexWrap } from 'components/HomePage/PostImageBox/styles';
+import ActiveImageBox from 'components/HomePage/PostImageBox/ActiveImageBox';
 
 const ThreeImagesHorizontal = ({
   postImages,

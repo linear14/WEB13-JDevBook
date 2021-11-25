@@ -1,8 +1,8 @@
 import imageUtil from 'utils/imageUtil';
 
 import { PostImageInfo } from 'types/post';
-import ActiveImageBox from './ActiveImageBox';
-import { CropCenter, FlexWrap } from './styles';
+import ActiveImageBox from 'components/HomePage/PostImageBox/ActiveImageBox';
+import { CropCenter, FlexWrap } from 'components/HomePage/PostImageBox/styles';
 
 const TwoImages = ({
   postImages,

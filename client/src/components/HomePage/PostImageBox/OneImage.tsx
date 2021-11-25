@@ -1,7 +1,7 @@
 import { PostImageInfo } from 'types/post';
 import imageUtil from 'utils/imageUtil';
 
-import ActiveImageBox from './ActiveImageBox';
+import ActiveImageBox from 'components/HomePage/PostImageBox/ActiveImageBox';
 
 const OneImage = ({
   postImages,

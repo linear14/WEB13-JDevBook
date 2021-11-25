@@ -4,7 +4,6 @@ import { GithubLoginButton } from 'react-social-login-buttons';
 
 import mainLogo from '../../images/main-logo.png';
 import fetchApi from 'api/fetch';
-import palette from 'theme/palette';
 
 const Box = styled.div`
   display: flex;
@@ -13,7 +12,7 @@ const Box = styled.div`
 
   width: 35vw;
   height: 50%;
-  background-color: ${palette.white};
+  background-color: #fafafa;
   border-radius: 50px;
 
   margin-right: 5vw;

@@ -14,6 +14,7 @@ const HeaderContainer = styled.div`
   border-top-right-radius: 8px;
   display: flex;
   align-items: center;
+  color: ${(props) => props.theme.black};
 `;
 
 const HeaderContent = styled.div`

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import palette from 'theme/palette';
 
 const ProfilePhotoWrap = styled.div`
   position: relative;
@@ -11,7 +10,7 @@ const ProfilePhotoWrap = styled.div`
   margin-left: 12px;
   padding: 4px;
 
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
 
   display: flex;
   justify-content: center;
@@ -24,13 +23,11 @@ const StyledProfilePhoto = styled.img`
 `;
 
 const ProfilePhoto = ({ userName }: { userName: string }) => {
-  const profileImgURL = `https://github.com/${userName}.png`;
-
   return (
     <ProfilePhotoWrap>
       {userName !== '' ? (
         <StyledProfilePhoto
-          src={profileImgURL}
+          src={`https://github.com/${userName}.png`}
           alt="프로필 사진"
           className="no-drag"
         />

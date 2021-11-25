@@ -10,7 +10,6 @@ import {
 } from 'recoil/store';
 
 import CurrentUser from './CurrentUser';
-import palette from 'theme/palette';
 import style from 'theme/style';
 import { iconSubmit, iconSubmitActive } from 'images/icons';
 import { IMessage, ISocketMessage, ISuccessiveMessage } from 'types/message';
@@ -57,7 +56,8 @@ const ChatSideBarContainer = styled.div<{
   animation-fill-mode: forwards;
 
   overscroll-behavior: none;
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme.black};
   box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
 `;
 
@@ -67,7 +67,7 @@ const CurrentUserTitle = styled.div<{
 }>`
   text-align: center;
   font-size: ${style.font.small};
-  color: ${palette.darkgray};
+  color: ${(props) => props.theme.darkgray};
 
   margin-top: ${style.margin.small};
 `;
@@ -78,7 +78,7 @@ const ChatTitle = styled.div<{
 }>`
   text-align: center;
   font-size: ${style.font.small};
-  color: ${palette.darkgray};
+  color: ${(props) => props.theme.darkgray};
 
   margin-bottom: ${style.margin.normal};
 `;
@@ -117,18 +117,17 @@ const MessageText = styled.div<IMessage>`
   text-align: left;
   max-width: 150px;
 
-  ${(props) =>
-    `color: ${props.currentUserName === props.sender ? 'white;' : 'black;'}`}
-  ${(props) =>
-    `background-color: ${
-      props.currentUserName === props.sender
-        ? `${palette.green};`
-        : `${palette.lightgray};`
-    }`}
+  color: ${(props) =>
+    props.currentUserName === props.sender
+      ? props.theme.white
+      : props.theme.black};
+  background-color: ${(props) =>
+    props.currentUserName === props.sender
+      ? props.theme.green
+      : props.theme.lightgray};
 
   margin-top: ${style.margin.smallest};
-  padding: ${style.padding.smallest} ${style.padding.normal}
-    ${style.padding.smallest} ${style.padding.normal};
+  padding: ${style.padding.smallest} ${style.padding.normal};
 `;
 
 const ChatInputWrapper = styled.div<{
@@ -159,7 +158,7 @@ const ChatInput = styled.textarea`
 
 const SubmitBtn = styled.button`
   border: none;
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
   transform: translateY(2px);
   margin-left: 16px;
   cursor: pointer;
@@ -186,8 +185,7 @@ const Divider = styled.div`
   width: calc(100% - 32px);
   height: 1px;
   background: #dddddd;
-  margin: ${style.margin.normal} ${style.margin.large} ${style.margin.normal}
-    ${style.margin.large};
+  margin: ${style.margin.normal} ${style.margin.large};
   box-shadow: 0 0 5px 0;
 `;
 
@@ -206,10 +204,7 @@ const ChatSideBar = () => {
 
     if (value.length > maxLength) {
       let valueCheck = value;
-      alertMessage(
-        `메시지는 ${maxLength}글자를 넘을 수 없습니다.`,
-        `${palette.alert}`
-      );
+      alertMessage(`메시지는 ${maxLength}글자를 넘을 수 없습니다.`, true);
       while (valueCheck.length > maxLength) {
         valueCheck = valueCheck.slice(0, -1);
       }

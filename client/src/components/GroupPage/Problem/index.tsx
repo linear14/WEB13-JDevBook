@@ -5,7 +5,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { GroupNavState, solvedProblemState } from 'recoil/store';
 import styled from 'styled-components';
 
-import palette from 'theme/palette';
 import { IProblem } from 'types/problem';
 import Explanation from './Explanation';
 
@@ -17,7 +16,7 @@ const ProblemContainer = styled.div`
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 5px;
   margin-top: 24px;
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
   box-sizing: border-box;
 
   * {
@@ -41,6 +40,7 @@ const GroupTitle = styled.div`
 `;
 
 const QuestionBox = styled.div`
+  color: ${(props) => props.theme.black};
   position: relative;
   padding: 16px 24px 0px;
   border-radius: 8px;
@@ -50,20 +50,20 @@ const QuestionBox = styled.div`
 const AnswerWrap = styled.div<{ isSolvedNow: boolean }>`
   display: flex;
   padding: 24px;
-  border-bottom: ${({ isSolvedNow }) =>
-    isSolvedNow && `1px solid ${palette.lightgray}`};
+  border-bottom: ${(props) =>
+    props.isSolvedNow && `1px solid ${props.theme.lightgray}`};
 `;
 
 const AnswerButton = styled.div`
   flex: 1;
   height: 64px;
   border-radius: 8px;
-  color: black;
+  color: ${(props) => props.theme.black};
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 24px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 12px;
+  box-shadow: rgba(255, 255, 255, 0.5) 0px 0px 12px;
   transition: 0.2s ease-out;
   cursor: pointer;
 
@@ -72,11 +72,11 @@ const AnswerButton = styled.div`
   }
 
   &:hover {
-    color: white;
+    color: ${(props) => props.theme.white};
   }
 
   &:active {
-    color: white;
+    color: ${(props) => props.theme.white};
     font-size: 22px;
     box-shadow: none;
     box-shadow: rgba(0, 0, 0, 0.03) 0px 3px 12px;
@@ -114,13 +114,13 @@ const WrongButton = styled(AnswerButton)`
 const SolvedLabel = styled.div`
   width: 100%;
   height: 36px;
-  background: ${palette.green};
+  background: ${(props) => props.theme.green};
   display: flex;
   justify-content: center;
   align-items: center;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  color: white;
+  color: ${(props) => props.theme.white};
   letter-spacing: 1px;
 
   &::after {
@@ -155,7 +155,7 @@ const Problem = ({
         fetchApi.insertSolvedProblem(problem.idx);
       }
     } else {
-      showAlert('오답입니다. 더 공부 하세요!', palette.alert);
+      showAlert('오답입니다. 더 공부 하세요!', true);
     }
   };
 

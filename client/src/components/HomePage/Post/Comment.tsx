@@ -4,7 +4,6 @@ import { useRecoilValue } from 'recoil';
 
 import { userDataStates, usersocketStates } from 'recoil/store';
 import { ClickableProfilePhoto } from 'components/common';
-import palette from 'theme/palette';
 import style from 'theme/style';
 import { IComment } from 'types/comment';
 
@@ -25,12 +24,13 @@ const CommentsWrap = styled.div`
 
   animation-name: ${Animation};
   animation-duration: 0.5s;
+  color: ${(props) => props.theme.black};
 `;
 
 const CommentBox = styled.div`
   display: inline-block;
   border-radius: 15px;
-  background-color: ${palette.lightgray};
+  background-color: ${(props) => props.theme.lightgray};
   margin-left: ${style.margin.normal};
   padding-left: ${style.padding.small};
   padding-right: ${style.padding.small};
@@ -62,9 +62,10 @@ const CommentInput = styled.input`
   border: none;
   border-radius: 15px;
 
-  background-color: ${palette.lightgray};
+  background-color: ${(props) => props.theme.lightgray};
   margin-left: ${style.margin.normal};
   padding-left: ${style.padding.normal};
+  color: ${(props) => props.theme.black};
 `;
 
 const Comment = ({
@@ -89,10 +90,7 @@ const Comment = ({
 
     if (value.length > maxLength) {
       let valueCheck = value;
-      alertMessage(
-        `메시지는 ${maxLength}글자를 넘을 수 없습니다.`,
-        `${palette.alert}`
-      );
+      alertMessage(`메시지는 ${maxLength}글자를 넘을 수 없습니다.`, true);
       while (valueCheck.length > maxLength) {
         valueCheck = valueCheck.slice(0, -1);
       }
@@ -129,7 +127,7 @@ const Comment = ({
         }
       );
 
-      if(currentUserName !== nickname) {
+      if (currentUserName !== nickname) {
         socket.emit('send alarm', {
           sender: currentUserName,
           receiver: nickname,

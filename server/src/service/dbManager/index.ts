@@ -20,7 +20,11 @@ import { getProblems, insertSolvedProblem, getSolvedProblems } from './problem';
 import { getGroupList, getGroup, toggleUserGroup } from './group';
 import { setChatList, getChatList } from './chat';
 import { setGroupChatList, getGroupChatList } from './groupchat';
-import { getGroupUsers, getGroupUsersName } from './usergroup';
+import {
+  getGroupUsers,
+  getGroupUsersName,
+  getUserNumInGroup
+} from './usergroup';
 import {
   addAlarm,
   getAlarmList,
@@ -31,6 +35,7 @@ import {
 const problemOS = require('../../config/problem_os.json');
 const problemDS = require('../../config/problem_ds.json');
 const problemBE = require('../../config/problem_be.json');
+const problemBC = require('../../config/problem_boostcamp.json');
 const group = require('../../config/initgroup.json');
 
 const dbManager = {
@@ -64,7 +69,7 @@ const dbManager = {
   createInitProblem: async function () {
     try {
       await db.models.Problem.bulkCreate(
-        [...problemOS, ...problemDS, ...problemBE],
+        [...problemOS, ...problemDS, ...problemBE, ...problemBC],
         {
           logging: false,
           returning: true
@@ -114,6 +119,7 @@ const dbManager = {
 
   getGroupUsers,
   getGroupUsersName,
+  getUserNumInGroup,
 
   setGroupChatList,
   getGroupChatList,
