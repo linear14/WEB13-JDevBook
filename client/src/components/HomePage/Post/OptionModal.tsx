@@ -12,7 +12,7 @@ import { PostData } from 'types/post';
 
 const OptionModalContainer = styled.div`
   width: 240px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: ${(props) => props.theme.shadow.optionModal};
   background: ${(props) => props.theme.white};
   border-radius: 8px;
   position: absolute;

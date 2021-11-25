@@ -59,7 +59,7 @@ const ChatSideBarContainer = styled.div<{
   overscroll-behavior: none;
   background-color: ${(props) => props.theme.white};
   color: ${(props) => props.theme.black};
-  box-shadow: -5px 2px 5px 0px rgb(0 0 0 / 24%);
+  box-shadow: rgba(0, 0, 0, 0.15) -3px 3px 3px;
 `;
 
 const CurrentUserTitle = styled.div<{
