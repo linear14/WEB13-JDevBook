@@ -118,7 +118,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
             </InfoContainer>
             <PostContainer>
               {myProfile ? <PostWriter /> : ''}
-              <PostList username={match.params.username} />
+              <PostList />
             </PostContainer>
           </InnerContainer>
         </ContentsContainer>

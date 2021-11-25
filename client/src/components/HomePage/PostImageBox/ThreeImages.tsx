@@ -13,8 +13,8 @@ const ThreeImagesHorizontal = ({
 }) => {
   if (postImages.length !== 3) return <div></div>;
 
-  const boxLengthHalf = isProfile ? 269 : 340;
-  const boxLengthFull = isProfile ? 538 : 680;
+  const boxLengthHalf = isProfile ? 266 : 340;
+  const boxLengthFull = isProfile ? 532 : 680;
 
   const { url: url1, originalWidth: ow1, originalHeight: oh1 } = postImages[0];
   const { url: url2, originalWidth: ow2, originalHeight: oh2 } = postImages[1];
@@ -77,8 +77,8 @@ const ThreeImagesVertical = ({
 }) => {
   if (postImages.length !== 3) return <div></div>;
 
-  const boxLengthHalf = isProfile ? 269 : 340;
-  const boxLengthFull = isProfile ? 538 : 680;
+  const boxLengthHalf = isProfile ? 266 : 340;
+  const boxLengthFull = isProfile ? 532 : 680;
 
   const { url: url1, originalWidth: ow1, originalHeight: oh1 } = postImages[0];
   const { url: url2, originalWidth: ow2, originalHeight: oh2 } = postImages[1];

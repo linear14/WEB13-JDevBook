@@ -1,13 +1,13 @@
 import fetchApi from 'api/fetch';
 import useAlertModal from 'hooks/useAlertModal';
-import React from 'react';
-import { useRecoilState } from 'recoil';
-import { solvedProblemState } from 'recoil/store';
+import React, { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { GroupNavState, solvedProblemState } from 'recoil/store';
 import styled from 'styled-components';
 
 import palette from 'theme/palette';
-import style from 'theme/style';
 import { IProblem } from 'types/problem';
+import Explanation from './Explanation';
 
 const ProblemContainer = styled.div`
   width: 680px;
@@ -19,7 +19,6 @@ const ProblemContainer = styled.div`
   margin-top: 24px;
   background-color: ${palette.white};
   box-sizing: border-box;
-  padding-bottom: 32px;
 
   * {
     box-sizing: inherit;
@@ -48,9 +47,11 @@ const QuestionBox = styled.div`
   line-height: 2;
 `;
 
-const AnswerWrap = styled.div`
+const AnswerWrap = styled.div<{ isSolvedNow: boolean }>`
   display: flex;
-  margin: 24px 24px 0px;
+  padding: 24px;
+  border-bottom: ${({ isSolvedNow }) =>
+    isSolvedNow && `1px solid ${palette.lightgray}`};
 `;
 
 const AnswerButton = styled.div`
@@ -64,6 +65,7 @@ const AnswerButton = styled.div`
   font-size: 24px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 12px;
   transition: 0.2s ease-out;
+  cursor: pointer;
 
   & + & {
     margin-left: 24px;
@@ -111,7 +113,7 @@ const WrongButton = styled(AnswerButton)`
 
 const SolvedLabel = styled.div`
   width: 100%;
-  height: 48px;
+  height: 36px;
   background: ${palette.green};
   display: flex;
   justify-content: center;
@@ -133,13 +135,16 @@ const Problem = ({
   problem: IProblem;
   isHome?: boolean;
 }) => {
+  const groupNavState = useRecoilValue(GroupNavState);
   const [solvedProblems, setSolvedProblems] =
     useRecoilState(solvedProblemState);
   const showAlert = useAlertModal();
+  const [isSolvedNow, setSolvedNow] = useState<boolean>(false);
 
   const handleAnswer = (selected: boolean) => {
     if (problem.answer === selected) {
-      showAlert('정답입니다.');
+      showAlert('정답입니다. 뛰어난 실력이시군요!');
+      setSolvedNow(true);
       if (!solvedProblems.map((item) => item.idx).includes(problem.idx)) {
         setSolvedProblems(
           solvedProblems.concat({
@@ -150,9 +155,15 @@ const Problem = ({
         fetchApi.insertSolvedProblem(problem.idx);
       }
     } else {
-      showAlert('오답입니다.', palette.alert);
+      showAlert('오답입니다. 더 공부 하세요!', palette.alert);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      setSolvedNow(false);
+    };
+  }, [groupNavState.problem]);
 
   return (
     <ProblemContainer>
@@ -163,10 +174,13 @@ const Problem = ({
         <GroupTitle>[{problem.BTGroupgroupidx.title}] 그룹의 문제</GroupTitle>
       )}
       <QuestionBox>{problem.question}</QuestionBox>
-      <AnswerWrap>
+      <AnswerWrap isSolvedNow={isSolvedNow}>
         <RightButton onClick={() => handleAnswer(true)} />
         <WrongButton onClick={() => handleAnswer(false)} />
       </AnswerWrap>
+      {isSolvedNow && problem.explanation && (
+        <Explanation explanation={problem.explanation} />
+      )}
     </ProblemContainer>
   );
 };

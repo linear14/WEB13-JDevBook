@@ -13,7 +13,7 @@ const TwoImages = ({
 }) => {
   if (postImages.length !== 2) return <div></div>;
 
-  const boxLength = isProfile ? 269 : 340;
+  const boxLength = isProfile ? 266 : 340;
 
   const { url: url1, originalWidth: ow1, originalHeight: oh1 } = postImages[0];
   const { url: url2, originalWidth: ow2, originalHeight: oh2 } = postImages[1];

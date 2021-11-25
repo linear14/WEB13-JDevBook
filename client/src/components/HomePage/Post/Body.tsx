@@ -18,7 +18,7 @@ const BodyContainer = styled.div`
 `;
 
 const ImagesWrap = styled.div<{ isProfile: boolean }>`
-  width: ${({ isProfile }) => (isProfile ? `538px` : `680px`)};
+  width: ${({ isProfile }) => (isProfile ? `532px` : `680px`)};
   background: ${palette.white};
   position: relative;
   border-top: 1px solid #dddddd;

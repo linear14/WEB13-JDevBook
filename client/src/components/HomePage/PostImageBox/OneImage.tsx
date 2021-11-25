@@ -14,7 +14,7 @@ const OneImage = ({
 
   const { url, originalWidth, originalHeight } = postImages[0];
   const [width, height] = imageUtil.getImageFitSize(
-    isProfile ? 538 : 680,
+    isProfile ? 532 : 680,
     originalWidth,
     originalHeight
   );
