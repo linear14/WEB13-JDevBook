@@ -32,11 +32,7 @@ import {
   getUncheckedAlarmsNum
 } from './alarm';
 
-const problemOS = require('../../config/problem_operating_system.json');
-const problemDS = require('../../config/problem_data_structure.json');
-const problemBE = require('../../config/problem_backend.json');
-const problemBC = require('../../config/problem_boostcamp.json');
-const problemJS = require('../../config/problem_javascript.json');
+import problems from '../../config/problems';
 const group = require('../../config/initgroup.json');
 
 const dbManager = {
@@ -69,13 +65,10 @@ const dbManager = {
 
   createInitProblem: async function () {
     try {
-      await db.models.Problem.bulkCreate(
-        [...problemOS, ...problemDS, ...problemBE, ...problemBC, ...problemJS],
-        {
-          logging: false,
-          returning: true
-        }
-      );
+      await db.models.Problem.bulkCreate(problems, {
+        logging: false,
+        returning: true
+      });
     } catch (e) {
       console.error(e);
     }
