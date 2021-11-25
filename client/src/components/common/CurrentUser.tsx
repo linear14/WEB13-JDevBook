@@ -82,7 +82,7 @@ const CurrentUser = () => {
       setUsersNum(usersInfo.length);
       return () => clearTimeout(fetchJob);
     }, 0);
-  }, []);
+  }, [usersLoginState]);
 
   useEffect(() => {
     if (currentUserName) {
