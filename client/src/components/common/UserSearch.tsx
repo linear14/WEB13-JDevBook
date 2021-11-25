@@ -97,8 +97,7 @@ const SearchBarContainerModal = styled(UserSearchBarContainer)`
 const UserSearchModalContainer = styled.div`
   width: 320px;
   max-height: 600px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  box-shadow: ${(props) => props.theme.shadow.searchUser};
   background: ${(props) => props.theme.white};
   border-radius: 12px;
   position: fixed;
