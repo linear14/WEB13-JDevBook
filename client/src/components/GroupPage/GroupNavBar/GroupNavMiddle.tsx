@@ -75,7 +75,7 @@ const GroupNavMiddle = () => {
         onClick={joinGroup}
         className="no-drag"
       >
-        {joinedState ? `그룹 탈퇴` : `그룹 추가`}
+        {joinedState ? `그룹 탈퇴` : `그룹 가입`}
       </GroupJoinBtn>
     </GroupNavMiddleWrap>
   );
