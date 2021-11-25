@@ -172,6 +172,12 @@ const IconWrap = styled.div<IconProps>`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  background-color: ${({ img }) =>
+    img.match('active')
+      ? css`
+          ${(props) => props.theme.lightestgreen}
+        `
+      : ``};
 
   &:after {
     content: '';
@@ -182,11 +188,18 @@ const IconWrap = styled.div<IconProps>`
   }
 
   &:hover {
-    background-color: ${(props) => props.theme.lightgray};
+    background-color: ${({ img }) =>
+      img.match('active')
+        ? css`
+            ${(props) => props.theme.lightgreen}
+          `
+        : css`
+            ${(props) => props.theme.gray};
+          `};
   }
 
   &:active {
-    background-color: ${(props) => props.theme.gray};
+    transform: scale(0.95);
   }
 `;
 
