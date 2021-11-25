@@ -10,8 +10,7 @@ import {
   SideBar,
   InfoSideBar,
   GroupSideBar,
-  InitUserData,
-  InitSocket
+  InitUserData
 } from 'components/common';
 
 const BodyColor = createGlobalStyle`
@@ -67,7 +66,6 @@ const HomePage = () => {
     <HomePageContainer>
       <BodyColor />
       <InitUserData />
-      <InitSocket />
       <Gnb type="home" rightModalType="" />
       <PageLayout>
         <SideBar isLeft={true}>
