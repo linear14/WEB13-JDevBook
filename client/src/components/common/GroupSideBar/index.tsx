@@ -18,7 +18,7 @@ const GroupSideBarContainer = styled.div`
   background: ${(props) => props.theme.white};
   display: flex;
   flex-direction: column;
-  box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 3px;
+  box-shadow: rgba(0, 0, 0, 0.15) 3px 3px 3px;
 `;
 
 const SearchBarWrap = styled.div`

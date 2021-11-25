@@ -63,7 +63,7 @@ const AnswerButton = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 24px;
-  box-shadow: rgba(255, 255, 255, 0.5) 0px 0px 12px;
+  box-shadow: ${(props) => props.theme.shadow.answerButton};
   transition: 0.2s ease-out;
   cursor: pointer;
 
