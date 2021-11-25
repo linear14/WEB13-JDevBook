@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
+import React, { BaseSyntheticEvent, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { FiUpload } from 'react-icons/fi';
@@ -236,6 +236,11 @@ const ImgUploadModal = () => {
 
     if (filelist[0].type.match(/image\/*/) === null) {
       alertMessage('이미지 파일이 아닙니다.', palette.alert);
+      return setIsImgUploading(uploadNum - 1);
+    }
+
+    if (filelist[0].size > 1024 * 1024) {
+      alertMessage('1MB 이하만 가능합니다.', palette.alert);
       return setIsImgUploading(uploadNum - 1);
     }
 

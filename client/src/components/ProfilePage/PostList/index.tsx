@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { postListStore, profileState } from 'recoil/store';
+
 import styled from 'styled-components';
 
 import fetchApi from 'api/fetch';
