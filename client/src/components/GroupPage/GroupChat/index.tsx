@@ -137,6 +137,7 @@ const ChatInput = styled.textarea`
   background-color: ${(props) => props.theme.lightgray};
   padding-left: 8px;
 
+  resize: none;
   overflow: hidden;
 `;
 
