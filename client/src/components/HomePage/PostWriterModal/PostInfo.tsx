@@ -20,11 +20,13 @@ const PostInfoWrap = styled.div`
   }
 `;
 
-const SecretSelector = styled.div`
-  width: 112px;
+const SecretSelector = styled.div<{ isSecret: boolean }>`
+  width: 100px;
   height: 30px;
 
-  background-color: ${(props) => props.theme.lightgray};
+  background-color: ${(props) =>
+    props.isSecret ? props.theme.green : props.theme.lightgray};
+  color: ${(props) => (props.isSecret ? props.theme.white : props.theme.black)};
   border-radius: 5px;
 
   display: flex;
@@ -33,7 +35,8 @@ const SecretSelector = styled.div`
 
   &:hover {
     cursor: pointer;
-    background-color: ${(props) => props.theme.gray};
+    background-color: ${(props) =>
+      props.isSecret ? props.theme.darkgreen : props.theme.gray};
   }
 
   &:active {
@@ -52,16 +55,16 @@ const PostInfo = () => {
   };
 
   useEffect(() => {
-    postData.secret
-      ? setSecretStr('🔒 나만 보기')
-      : setSecretStr('👨‍👩‍👧‍👧 전체 공개');
+    postData.secret ? setSecretStr('나만 보기') : setSecretStr('전체 공개');
   }, [postData.secret]);
 
   return (
     <PostInfoWrap>
       <ProfilePhoto userName={userdata.name} size="44px" />
       <div>{userdata.name}</div>
-      <SecretSelector onClick={secretToggleHandler}>{secretStr}</SecretSelector>
+      <SecretSelector isSecret={postData.secret} onClick={secretToggleHandler}>
+        {secretStr}
+      </SecretSelector>
     </PostInfoWrap>
   );
 };
