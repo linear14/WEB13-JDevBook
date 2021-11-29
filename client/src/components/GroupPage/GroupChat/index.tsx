@@ -330,7 +330,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
         <ReceiverName>{msg.split(':')[0]}</ReceiverName>
       </ReceiverDiv>
       <MessageText currentUserName={currentUserName} sender={msg.split(':')[0]}>
-        {msg.split(':')[1]}
+        {msg.substring(msg.indexOf(':') + 1, msg.length)}
       </MessageText>
     </MessageWrap>
   ));
@@ -362,13 +362,13 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
             onKeyPress={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                document.getElementById('submit-btn')?.click();
+                document.getElementById('group-chat-submit-btn')?.click();
               }
             }}
             value={value}
             placeholder="메시지 입력"
           />
-          <SubmitBtn type="submit" id="submit-btn">
+          <SubmitBtn type="submit" id="group-chat-submit-btn">
             <img
               src={iconSubmit}
               onMouseOver={(e) => (e.currentTarget.src = `${iconSubmitActive}`)}
