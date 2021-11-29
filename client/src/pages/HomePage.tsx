@@ -6,12 +6,10 @@ import { imageViewerState as ivState } from 'recoil/store';
 
 import { PostWriter, PostList, ImageViewer } from 'components/HomePage';
 import {
-  Gnb,
-  SideBar,
-  InfoSideBar,
-  GroupSideBar,
+  FakeSideBar,
   InitUserData,
-  InitSocket
+  InitSocket,
+  FakeGnb
 } from 'components/common';
 
 const BodyColor = createGlobalStyle`
@@ -66,13 +64,9 @@ const HomePage = () => {
     <HomePageContainer>
       <BodyColor />
       <InitUserData />
-      <InitSocket />
-      <Gnb type="home" rightModalType="" />
+      <FakeGnb />
       <PageLayout>
-        <SideBar isLeft={true}>
-          <InfoSideBar />
-          <GroupSideBar />
-        </SideBar>
+        <FakeSideBar />
         <PostContainer>
           <InnerContainer>
             <PostWriter />

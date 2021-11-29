@@ -1,12 +1,10 @@
 import styled, { createGlobalStyle, css } from 'styled-components';
 
 import {
-  Gnb,
-  SideBar,
-  InfoSideBar,
-  GroupSideBar,
+  FakeSideBar,
   InitUserData,
-  InitSocket
+  InitSocket,
+  FakeGnb
 } from 'components/common';
 import { GroupSelectTitle, GroupSelectList } from 'components/GroupSelectPage';
 
@@ -31,7 +29,7 @@ const PageLayout = styled.div`
 `;
 
 const ContentsContainer = styled.div`
-  width: 100%;
+  width: calc(100vw - 340px);
   min-width: 720px;
   box-sizing: border-box;
   padding: 30px 50px;
@@ -45,13 +43,9 @@ const GroupSelectPage = () => {
     <GroupSelectPageContainer>
       <GlobalStyle />
       <InitUserData />
-      <InitSocket />
-      <Gnb type="group" />
+      <FakeGnb />
       <PageLayout>
-        <SideBar isLeft={true}>
-          <InfoSideBar />
-          <GroupSideBar />
-        </SideBar>
+        <FakeSideBar />
         <ContentsContainer>
           <GroupSelectTitle />
           <GroupSelectList />

@@ -14,7 +14,9 @@ import {
   GroupSideBar,
   InitUserData,
   InitSocket,
-  LoadingModal
+  LoadingModal,
+  FakeSideBar,
+  FakeGnb
 } from 'components/common';
 import {
   ProblemList,
@@ -79,14 +81,10 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
       <GlobalStyle />
       <InitUserData />
       <InitGroupData groupIdx={Number(match.params.groupidx)} />
-      <InitSocket />
       <LoadingModal modalState={groupData.idx === 0} />
-      <Gnb type="group" />
+      <FakeGnb />
       <PageLayout>
-        <SideBar isLeft={true}>
-          <InfoSideBar />
-          <GroupSideBar />
-        </SideBar>
+        <FakeSideBar />
         <ContentsContainer contentsState={groupData.idx !== 0}>
           <img src={groupData.cover || defaultGroup} alt="그룹 이미지" />
           <GroupNavBar />

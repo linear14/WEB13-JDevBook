@@ -13,7 +13,9 @@ import {
   GroupSideBar,
   InitUserData,
   InitSocket,
-  LoadingModal
+  LoadingModal,
+  FakeSideBar,
+  FakeGnb
 } from 'components/common';
 import { PostWriter, ImageViewer } from 'components/HomePage';
 import {
@@ -102,16 +104,12 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
       <GlobalStyle />
       <InitUserData />
       <InitProfileData userName={match.params.username} />
-      <InitSocket />
       <LoadingModal
         modalState={profileData.idx === 0 || userData.name === ''}
       />
-      <Gnb />
+      <FakeGnb />
       <PageLayout>
-        <SideBar isLeft={true}>
-          <InfoSideBar />
-          <GroupSideBar />
-        </SideBar>
+        <FakeSideBar />
         <ContentsContainer contentsState={profileData.idx !== 0}>
           <ProfileCover />
           <ProfileBar />
