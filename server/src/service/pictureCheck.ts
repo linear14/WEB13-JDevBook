@@ -1,13 +1,7 @@
-import { PostAddData } from 'types/interface';
 import { objectStorage } from '../service/objectStorage';
 
-export const pictureCheck = async (PostAddData: PostAddData) => {
-  const pList: (string | null)[] = [
-    PostAddData.picture1,
-    PostAddData.picture2,
-    PostAddData.picture3
-  ];
-
+// picture 3개 기준
+export const pictureCheck = async (pList: (string | null)[]) => {
   // picture 순서 예외처리 (fetch 강제 시도)
   if (pList[0] === null && (pList[1] !== null || pList[2] !== null))
     return false;
