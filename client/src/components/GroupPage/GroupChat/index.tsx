@@ -171,7 +171,7 @@ const Divider = styled.div`
   height: 1px;
   background: #dddddd;
   margin: ${style.margin.normal} ${style.margin.large};
-  box-shadow: 0 0 5px 0;
+  box-shadow: 0 -2px 5px 0;
 `;
 
 const CurrentUserBox = styled.div`
