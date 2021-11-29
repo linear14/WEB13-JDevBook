@@ -362,7 +362,11 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
             onKeyPress={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                document.getElementById('group-chat-submit-btn')?.click();
+                if(allUsers.includes(currentUserName)){
+                  document.getElementById('group-chat-submit-btn')?.click();
+                } else {
+                  alertMessage(`그룹에 가입하지 않으면 채팅할 수 없습니다.`, true);
+                }
               }
             }}
             value={value}
