@@ -11,7 +11,7 @@ import {
   CommentData,
   IProfile
 } from '../types/interface';
-import { uploadFile } from '../service/objectStorage';
+import { uploadFile, objectStorage } from '../service/objectStorage';
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
@@ -116,6 +116,37 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const PostAddData: PostAddData = req.body;
+      const pList: (string | null)[] = [
+        PostAddData.picture1,
+        PostAddData.picture2,
+        PostAddData.picture3
+      ];
+
+      // picture 순서 예외처리 (fetch 강제 시도)
+      if (pList[0] === null && (pList[1] !== null || pList[2] !== null))
+        res.json({ result: {}, check: false });
+      if (pList[0] !== null && pList[1] === null && pList[2] !== null)
+        res.json({ result: {}, check: false });
+
+      // picture 정상 체크
+      if (pList[0] === null) {
+      } else if (pList[1] === null) {
+        if (!(await objectStorage.getExistObject(pList[0])))
+          res.json({ result: {}, check: false });
+      } else if (pList[2] === null) {
+        if (!(await objectStorage.getExistObject(pList[0])))
+          res.json({ result: {}, check: false });
+        if (!(await objectStorage.getExistObject(pList[1])))
+          res.json({ result: {}, check: false });
+      } else {
+        if (!(await objectStorage.getExistObject(pList[0])))
+          res.json({ result: {}, check: false });
+        if (!(await objectStorage.getExistObject(pList[1])))
+          res.json({ result: {}, check: false });
+        if (!(await objectStorage.getExistObject(pList[2])))
+          res.json({ result: {}, check: false });
+      }
+
       const postData = await dbManager.addPost(PostAddData);
       res.json({ result: postData, check: true });
     } catch (err) {
