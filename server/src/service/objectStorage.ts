@@ -7,6 +7,7 @@ import { NextFunction, Request, Response } from 'express';
 const storage = require('../config/objectstorage.json');
 
 const url: string = storage.url;
+const urlDomain: string = url.split('//')[1];
 const region: string = storage.region;
 const access_key: string = storage.access_key;
 const secret_key: string = storage.secret_key;
@@ -106,6 +107,25 @@ export const objectStorage = {
     };
     const data = await S3.listObjectsV2(params).promise();
     return data.Contents;
+  },
+
+  getExistObject: async (pictureUrl: string, bucket_name = default_bucket) => {
+    const re = new RegExp(
+      `https:\/\/${bucket_name}.${urlDomain}\/(?<key>\\S+\/\\d{8}\/\\S+)$`
+    );
+    const result = re.exec(pictureUrl);
+    if (result?.groups?.key === undefined) return false;
+
+    const params = {
+      Bucket: bucket_name,
+      Key: result.groups.key
+    };
+    try {
+      const data = await S3.getObject(params).promise();
+      return data;
+    } catch (e) {
+      return false;
+    }
   },
 
   deleteObject: async (object_name: string, bucket_name = default_bucket) => {
