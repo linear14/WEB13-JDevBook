@@ -121,8 +121,8 @@ export const objectStorage = {
       Key: result.groups.key
     };
     try {
-      const data = await S3.getObject(params).promise();
-      return data;
+      await S3.getObject(params).promise();
+      return true;
     } catch (e) {
       return false;
     }
