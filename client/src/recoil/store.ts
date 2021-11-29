@@ -199,3 +199,8 @@ export const usersNumState = atom<number>({
   key: 'number of usres',
   default: 0
 });
+
+export const commonState = atom<boolean>({
+  key: 'common',
+  default: false
+});

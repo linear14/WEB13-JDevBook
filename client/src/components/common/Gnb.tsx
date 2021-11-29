@@ -11,7 +11,8 @@ import {
   GroupNavState,
   alarmState,
   usersocketStates,
-  themeState
+  themeState,
+  commonState
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 import {
@@ -21,7 +22,6 @@ import {
   IconProps,
   RightModalProps
 } from 'types/GNB';
-import palette from 'theme/palette';
 import {
   GnbHome,
   GnbGroup,
@@ -41,14 +41,14 @@ import {
 } from 'components/common';
 import useResetProfile from 'hooks/useResetProfile';
 
-const GnbContainer = styled.div`
+const GnbContainer = styled.div<{ commonState: boolean }>`
   width: 100%;
   min-width: 720px;
   height: 56px;
   position: fixed;
   top: 0;
   z-index: 2;
-  display: flex;
+  display: ${(props) => (props.commonState ? 'flex' : 'none')};
   justify-content: space-between;
   align-items: center;
   padding-left: 16px;
@@ -246,7 +246,7 @@ const turnDark = keyframes`
   }
   100%{
     left: 22px;
-    background-color: ${palette.darkgray};
+    background-color: #8a8c91;
   }
 `;
 const turnLight = keyframes`
@@ -255,7 +255,7 @@ const turnLight = keyframes`
   }
   100%{
     left: -2px;
-    background-color: ${palette.green};
+    background-color: #87d474;
   }
 `;
 
@@ -289,6 +289,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   const [alarmNum, setAlarmNum] = useRecoilState(alarmState);
   const [theme, setTheme] = useRecoilState(themeState);
   const socket = useRecoilValue(usersocketStates);
+  const [commonDisplay, setCommonDispaly] = useRecoilState(commonState);
   const history = useHistory();
   const resetProfile = useResetProfile();
 
@@ -312,7 +313,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   );
 
   return (
-    <GnbContainer className="no-drag">
+    <GnbContainer commonState={commonDisplay} className="no-drag">
       <FlexWrap>
         {modalState.searchUser ? <UserSearchModal /> : <UserSearchBar />}
       </FlexWrap>
@@ -380,6 +381,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
               bio: '' as string,
               login: false
             });
+            setCommonDispaly(false);
             resetSolvedProblemState();
             socket.emit('disconnect notify');
             history.push('/');
