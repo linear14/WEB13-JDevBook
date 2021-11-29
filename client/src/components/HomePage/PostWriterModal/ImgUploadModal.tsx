@@ -107,6 +107,7 @@ const WhatWorkModal = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: ${(props) => props.theme.black};
 
   div.icon {
     width: 40px;
@@ -154,11 +155,12 @@ const ImgPreview = styled.div`
 
     &:hover {
       cursor: pointer;
-      filter: brightness(80%);
+      background-color: ${(props) => props.theme.lightgray};
       transition: all 0.1s;
     }
     &:active {
       cursor: pointer;
+      background-color: ${(props) => props.theme.gray};
     }
   }
 

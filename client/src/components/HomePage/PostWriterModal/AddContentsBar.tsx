@@ -41,11 +41,11 @@ const ContentsBtn = styled.div<{ modalState: boolean }>`
 
   &:hover {
     cursor: pointer;
-    filter: brightness(90%);
+    background-color: ${(props) => props.theme.lightgray};
   }
 
   &:active {
-    filter: brightness(85%);
+    background-color: ${(props) => props.theme.gray};
   }
 
   img {

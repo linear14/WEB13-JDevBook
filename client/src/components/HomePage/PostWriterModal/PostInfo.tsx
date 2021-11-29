@@ -33,11 +33,11 @@ const SecretSelector = styled.div`
 
   &:hover {
     cursor: pointer;
-    filter: brightness(95%);
+    background-color: ${(props) => props.theme.gray};
   }
 
   &:active {
-    filter: brightness(90%);
+    background-color: ${(props) => props.theme.darkgray};
     font-size: 15px;
   }
 `;
