@@ -5,15 +5,9 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { groupState } from 'recoil/store';
 import { defaultGroup } from 'images/groupimg';
-import palette from 'theme/palette';
 
 import {
-  Gnb,
-  SideBar,
-  InfoSideBar,
-  GroupSideBar,
   InitUserData,
-  InitSocket,
   LoadingModal,
   FakeSideBar,
   FakeGnb

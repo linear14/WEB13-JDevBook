@@ -4,15 +4,9 @@ import styled, { createGlobalStyle, css } from 'styled-components';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { imageViewerState, profileState, userDataStates } from 'recoil/store';
-import palette from 'theme/palette';
 
 import {
-  Gnb,
-  SideBar,
-  InfoSideBar,
-  GroupSideBar,
   InitUserData,
-  InitSocket,
   LoadingModal,
   FakeSideBar,
   FakeGnb

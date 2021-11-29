@@ -8,7 +8,6 @@ import fetchApi from 'api/fetch';
 
 import { Post } from 'components/HomePage';
 import { Skeleton } from 'components/common';
-import palette from 'theme/palette';
 
 const PostListContainer = styled.div`
   width: 532px;
@@ -33,7 +32,7 @@ const NoPost = styled.div`
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 5px;
   margin-top: 24px;
-  background-color: ${palette.white};
+  background-color: ${(props) => props.theme.white};
 
   &::after {
     content: '등록된 게시글이 없습니다';

@@ -1,11 +1,6 @@
 import styled, { createGlobalStyle, css } from 'styled-components';
 
-import {
-  FakeSideBar,
-  InitUserData,
-  InitSocket,
-  FakeGnb
-} from 'components/common';
+import { FakeSideBar, InitUserData, FakeGnb } from 'components/common';
 import { GroupSelectTitle, GroupSelectList } from 'components/GroupSelectPage';
 
 const GlobalStyle = createGlobalStyle`
@@ -36,6 +31,10 @@ const ContentsContainer = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 1040px) {
+    width: 100%;
+  }
 `;
 
 const GroupSelectPage = () => {

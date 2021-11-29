@@ -5,12 +5,7 @@ import { useRecoilState } from 'recoil';
 import { imageViewerState as ivState } from 'recoil/store';
 
 import { PostWriter, PostList, ImageViewer } from 'components/HomePage';
-import {
-  FakeSideBar,
-  InitUserData,
-  InitSocket,
-  FakeGnb
-} from 'components/common';
+import { FakeSideBar, InitUserData, FakeGnb } from 'components/common';
 
 const BodyColor = createGlobalStyle`
   ${({}) => {

@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { SearchedUserProps } from 'types/GNB';
-import palette from 'theme/palette';
 
 import { useRecoilState } from 'recoil';
 import { modalStateStore } from 'recoil/store';
