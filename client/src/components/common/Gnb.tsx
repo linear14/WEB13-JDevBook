@@ -11,8 +11,7 @@ import {
   GroupNavState,
   alarmState,
   usersocketStates,
-  themeState,
-  animationState
+  themeState
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 import {
@@ -46,16 +45,16 @@ const GnbContainer = styled.div`
   width: 100%;
   min-width: 720px;
   height: 56px;
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-left: 16px;
   padding-right: 16px;
   box-sizing: border-box;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.15) 3px 3px 3px;
   background-color: ${(props) => props.theme.white};
 
   a {
@@ -260,7 +259,7 @@ const turnLight = keyframes`
   }
 `;
 
-const ToggleBtn = styled.div<{ themeState: string; animationState: boolean }>`
+const ToggleBtn = styled.div<{ themeState: string }>`
   position: absolute;
   top: -6px;
   left: ${(props) => (props.themeState === 'dark' ? '22px' : '-2px')};
@@ -271,14 +270,13 @@ const ToggleBtn = styled.div<{ themeState: string; animationState: boolean }>`
   background-color: ${(props) =>
     props.themeState === 'dark' ? props.theme.darkgray : props.theme.green};
   animation: ${(props) =>
-    props.animationState &&
-    (props.themeState === 'dark'
+    props.themeState === 'dark'
       ? css`
           ${turnDark} ease 0.5s
         `
       : css`
           ${turnLight} ease 0.5s
-        `)};
+        `};
 `;
 
 const Gnb = ({ type, rightModalType }: GnbProps) => {
@@ -291,7 +289,6 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   const [alarmNum, setAlarmNum] = useRecoilState(alarmState);
   const [theme, setTheme] = useRecoilState(themeState);
   const socket = useRecoilValue(usersocketStates);
-  const [animation, setAnimaition] = useRecoilState(animationState);
   const history = useHistory();
   const resetProfile = useResetProfile();
 
@@ -300,12 +297,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   };
 
   const themeToggleHandler = (e: React.MouseEvent) => {
-    setAnimaition(true);
     setTheme(theme === 'light' ? 'dark' : 'light');
-  };
-
-  const animationEnd = (e: React.AnimationEvent) => {
-    setAnimaition(false);
   };
 
   useEffect(() => {}, [alarmNum]);
@@ -339,11 +331,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
       <FlexWrap>
         <ToggleBtnWrap onClick={themeToggleHandler}>
           <ToggleBar>
-            <ToggleBtn
-              animationState={animation}
-              themeState={theme}
-              onAnimationEnd={animationEnd}
-            />
+            <ToggleBtn themeState={theme} />
           </ToggleBar>
         </ToggleBtnWrap>
         <Link to={`/profile/${userdata.name}`} onClick={photoClickHandler}>
