@@ -368,7 +368,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
             value={value}
             placeholder="메시지 입력"
           />
-          <SubmitBtn type="submit">
+          <SubmitBtn type="submit" id="submit-btn">
             <img
               src={iconSubmit}
               onMouseOver={(e) => (e.currentTarget.src = `${iconSubmitActive}`)}
