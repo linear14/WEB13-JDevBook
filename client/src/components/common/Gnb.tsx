@@ -112,7 +112,7 @@ const GnbTab = styled.div<TabProps>`
           `}
   }
 
-  @media screen and (max-width: 852px) {
+  @media screen and (max-width: 920px) {
     width: 60px;
     height: 48px;
   }
@@ -141,7 +141,7 @@ const ProfileWrap = styled.div`
     font-weight: bold;
   }
 
-  @media screen and (max-width: 852px) {
+  @media screen and (max-width: 920px) {
     padding: 0px;
     p {
       display: none;
