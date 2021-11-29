@@ -121,7 +121,7 @@ export const objectStorage = {
 
     const params = {
       Bucket: bucket_name,
-      Key: result.groups.key
+      Key: decodeURI(result.groups.key)
     };
     try {
       await S3.getObject(params).promise();
