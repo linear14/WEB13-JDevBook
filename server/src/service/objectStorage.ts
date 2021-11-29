@@ -109,7 +109,10 @@ export const objectStorage = {
     return data.Contents;
   },
 
-  getExistObject: async (pictureUrl: string, bucket_name = default_bucket) => {
+  getExistObject: async (
+    pictureUrl: string,
+    bucket_name = default_bucket
+  ): Promise<boolean> => {
     const re = new RegExp(
       `https:\/\/${bucket_name}.${urlDomain}\/(?<key>\\S+\/\\d{8}\/\\S+)$`
     );
