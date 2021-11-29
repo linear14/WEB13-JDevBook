@@ -33,7 +33,6 @@ const PageLayout = styled.div`
 const ContentsContainer = styled.div`
   width: 100%;
   min-width: 720px;
-  margin: 0 12px;
   box-sizing: border-box;
   padding: 30px 50px;
 
