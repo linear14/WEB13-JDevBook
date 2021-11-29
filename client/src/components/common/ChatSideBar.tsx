@@ -6,7 +6,8 @@ import {
   rightModalStates,
   userDataStates,
   usersocketStates,
-  chatWith
+  chatWith,
+  usersNumState
 } from 'recoil/store';
 
 import CurrentUser from './CurrentUser';
@@ -200,6 +201,7 @@ const ChatSideBar = () => {
   const socket = useRecoilValue(usersocketStates);
   const currentUserName = useRecoilValue(userDataStates).name;
   const chatReceiver = useRecoilValue(chatWith);
+  const usersNum = useRecoilValue(usersNumState);
 
   const contentsBytesCheck = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const maxLength = 100;
@@ -310,7 +312,7 @@ const ChatSideBar = () => {
         rightModalFlag={rightModalState.rightModalFlag}
         messageFlag={rightModalState.messageFlag}
       >
-        전체 유저
+        전체 유저 {usersNum}명
       </CurrentUserTitle>
       <CurrentUser />
       <Divider />
