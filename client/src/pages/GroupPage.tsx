@@ -13,7 +13,6 @@ import {
   InfoSideBar,
   GroupSideBar,
   InitUserData,
-  InitSocket,
   LoadingModal
 } from 'components/common';
 import {
@@ -80,7 +79,6 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
       <GlobalStyle />
       <InitUserData />
       <InitGroupData groupIdx={Number(match.params.groupidx)} />
-      <InitSocket />
       <LoadingModal modalState={groupData.idx === 0} />
       <Gnb type="group" />
       <PageLayout>

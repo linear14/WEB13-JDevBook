@@ -4,7 +4,6 @@ import styled, { createGlobalStyle, css } from 'styled-components';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { imageViewerState, profileState, userDataStates } from 'recoil/store';
-import palette from 'theme/palette';
 
 import {
   Gnb,
@@ -12,7 +11,6 @@ import {
   InfoSideBar,
   GroupSideBar,
   InitUserData,
-  InitSocket,
   LoadingModal
 } from 'components/common';
 import { PostWriter, ImageViewer } from 'components/HomePage';
@@ -103,7 +101,6 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
       <GlobalStyle />
       <InitUserData />
       <InitProfileData userName={match.params.username} />
-      <InitSocket />
       <LoadingModal
         modalState={profileData.idx === 0 || userData.name === ''}
       />

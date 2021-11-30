@@ -5,8 +5,7 @@ import {
   SideBar,
   InfoSideBar,
   GroupSideBar,
-  InitUserData,
-  InitSocket
+  InitUserData
 } from 'components/common';
 import { GroupSelectTitle, GroupSelectList } from 'components/GroupSelectPage';
 
@@ -46,7 +45,6 @@ const GroupSelectPage = () => {
     <GroupSelectPageContainer>
       <GlobalStyle />
       <InitUserData />
-      <InitSocket />
       <Gnb type="group" />
       <PageLayout>
         <SideBar isLeft={true}>
