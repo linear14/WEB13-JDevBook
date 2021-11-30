@@ -32,7 +32,7 @@ const UserSearchModalContainer = styled.div`
   border-radius: 12px;
   position: fixed;
   top: 0;
-  left: -8px;
+  left: 0;
   padding: 8px 8px 0px 8px;
   box-sizing: border-box;
 

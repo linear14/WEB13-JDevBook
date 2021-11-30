@@ -1,15 +1,3 @@
-export interface FlexProps {
-  center?: boolean;
-}
-
-export interface TabProps {
-  current?: boolean;
-}
-
-export interface IconProps {
-  img: any;
-}
-
 export interface RightModalProps {
   [key: string]: boolean;
   rightModalFlag: boolean;

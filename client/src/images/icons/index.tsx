@@ -3,9 +3,7 @@ import { ReactComponent as GnbGroup } from 'images/icons/gnb-group.svg';
 import { ReactComponent as GnbHomeActive } from 'images/icons/gnb-home-active.svg';
 import { ReactComponent as GnbGroupActive } from 'images/icons/gnb-group-active.svg';
 import { ReactComponent as GnbMessage } from 'images/icons/gnb-message.svg';
-import { ReactComponent as GnbMessageActive } from 'images/icons/gnb-message-active.svg';
 import { ReactComponent as GnbAlarm } from 'images/icons/gnb-alarm.svg';
-import { ReactComponent as GnbAlarmActive } from 'images/icons/gnb-alarm-active.svg';
 import { ReactComponent as GnbLogout } from 'images/icons/gnb-logout.svg';
 import { ReactComponent as LikeIcon } from 'images/icons/icon-like.svg';
 import { ReactComponent as LikeIconActive } from 'images/icons/icon-like-active.svg';
@@ -25,9 +23,7 @@ export {
   GnbHome,
   GnbHomeActive,
   GnbMessage,
-  GnbMessageActive,
   GnbAlarm,
-  GnbAlarmActive,
   GnbLogout,
   iconPhoto,
   IconSearch,
