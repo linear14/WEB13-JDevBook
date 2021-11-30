@@ -6,12 +6,12 @@ dotenv.config({
 import express, { Request, Response, NextFunction } from 'express';
 import dbManager from '../../service/dbManager';
 import { DBUser, CommentData, IProfile } from '../../types/interface';
-import { uploadFile } from '../../service/objectStorage';
 
 import isLogin from './isLogin';
 import users from './users';
 import posts from './posts';
 import likes from './likes';
+import image from './image';
 
 const router = express.Router();
 
@@ -29,15 +29,7 @@ router.delete('/posts/:postidx', posts.delete);
 router.put('/posts/like/:postidx', likes.update);
 router.post('/likes/:useridx/:postidx', likes.toggle);
 
-router.post(
-  '/uploadimg',
-  uploadFile, // file 크기 제한 에러핸들링, multer-s3 location 추가됨
-  async (req: Request, res: Response, next: NextFunction) => {
-    const s3file = req.file;
-    if (s3file) res.json({ file: s3file, save: true });
-    else res.json({ file: true, save: false });
-  }
-);
+router.post('/uploadimg', image.upload, image.send);
 
 router.get(
   '/comments/:postidx',
@@ -49,6 +41,20 @@ router.get(
     } catch (err) {
       console.error(err);
       res.json(false);
+    }
+  }
+);
+
+router.post(
+  '/comments',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const addComment: CommentData = req.body;
+      const result = await dbManager.addComment(addComment);
+      res.json({ result: result, check: true });
+    } catch (err) {
+      console.error(err);
+      res.json({ check: false });
     }
   }
 );
@@ -98,20 +104,6 @@ router.get(
     } catch (err) {
       console.error(err);
       res.json([]);
-    }
-  }
-);
-
-router.post(
-  '/comments',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const addComment: CommentData = req.body;
-      const result = await dbManager.addComment(addComment);
-      res.json({ result: result, check: true });
-    } catch (err) {
-      console.error(err);
-      res.json({ check: false });
     }
   }
 );
