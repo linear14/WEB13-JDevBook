@@ -5,6 +5,11 @@ const Text = styled.div`
   bottom: 15px;
   left: 50%;
   transform: translate(-50%, -50%);
+  white-space: nowrap;
+
+  @media screen and (max-width: 880px) {
+    font-size: 9px;
+  }
 `;
 
 const Footer = () => {
