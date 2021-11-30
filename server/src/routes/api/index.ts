@@ -16,29 +16,15 @@ import { uploadFile } from '../../service/objectStorage';
 import { pictureCheck } from '../../service/pictureCheck';
 
 import isLogin from './isLogin';
+import users from './users';
 
 const router = express.Router();
 
 router.get('/data', isLogin.userData);
 router.get('/islogin', isLogin.check);
 
-router.get(
-  '/users',
-  async (
-    req: Request<{}, {}, {}, { keyword: string }>,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const { keyword } = req.query;
-      const searchedUsers = keyword ? await dbManager.searchUsers(keyword) : [];
-      res.json(searchedUsers);
-    } catch (err) {
-      console.error(err);
-      res.json([]);
-    }
-  }
-);
+router.get('/users', users.search);
+router.get('/allUsers', users.all);
 
 router.get(
   '/posts',
@@ -125,19 +111,6 @@ router.delete(
     } catch (err) {
       console.error(err);
       res.json(false);
-    }
-  }
-);
-
-router.get(
-  '/allUsers',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const allUsers = await dbManager.getAllUsers();
-      res.json(allUsers);
-    } catch (err) {
-      console.error(err);
-      res.json([]);
     }
   }
 );
