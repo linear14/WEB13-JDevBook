@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import { SearchedUserProps } from 'types/GNB';
-
-import { useRecoilState } from 'recoil';
+import { SearchedUser } from 'types/GNB';
 import { modalStateStore } from 'recoil/store';
-import { ProfilePhoto } from 'components/common';
 import useResetProfile from 'hooks/useResetProfile';
+
+import { ProfilePhoto } from 'components/common';
 
 const CardWrap = styled.div`
   width: 100%;
@@ -30,12 +30,10 @@ const CardWrap = styled.div`
 
 const NavLink = styled(Link)`
   display: block;
-  & + & {
-    margin-top: 4px;
-  }
+  margin-top: 4px;
 `;
 
-const UserCard = ({ user }: SearchedUserProps) => {
+const UserCard = ({ user }: { user: SearchedUser }) => {
   const [modalState, setModalState] = useRecoilState(modalStateStore);
   const resetProfile = useResetProfile();
 

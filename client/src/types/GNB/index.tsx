@@ -28,7 +28,3 @@ export interface SearchedUser {
   nickname: string;
   profile: string;
 }
-
-export interface SearchedUserProps {
-  user: SearchedUser;
-}

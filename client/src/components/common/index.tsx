@@ -3,7 +3,7 @@ import ChatSideBar from 'components/common/ChatSideBar';
 import SelectorSideBar from 'components/common/SelectorSideBar';
 import GroupSideBar from 'components/common/GroupSideBar';
 import InfoSideBar from 'components/common/InfoSideBar';
-import Gnb from 'components/common/Gnb/Gnb';
+import Gnb from 'components/common/Gnb';
 import FakeGnb from 'components/common/FakeComponents/FakeGnb';
 import SideBar from 'components/common/SideBar';
 import FakeSideBar from 'components/common/FakeComponents/FakeSideBar';
