@@ -23,6 +23,7 @@ const SubmitBtn = () => {
         src={iconSubmit}
         onMouseOver={(e) => (e.currentTarget.src = `${iconSubmitActive}`)}
         onMouseOut={(e) => (e.currentTarget.src = `${iconSubmit}`)}
+        alt="submit-btn"
       />
     </SubmitBtnWrapper>
   );

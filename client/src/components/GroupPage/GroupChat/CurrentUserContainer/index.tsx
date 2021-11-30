@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 import { useRecoilValue } from 'recoil';
 import { loginState } from 'recoil/store';

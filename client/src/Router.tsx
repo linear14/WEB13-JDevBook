@@ -35,7 +35,7 @@ const Router = () => {
         if (islogin === false) setLoginfail(true);
       })();
     }
-  }, [userdata]);
+  }, [userdata, setLoginfail]);
 
   return (
     <BrowserRouter>
