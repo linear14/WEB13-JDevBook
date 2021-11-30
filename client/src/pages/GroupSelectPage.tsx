@@ -1,12 +1,6 @@
 import styled, { createGlobalStyle, css } from 'styled-components';
 
-import {
-  Gnb,
-  SideBar,
-  InfoSideBar,
-  GroupSideBar,
-  InitUserData
-} from 'components/common';
+import { FakeSideBar, InitUserData, FakeGnb } from 'components/common';
 import { GroupSelectTitle, GroupSelectList } from 'components/GroupSelectPage';
 
 const GlobalStyle = createGlobalStyle`
@@ -30,14 +24,17 @@ const PageLayout = styled.div`
 `;
 
 const ContentsContainer = styled.div`
-  width: 100%;
+  width: calc(100vw - 340px);
   min-width: 720px;
-  margin: 0 12px;
   box-sizing: border-box;
   padding: 30px 50px;
 
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 1040px) {
+    width: 100%;
+  }
 `;
 
 const GroupSelectPage = () => {
@@ -45,12 +42,9 @@ const GroupSelectPage = () => {
     <GroupSelectPageContainer>
       <GlobalStyle />
       <InitUserData />
-      <Gnb type="group" />
+      <FakeGnb />
       <PageLayout>
-        <SideBar isLeft={true}>
-          <InfoSideBar />
-          <GroupSideBar />
-        </SideBar>
+        <FakeSideBar />
         <ContentsContainer>
           <GroupSelectTitle />
           <GroupSelectList />

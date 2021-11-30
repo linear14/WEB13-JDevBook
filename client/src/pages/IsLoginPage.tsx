@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled, { keyframes } from 'styled-components';
 
 import { isLoginfailStates } from 'recoil/store';
 import { mainLogo } from 'images';
-import palette from 'theme/palette';
 
 const Content = styled.div`
   display: flex;
@@ -37,7 +36,7 @@ const LoadingLogo = styled.img`
 
 const LoadingTitle = styled.div`
   font-size: 50px;
-  color: ${palette.green};
+  color: ${(props) => props.theme.green};
 `;
 
 const IsLoginPage = () => {

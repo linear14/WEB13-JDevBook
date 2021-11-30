@@ -8,12 +8,12 @@ import {
   postModalDataStates,
   solvedProblemState,
   groupListState,
-  myJoinedGroupState
+  myJoinedGroupState,
+  commonState
 } from 'recoil/store';
 import { useHistory } from 'react-router-dom';
 import { IProblem } from 'types/problem';
 import { IGroup } from 'types/group';
-import socket from './Socket';
 
 const InitUserData = () => {
   const setUserdata = useSetRecoilState(userDataStates);
@@ -21,6 +21,7 @@ const InitUserData = () => {
   const [groupList, setGroupList] = useRecoilState(groupListState);
   const setSolvedProblems = useSetRecoilState(solvedProblemState);
   const setJoinedGroups = useSetRecoilState(myJoinedGroupState);
+  const setCommon = useSetRecoilState(commonState);
   const history = useHistory();
 
   useEffect(() => {
@@ -54,6 +55,7 @@ const InitUserData = () => {
         setJoinedGroups(
           data.BTMUserGroupuseridx.map((item: IGroup) => item.idx)
         );
+        setCommon(true);
 
         //socket.connect();
         //socket?.emit('name', data.nickname);

@@ -12,7 +12,14 @@ import {
   IsLoginPage,
   GroupSelectPage
 } from 'pages';
-import { ChatSideBar, AlarmSideBar } from 'components/common';
+import {
+  ChatSideBar,
+  AlarmSideBar,
+  SideBar,
+  InfoSideBar,
+  GroupSideBar,
+  Gnb
+} from 'components/common';
 
 const Router = () => {
   const [login, setLogin] = useState(false);
@@ -32,6 +39,13 @@ const Router = () => {
 
   return (
     <BrowserRouter>
+      <Gnb type="home" rightModalType="" />
+      <SideBar>
+        <InfoSideBar />
+        <GroupSideBar />
+      </SideBar>
+      <ChatSideBar />
+      <AlarmSideBar />
       <Switch>
         <Route path="/" exact component={LoginPage} />
         <Route
@@ -60,8 +74,6 @@ const Router = () => {
         />
         <Route path="/*" component={NotFoundPage} />
       </Switch>
-      <ChatSideBar />
-      <AlarmSideBar />
     </BrowserRouter>
   );
 };

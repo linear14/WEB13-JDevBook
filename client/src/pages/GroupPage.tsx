@@ -5,15 +5,12 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { groupState } from 'recoil/store';
 import { defaultGroup } from 'images/groupimg';
-import palette from 'theme/palette';
 
 import {
-  Gnb,
-  SideBar,
-  InfoSideBar,
-  GroupSideBar,
   InitUserData,
-  LoadingModal
+  LoadingModal,
+  FakeSideBar,
+  FakeGnb
 } from 'components/common';
 import {
   ProblemList,
@@ -45,7 +42,6 @@ const PageLayout = styled.div`
 const ContentsContainer = styled.div<{ contentsState: boolean }>`
   width: calc(100vw - 680px);
   min-width: 720px;
-  margin: 0 12px;
 
   display: ${(props) => (props.contentsState ? 'flex' : 'none')};
   flex-direction: column;
@@ -80,12 +76,9 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
       <InitUserData />
       <InitGroupData groupIdx={Number(match.params.groupidx)} />
       <LoadingModal modalState={groupData.idx === 0} />
-      <Gnb type="group" />
+      <FakeGnb />
       <PageLayout>
-        <SideBar isLeft={true}>
-          <InfoSideBar />
-          <GroupSideBar />
-        </SideBar>
+        <FakeSideBar />
         <ContentsContainer contentsState={groupData.idx !== 0}>
           <img src={groupData.cover || defaultGroup} alt="그룹 이미지" />
           <GroupNavBar />

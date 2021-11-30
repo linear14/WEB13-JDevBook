@@ -8,7 +8,6 @@ import fetchApi from 'api/fetch';
 
 import { Post } from 'components/HomePage';
 import { Skeleton } from 'components/common';
-import palette from 'theme/palette';
 
 const PostListContainer = styled.div`
   width: 532px;
