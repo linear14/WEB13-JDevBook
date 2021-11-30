@@ -35,7 +35,7 @@ const Text = styled.div`
 
 const LoginBox = (): JSX.Element => {
   return (
-    <Box className="no-drag">
+    <Box className="no-drag" data-cy="LoginBox">
       <div>
         <MainLogo src={mainLogo} />
         <Text>개발자라면 Github 아이디는 가지고 계시죠?</Text>

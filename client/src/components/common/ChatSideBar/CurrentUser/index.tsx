@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
 import {
   usersocketStates,
   userDataStates,
@@ -64,13 +64,13 @@ const LoginState = styled.div<{ user: string; loginStateArray: any }>`
 `;
 
 const CurrentUser = () => {
-  const socket = useRecoilValue(usersocketStates);
   const [allUsers, setAllUsers] = useState<string[]>([]);
-  const [chatReceiver, setChatWith] = useRecoilState(chatWith);
-  const currentUserName = useRecoilValue(userDataStates).name;
   const [usersLoginState, setUsersLoginState] = useState<UserSocket>({});
   const [loginStateArray, setLoginStateArray] = useRecoilState(loginState);
-  const [usersNum, setUsersNum] = useRecoilState(usersNumState);
+  const socket = useRecoilValue(usersocketStates);
+  const currentUserName = useRecoilValue(userDataStates).name;
+  const setUsersNum = useSetRecoilState(usersNumState);
+  const setChatWith = useSetRecoilState(chatWith);
 
   useEffect(() => {
     const fetchJob = setTimeout(async () => {
