@@ -19,7 +19,7 @@ const ItemContainer = styled.div`
   }
 `;
 
-const NavButton = styled(Link)<{ current: boolean }>`
+const NavButton = styled(Link)<{ $current: boolean }>`
   width: 112px;
   height: 48px;
   display: flex;
@@ -41,8 +41,8 @@ const NavButton = styled(Link)<{ current: boolean }>`
   }
 
   svg path {
-    ${({ current }) =>
-      current
+    ${({ $current }) =>
+      $current
         ? css`
             fill: ${(props) => props.theme.green};
           `
@@ -62,10 +62,10 @@ const GnbCenterItems = () => {
 
   return (
     <ItemContainer>
-      <NavButton to="/home" current={currentPage === Page.HOME}>
+      <NavButton to="/home" $current={currentPage === Page.HOME}>
         {currentPage === Page.HOME ? <GnbHomeActive /> : <GnbHome />}
       </NavButton>
-      <NavButton to="/groupselect" current={currentPage === Page.GROUP_SELECT}>
+      <NavButton to="/groupselect" $current={currentPage === Page.GROUP_SELECT}>
         {currentPage === Page.GROUP_SELECT ? <GnbGroupActive /> : <GnbGroup />}
       </NavButton>
     </ItemContainer>
