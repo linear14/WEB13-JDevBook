@@ -12,10 +12,11 @@ import {
   alarmState,
   usersocketStates,
   themeState,
-  commonState
+  commonState,
+  currentPageStates
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
-import { GnbProps, FlexProps, TabProps, RightModalProps } from 'types/GNB';
+import { FlexProps, TabProps, RightModalProps } from 'types/GNB';
 import {
   GnbHome,
   GnbGroup,
@@ -33,6 +34,7 @@ import useResetProfile from 'hooks/useResetProfile';
 import { ProfilePhoto } from 'components/common';
 import UserSearchModal from './UserSearchModal';
 import UserSearchBar from './UserSearchBar';
+import { Page } from 'types/common';
 
 const MainLogo = styled(Link)`
   width: 40px;
@@ -284,7 +286,7 @@ const ToggleBtn = styled.div<{ themeState: string }>`
         `};
 `;
 
-const Gnb = ({ type, rightModalType }: GnbProps) => {
+const Gnb = ({ type }: { type?: string }) => {
   const modalState = useRecoilValue(modalStateStore);
   const [userdata, setUserdata] = useRecoilState(userDataStates);
   const resetSolvedProblemState = useResetRecoilState(solvedProblemState);
@@ -297,6 +299,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   const [commonDisplay, setCommonDispaly] = useRecoilState(commonState);
   const history = useHistory();
   const resetProfile = useResetProfile();
+  const currentPage = useRecoilValue(currentPageStates);
 
   const photoClickHandler = (e: React.MouseEvent) => {
     resetProfile(userdata.name);
@@ -326,13 +329,17 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
       </FlexWrap>
       <FlexWrap center>
         <Link to="/home">
-          <GnbTab current={type === 'home'}>
-            {type === 'home' ? <GnbHomeActive /> : <GnbHome />}
+          <GnbTab current={currentPage === Page.HOME}>
+            {currentPage === Page.HOME ? <GnbHomeActive /> : <GnbHome />}
           </GnbTab>
         </Link>
         <Link to="/groupselect">
-          <GnbTab current={type === 'group'}>
-            {type === 'group' ? <GnbGroupActive /> : <GnbGroup />}
+          <GnbTab current={currentPage === Page.GROUP_SELECT}>
+            {currentPage === Page.GROUP_SELECT ? (
+              <GnbGroupActive />
+            ) : (
+              <GnbGroup />
+            )}
           </GnbTab>
         </Link>
       </FlexWrap>

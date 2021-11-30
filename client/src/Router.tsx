@@ -39,7 +39,7 @@ const Router = () => {
 
   return (
     <BrowserRouter>
-      <Gnb type="home" rightModalType="" />
+      <Gnb />
       <SideBar>
         <InfoSideBar />
         <GroupSideBar />

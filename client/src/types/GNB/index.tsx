@@ -1,8 +1,3 @@
-export interface GnbProps {
-  type?: string;
-  rightModalType?: string;
-}
-
 export interface FlexProps {
   center?: boolean;
 }

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle, css } from 'styled-components';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import { groupState } from 'recoil/store';
+import { currentPageStates, groupState } from 'recoil/store';
 import { defaultGroup } from 'images/groupimg';
 
 import {
@@ -19,6 +19,7 @@ import {
   About,
   GroupChat
 } from 'components/GroupPage';
+import { Page } from 'types/common';
 
 const GlobalStyle = createGlobalStyle`
   ${({}) => {
@@ -65,8 +66,10 @@ const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
 }) => {
   const groupData = useRecoilValue(groupState);
   const resetGroupData = useResetRecoilState(groupState);
+  const setCurrentPage = useSetRecoilState(currentPageStates);
 
   useEffect(() => {
+    setCurrentPage(Page.GROUP);
     return () => resetGroupData();
   }, []);
 
