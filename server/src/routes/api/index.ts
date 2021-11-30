@@ -11,6 +11,7 @@ import { uploadFile } from '../../service/objectStorage';
 import isLogin from './isLogin';
 import users from './users';
 import posts from './posts';
+import likes from './likes';
 
 const router = express.Router();
 
@@ -25,34 +26,8 @@ router.post('/posts', posts.add);
 router.put('/posts/:postidx', posts.update);
 router.delete('/posts/:postidx', posts.delete);
 
-router.put(
-  '/posts/like/:postidx',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const postIdx = Number(req.params.postidx);
-      const { likeNum } = req.body;
-      await dbManager.updateLikeNum(postIdx, likeNum);
-      res.json(true);
-    } catch (err) {
-      console.error(err);
-      res.json(false);
-    }
-  }
-);
-
-router.post(
-  '/likes/:useridx/:postidx',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const useridx = Number(req.params.useridx);
-      const postidx = Number(req.params.postidx);
-      const result = await dbManager.toggleLikePosts(useridx, postidx);
-      res.json(result);
-    } catch (err) {
-      res.json(false);
-    }
-  }
-);
+router.put('/posts/like/:postidx', likes.update);
+router.post('/likes/:useridx/:postidx', likes.toggle);
 
 router.post(
   '/uploadimg',
