@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import { iconSearch } from 'images/icons';
+import { IconSearch } from 'images/icons';
 import { MdArrowBack } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
 import { modalStateStore } from 'recoil/store';
@@ -43,10 +43,15 @@ const UserSearchBarContainer = styled.div`
   padding-left: 12px;
   padding-right: 12px;
   box-sizing: border-box;
+  position: relative;
 
-  img {
-    width: 22px;
-    height: 22px;
+  svg {
+    width: 20px;
+    height: 20px;
+
+    path {
+      fill: ${(props) => props.theme.black};
+    }
   }
 
   input {
@@ -56,10 +61,8 @@ const UserSearchBarContainer = styled.div`
     border: none;
     margin-left: 4px;
     font-size: 1rem;
-
-    &::placeholder {
-      font-size: 0.875rem;
-    }
+    height: 100%;
+    padding: 0px;
   }
 `;
 
@@ -77,21 +80,6 @@ const SearchBarContainerModal = styled(UserSearchBarContainer)`
   margin-left: 8px;
   width: 100%;
   animation: ${ExtendSearchBarAnimation} 0.5s ease-in-out;
-
-  /* &::before {
-    content: '';
-    width: 22px;
-    height: 22px;
-    background-image: url(${iconSearch});
-    background-size: 22px 22px;
-    transition: width 0.2s ease-in-out;
-  }
-
-  &:focus-within::before {
-    background-image: none;
-    width: 0px;
-    height: 0px;
-  } */
 `;
 
 const UserSearchModalContainer = styled.div`
@@ -162,7 +150,7 @@ const UserSearchBar = () => {
       <UserSearchBarContainer
         onClick={() => setModalState({ ...modalState, searchUser: true })}
       >
-        <img src={iconSearch} alt="iconSearch" />
+        <IconSearch />
         <input type="text" placeholder="사용자 검색" readOnly />
       </UserSearchBarContainer>
     </>

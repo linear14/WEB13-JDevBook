@@ -33,6 +33,7 @@ const GroupNavTitle = () => {
   const [userNum, setUserNum] = useState<number>();
 
   const getUserNum = async () => {
+    if (groupData.idx === 0) return;
     const fetchUserNum = await fetchApi.getUserNumInGroup(groupData.idx);
     setUserNum(fetchUserNum);
   };
@@ -42,7 +43,7 @@ const GroupNavTitle = () => {
     return () => {
       setUserNum(0);
     };
-  }, [groupData.idx !== 0]);
+  }, [groupData.idx]);
 
   return (
     <GroupNavTitleWrap>

@@ -66,13 +66,13 @@ const ButtonsWrap = styled.div`
 const StyledBtn = styled.div`
   display: flex;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 5px 15px;
 
   &:hover {
     cursor: pointer;
     background-color: ${(props) => props.theme.lightgray};
-    transition: all 0.2s;
+    transition: all 0.1s;
   }
 
   &:active {

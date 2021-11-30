@@ -12,8 +12,8 @@ import { ReactComponent as LikeIconActive } from 'images/icons/icon-like-active.
 import { ReactComponent as CommentIcon } from 'images/icons/icon-comment.svg';
 import { ReactComponent as IconPublic } from 'images/icons/icon-public.svg';
 import { ReactComponent as IconPrivate } from 'images/icons/icon-private.svg';
+import { ReactComponent as IconSearch } from 'images/icons/icon-search.svg';
 
-import iconSearch from 'images/icons/icon-search.svg';
 import iconPhoto from 'images/icons/icon-photo.svg';
 import likeBadge from 'images/icons/icon-like-badge.svg';
 import iconSubmit from 'images/icons/icon-submit.svg';
@@ -30,7 +30,7 @@ export {
   GnbAlarmActive,
   GnbLogout,
   iconPhoto,
-  iconSearch,
+  IconSearch,
   LikeIcon,
   LikeIconActive,
   CommentIcon,

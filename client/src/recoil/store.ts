@@ -195,12 +195,12 @@ export const themeState = atom<string>({
   default: 'light'
 });
 
-export const animationState = atom<boolean>({
-  key: 'animation',
-  default: true
-});
-
 export const usersNumState = atom<number>({
   key: 'number of usres',
   default: 0
+});
+
+export const commonState = atom<boolean>({
+  key: 'common',
+  default: false
 });

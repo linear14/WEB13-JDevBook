@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled, { css } from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
 import {
@@ -7,7 +7,7 @@ import {
   myJoinedGroupState,
   GroupNavState
 } from 'recoil/store';
-import { iconSearch } from 'images/icons';
+import { IconSearch } from 'images/icons';
 import { IGroup } from 'types/group';
 
 import JoinedGroupCard from './JoinedGroupCard';
@@ -28,10 +28,14 @@ const SearchBarWrap = styled.div`
   background: ${(props) => props.theme.lightgray};
   border-radius: 24px;
 
-  img {
+  svg {
     width: 20px;
     height: 20px;
     margin: 10px 5px 10px 15px;
+
+    path {
+      fill: ${(props) => props.theme.black};
+    }
   }
 
   input {
@@ -87,7 +91,7 @@ const GroupSideBar = () => {
   return (
     <GroupSideBarContainer className="no-drag">
       <SearchBarWrap>
-        <img src={iconSearch} alt="Search 아이콘" />
+        <IconSearch />
         <input type="text" placeholder="그룹 검색" onChange={searchHandler} />
       </SearchBarWrap>
       <GroupList

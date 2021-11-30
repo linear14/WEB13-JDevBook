@@ -1,30 +1,31 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import styled from 'styled-components';
 
-import { SideBarProps } from 'types/common';
+import { commonState } from 'recoil/store';
 
-const SideBarContainer = styled.div<SideBarProps>`
-  position: sticky;
-  top: 0;
+const SideBarContainer = styled.div<{ commonState: boolean }>`
+  position: fixed;
+  top: 56px;
+  left: 0;
   width: 340px;
   height: calc(100vh - 56px);
-  top: 56px;
-  ${(props) => (props.isLeft ? `left: 0` : `right: 0`)};
+  z-index: 1;
 
-  display: flex;
+  display: ${(props) => (props.commonState ? 'flex' : 'none')};
   flex-direction: column;
-  ${(props) =>
-    props.isLeft
-      ? css`
-          @media screen and (max-width: 1040px) {
-            display: none;
-          }
-        `
-      : ``};
+
+  @media screen and (max-width: 1040px) {
+    display: none;
+  }
 `;
 
-const SideBar = ({ isLeft, children }: SideBarProps) => {
-  return <SideBarContainer isLeft={isLeft}>{children}</SideBarContainer>;
+const SideBar = ({ children }: { children?: React.ReactNode }) => {
+  const commonDisplay = useRecoilValue(commonState);
+
+  return (
+    <SideBarContainer commonState={commonDisplay}>{children}</SideBarContainer>
+  );
 };
 
 export default SideBar;

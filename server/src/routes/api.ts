@@ -12,6 +12,7 @@ import {
   IProfile
 } from '../types/interface';
 import { uploadFile } from '../service/objectStorage';
+import { pictureCheck } from '../service/pictureCheck';
 const oauth = require('../config/oauth.json');
 
 const router = express.Router();
@@ -116,8 +117,16 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const PostAddData: PostAddData = req.body;
-      const postData = await dbManager.addPost(PostAddData);
-      res.json({ result: postData, check: true });
+      const pList: (string | null)[] = [
+        PostAddData.picture1,
+        PostAddData.picture2,
+        PostAddData.picture3
+      ];
+      if (!(await pictureCheck(pList))) res.json({ result: {}, check: false });
+      else {
+        const postData = await dbManager.addPost(PostAddData);
+        res.json({ result: postData, check: true });
+      }
     } catch (err) {
       console.error(err);
       res.json({ result: {}, check: false });
@@ -131,8 +140,16 @@ router.put(
     try {
       const postIdx = Number(req.params.postidx);
       const postUpdateData: PostUpdateData = req.body;
-      await dbManager.updatePost(postUpdateData, postIdx);
-      res.json({ check: true });
+      const pList: (string | null)[] = [
+        postUpdateData.picture1,
+        postUpdateData.picture2,
+        postUpdateData.picture3
+      ];
+      if (!(await pictureCheck(pList))) res.json({ check: false });
+      else {
+        await dbManager.updatePost(postUpdateData, postIdx);
+        res.json({ check: true });
+      }
     } catch (err) {
       console.error(err);
       res.json({ check: false });

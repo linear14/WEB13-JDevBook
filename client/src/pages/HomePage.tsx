@@ -5,14 +5,7 @@ import { useRecoilState } from 'recoil';
 import { imageViewerState as ivState } from 'recoil/store';
 
 import { PostWriter, PostList, ImageViewer } from 'components/HomePage';
-import {
-  Gnb,
-  SideBar,
-  InfoSideBar,
-  GroupSideBar,
-  InitUserData,
-  InitSocket
-} from 'components/common';
+import { FakeSideBar, InitUserData, FakeGnb } from 'components/common';
 
 const BodyColor = createGlobalStyle`
   ${({}) => {
@@ -36,7 +29,6 @@ const PageLayout = styled.div`
 const PostContainer = styled.div`
   width: calc(100vw - 680px);
   min-width: 720px;
-  margin: 0 12px;
 
   display: flex;
   flex-direction: column;
@@ -67,13 +59,9 @@ const HomePage = () => {
     <HomePageContainer>
       <BodyColor />
       <InitUserData />
-      <InitSocket />
-      <Gnb type="home" rightModalType="" />
+      <FakeGnb />
       <PageLayout>
-        <SideBar isLeft={true}>
-          <InfoSideBar />
-          <GroupSideBar />
-        </SideBar>
+        <FakeSideBar />
         <PostContainer>
           <InnerContainer>
             <PostWriter />

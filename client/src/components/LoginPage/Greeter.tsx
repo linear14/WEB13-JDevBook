@@ -51,7 +51,7 @@ const Greeter = () => {
 
   return (
     <>
-      <Wrapper className="no-drag">
+      <Wrapper className="no-drag" data-cy="Greeter">
         <SubTitle>우리들의 공간</SubTitle>
         <Content>
           {textArray.map((item, index) => (

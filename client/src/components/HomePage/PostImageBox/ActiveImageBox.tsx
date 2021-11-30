@@ -51,6 +51,7 @@ const ActiveImageBox = (props: PostImagesInfo) => {
         src={urls[index]}
         width={width}
         height={height}
+        alt="게시글 이미지"
       />
       <div />
     </HoverBox>
