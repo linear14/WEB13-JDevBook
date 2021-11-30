@@ -5,18 +5,12 @@ dotenv.config({
 });
 import express, { Request, Response, NextFunction } from 'express';
 import dbManager from '../../service/dbManager';
-import {
-  DBUser,
-  PostAddData,
-  PostUpdateData,
-  CommentData,
-  IProfile
-} from '../../types/interface';
+import { DBUser, CommentData, IProfile } from '../../types/interface';
 import { uploadFile } from '../../service/objectStorage';
-import { pictureCheck } from '../../service/pictureCheck';
 
 import isLogin from './isLogin';
 import users from './users';
+import posts from './posts';
 
 const router = express.Router();
 
@@ -26,94 +20,10 @@ router.get('/islogin', isLogin.check);
 router.get('/users', users.search);
 router.get('/allUsers', users.all);
 
-router.get(
-  '/posts',
-  async (
-    req: Request<
-      {},
-      {},
-      {},
-      { lastIdx: number; count: number; username: string }
-    >,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const myIdx = req.session.useridx;
-      const { lastIdx, count, username } = req.query;
-      const userIdx = username ? await dbManager.getUseridx(username) : null;
-      const posts = await dbManager.getPosts(
-        myIdx,
-        Number(lastIdx),
-        Number(count),
-        userIdx
-      );
-      res.json(posts);
-    } catch (err) {
-      console.error(err);
-      res.json([]);
-    }
-  }
-);
-
-router.post(
-  '/posts',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const PostAddData: PostAddData = req.body;
-      const pList: (string | null)[] = [
-        PostAddData.picture1,
-        PostAddData.picture2,
-        PostAddData.picture3
-      ];
-      if (!(await pictureCheck(pList))) res.json({ result: {}, check: false });
-      else {
-        const postData = await dbManager.addPost(PostAddData);
-        res.json({ result: postData, check: true });
-      }
-    } catch (err) {
-      console.error(err);
-      res.json({ result: {}, check: false });
-    }
-  }
-);
-
-router.put(
-  '/posts/:postidx',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const postIdx = Number(req.params.postidx);
-      const postUpdateData: PostUpdateData = req.body;
-      const pList: (string | null)[] = [
-        postUpdateData.picture1,
-        postUpdateData.picture2,
-        postUpdateData.picture3
-      ];
-      if (!(await pictureCheck(pList))) res.json({ check: false });
-      else {
-        await dbManager.updatePost(postUpdateData, postIdx);
-        res.json({ check: true });
-      }
-    } catch (err) {
-      console.error(err);
-      res.json({ check: false });
-    }
-  }
-);
-
-router.delete(
-  '/posts/:postidx',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const postIdx = Number(req.params.postidx);
-      await dbManager.deletePost(postIdx);
-      res.json(true);
-    } catch (err) {
-      console.error(err);
-      res.json(false);
-    }
-  }
-);
+router.get('/posts', posts.get);
+router.post('/posts', posts.add);
+router.put('/posts/:postidx', posts.update);
+router.delete('/posts/:postidx', posts.delete);
 
 router.put(
   '/posts/like/:postidx',
