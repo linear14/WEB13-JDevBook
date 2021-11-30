@@ -126,6 +126,12 @@ export const alertState = atom<Alert>({
     modalState: false
   }
 });
+
+export const timeOutValueState = atom({
+  key: 'timeOutValueState',
+  default: 0
+});
+
 export const solvedProblemState = atom<ISolvedProblem[]>({
   key: 'solvedProblem',
   default: []
