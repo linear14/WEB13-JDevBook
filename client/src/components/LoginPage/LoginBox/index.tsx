@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { GithubLoginButton } from 'react-social-login-buttons';
 
-import mainLogo from '../../images/main-logo.png';
+import mainLogo from 'images/main-logo.png';
 import fetchApi from 'api/fetch';
 
 const Box = styled.div`
@@ -33,7 +33,7 @@ const Text = styled.div`
   margin-bottom: 50px;
 `;
 
-const LoginBox = (): JSX.Element => {
+const LoginBox = () => {
   return (
     <Box className="no-drag" data-cy="LoginBox">
       <div>
