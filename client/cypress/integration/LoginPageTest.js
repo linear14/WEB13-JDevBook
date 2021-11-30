@@ -34,59 +34,12 @@ describe('render login page', () => {
     cy.findByText(footerText).should('exist');
   });
 
+  // Github Login Button Test
   it('Is Github Login Button Existed', () => {
-
-    cy.visit('/home');
-    // cy.get('button').should('exist');
-    // cy.findByText('Log in with GitHub').click();
-    // cy.get('#login_field').type('kitae0629@naver.com');
-    // cy.get('#password').type('apdlvmf123@');
-    // cy.get('.btn').click();
+    cy.get('button').should('exist');
+    cy.findByText('Log in with GitHub').click();
+    cy.get('#login_field').type('kitae0629@naver.com');
+    cy.get('#password').type('apdlvmf123@');
+    cy.get('.btn').click();
   });
-
-  // it("Login with Github", () => {
-  //   const username = 'kitae0629@naver.com';
-  //   const password = 'apdlvmf123@';
-  //   const loginUrl = 'http://localhost:3000';
-  //   const cookieName = 'next-auth.session-token';
-  //   const socialLoginOptions = {
-  //     username,
-  //     password,
-  //     loginUrl,
-  //     headless: true,
-  //     logs: false,
-  //     preLoginSelector: 'button[type="button"]',
-  //     loginSelector: 'a[href="https://github.com"]',
-  //     postLoginSelector: '.account-panel'
-  //   }
-
-  //   return cy
-  //     .task("GitHubSocialLogin", socialLoginOptions)
-  //     .then(({ cookies }) => {
-  //       cy.clearCookies()
-
-  //       const cookie = cookies
-  //         .filter((cookie) => cookie.name === cookieName)
-  //         .pop()
-
-  //       if (cookie) {
-  //         cy.setCookie(cookie.name, cookie.value, {
-  //           domain: cookie.domain,
-  //           expiry: cookie.expires,
-  //           httpOnly: cookie.httpOnly,
-  //           path: cookie.path,
-  //           secure: cookie.secure,
-  //         })
-
-  //         Cypress.Cookies.defaults({
-  //           preserve: cookieName,
-  //         })
-
-  //         // remove the two lines below if you need to stay logged in
-  //         // for your remaining tests
-  //         // cy.visit("/api/auth/signout")
-  //         // cy.get("form").submit()
-  //       }
-  //     })
-  // })
 });
