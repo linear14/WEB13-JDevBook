@@ -138,13 +138,13 @@ const ChatSideBar = () => {
     }
   }, [chatReceiver, socket]);
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (value) {
       submit(e);
       setValue('');
     }
-  }
+  };
 
   return (
     <ChatSideBarContainer
