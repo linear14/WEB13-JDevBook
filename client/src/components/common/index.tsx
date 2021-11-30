@@ -3,7 +3,7 @@ import ChatSideBar from 'components/common/ChatSideBar';
 import SelectorSideBar from 'components/common/SelectorSideBar';
 import GroupSideBar from 'components/common/GroupSideBar';
 import InfoSideBar from 'components/common/InfoSideBar';
-import Gnb from 'components/common/Gnb';
+import Gnb from 'components/common/Gnb/Gnb';
 import FakeGnb from 'components/common/FakeComponents/FakeGnb';
 import SideBar from 'components/common/SideBar';
 import FakeSideBar from 'components/common/FakeComponents/FakeSideBar';
@@ -11,8 +11,7 @@ import {
   ProfilePhoto,
   ClickableProfilePhoto
 } from 'components/common/ProfilePhoto';
-import { UserSearchBar, UserSearchModal } from 'components/common/UserSearch';
-import UserCard from 'components/common/UserCard';
+import UserCard from 'components/common/Gnb/UserCard';
 import InitUserData from 'components/common/InitUserData';
 import AlertModal from 'components/common/AlertModal';
 import Skeleton from 'components/common/Skeleton';
@@ -31,8 +30,6 @@ export {
   FakeSideBar,
   ProfilePhoto,
   ClickableProfilePhoto,
-  UserSearchBar,
-  UserSearchModal,
   UserCard,
   InitUserData,
   AlertModal,

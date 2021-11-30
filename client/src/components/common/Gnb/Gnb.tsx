@@ -34,11 +34,8 @@ import {
   GnbLogout
 } from 'images/icons';
 
-import {
-  UserSearchBar,
-  UserSearchModal,
-  ProfilePhoto
-} from 'components/common';
+import { ProfilePhoto } from 'components/common';
+import { UserSearchBar, UserSearchModal } from './UserSearch';
 import useResetProfile from 'hooks/useResetProfile';
 
 const GnbContainer = styled.div<{ commonState: boolean }>`
