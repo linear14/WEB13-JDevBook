@@ -15,13 +15,7 @@ import {
   commonState
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
-import {
-  GnbProps,
-  FlexProps,
-  TabProps,
-  IconProps,
-  RightModalProps
-} from 'types/GNB';
+import { GnbProps, FlexProps, TabProps, RightModalProps } from 'types/GNB';
 import {
   GnbHome,
   GnbGroup,
@@ -33,10 +27,20 @@ import {
   GnbAlarmActive,
   GnbLogout
 } from 'images/icons';
+import { mainLogo } from 'images';
+import useResetProfile from 'hooks/useResetProfile';
 
 import { ProfilePhoto } from 'components/common';
-import { UserSearchBar, UserSearchModal } from './UserSearch';
-import useResetProfile from 'hooks/useResetProfile';
+import UserSearchModal from './UserSearchModal';
+import UserSearchBar from './UserSearchBar';
+
+const MainLogo = styled(Link)`
+  width: 40px;
+  height: 40px;
+  display: block;
+  background-image: url(${mainLogo});
+  background-size: 40px 40px;
+`;
 
 const GnbContainer = styled.div<{ commonState: boolean }>`
   width: 100%;
@@ -316,7 +320,9 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   return (
     <GnbContainer commonState={commonDisplay} className="no-drag">
       <FlexWrap>
-        {modalState.searchUser ? <UserSearchModal /> : <UserSearchBar />}
+        <MainLogo to="/home" />
+        <UserSearchBar />
+        {modalState.searchUser && <UserSearchModal />}
       </FlexWrap>
       <FlexWrap center>
         <Link to="/home">
