@@ -133,9 +133,11 @@ const ChatInput = styled.textarea`
   border: none;
   border-radius: 15px;
 
+  color: ${(props) => props.theme.black};
   background-color: ${(props) => props.theme.lightgray};
   padding-left: 8px;
 
+  resize: none;
   overflow: hidden;
 `;
 
@@ -169,7 +171,7 @@ const Divider = styled.div`
   height: 1px;
   background: #dddddd;
   margin: ${style.margin.normal} ${style.margin.large};
-  box-shadow: 0 0 5px 0;
+  box-shadow: 0 -2px 5px 0;
 `;
 
 const CurrentUserBox = styled.div`
@@ -328,7 +330,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
         <ReceiverName>{msg.split(':')[0]}</ReceiverName>
       </ReceiverDiv>
       <MessageText currentUserName={currentUserName} sender={msg.split(':')[0]}>
-        {msg.split(':')[1]}
+        {msg.substring(msg.indexOf(':') + 1, msg.length)}
       </MessageText>
     </MessageWrap>
   ));
@@ -360,13 +362,17 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
             onKeyPress={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                document.getElementById('submit-btn')?.click();
+                if(allUsers.includes(currentUserName)){
+                  document.getElementById('group-chat-submit-btn')?.click();
+                } else {
+                  alertMessage(`그룹에 가입하지 않으면 채팅할 수 없습니다.`, true);
+                }
               }
             }}
             value={value}
             placeholder="메시지 입력"
           />
-          <SubmitBtn type="submit">
+          <SubmitBtn type="submit" id="group-chat-submit-btn">
             <img
               src={iconSubmit}
               onMouseOver={(e) => (e.currentTarget.src = `${iconSubmitActive}`)}

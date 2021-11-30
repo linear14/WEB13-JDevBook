@@ -27,11 +27,11 @@ import {
   GnbGroup,
   GnbHomeActive,
   GnbGroupActive,
-  gnbMessage,
-  gnbMessageActive,
-  gnbAlarm,
-  gnbAlarmActive,
-  gnbLogout
+  GnbMessage,
+  GnbMessageActive,
+  GnbAlarm,
+  GnbAlarmActive,
+  GnbLogout
 } from 'images/icons';
 
 import {
@@ -162,7 +162,7 @@ const ProfileWrap = styled.div`
   }
 `;
 
-const IconWrap = styled.div<IconProps>`
+const IconWrap = styled.div<TabProps>`
   width: 40px;
   height: 40px;
   background: ${(props) => props.theme.lightgray};
@@ -171,35 +171,39 @@ const IconWrap = styled.div<IconProps>`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background-color: ${({ img }) =>
-    img.match('active')
-      ? css`
-          ${(props) => props.theme.lightestgreen}
-        `
-      : ``};
-
-  &:after {
-    content: '';
-    background-image: url(${({ img }) => img});
-    background-size: 20px 20px;
-    width: 20px;
-    height: 20px;
-  }
 
   &:hover {
-    background-color: ${({ img }) =>
-      img.match('active')
-        ? css`
-            ${(props) => props.theme.lightgreen}
-          `
-        : css`
-            ${(props) => props.theme.gray};
-          `};
+    background-color: ${(props) => props.theme.lightgreen};
   }
 
   &:active {
     transform: scale(0.95);
   }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  svg path {
+    ${({ current }) =>
+      current
+        ? css`
+            fill: ${(props) => props.theme.green};
+          `
+        : css`
+            fill: ${(props) => props.theme.black};
+          `}
+  }
+
+  ${({ current }) =>
+    current
+      ? css`
+          background-color: ${(props) => props.theme.lightestgreen};
+        `
+      : css`
+          background-color: ${(props) => props.theme.lightgray};
+        `}
 `;
 
 const AlarmBadge = styled.div`
@@ -342,7 +346,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           </ProfileWrap>
         </Link>
         <IconWrap
-          img={rightModalState.messageFlag ? gnbMessageActive : gnbMessage}
+          current={rightModalState.messageFlag === true}
           onClick={() => {
             ChangeFlag(rightModalState, setRightModalState, 'messageFlag');
             setGroupNavState({
@@ -350,15 +354,19 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
               groupChat: false
             });
           }}
-        />
+        >
+          {type === 'message' ? <GnbMessageActive /> : <GnbMessage />}
+        </IconWrap>
         <IconWrap
-          img={rightModalState.alarmFlag ? gnbAlarmActive : gnbAlarm}
+          current={rightModalState.alarmFlag === true}
           onClick={() => {
             ChangeFlag(rightModalState, setRightModalState, 'alarmFlag');
             setAlarmNum(0);
             socket.emit('make alarms check', { receiver: userdata.name });
           }}
-        />
+        >
+          {type === 'alarm' ? <GnbAlarmActive /> : <GnbAlarm />}
+        </IconWrap>
         <AlarmBadge
           onClick={() => {
             ChangeFlag(rightModalState, setRightModalState, 'alarmFlag');
@@ -369,7 +377,6 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           {alarmNum ? alarmNum : null}
         </AlarmBadge>
         <IconWrap
-          img={gnbLogout}
           onClick={async () => {
             ChangeFlag(rightModalState, setRightModalState, '');
             await fetchApi.logout();
@@ -386,7 +393,9 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
             socket.emit('disconnect notify');
             history.push('/');
           }}
-        />
+        >
+          {<GnbLogout />}
+        </IconWrap>
       </FlexWrap>
     </GnbContainer>
   );
