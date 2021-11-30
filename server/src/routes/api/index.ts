@@ -13,6 +13,7 @@ import posts from './posts';
 import likes from './likes';
 import image from './image';
 import comments from './comments';
+import problems from './problems';
 
 const router = express.Router();
 
@@ -35,81 +36,11 @@ router.post('/uploadimg', image.upload, image.send);
 router.get('/comments/:postidx', comments.get);
 router.post('/comments', comments.add);
 
-router.get(
-  '/problems/:groupidx',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const groupIdx = Number(req.params.groupidx);
-      const problems = groupIdx ? await dbManager.getProblems([groupIdx]) : [];
-      res.json(problems);
-    } catch (err) {
-      console.error(err);
-      res.json([]);
-    }
-  }
-);
-
-router.get(
-  '/problems',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const groups = await dbManager.getUserJoinedGroups(req.session.useridx);
-      const groupIndices = JSON.parse(JSON.stringify(groups)).map(
-        (item: any) => item.groupidx
-      );
-      const problems = await dbManager.getProblems(groupIndices);
-      res.json(problems);
-    } catch (err) {
-      console.error(err);
-      res.json([]);
-    }
-  }
-);
-
-router.get(
-  '/problems/joined/:useridx',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const userIdx = Number(req.params.useridx);
-      const groups = await dbManager.getUserJoinedGroups(userIdx);
-      const groupIndices = JSON.parse(JSON.stringify(groups)).map(
-        (item: any) => item.groupidx
-      );
-      const problems = await dbManager.getProblems(groupIndices);
-      res.json(problems);
-    } catch (err) {
-      console.error(err);
-      res.json([]);
-    }
-  }
-);
-
-router.post(
-  '/problems/correct',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const userIdx = req.session.useridx;
-      const { problemIdx } = req.body;
-      await dbManager.insertSolvedProblem(userIdx, Number(problemIdx));
-      res.json(true);
-    } catch (err) {
-      res.json(false);
-    }
-  }
-);
-
-router.get(
-  '/problems/solved/:username',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const userName = req.params.username;
-      const result = await dbManager.getSolvedProblems(userName);
-      res.json(result);
-    } catch (err) {
-      res.json(false);
-    }
-  }
-);
+router.get('/problems/:groupidx', problems.oneGroup);
+router.get('/problems', problems.myGroups);
+router.get('/problems/joined/:useridx', problems.useridxGroups);
+router.post('/problems/correct', problems.addCorrect);
+router.get('/problems/solved/:username', problems.getCorrect);
 
 router.get(
   '/groups',
