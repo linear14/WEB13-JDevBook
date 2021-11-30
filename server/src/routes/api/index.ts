@@ -14,6 +14,7 @@ import likes from './likes';
 import image from './image';
 import comments from './comments';
 import problems from './problems';
+import groups from './groups';
 
 const router = express.Router();
 
@@ -42,74 +43,11 @@ router.get('/problems/joined/:useridx', problems.useridxGroups);
 router.post('/problems/correct', problems.addCorrect);
 router.get('/problems/solved/:username', problems.getCorrect);
 
-router.get(
-  '/groups',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const groupList = await dbManager.getGroupList();
-      res.json(groupList);
-    } catch (err) {
-      console.error(err);
-      res.json([]);
-    }
-  }
-);
-
-router.get(
-  '/groups/:groupidx',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const groupIdx: number = Number(req.params.groupidx);
-      const group = await dbManager.getGroup(groupIdx);
-      res.json(group);
-    } catch (err) {
-      console.error(err);
-      res.json([]);
-    }
-  }
-);
-
-router.get(
-  '/groups/joined/:useridx',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const userIdx: number = Number(req.params.useridx);
-      const group = await dbManager.getUserJoinedGroups(userIdx);
-      res.json(group);
-    } catch (err) {
-      console.error(err);
-      res.json([]);
-    }
-  }
-);
-
-router.get(
-  '/groups/usernum/:groupidx',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const groupIdx: number = Number(req.params.groupidx);
-      const userNum = await dbManager.getUserNumInGroup(groupIdx);
-      res.json(userNum);
-    } catch (err) {
-      console.error(err);
-      res.json([]);
-    }
-  }
-);
-
-router.post(
-  '/joingroup/:useridx/:postidx',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const useridx = Number(req.params.useridx);
-      const postidx = Number(req.params.postidx);
-      const result = await dbManager.toggleUserGroup(useridx, postidx);
-      res.json(result);
-    } catch (err) {
-      res.json(false);
-    }
-  }
-);
+router.get('/groups', groups.all);
+router.get('/groups/:groupidx', groups.search);
+router.get('/groups/joined/:useridx', groups.joined);
+router.get('/groups/usernum/:groupidx', groups.userNum);
+router.post('/joingroup/:useridx/:postidx', groups.joinLeave);
 
 router.put(
   '/profile/:useridx',
