@@ -1,15 +1,9 @@
-import path from 'path';
-import dotenv from 'dotenv';
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 import dbManager from '../../service/dbManager';
 import { DBUser } from '../../types/interface';
 const oauth = require('../../config/oauth.json');
-
-dotenv.config({
-  path: path.resolve(__dirname, '../../config/.env.development')
-});
 
 const isLogin = {
   check: (req: Request, res: Response, next: NextFunction) => {
