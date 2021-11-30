@@ -1,5 +1,10 @@
 import { CommentData } from 'types/comment';
-import { PostData, PostAddData, PostUpdateData } from 'types/post';
+import {
+  PostData,
+  PostAddData,
+  PostUpdateData,
+  PostRequestOptions
+} from 'types/post';
 import { IProfile } from 'types/user';
 
 const fetchApi = {
@@ -26,11 +31,10 @@ const fetchApi = {
   },
 
   getPosts: async (
-    lastIdx: number = -1,
-    count: number = 10,
-    username: string | null,
-    signal?: AbortSignal
+    signal: AbortSignal | null = null,
+    option: Partial<PostRequestOptions> = {}
   ): Promise<PostData[]> => {
+    const { lastIdx = -1, count = 10, username } = option;
     const response = username
       ? await fetch(
           `/api/posts?username=${username}&lastIdx=${lastIdx}&count=${count}`,

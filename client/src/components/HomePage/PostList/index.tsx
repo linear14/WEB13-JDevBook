@@ -56,9 +56,6 @@ const PostList = () => {
       abortController.current = new AbortController();
       setFetching(true);
       const fetchPosts = await fetchApi.getPosts(
-        -1,
-        10,
-        null,
         abortController.current.signal
       );
       const fetchProblems = await fetchApi.getProblems(
@@ -86,12 +83,10 @@ const PostList = () => {
     try {
       abortController.current = new AbortController();
       setFetching(true);
-      const result = await fetchApi.getPosts(
+      const result = await fetchApi.getPosts(abortController.current.signal, {
         lastIdx,
-        count,
-        null,
-        abortController.current.signal
-      );
+        count
+      });
       if (result.length < count) {
         setHasMore(false);
       }
