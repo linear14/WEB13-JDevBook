@@ -42,6 +42,7 @@ const UserSearchBarContainer = styled.div<{ isFake: boolean }>`
 
   input {
     flex: 1;
+    min-width: 0;
     outline: none;
     background: none;
     border: none;
