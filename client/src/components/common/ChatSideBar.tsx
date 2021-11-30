@@ -151,9 +151,11 @@ const ChatInput = styled.textarea`
   border: none;
   border-radius: 15px;
 
+  color: ${(props) => props.theme.black};
   background-color: ${(props) => props.theme.lightgray};
   padding-left: 8px;
 
+  resize: none;
   overflow: hidden;
 `;
 
@@ -182,13 +184,12 @@ const ReceiverName = styled.div`
   line-height: 30px;
 `;
 
-const Divider = styled.div<{usersNum: number}>`
+const Divider = styled.div`
   width: calc(100% - 32px);
   height: 1px;
   background: #dddddd;
   margin: ${style.margin.normal} ${style.margin.large};
-  
-  box-shadow: ${(props) => props.usersNum > 4 ? `0 0 5 px 0` : ``};
+  box-shadow: 0 -2px 5px 0;
 `;
 
 const ChatSideBar = () => {
@@ -297,7 +298,7 @@ const ChatSideBar = () => {
         <ReceiverName>{msg.split(':')[0]}</ReceiverName>
       </ReceiverDiv>
       <MessageText currentUserName={currentUserName} sender={msg.split(':')[0]}>
-        {msg.split(':')[1]}
+        {msg.substring(msg.indexOf(':') + 1, msg.length)}
       </MessageText>
     </MessageWrap>
   ));
@@ -311,10 +312,10 @@ const ChatSideBar = () => {
         rightModalFlag={rightModalState.rightModalFlag}
         messageFlag={rightModalState.messageFlag}
       >
-        전체 유저
+        전체 유저 {usersNum}명
       </CurrentUserTitle>
       <CurrentUser />
-      <Divider usersNum={usersNum}/>
+      <Divider />
       <ChatTitle
         rightModalFlag={rightModalState.rightModalFlag}
         messageFlag={rightModalState.messageFlag}
