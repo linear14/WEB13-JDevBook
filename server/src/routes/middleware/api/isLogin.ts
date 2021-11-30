@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-import dbManager from '../../service/dbManager';
-import { DBUser } from '../../types/interface';
-const oauth = require('../../config/oauth.json');
+import dbManager from '../../../service/dbManager';
+import { DBUser } from '../../../types/interface';
+const oauth = require('../../../config/oauth.json');
 
 const isLogin = {
   check: (req: Request, res: Response, next: NextFunction) => {

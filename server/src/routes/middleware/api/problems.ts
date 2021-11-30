@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import dbManager from '../../service/dbManager';
+import dbManager from '../../../service/dbManager';
 
 const problems = {
   oneGroup: async (req: Request, res: Response, next: NextFunction) => {

@@ -1,14 +1,16 @@
 import express from 'express';
 
-import isLogin from './isLogin';
-import users from './users';
-import posts from './posts';
-import likes from './likes';
-import image from './image';
-import comments from './comments';
-import problems from './problems';
-import groups from './groups';
-import profile from './profile';
+import {
+  isLogin,
+  users,
+  posts,
+  likes,
+  image,
+  comments,
+  problems,
+  groups,
+  profile
+} from './middleware/api';
 
 const router = express.Router();
 

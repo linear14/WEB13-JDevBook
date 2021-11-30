@@ -1,7 +1,6 @@
 import express from 'express';
 
-import githubLogin from './login';
-import logout from './logout';
+import { githubLogin, logout } from './middleware/oauth';
 
 const router = express.Router();
 

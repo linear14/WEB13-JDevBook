@@ -3,13 +3,13 @@ import dotenv from 'dotenv';
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-import dbManager from '../../service/dbManager';
-import { DBUser } from '../../types/interface';
-const githubOauth = require('../../service/githubOauth');
-const oauth = require('../../config/oauth.json');
+import dbManager from '../../../service/dbManager';
+import { DBUser } from '../../../types/interface';
+const githubOauth = require('../../../service/githubOauth');
+const oauth = require('../../../config/oauth.json');
 
 dotenv.config({
-  path: path.resolve(__dirname, '../../config/.env.development')
+  path: path.resolve(__dirname, '../../../config/.env.development')
 });
 
 const clientURL: string = process.env.LOCAL_CLIENT ?? '/';

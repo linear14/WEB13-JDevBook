@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { upload } from '../../service/objectStorage';
+import { upload } from '../../../service/objectStorage';
 
 const image = {
   upload: (req: Request, res: Response, next: NextFunction) => {

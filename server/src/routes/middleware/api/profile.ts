@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
-import dbManager from '../../service/dbManager';
-import { DBUser, IProfile } from '../../types/interface';
+import dbManager from '../../../service/dbManager';
+import { DBUser, IProfile } from '../../../types/interface';
 
 const profile = {
   update: async (req: Request, res: Response, next: NextFunction) => {
