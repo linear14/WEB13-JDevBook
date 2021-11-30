@@ -5,13 +5,14 @@ dotenv.config({
 });
 import express, { Request, Response, NextFunction } from 'express';
 import dbManager from '../../service/dbManager';
-import { DBUser, CommentData, IProfile } from '../../types/interface';
+import { DBUser, IProfile } from '../../types/interface';
 
 import isLogin from './isLogin';
 import users from './users';
 import posts from './posts';
 import likes from './likes';
 import image from './image';
+import comments from './comments';
 
 const router = express.Router();
 
@@ -31,33 +32,8 @@ router.post('/likes/:useridx/:postidx', likes.toggle);
 
 router.post('/uploadimg', image.upload, image.send);
 
-router.get(
-  '/comments/:postidx',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const postidx = Number(req.params.postidx);
-      const result = await dbManager.getComments(postidx);
-      res.json(result);
-    } catch (err) {
-      console.error(err);
-      res.json(false);
-    }
-  }
-);
-
-router.post(
-  '/comments',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const addComment: CommentData = req.body;
-      const result = await dbManager.addComment(addComment);
-      res.json({ result: result, check: true });
-    } catch (err) {
-      console.error(err);
-      res.json({ check: false });
-    }
-  }
-);
+router.get('/comments/:postidx', comments.get);
+router.post('/comments', comments.add);
 
 router.get(
   '/problems/:groupidx',
