@@ -4,16 +4,12 @@ import styled, { createGlobalStyle, css } from 'styled-components';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { imageViewerState, profileState, userDataStates } from 'recoil/store';
-import palette from 'theme/palette';
 
 import {
-  Gnb,
-  SideBar,
-  InfoSideBar,
-  GroupSideBar,
   InitUserData,
-  InitSocket,
-  LoadingModal
+  LoadingModal,
+  FakeSideBar,
+  FakeGnb
 } from 'components/common';
 import { PostWriter, ImageViewer } from 'components/HomePage';
 import {
@@ -46,7 +42,6 @@ const PageLayout = styled.div`
 const ContentsContainer = styled.div<{ contentsState: boolean }>`
   width: calc(100vw - 680px);
   min-width: 720px;
-  margin: 0 12px;
 
   display: ${(props) => (props.contentsState ? 'flex' : 'none')};
   flex-direction: column;
@@ -103,16 +98,12 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
       <GlobalStyle />
       <InitUserData />
       <InitProfileData userName={match.params.username} />
-      <InitSocket />
       <LoadingModal
         modalState={profileData.idx === 0 || userData.name === ''}
       />
-      <Gnb />
+      <FakeGnb />
       <PageLayout>
-        <SideBar isLeft={true}>
-          <InfoSideBar />
-          <GroupSideBar />
-        </SideBar>
+        <FakeSideBar />
         <ContentsContainer contentsState={profileData.idx !== 0}>
           <ProfileCover />
           <ProfileBar />

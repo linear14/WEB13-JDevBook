@@ -12,7 +12,7 @@ import {
   alarmState,
   usersocketStates,
   themeState,
-  animationState
+  commonState
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 import {
@@ -22,17 +22,16 @@ import {
   IconProps,
   RightModalProps
 } from 'types/GNB';
-import palette from 'theme/palette';
 import {
   GnbHome,
   GnbGroup,
   GnbHomeActive,
   GnbGroupActive,
-  gnbMessage,
-  gnbMessageActive,
-  gnbAlarm,
-  gnbAlarmActive,
-  gnbLogout
+  GnbMessage,
+  GnbMessageActive,
+  GnbAlarm,
+  GnbAlarmActive,
+  GnbLogout
 } from 'images/icons';
 
 import {
@@ -42,20 +41,20 @@ import {
 } from 'components/common';
 import useResetProfile from 'hooks/useResetProfile';
 
-const GnbContainer = styled.div`
+const GnbContainer = styled.div<{ commonState: boolean }>`
   width: 100%;
   min-width: 720px;
   height: 56px;
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1;
-  display: flex;
+  z-index: 2;
+  display: ${(props) => (props.commonState ? 'flex' : 'none')};
   justify-content: space-between;
   align-items: center;
   padding-left: 16px;
   padding-right: 16px;
   box-sizing: border-box;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.15) 3px 3px 3px;
   background-color: ${(props) => props.theme.white};
 
   a {
@@ -113,7 +112,7 @@ const GnbTab = styled.div<TabProps>`
           `}
   }
 
-  @media screen and (max-width: 852px) {
+  @media screen and (max-width: 920px) {
     width: 60px;
     height: 48px;
   }
@@ -142,7 +141,7 @@ const ProfileWrap = styled.div`
     font-weight: bold;
   }
 
-  @media screen and (max-width: 852px) {
+  @media screen and (max-width: 920px) {
     padding: 0px;
     p {
       display: none;
@@ -163,7 +162,7 @@ const ProfileWrap = styled.div`
   }
 `;
 
-const IconWrap = styled.div<IconProps>`
+const IconWrap = styled.div<TabProps>`
   width: 40px;
   height: 40px;
   background: ${(props) => props.theme.lightgray};
@@ -172,35 +171,39 @@ const IconWrap = styled.div<IconProps>`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background-color: ${({ img }) =>
-    img.match('active')
-      ? css`
-          ${(props) => props.theme.lightestgreen}
-        `
-      : ``};
-
-  &:after {
-    content: '';
-    background-image: url(${({ img }) => img});
-    background-size: 20px 20px;
-    width: 20px;
-    height: 20px;
-  }
 
   &:hover {
-    background-color: ${({ img }) =>
-      img.match('active')
-        ? css`
-            ${(props) => props.theme.lightgreen}
-          `
-        : css`
-            ${(props) => props.theme.gray};
-          `};
+    background-color: ${(props) => props.theme.lightgreen};
   }
 
   &:active {
     transform: scale(0.95);
   }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  svg path {
+    ${({ current }) =>
+      current
+        ? css`
+            fill: ${(props) => props.theme.green};
+          `
+        : css`
+            fill: ${(props) => props.theme.black};
+          `}
+  }
+
+  ${({ current }) =>
+    current
+      ? css`
+          background-color: ${(props) => props.theme.lightestgreen};
+        `
+      : css`
+          background-color: ${(props) => props.theme.lightgray};
+        `}
 `;
 
 const AlarmBadge = styled.div`
@@ -247,7 +250,7 @@ const turnDark = keyframes`
   }
   100%{
     left: 22px;
-    background-color: ${palette.darkgray};
+    background-color: #8a8c91;
   }
 `;
 const turnLight = keyframes`
@@ -256,11 +259,11 @@ const turnLight = keyframes`
   }
   100%{
     left: -2px;
-    background-color: ${palette.green};
+    background-color: #87d474;
   }
 `;
 
-const ToggleBtn = styled.div<{ themeState: string; animationState: boolean }>`
+const ToggleBtn = styled.div<{ themeState: string }>`
   position: absolute;
   top: -6px;
   left: ${(props) => (props.themeState === 'dark' ? '22px' : '-2px')};
@@ -271,14 +274,13 @@ const ToggleBtn = styled.div<{ themeState: string; animationState: boolean }>`
   background-color: ${(props) =>
     props.themeState === 'dark' ? props.theme.darkgray : props.theme.green};
   animation: ${(props) =>
-    props.animationState &&
-    (props.themeState === 'dark'
+    props.themeState === 'dark'
       ? css`
           ${turnDark} ease 0.5s
         `
       : css`
           ${turnLight} ease 0.5s
-        `)};
+        `};
 `;
 
 const Gnb = ({ type, rightModalType }: GnbProps) => {
@@ -291,7 +293,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   const [alarmNum, setAlarmNum] = useRecoilState(alarmState);
   const [theme, setTheme] = useRecoilState(themeState);
   const socket = useRecoilValue(usersocketStates);
-  const [animation, setAnimaition] = useRecoilState(animationState);
+  const [commonDisplay, setCommonDispaly] = useRecoilState(commonState);
   const history = useHistory();
   const resetProfile = useResetProfile();
 
@@ -300,12 +302,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   };
 
   const themeToggleHandler = (e: React.MouseEvent) => {
-    setAnimaition(true);
     setTheme(theme === 'light' ? 'dark' : 'light');
-  };
-
-  const animationEnd = (e: React.AnimationEvent) => {
-    setAnimaition(false);
   };
 
   useEffect(() => {}, [alarmNum]);
@@ -320,7 +317,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
   );
 
   return (
-    <GnbContainer className="no-drag">
+    <GnbContainer commonState={commonDisplay} className="no-drag">
       <FlexWrap>
         {modalState.searchUser ? <UserSearchModal /> : <UserSearchBar />}
       </FlexWrap>
@@ -339,11 +336,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
       <FlexWrap>
         <ToggleBtnWrap onClick={themeToggleHandler}>
           <ToggleBar>
-            <ToggleBtn
-              animationState={animation}
-              themeState={theme}
-              onAnimationEnd={animationEnd}
-            />
+            <ToggleBtn themeState={theme} />
           </ToggleBar>
         </ToggleBtnWrap>
         <Link to={`/profile/${userdata.name}`} onClick={photoClickHandler}>
@@ -353,7 +346,7 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           </ProfileWrap>
         </Link>
         <IconWrap
-          img={rightModalState.messageFlag ? gnbMessageActive : gnbMessage}
+          current={rightModalState.messageFlag === true}
           onClick={() => {
             ChangeFlag(rightModalState, setRightModalState, 'messageFlag');
             setGroupNavState({
@@ -361,15 +354,19 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
               groupChat: false
             });
           }}
-        />
+        >
+          {type === 'message' ? <GnbMessageActive /> : <GnbMessage />}
+        </IconWrap>
         <IconWrap
-          img={rightModalState.alarmFlag ? gnbAlarmActive : gnbAlarm}
+          current={rightModalState.alarmFlag === true}
           onClick={() => {
             ChangeFlag(rightModalState, setRightModalState, 'alarmFlag');
             setAlarmNum(0);
             socket.emit('make alarms check', { receiver: userdata.name });
           }}
-        />
+        >
+          {type === 'alarm' ? <GnbAlarmActive /> : <GnbAlarm />}
+        </IconWrap>
         <AlarmBadge
           onClick={() => {
             ChangeFlag(rightModalState, setRightModalState, 'alarmFlag');
@@ -380,7 +377,6 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
           {alarmNum ? alarmNum : null}
         </AlarmBadge>
         <IconWrap
-          img={gnbLogout}
           onClick={async () => {
             ChangeFlag(rightModalState, setRightModalState, '');
             await fetchApi.logout();
@@ -392,11 +388,14 @@ const Gnb = ({ type, rightModalType }: GnbProps) => {
               bio: '' as string,
               login: false
             });
+            setCommonDispaly(false);
             resetSolvedProblemState();
             socket.emit('disconnect notify');
             history.push('/');
           }}
-        />
+        >
+          {<GnbLogout />}
+        </IconWrap>
       </FlexWrap>
     </GnbContainer>
   );
