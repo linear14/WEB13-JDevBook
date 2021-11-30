@@ -1,68 +1,26 @@
 import path from 'path';
 import dotenv from 'dotenv';
-dotenv.config({ path: path.resolve(__dirname, '../config/.env.development') });
+dotenv.config({
+  path: path.resolve(__dirname, '../../config/.env.development')
+});
 import express, { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-import dbManager from '../service/dbManager';
+import dbManager from '../../service/dbManager';
 import {
   DBUser,
   PostAddData,
   PostUpdateData,
   CommentData,
   IProfile
-} from '../types/interface';
-import { uploadFile } from '../service/objectStorage';
-import { pictureCheck } from '../service/pictureCheck';
-const oauth = require('../config/oauth.json');
+} from '../../types/interface';
+import { uploadFile } from '../../service/objectStorage';
+import { pictureCheck } from '../../service/pictureCheck';
+
+import isLogin from './isLogin';
 
 const router = express.Router();
 
-router.get('/data', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { name } = jwt.verify(req.session.jwt, oauth.jwtKey) as {
-      name: string;
-    };
-    if (name === req.session.username) {
-      const userdata: DBUser = await dbManager.getUserData(name);
-      res.json({
-        data: userdata,
-        error: false
-      });
-    } else {
-      console.log(`로그인 정보 비정상 감지: ${req.session.username}`);
-      req.session.destroy((err) => {
-        // 세션이 하나 생성되어서 지워줘야..
-        res.json({ data: '', error: true });
-      });
-    }
-  } catch (err) {
-    // 로그인안하고 home 등 직접적인 접근
-    //console.error(err);
-    req.session.destroy((err) => {
-      // 세션이 하나 생성되어서 지워줘야..
-      res.json({ data: '', error: true });
-    });
-  }
-});
-
-router.get('/islogin', (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { name } = jwt.verify(req.session.jwt, oauth.jwtKey) as {
-      name: string;
-    };
-    if (name === req.session.username) {
-      res.json(true);
-    } else {
-      req.session.destroy((err) => {
-        res.json(false);
-      });
-    }
-  } catch (err) {
-    req.session.destroy((err) => {
-      res.json(false);
-    });
-  }
-});
+router.get('/data', isLogin.userData);
+router.get('/islogin', isLogin.check);
 
 router.get(
   '/users',
