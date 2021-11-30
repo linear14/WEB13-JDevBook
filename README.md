@@ -30,6 +30,10 @@
 프로필 커버 사진, 프로필 사진, 자기소개를 작성할 수 있습니다.
 해당 사용자가 작성한 글들을 확인할 수 있습니다. (비공개는 불가능)
 
+### etc
+
+채팅 알람, 댓글 알람, 다크모드, 반응형 등
+
 ## 🙋🏻‍♂️ 팀원
 
 |       [J085 박기태](https://github.com/idiot-kitto)       |        [J115 신태수](https://github.com/shinn338)         |                   [J140 이동현](https://github.com/linear14)                   |      [J217 현상엽](https://github.com/Hyun-SangYeop)      |

@@ -12,7 +12,15 @@ import { ReactComponent as LikeIconActive } from 'images/icons/icon-like-active.
 import { ReactComponent as CommentIcon } from 'images/icons/icon-comment.svg';
 import { ReactComponent as IconPublic } from 'images/icons/icon-public.svg';
 import { ReactComponent as IconPrivate } from 'images/icons/icon-private.svg';
+import { ReactComponent as IconSearch } from 'images/icons/icon-search.svg';
 
+import gnbMessage from 'images/icons/gnb-message.svg';
+import gnbMessageActive from 'images/icons/gnb-message-active.svg';
+import gnbAlarm from 'images/icons/gnb-alarm.svg';
+import gnbAlarmActive from 'images/icons/gnb-alarm-active.svg';
+import gnbSelector from 'images/icons/gnb-down-arrow.svg';
+import gnbLogout from 'images/icons/gnb-logout.svg';
+import gnbSelectorActive from 'images/icons/gnb-down-arrow-active.svg';
 import iconSearch from 'images/icons/icon-search.svg';
 import iconPhoto from 'images/icons/icon-photo.svg';
 import likeBadge from 'images/icons/icon-like-badge.svg';
@@ -30,7 +38,7 @@ export {
   GnbAlarmActive,
   GnbLogout,
   iconPhoto,
-  iconSearch,
+  IconSearch,
   LikeIcon,
   LikeIconActive,
   CommentIcon,
