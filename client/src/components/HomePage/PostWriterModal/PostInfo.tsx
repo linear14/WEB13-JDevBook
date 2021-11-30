@@ -5,6 +5,7 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import { userDataStates, postModalDataStates } from 'recoil/store';
 
 import { ProfilePhoto } from 'components/common';
+import style from 'theme/style';
 
 const PostInfoWrap = styled.div`
   width: 100%;
@@ -23,6 +24,7 @@ const PostInfoWrap = styled.div`
 const SecretSelector = styled.div<{ isSecret: boolean }>`
   width: 100px;
   height: 30px;
+  padding: 0 ${style.padding.small};
 
   background-color: ${(props) =>
     props.isSecret ? props.theme.green : props.theme.lightgray};
@@ -55,7 +57,9 @@ const PostInfo = () => {
   };
 
   useEffect(() => {
-    postData.secret ? setSecretStr('나만 보기') : setSecretStr('전체 공개');
+    postData.secret
+      ? setSecretStr(' 🔒 나만 보기')
+      : setSecretStr(' 👨‍👨‍👧‍👧 전체 공개');
   }, [postData.secret]);
 
   return (
