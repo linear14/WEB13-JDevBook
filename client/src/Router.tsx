@@ -12,7 +12,7 @@ import {
   IsLoginPage,
   GroupSelectPage
 } from 'pages';
-import { ChatSideBar, AlarmSideBar } from 'components/common';
+import { AlarmSideBar, ChatSideBar } from 'components/common';
 
 const Router = () => {
   const [login, setLogin] = useState(false);
