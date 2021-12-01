@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { rightModalStates, groupListState } from 'recoil/store';

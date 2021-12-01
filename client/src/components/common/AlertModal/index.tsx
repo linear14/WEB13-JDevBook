@@ -1,31 +1,12 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { alertState } from 'recoil/store';
 
-const onAnimation = keyframes`
-  0% {
-    top: -70px;
-    opacity: 0%;
-  }
-  25%{
-    top: 20px;
-    opacity: 100%;
-  }
-  75%{
-    top: 20px;
-    opacity: 100%;
-  }
-  100% {
-    top: -70px;
-    opacity: 0%;
-  }
-`;
-
 const AlertModalWrap = styled.div<{ bgColor?: boolean; modalState: boolean }>`
   position: fixed;
-  top: -70px;
+  top: ${(props) => (!props.modalState ? '-70px' : '30px')};
+  transition: top 0.5s ease;
   left: 50%;
   width: 500px;
   height: 50px;
@@ -36,27 +17,17 @@ const AlertModalWrap = styled.div<{ bgColor?: boolean; modalState: boolean }>`
   background-color: ${(props) =>
     props.bgColor ? props.theme.alert : props.theme.blue};
   color: ${(props) => props.theme.white};
-  animation: ${onAnimation} 2s ease;
 
-  display: ${(props) => (props.modalState ? `flex` : `none`)};
+  display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const AlertModal = () => {
   const alert = useRecoilValue(alertState);
-  const resetAlert = useResetRecoilState(alertState);
-
-  const alertOff = (e: React.AnimationEvent) => {
-    resetAlert();
-  };
 
   return (
-    <AlertModalWrap
-      modalState={alert.modalState}
-      bgColor={alert.isAlert}
-      onAnimationEnd={alertOff}
-    >
+    <AlertModalWrap modalState={alert.modalState} bgColor={alert.isAlert}>
       {alert.comment}
     </AlertModalWrap>
   );

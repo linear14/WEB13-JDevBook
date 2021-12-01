@@ -1,8 +1,10 @@
-import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { commonState } from 'recoil/store';
+
+import GroupSideBar from 'components/common/LeftSideBar/GroupSideBar';
+import InfoSideBar from 'components/common/LeftSideBar/InfoSideBar';
 
 const SideBarContainer = styled.div<{ commonState: boolean }>`
   position: fixed;
@@ -20,12 +22,15 @@ const SideBarContainer = styled.div<{ commonState: boolean }>`
   }
 `;
 
-const SideBar = ({ children }: { children?: React.ReactNode }) => {
+const LeftSideBar = () => {
   const commonDisplay = useRecoilValue(commonState);
 
   return (
-    <SideBarContainer commonState={commonDisplay}>{children}</SideBarContainer>
+    <SideBarContainer commonState={commonDisplay}>
+      <InfoSideBar />
+      <GroupSideBar />
+    </SideBarContainer>
   );
 };
 
-export default SideBar;
+export default LeftSideBar;

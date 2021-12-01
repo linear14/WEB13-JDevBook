@@ -39,6 +39,7 @@ const ChatSideBarContainer = styled.div<{
   flex-direction: column;
   width: 340px;
   height: calc(100% - 56px);
+  z-index: 1;
 
   visibility: ${(props) =>
     props.rightModalFlag && props.messageFlag ? `` : `hidden`};
@@ -61,7 +62,6 @@ const ChatSideBarContainer = styled.div<{
   color: ${(props) => props.theme.black};
   box-shadow: rgba(0, 0, 0, 0.15) -3px 3px 3px;
 `;
-
 
 const Divider = styled.div`
   width: calc(100% - 32px);
@@ -157,7 +157,7 @@ const ChatSideBar = () => {
       <ChatTitle />
       <ChatListView messageList={messageList} />
       <form onSubmit={onSubmit}>
-        <ChatInput value={value} setValue={setValue}/>
+        <ChatInput value={value} setValue={setValue} />
       </form>
     </ChatSideBarContainer>
   );

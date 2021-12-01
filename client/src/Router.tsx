@@ -13,14 +13,7 @@ import {
   LoadingWhitePage,
   GroupSelectPage
 } from 'pages';
-import {
-  ChatSideBar,
-  AlarmSideBar,
-  SideBar,
-  InfoSideBar,
-  GroupSideBar,
-  Gnb
-} from 'components/common';
+import { ChatSideBar, AlarmSideBar, LeftSideBar, Gnb } from 'components/common';
 
 const Router = () => {
   const [login, setLogin] = useState(false);
@@ -41,10 +34,7 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Gnb />
-      <SideBar>
-        <InfoSideBar />
-        <GroupSideBar />
-      </SideBar>
+      <LeftSideBar />
       <ChatSideBar />
       <AlarmSideBar />
       <Switch>
