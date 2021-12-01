@@ -2,8 +2,7 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { profileState } from 'recoil/store';
-import { userDataStates } from 'recoil/user';
+import { userDataStates, profileState } from 'recoil/user';
 
 import { defaultGroup } from 'images/groupimg';
 import fetchApi from 'api/fetch';

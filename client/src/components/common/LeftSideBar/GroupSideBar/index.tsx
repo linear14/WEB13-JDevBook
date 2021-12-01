@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import {
-  groupListState,
-  myJoinedGroupState,
-  GroupNavState
-} from 'recoil/store';
+import { groupListState, GroupNavState } from 'recoil/store';
+import { myJoinedGroupState } from 'recoil/user';
+
 import { IconSearch } from 'images/icons';
 import { IGroup } from 'types/group';
 
-import JoinedGroupCard from './JoinedGroupCard';
+import JoinedGroupCard from 'components/common/LeftSideBar/GroupSideBar/JoinedGroupCard';
 
 const GroupSideBarContainer = styled.div`
   height: calc(100vh - 256px);

@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import {
+  userDataStates,
   solvedProblemState,
   rateState,
   myJoinedGroupState
-} from 'recoil/store';
-import { userDataStates } from 'recoil/user';
+} from 'recoil/user';
 
 import fetchApi from 'api/fetch';
 import useResetProfile from 'hooks/useResetProfile';

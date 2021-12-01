@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { profileState } from 'recoil/store';
+import { profileState } from 'recoil/user';
+
+import fetchApi from 'api/fetch';
 import { ISolvedProblem, IProblem } from 'types/problem';
 import { IUserWithSolved, IUserGroup } from 'types/user';
-import fetchApi from 'api/fetch';
 
 const ProfileBarContainer = styled.div`
   width: 100%;

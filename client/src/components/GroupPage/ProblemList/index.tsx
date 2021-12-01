@@ -1,13 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import fetchApi from 'api/fetch';
+import { GroupNavState } from 'recoil/store';
+import { myJoinedGroupState } from 'recoil/user';
 
-import { Problem } from '..';
+import fetchApi from 'api/fetch';
 import { IProblem } from 'types/problem';
+
+import { Problem } from 'components/GroupPage';
 import { Skeleton } from 'components/common';
-import { GroupNavState, myJoinedGroupState } from 'recoil/store';
 
 const ProblemListContainer = styled.div<{ navState: boolean }>`
   width: 680px;

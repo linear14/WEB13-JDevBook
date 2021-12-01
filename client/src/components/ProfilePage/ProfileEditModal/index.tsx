@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { profileState } from 'recoil/store';
 import { modalStateStore } from 'recoil/common';
+import { profileState } from 'recoil/user';
 
 import style from 'theme/style';
 import fetchApi from 'api/fetch';

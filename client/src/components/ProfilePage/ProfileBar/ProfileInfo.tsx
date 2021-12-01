@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { profileState } from 'recoil/store';
 import { modalStateStore } from 'recoil/common';
+import { profileState } from 'recoil/user';
 
 import style from 'theme/style';
 

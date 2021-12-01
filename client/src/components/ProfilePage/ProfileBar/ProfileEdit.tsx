@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { profileState } from 'recoil/store';
 import { modalStateStore } from 'recoil/common';
-import { userDataStates } from 'recoil/user';
+import { userDataStates, profileState } from 'recoil/user';
 
 import style from 'theme/style';
 

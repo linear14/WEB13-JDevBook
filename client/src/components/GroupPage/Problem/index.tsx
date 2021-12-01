@@ -1,12 +1,15 @@
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { useRecoilState, useRecoilValue } from 'recoil';
+
+import { GroupNavState } from 'recoil/store';
+import { solvedProblemState } from 'recoil/user';
+
 import fetchApi from 'api/fetch';
 import useAlertModal from 'hooks/useAlertModal';
-import React, { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { GroupNavState, solvedProblemState } from 'recoil/store';
-import styled from 'styled-components';
-
 import { IProblem } from 'types/problem';
-import Explanation from './Explanation';
+
+import Explanation from 'components/GroupPage/Problem/Explanation';
 
 const ProblemContainer = styled.div`
   width: 680px;

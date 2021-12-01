@@ -1,7 +1,7 @@
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import { profileState } from 'recoil/store';
 import { modalStateStore } from 'recoil/common';
+import { profileState } from 'recoil/user';
 
 import fetchApi from 'api/fetch';
 

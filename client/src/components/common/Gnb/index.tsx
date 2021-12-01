@@ -3,18 +3,14 @@ import styled, { css, keyframes } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
 
-import {
-  solvedProblemState,
-  GroupNavState,
-  usersocketStates
-} from 'recoil/store';
+import { GroupNavState, usersocketStates } from 'recoil/store';
 import {
   rightModalStates,
   alarmState,
   themeState,
   commonState
 } from 'recoil/common';
-import { userDataStates } from 'recoil/user';
+import { userDataStates, solvedProblemState } from 'recoil/user';
 
 import fetchApi from 'api/fetch';
 import { RightModalProps } from 'types/GNB';

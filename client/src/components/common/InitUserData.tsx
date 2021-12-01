@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import {
-  solvedProblemState,
-  groupListState,
-  myJoinedGroupState
-} from 'recoil/store';
+import { groupListState } from 'recoil/store';
 import { commonState } from 'recoil/common';
-import { userDataStates } from 'recoil/user';
+import {
+  userDataStates,
+  myJoinedGroupState,
+  solvedProblemState
+} from 'recoil/user';
 import { postModalDataStates } from 'recoil/post';
 
 import { IProblem } from 'types/problem';
