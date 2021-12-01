@@ -5,11 +5,13 @@ const Wrapper = styled.span`
   align-items: center;
   text-align: center;
 
+  margin-left: 10vw;
   font-size: 50px;
 `;
 
 const SubTitle = styled.div`
   color: #000;
+  white-space: nowrap;
 `;
 
 const Animation = keyframes`
@@ -23,7 +25,8 @@ const Content = styled.span`
   width: 50vw;
   font-size: 50px;
   color: #87d474;
-  display: inline-block;
+  white-space: nowrap;
+
   span {
     display: inline-block;
     opacity: 0;
@@ -50,8 +53,8 @@ const Greeter = () => {
   const textArray = 'JDevBook'.split('');
 
   return (
-    <>
-      <Wrapper className="no-drag">
+    
+      <Wrapper className="no-drag" data-cy="Greeter">
         <SubTitle>우리들의 공간</SubTitle>
         <Content>
           {textArray.map((item, index) => (
@@ -59,7 +62,7 @@ const Greeter = () => {
           ))}
         </Content>
       </Wrapper>
-    </>
+    
   );
 };
 
