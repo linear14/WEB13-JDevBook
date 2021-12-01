@@ -17,6 +17,10 @@ const fetchApi = {
     const userDataRes: Response = await fetch('/api/data');
     return await userDataRes.json();
   },
+  isLogin: async () => {
+    const response: Response = await fetch('/api/islogin');
+    return await response.json();
+  },
   logout: async () => {
     await fetch('/oauth/logout');
   },
