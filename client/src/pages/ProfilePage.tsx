@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle, css } from 'styled-components';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import { imageViewerState, profileState, userDataStates } from 'recoil/store';
+import {
+  currentPageStates,
+  imageViewerState,
+  profileState,
+  userDataStates
+} from 'recoil/store';
 
 import {
   InitUserData,
@@ -19,6 +24,7 @@ import {
   PostList,
   ProfileInfoBar
 } from 'components/ProfilePage';
+import { Page } from 'types/common';
 
 const GlobalStyle = createGlobalStyle`
   ${({}) => {
@@ -81,6 +87,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   const resetProfileData = useResetRecoilState(profileState);
   const imageViewer = useRecoilValue(imageViewerState);
   const [myProfile, setMyProfile] = useState<boolean>(false);
+  const setCurrentPage = useSetRecoilState(currentPageStates);
 
   useEffect(() => {
     if (userData.name === profileData.nickname) setMyProfile(true);
@@ -88,6 +95,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
   }, [profileData, userData]);
 
   useEffect(() => {
+    setCurrentPage(Page.PROFILE);
     return () => {
       resetProfileData();
     };
