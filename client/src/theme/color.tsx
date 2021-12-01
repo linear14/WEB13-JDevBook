@@ -13,8 +13,7 @@ export const light = {
   skeleton: '#f0f2f5',
   shadow: {
     answerButton: 'rgba(0, 0, 0, 0.1) 0px 3px 12px',
-    searchUser:
-      'rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,rgba(0, 0, 0, 0.3) 0px 8px 16px -8px',
+    searchUser: 'rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,rgba(0, 0, 0, 0.3) 0px 8px 16px -8px',
     optionModal: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
   },
   inColorBox: '#FAFAFA'

@@ -17,9 +17,7 @@ const useResetProfile = () => {
       editProfile: false,
       post: { ...modalState.post, writer: false }
     });
-    const { data: fetchProfileData, error } = await fetchApi.getProfile(
-      userName
-    );
+    const { data: fetchProfileData, error } = await fetchApi.getProfile(userName);
     if (!error) setProfileData(fetchProfileData);
   };
 
