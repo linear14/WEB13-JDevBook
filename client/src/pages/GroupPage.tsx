@@ -6,6 +6,7 @@ import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { currentPageStates } from 'recoil/common';
 import { groupState } from 'recoil/group';
 
+import { Page } from 'types/common';
 import { defaultGroup } from 'images/groupimg';
 
 import {
@@ -21,7 +22,6 @@ import {
   About,
   GroupChat
 } from 'components/GroupPage';
-import { Page } from 'types/common';
 
 const GlobalStyle = createGlobalStyle`
   ${({}) => {
