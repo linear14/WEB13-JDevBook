@@ -1,10 +1,12 @@
-import { CommentData } from 'types/comment';
 import { IProfile } from 'types/user';
 
 import { getLoginlink, isLogin } from 'api/fetch/login';
 import { logout } from 'api/fetch/logout';
 import { getuserData, searchUsers, getAllUsers } from 'api/fetch/users';
 import { getPosts, addPosts, updatePosts, deletePosts } from 'api/fetch/posts';
+import { addLikePost, updateLikeNum } from 'api/fetch/like';
+import { uploadImg } from 'api/fetch/image';
+import { getComments, getCommentsNum, addComments } from 'api/fetch/comments';
 
 const fetchApi = {
   getLoginlink,
@@ -21,60 +23,14 @@ const fetchApi = {
   updatePosts,
   deletePosts,
 
-  addLikePost: async (userIdx: number, postIdx: number) => {
-    const response = await fetch(`/api/likes/${userIdx}/${postIdx}`, {
-      method: 'POST'
-    });
-    return await response.json();
-  },
+  addLikePost,
+  updateLikeNum,
 
-  updateLikeNum: async (postIdx: number, likeNum: number) => {
-    const response = await fetch(`/api/posts/like/${postIdx}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ likeNum: likeNum })
-    });
-    return await response.json();
-  },
+  uploadImg,
 
-  uploadImg: async (imglist: FileList) => {
-    const formData = new FormData();
-    formData.append('imgfile', imglist[0]);
-
-    const fileRes = await fetch('/api/uploadimg', {
-      method: 'POST',
-      body: formData
-    });
-
-    return await fileRes.json(); // {file: s3file, save: true/false}
-  },
-
-  getComments: async (postidx: number) => {
-    const response = await fetch(`/api/comments/${postidx}`);
-    const getCommentsList = await response.json();
-    // 여기서 getCommentsList map해서 보내준다.
-    return getCommentsList;
-  },
-
-  getCommentsNum: async (postidx: number) => {
-    const response = await fetch(`/api/comments/${postidx}`);
-    const getCommentsList = await response.json();
-    return getCommentsList.length;
-  },
-
-  addComments: async (addComment: CommentData) => {
-    const response = await fetch(`/api/comments`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(addComment)
-    });
-
-    return await response.json();
-  },
+  getComments,
+  getCommentsNum,
+  addComments,
 
   getProblems: async (groupIdx?: number | null, signal?: AbortSignal) => {
     const response = groupIdx
