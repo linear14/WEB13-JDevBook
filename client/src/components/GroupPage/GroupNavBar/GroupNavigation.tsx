@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { GroupNavState } from 'recoil/store';
 import { rightModalStates } from 'recoil/common';
+import { GroupNavState } from 'recoil/group';
 
 import style from 'theme/style';
 

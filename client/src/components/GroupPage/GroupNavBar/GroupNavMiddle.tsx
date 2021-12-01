@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { groupState } from 'recoil/store';
 import { userDataStates, myJoinedGroupState } from 'recoil/user';
+import { groupState } from 'recoil/group';
 
+import fetchApi from 'api/fetch';
 import style from 'theme/style';
 import useAlertModal from 'hooks/useAlertModal';
-import fetchApi from 'api/fetch';
 
 const GroupNavMiddleWrap = styled.div`
   display: flex;

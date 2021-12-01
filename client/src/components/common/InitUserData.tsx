@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { groupListState } from 'recoil/store';
 import { commonState } from 'recoil/common';
 import {
   userDataStates,
@@ -10,6 +9,7 @@ import {
   solvedProblemState
 } from 'recoil/user';
 import { postModalDataStates } from 'recoil/post';
+import { groupListState } from 'recoil/group';
 
 import { IProblem } from 'types/problem';
 import { IGroup } from 'types/group';

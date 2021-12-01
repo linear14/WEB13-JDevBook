@@ -2,16 +2,17 @@ import { useState, useEffect, FormEvent } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { GroupNavState, usersocketStates } from 'recoil/store';
+import { usersocketStates } from 'recoil/store';
 import { userDataStates } from 'recoil/user';
+import { GroupNavState } from 'recoil/group';
 
 import style from 'theme/style';
 
-import CurrentUserTitle from './CurrentUserTitle';
-import CurrentUserContainer from './CurrentUserContainer';
-import ChatTitle from './ChatTitle';
-import ChatListView from './ChatList';
-import ChatInput from './ChatInput';
+import CurrentUserTitle from 'components/GroupPage/GroupChat/CurrentUserTitle';
+import CurrentUserContainer from 'components/GroupPage/GroupChat/CurrentUserContainer';
+import ChatTitle from 'components/GroupPage/GroupChat/ChatTitle';
+import ChatListView from 'components/GroupPage/GroupChat/ChatList';
+import ChatInput from 'components/GroupPage/GroupChat/ChatInput';
 
 const OpenChatAnimation = keyframes`
   0% { opacity: 0; transform: translateX(100px); }

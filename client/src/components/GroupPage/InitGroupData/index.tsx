@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import { groupState } from 'recoil/store';
+import { groupState } from 'recoil/group';
+
 import fetchApi from 'api/fetch';
 import { IGroup } from 'types/group';
 

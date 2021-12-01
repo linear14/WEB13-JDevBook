@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { GroupNavState } from 'recoil/store';
 import { solvedProblemState } from 'recoil/user';
+import { GroupNavState } from 'recoil/group';
 
 import fetchApi from 'api/fetch';
 import useAlertModal from 'hooks/useAlertModal';

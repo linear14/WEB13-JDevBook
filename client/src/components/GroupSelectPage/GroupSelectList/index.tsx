@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { groupListState } from 'recoil/store';
 import { rightModalStates } from 'recoil/common';
+import { groupListState } from 'recoil/group';
 
 import fetchApi from 'api/fetch';
 import { IGroup } from 'types/group';

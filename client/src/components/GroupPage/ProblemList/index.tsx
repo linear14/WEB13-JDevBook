@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { GroupNavState } from 'recoil/store';
 import { myJoinedGroupState } from 'recoil/user';
+import { GroupNavState } from 'recoil/group';
 
 import fetchApi from 'api/fetch';
 import { IProblem } from 'types/problem';

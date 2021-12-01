@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { groupListState, GroupNavState } from 'recoil/store';
 import { myJoinedGroupState } from 'recoil/user';
+import { groupListState, GroupNavState } from 'recoil/group';
 
 import { IconSearch } from 'images/icons';
 import { IGroup } from 'types/group';
