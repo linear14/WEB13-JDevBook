@@ -34,6 +34,7 @@ const AlarmSideBarContainer = styled.div<{
   flex-direction: column;
   width: 340px;
   height: calc(100% - 56px);
+  z-index: 1;
 
   visibility: ${(props) =>
     props.rightModalFlag && props.alarmFlag ? `` : `hidden`};
