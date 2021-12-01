@@ -173,7 +173,8 @@ const AlarmBadge = styled.div`
 `;
 
 const Gnb = () => {
-  const [userdata, setUserdata] = useRecoilState(userDataStates);
+  const userdata = useRecoilValue(userDataStates);
+  const resetUserdata = useResetRecoilState(userDataStates);
   const resetSolvedProblemState = useResetRecoilState(solvedProblemState);
   const [rightModalState, setRightModalState] =
     useRecoilState(rightModalStates);
@@ -245,14 +246,7 @@ const Gnb = () => {
           onClick={async () => {
             ChangeFlag(rightModalState, setRightModalState, '');
             await fetchApi.logout();
-            setUserdata({
-              idx: -1,
-              name: '',
-              profile: '' as string,
-              cover: '' as string,
-              bio: '' as string,
-              login: false
-            });
+            resetUserdata();
             setCommonDispaly(false);
             resetSolvedProblemState();
             socket.emit('disconnect notify');
