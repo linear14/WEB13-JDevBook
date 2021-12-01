@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
+import { pictureCheck } from '../../../service/pictureCheck';
 import dbManager from '../../../service/dbManager';
 import { DBUser, IProfile } from '../../../types/interface';
 
@@ -8,8 +9,12 @@ const profile = {
     try {
       const userIdx = Number(req.params.useridx);
       const userUpdateData: IProfile = req.body;
-      await dbManager.updateProfile(userUpdateData, userIdx);
-      res.json({ check: true });
+      const pList: (string | null)[] = [userUpdateData.cover, null, null];
+      if (!(await pictureCheck(pList))) res.json({ check: false });
+      else {
+        await dbManager.updateProfile(userUpdateData, userIdx);
+        res.json({ check: true });
+      }
     } catch (err) {
       console.error(err);
       res.json({ check: false });
