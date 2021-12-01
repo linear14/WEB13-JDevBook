@@ -1,6 +1,6 @@
 import dbManager from '../service/dbManager'; // 왜 절대경로 안되지
 import { Socket, Server } from 'socket.io';
-import { IUserSocket } from '../types/interface';
+import { IUserSocket } from '../types';
 
 const UserObj: IUserSocket = {};
 
@@ -107,9 +107,9 @@ const socketIO = (server: any) => {
 
     // 알람 부분
     socket.on('send alarm', async (receivedData) => {
-      const { sender, receiver, type, text } = receivedData;      
+      const { sender, receiver, type, text } = receivedData;
       const msg = `${sender}:${type}:${text}`;
-      
+
       await dbManager.addAlarm(receiver, msg);
       io.emit('get alarm', receivedData);
       io.emit('get alarm info', receivedData);

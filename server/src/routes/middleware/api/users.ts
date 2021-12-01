@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-import { DBUser } from '../../../types/interface';
+import { DBUser } from '../../../types';
 import dbManager from '../../../service/dbManager';
 const oauth = require('../../../config/oauth.json');
 

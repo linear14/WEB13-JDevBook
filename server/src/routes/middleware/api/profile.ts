@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 import { pictureCheck } from '../../../service/pictureCheck';
 import dbManager from '../../../service/dbManager';
-import { DBUser, IProfile } from '../../../types/interface';
+import { DBUser, IProfile } from '../../../types';
 
 const profile = {
   update: async (req: Request, res: Response, next: NextFunction) => {

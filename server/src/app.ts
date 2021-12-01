@@ -1,14 +1,15 @@
+import path from 'path';
+import dotenv from 'dotenv';
+dotenv.config({ path: path.resolve(__dirname, './config/.env.development') });
+
 import express from 'express';
 import session from 'express-session';
 import sessionFileStore from 'session-file-store';
-import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import dotenv from 'dotenv';
 import { createServer } from 'http';
-import socketIO from './sockets/socketIO';
-dotenv.config({ path: path.resolve(__dirname, './config/.env.development') });
 
+import socketIO from './sockets/socketIO';
 import dbManager from './service/dbManager';
 
 const indexRouter = require('./routes/index');
