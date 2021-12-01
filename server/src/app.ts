@@ -15,17 +15,17 @@ import dbManager from './service/dbManager';
 const indexRouter = require('./routes/index');
 const oauthRouter = require('./routes/oauth');
 const apiRouter = require('./routes/api');
+const FileStore = sessionFileStore(session);
 
 const app = express();
+const port = 4000;
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'build') /*, { maxAge: 10 }*/));
-
-const port = 4000;
 app.set('port', port);
-const FileStore = sessionFileStore(session);
 
 dbManager.sync();
 
