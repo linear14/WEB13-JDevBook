@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
@@ -48,7 +48,7 @@ const OptionModal = ({ post }: { post: PostData }) => {
   const setPostData = useSetRecoilState(postModalDataStates);
   const resetModalState = useResetRecoilState(modalStateStore);
 
-  const modal = React.useRef<HTMLDivElement>(null);
+  const modal = useRef<HTMLDivElement>(null);
   const closeModal = (e: any, force?: boolean) => {
     if (!force && modal.current?.contains(e.target)) {
       return;

@@ -40,8 +40,9 @@ app.use(
     },
     store: new FileStore({
       path: path.resolve(__dirname, './sessions/'),
-      reapInterval: 24 * 60 * 60,
-      ttl: 24 * 60 * 60
+      ttl: 24 * 60 * 60,
+      //retries: 0
+      logFn: function () {}
     })
   })
 );

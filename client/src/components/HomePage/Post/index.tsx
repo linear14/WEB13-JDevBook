@@ -221,7 +221,6 @@ const Post = ({
           <Divider />
           <Comment
             postIdx={postIdx}
-            commentsNum={commentsNum}
             setCommentsNum={setCommentsNum}
             nickname={nickname}
           />

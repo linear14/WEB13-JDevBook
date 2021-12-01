@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   rightModalStates,
   usersocketStates,
@@ -8,10 +8,10 @@ import {
   alarmState
 } from 'recoil/store';
 
-import messageAudio from '../../sounds/message-notify.mp3';
-import commentAudio from '../../sounds/comment-notify.mp3';
-import { ClickableProfilePhoto } from 'components/common';
-import style from 'theme/style';
+import messageAudio from '../../../sounds/message-notify.mp3';
+import commentAudio from '../../../sounds/comment-notify.mp3';
+
+import AlarmListView from './AlarmListView';
 
 const OpenAlarmAnimation = keyframes`
   0% { opacity: 0; transform: translateX(100px); }
@@ -63,36 +63,12 @@ const AlarmSideBarContainer = styled.div<{
   }
 `;
 
-const AlarmBox = styled.div`
-  display: flex;
-  padding: ${style.padding.normal};
-  color: ${(props) => props.theme.black};
-  :hover {
-    background-color: ${(props) => props.theme.lightgray};
-    border-radius: 10px;
-  }
-`;
-const AlarmText = styled.div`
-  margin-top: ${style.margin.small};
-  margin-left: ${style.margin.small};
-  word-break: break-word;
-  font-size: 14px;
-`;
-
-const AlarmTextPreview = styled.div`
-  width: 248px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  opacity: 0.4;
-`;
-
 const AlarmSideBar = () => {
   const [alarmList, setAlarmList] = useState<string[]>([]);
+  const socket = useRecoilValue(usersocketStates);
   const rightModalState = useRecoilValue(rightModalStates);
   const currentUserName = useRecoilValue(userDataStates).name;
-  const [alarmNum, setAlarmNum] = useRecoilState(alarmState);
-  const socket = useRecoilValue(usersocketStates);
+  const setAlarmNum = useSetRecoilState(alarmState);
 
   socket.off('get alarm info');
   socket.on(
@@ -139,26 +115,12 @@ const AlarmSideBar = () => {
     }
   }, [currentUserName]);
 
-  const alarmListView = alarmList
-    .map((alarm, idx) => (
-      <AlarmBox key={idx}>
-        <ClickableProfilePhoto userName={alarm.split(':')[0]} size={'60px'} />
-        <AlarmText>
-          {alarm.split(':')[1] === 'post'
-            ? `${alarm.split(':')[0]} 님이 내 게시물에 댓글을 달았습니다. `
-            : `${alarm.split(':')[0]} 님으로부터 메시지가 도착했습니다. `}
-          <AlarmTextPreview>{alarm.split(':')[2]}</AlarmTextPreview>
-        </AlarmText>
-      </AlarmBox>
-    ))
-    .reverse();
-
   return (
     <AlarmSideBarContainer
       rightModalFlag={rightModalState.rightModalFlag}
       alarmFlag={rightModalState.alarmFlag}
     >
-      {alarmListView}
+      <AlarmListView alarmList={alarmList} />
     </AlarmSideBarContainer>
   );
 };
