@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import styled, { createGlobalStyle, css } from 'styled-components';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { imageViewerState as ivState } from 'recoil/store';
 import { currentPageStates } from 'recoil/common';
+import { imageViewerState as ivState } from 'recoil/post';
 
 import { Page } from 'types/common';
 

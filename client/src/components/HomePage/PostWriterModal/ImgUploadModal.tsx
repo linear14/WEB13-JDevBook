@@ -1,12 +1,12 @@
 import React, { BaseSyntheticEvent, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { useRecoilState } from 'recoil';
 import { IoClose } from 'react-icons/io5';
 import { FiUpload } from 'react-icons/fi';
-import { useRecoilState } from 'recoil';
 
-import { imageViewerState as ivState, uploadImgList } from 'recoil/store';
-import { isImgUploadingState, postModalDataStates } from 'recoil/store';
 import { modalStateStore } from 'recoil/common';
+import { imageViewerState as ivState, uploadImgList } from 'recoil/post';
+import { isImgUploadingState, postModalDataStates } from 'recoil/post';
 
 import fetchApi from 'api/fetch';
 import style from 'theme/style';

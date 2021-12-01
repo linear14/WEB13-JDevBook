@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import { postListStore, postModalDataStates } from 'recoil/store';
 import { modalStateStore } from 'recoil/common';
+import { postListStore, postModalDataStates } from 'recoil/post';
 
 import fetchApi from 'api/fetch';
 import { PostData } from 'types/post';

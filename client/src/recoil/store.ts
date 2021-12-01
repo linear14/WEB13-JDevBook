@@ -3,7 +3,6 @@ import { atom } from 'recoil';
 import { Socket } from 'socket.io-client';
 
 import { IGroup } from 'types/group';
-import { PostData } from 'types/post';
 import { SolvedRates, IProfile } from 'types/user';
 import { ISolvedProblem } from 'types/problem';
 
@@ -16,49 +15,6 @@ export const usersocketStates = atom({
 export const chatWith = atom({
   key: 'getReceiver',
   default: '' as string
-});
-
-export const imageViewerState = atom<{
-  isOpen: boolean;
-  imageCount: number;
-  currentIdx: number;
-  images: (string | never)[];
-}>({
-  key: 'imageViewerState',
-  default: {
-    isOpen: false,
-    imageCount: 0,
-    currentIdx: 0,
-    images: []
-  }
-});
-
-export const postModalDataStates = atom<PostData>({
-  key: 'postModalData',
-  default: {
-    idx: 0,
-    useridx: 0,
-    secret: false,
-    contents: '',
-    likenum: 0,
-    commentnum: 0,
-    likeFlag: false,
-    picture1: null,
-    picture2: null,
-    picture3: null,
-    BTUseruseridx: {
-      bio: null,
-      idx: 0,
-      nickname: '',
-      profile: null
-    },
-    createdAt: new Date()
-  }
-});
-
-export const postListStore = atom<PostData[]>({
-  key: 'postList',
-  default: []
 });
 
 export const CommentState = atom({
@@ -78,11 +34,6 @@ export const GroupNavState = atom({
 export const solvedProblemState = atom<ISolvedProblem[]>({
   key: 'solvedProblem',
   default: []
-});
-
-export const isImgUploadingState = atom({
-  key: 'isImgUploading',
-  default: 0
 });
 
 export const rateState = atom<SolvedRates>({
@@ -112,11 +63,6 @@ export const groupState = atom<IGroup>({
     description: '',
     cover: ''
   }
-});
-
-export const uploadImgList = atom({
-  key: 'uploadImgList',
-  default: [] as string[]
 });
 
 export const profileState = atom<IProfile>({

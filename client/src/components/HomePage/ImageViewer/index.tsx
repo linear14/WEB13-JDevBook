@@ -1,8 +1,9 @@
 import { useCallback, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { MdClose, MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import { useRecoilState } from 'recoil';
-import { imageViewerState as ivState } from 'recoil/store';
+import { MdClose, MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
+
+import { imageViewerState as ivState } from 'recoil/post';
 
 import { gridImage } from 'images';
 

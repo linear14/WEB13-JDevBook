@@ -2,14 +2,14 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { usersocketStates } from 'recoil/store';
+import { modalStateStore } from 'recoil/common';
 import {
   isImgUploadingState,
   postListStore,
   postModalDataStates,
-  uploadImgList,
-  usersocketStates
-} from 'recoil/store';
-import { modalStateStore } from 'recoil/common';
+  uploadImgList
+} from 'recoil/post';
 
 import fetchApi from 'api/fetch';
 import { PostAddData, PostUpdateData, PostData } from 'types/post';

@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { postListStore, profileState } from 'recoil/store';
-
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { useRecoilState, useRecoilValue } from 'recoil';
+
+import { profileState } from 'recoil/store';
+import { postListStore } from 'recoil/post';
 
 import fetchApi from 'api/fetch';
 

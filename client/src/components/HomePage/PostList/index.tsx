@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { postListStore } from 'recoil/store';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+
+import { postListStore } from 'recoil/post';
 
 import fetchApi from 'api/fetch';
 import arrayUtil from 'utils/arrayUtil';

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
+import { imageViewerState as ivState } from 'recoil/post';
+
 import { PostImagesInfo } from 'types/post';
-import { imageViewerState as ivState } from 'recoil/store';
 
 const HoverBox = styled.div`
   position: relative;
