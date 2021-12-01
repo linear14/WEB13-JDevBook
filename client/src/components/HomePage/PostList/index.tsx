@@ -8,7 +8,7 @@ import arrayUtil from 'utils/arrayUtil';
 
 import { Post } from 'components/HomePage';
 import { Problem } from 'components/GroupPage';
-import { NewPostAlert, Skeleton } from 'components/common';
+import { NewPostAlert, FakePost } from 'components/common';
 
 const PostListContainer = styled.div`
   width: 680px;
@@ -101,7 +101,7 @@ const PostList = () => {
     return Array(count)
       .fill(undefined)
       .map((v, i) => {
-        return <Skeleton key={`s${i}`} />;
+        return <FakePost key={`s${i}`} />;
       });
   };
 

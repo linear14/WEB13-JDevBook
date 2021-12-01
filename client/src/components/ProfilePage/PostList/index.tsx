@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import fetchApi from 'api/fetch';
 
 import { Post } from 'components/HomePage';
-import { Skeleton } from 'components/common';
+import { FakePost } from 'components/common';
 
 const PostListContainer = styled.div`
   width: 532px;
@@ -88,7 +88,7 @@ const PostList = () => {
     return Array(count)
       .fill(undefined)
       .map((v, i) => {
-        return <Skeleton key={`s${i}`} isProfile />;
+        return <FakePost key={`s${i}`} isProfile />;
       });
   };
 
