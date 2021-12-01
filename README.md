@@ -64,7 +64,7 @@
 
 ### 테스트
 
-![](https://img.shields.io/badge/-Cypress-%23C21325?style=flat-square&logo=Cypress&logoColor=white)
+![](https://img.shields.io/badge/-Cypress-%23181717?style=flat-square&logo=Cypress&logoColor=white)
 
 ### 협업 툴
 
