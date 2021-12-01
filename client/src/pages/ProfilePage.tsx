@@ -3,8 +3,9 @@ import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle, css } from 'styled-components';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import { imageViewerState, profileState, userDataStates } from 'recoil/store';
+import { imageViewerState, profileState } from 'recoil/store';
 import { currentPageStates } from 'recoil/common';
+import { userDataStates } from 'recoil/user';
 
 import { Page } from 'types/common';
 

@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { MdMoreHoriz } from 'react-icons/md';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { userDataStates, usersocketStates } from 'recoil/store';
+import { usersocketStates } from 'recoil/store';
 import { modalStateStore } from 'recoil/common';
+import { userDataStates } from 'recoil/user';
 
 import { LikeIcon, CommentIcon } from 'images/icons';
 import { PostData } from 'types/post';

@@ -3,13 +3,13 @@ import { useHistory } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import {
-  userDataStates,
   postModalDataStates,
   solvedProblemState,
   groupListState,
   myJoinedGroupState
 } from 'recoil/store';
 import { commonState } from 'recoil/common';
+import { userDataStates } from 'recoil/user';
 
 import { IProblem } from 'types/problem';
 import { IGroup } from 'types/group';

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { userDataStates, postModalDataStates } from 'recoil/store';
+import { postModalDataStates } from 'recoil/store';
 import { modalStateStore } from 'recoil/common';
+import { userDataStates } from 'recoil/user';
 
 import style from 'theme/style';
 import useAlertModal from 'hooks/useAlertModal';

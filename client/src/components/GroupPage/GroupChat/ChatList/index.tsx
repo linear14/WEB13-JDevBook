@@ -1,11 +1,12 @@
 import styled from 'styled-components';
-
 import { useRecoilValue } from 'recoil';
-import { userDataStates } from 'recoil/store';
 
-import { ClickableProfilePhoto } from 'components/common';
+import { userDataStates } from 'recoil/user';
+
 import { IMessage, ISuccessiveMessage } from 'types/message';
 import style from 'theme/style';
+
+import { ClickableProfilePhoto } from 'components/common';
 
 const MessageWrap = styled.div<IMessage>`
   ${(props) =>

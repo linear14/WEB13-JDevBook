@@ -7,19 +7,6 @@ import { PostData } from 'types/post';
 import { SolvedRates, IProfile } from 'types/user';
 import { ISolvedProblem } from 'types/problem';
 
-export const userDataStates = atom({
-  key: 'userData',
-  default: {
-    idx: -1,
-    name: '',
-    profile: '' as string,
-    cover: '' as string,
-    bio: '' as string,
-    login: false
-    // CUD는 필요할 때 DB에서 쓰자.
-  }
-});
-
 export const usersocketStates = atom({
   key: 'socket',
   default: socket as Socket

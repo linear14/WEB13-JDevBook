@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { userDataStates, myJoinedGroupState } from 'recoil/store';
+import { myJoinedGroupState } from 'recoil/store';
+import { userDataStates } from 'recoil/user';
+
 import style from 'theme/style';
-import { defaultGroup } from 'images/groupimg';
 import { IGroup } from 'types/group';
+import { defaultGroup } from 'images/groupimg';
 import fetchApi from 'api/fetch';
 import useAlertModal from 'hooks/useAlertModal';
 

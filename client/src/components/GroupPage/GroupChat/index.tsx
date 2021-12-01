@@ -2,7 +2,8 @@ import { useState, useEffect, FormEvent } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { GroupNavState, userDataStates, usersocketStates } from 'recoil/store';
+import { GroupNavState, usersocketStates } from 'recoil/store';
+import { userDataStates } from 'recoil/user';
 
 import style from 'theme/style';
 

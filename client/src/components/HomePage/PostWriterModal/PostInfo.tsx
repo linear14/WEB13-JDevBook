@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { userDataStates, postModalDataStates } from 'recoil/store';
+import { postModalDataStates } from 'recoil/store';
+import { userDataStates } from 'recoil/user';
+
+import style from 'theme/style';
 
 import { ProfilePhoto } from 'components/common';
-import style from 'theme/style';
 
 const PostInfoWrap = styled.div`
   width: 100%;

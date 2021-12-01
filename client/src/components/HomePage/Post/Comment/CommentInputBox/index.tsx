@@ -2,11 +2,12 @@ import { ChangeEvent, Dispatch } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { userDataStates } from 'recoil/store';
-import { ClickableProfilePhoto } from 'components/common';
-import style from 'theme/style';
+import { userDataStates } from 'recoil/user';
 
+import style from 'theme/style';
 import useAlertModal from 'hooks/useAlertModal';
+
+import { ClickableProfilePhoto } from 'components/common';
 
 const CommentInputWrapper = styled.div`
   display: flex;

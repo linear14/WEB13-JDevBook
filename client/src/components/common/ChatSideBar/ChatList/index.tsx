@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { useRecoilValue } from 'recoil';
-import { userDataStates } from 'recoil/store';
+import { userDataStates } from 'recoil/user';
 
 import { ClickableProfilePhoto } from 'components/common';
 import { IMessage, ISuccessiveMessage } from 'types/message';

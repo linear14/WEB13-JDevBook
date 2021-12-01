@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { userDataStates } from 'recoil/store';
+import { userDataStates } from 'recoil/user';
 import { isLoginfailStates } from 'recoil/common';
 
 import {

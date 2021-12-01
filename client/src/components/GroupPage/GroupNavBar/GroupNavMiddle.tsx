@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { userDataStates, myJoinedGroupState, groupState } from 'recoil/store';
+import { myJoinedGroupState, groupState } from 'recoil/store';
+import { userDataStates } from 'recoil/user';
+
 import style from 'theme/style';
 import useAlertModal from 'hooks/useAlertModal';
 import fetchApi from 'api/fetch';

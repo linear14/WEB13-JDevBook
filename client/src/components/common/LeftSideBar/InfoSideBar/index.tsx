@@ -5,10 +5,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import {
   solvedProblemState,
-  userDataStates,
   rateState,
   myJoinedGroupState
 } from 'recoil/store';
+import { userDataStates } from 'recoil/user';
+
 import fetchApi from 'api/fetch';
 import useResetProfile from 'hooks/useResetProfile';
 

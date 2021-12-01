@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { profileState, userDataStates } from 'recoil/store';
+import { profileState } from 'recoil/store';
 import { modalStateStore } from 'recoil/common';
+import { userDataStates } from 'recoil/user';
 
 import style from 'theme/style';
 

@@ -2,7 +2,8 @@ import { useState, useEffect, FormEvent } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { userDataStates, usersocketStates, chatWith } from 'recoil/store';
+import { usersocketStates, chatWith } from 'recoil/store';
+import { userDataStates } from 'recoil/user';
 import { rightModalStates } from 'recoil/common';
 
 import style from 'theme/style';

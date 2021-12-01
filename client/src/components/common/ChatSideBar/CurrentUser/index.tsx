@@ -2,13 +2,9 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
 
-import {
-  usersocketStates,
-  userDataStates,
-  chatWith,
-  usersNumState
-} from 'recoil/store';
+import { usersocketStates, chatWith, usersNumState } from 'recoil/store';
 import { loginState } from 'recoil/common';
+import { userDataStates } from 'recoil/user';
 
 import getData from 'api/fetch';
 import style from 'theme/style';

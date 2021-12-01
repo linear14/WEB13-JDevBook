@@ -2,14 +2,15 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { userDataStates, usersocketStates } from 'recoil/store';
+import { usersocketStates } from 'recoil/store';
+import { userDataStates } from 'recoil/user';
+
 import style from 'theme/style';
 import { IComment } from 'types/comment';
-
 import fetchApi from 'api/fetch';
 
-import CommentListView from './CommentListView';
-import CommentInputBox from './CommentInputBox';
+import CommentListView from 'components/HomePage/Post/Comment/CommentListView';
+import CommentInputBox from 'components/HomePage/Post/Comment/CommentInputBox';
 
 const Animation = keyframes`
   0% { opacity: 0; }
