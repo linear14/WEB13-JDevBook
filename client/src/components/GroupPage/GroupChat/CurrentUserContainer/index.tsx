@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-
 import { useRecoilValue } from 'recoil';
-import { loginState } from 'recoil/store';
+
+import { loginState } from 'recoil/common';
 
 import style from 'theme/style';
+
 import { ClickableProfilePhoto } from 'components/common';
 
 const CurrentUserWrapper = styled.div`

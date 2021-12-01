@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-
 import { MdArrowBack } from 'react-icons/md';
-import { modalStateStore } from 'recoil/store';
+
+import { modalStateStore } from 'recoil/common';
+
 import { SearchedUser } from 'types/GNB';
 
 import { UserCard } from 'components/common';
-import UserSearchBar from './UserSearchBar';
+import UserSearchBar from 'components/common/Gnb/UserSearchBar';
 
 const FlexBox = styled.div`
   display: flex;

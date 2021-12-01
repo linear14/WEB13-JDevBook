@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
+
 import {
   usersocketStates,
   userDataStates,
   chatWith,
-  loginState,
   usersNumState
 } from 'recoil/store';
+import { loginState } from 'recoil/common';
 
 import getData from 'api/fetch';
-import { ClickableProfilePhoto } from 'components/common';
 import style from 'theme/style';
 import { UserSocket } from 'types/common';
+
+import { ClickableProfilePhoto } from 'components/common';
 
 const CurrentUserWrapper = styled.div`
   width: inherit;

@@ -2,11 +2,13 @@ import { useEffect } from 'react';
 import styled, { createGlobalStyle, css } from 'styled-components';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { currentPageStates, imageViewerState as ivState } from 'recoil/store';
+import { imageViewerState as ivState } from 'recoil/store';
+import { currentPageStates } from 'recoil/common';
+
+import { Page } from 'types/common';
 
 import { PostWriter, PostList, ImageViewer } from 'components/HomePage';
 import { FakeSideBar, InitUserData, FakeGnb } from 'components/common';
-import { Page } from 'types/common';
 
 const BodyColor = createGlobalStyle`
   ${({}) => {

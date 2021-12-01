@@ -1,22 +1,18 @@
 import { useState, useEffect, FormEvent } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-
 import { useRecoilValue } from 'recoil';
-import {
-  rightModalStates,
-  userDataStates,
-  usersocketStates,
-  chatWith
-} from 'recoil/store';
 
-import CurrentUser from './CurrentUser';
+import { userDataStates, usersocketStates, chatWith } from 'recoil/store';
+import { rightModalStates } from 'recoil/common';
+
 import style from 'theme/style';
 import { ISocketMessage } from 'types/message';
 
-import ChatListView from './ChatList';
-import CurrentUserTitle from './CurrentUserTitle';
-import ChatTitle from './ChatTitle';
-import ChatInput from './ChatInput';
+import CurrentUser from 'components/common/ChatSideBar/CurrentUser';
+import ChatListView from 'components/common/ChatSideBar/ChatList';
+import CurrentUserTitle from 'components/common/ChatSideBar/CurrentUserTitle';
+import ChatTitle from 'components/common/ChatSideBar/ChatTitle';
+import ChatInput from 'components/common/ChatSideBar/ChatInput';
 
 const OpenChatAnimation = keyframes`
   0% { opacity: 0; transform: translateX(100px); }

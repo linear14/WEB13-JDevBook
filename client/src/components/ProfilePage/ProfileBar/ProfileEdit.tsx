@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { modalStateStore, profileState, userDataStates } from 'recoil/store';
+import { profileState, userDataStates } from 'recoil/store';
+import { modalStateStore } from 'recoil/common';
+
 import style from 'theme/style';
 
 const ProfileEditWrap = styled.div<{ myProfile: boolean }>`

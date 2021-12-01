@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { rightModalStates, groupListState } from 'recoil/store';
+import { groupListState } from 'recoil/store';
+import { rightModalStates } from 'recoil/common';
+
 import fetchApi from 'api/fetch';
+import { IGroup } from 'types/group';
 
 import GroupCard from 'components/GroupSelectPage/GroupSelectList/GroupCard';
-import { IGroup } from 'types/group';
 
 const GroupSelectListContainer = styled.div<{
   modalState: boolean;

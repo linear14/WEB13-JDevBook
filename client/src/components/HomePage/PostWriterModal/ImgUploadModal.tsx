@@ -3,16 +3,14 @@ import styled, { keyframes } from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 import { FiUpload } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
-import { imageViewerState as ivState, uploadImgList } from 'recoil/store';
 
-import {
-  isImgUploadingState,
-  modalStateStore,
-  postModalDataStates
-} from 'recoil/store';
+import { imageViewerState as ivState, uploadImgList } from 'recoil/store';
+import { isImgUploadingState, postModalDataStates } from 'recoil/store';
+import { modalStateStore } from 'recoil/common';
+
 import fetchApi from 'api/fetch';
-import useAlertModal from 'hooks/useAlertModal';
 import style from 'theme/style';
+import useAlertModal from 'hooks/useAlertModal';
 
 const ModalAnimation = keyframes`
   0% {

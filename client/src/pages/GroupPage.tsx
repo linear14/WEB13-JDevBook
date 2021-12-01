@@ -3,7 +3,9 @@ import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle, css } from 'styled-components';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import { currentPageStates, groupState } from 'recoil/store';
+import { groupState } from 'recoil/store';
+import { currentPageStates } from 'recoil/common';
+
 import { defaultGroup } from 'images/groupimg';
 
 import {

@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdMoreHoriz } from 'react-icons/md';
+import { useRecoilState, useRecoilValue } from 'recoil';
+
+import { userDataStates, usersocketStates } from 'recoil/store';
+import { modalStateStore } from 'recoil/common';
 
 import { LikeIcon, CommentIcon } from 'images/icons';
 import { PostData } from 'types/post';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  modalStateStore,
-  userDataStates,
-  usersocketStates
-} from 'recoil/store';
-import Header from './Header';
-import OptionModal from './OptionModal';
-import Body from './Body';
-import Footer from './Footer';
+import Header from 'components/HomePage/Post/Header';
+import OptionModal from 'components/HomePage/Post/OptionModal';
+import Body from 'components/HomePage/Post/Body';
+import Footer from 'components/HomePage/Post/Footer';
 import fetchApi from 'api/fetch';
-import Comment from './Comment';
+import Comment from 'components/HomePage/Post/Comment';
 
 const PostContainer = styled.div`
   width: 100%;

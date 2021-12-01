@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-
 import { useRecoilValue } from 'recoil';
-import { rightModalStates, usersNumState } from 'recoil/store';
+
+import { usersNumState } from 'recoil/store';
+import { rightModalStates } from 'recoil/common';
 
 import style from 'theme/style';
 

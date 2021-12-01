@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { themeState } from 'recoil/store';
+import { themeState } from 'recoil/common';
+
 import { light, dark } from 'theme/color';
 
 const InitTheme: React.FC = ({ children }) => {

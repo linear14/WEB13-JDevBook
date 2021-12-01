@@ -1,6 +1,8 @@
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import { modalStateStore, profileState } from 'recoil/store';
+import { profileState } from 'recoil/store';
+import { modalStateStore } from 'recoil/common';
+
 import fetchApi from 'api/fetch';
 
 const useResetProfile = () => {

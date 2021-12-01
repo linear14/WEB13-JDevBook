@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { userDataStates, modalStateStore } from 'recoil/store';
+import { userDataStates } from 'recoil/store';
+import { modalStateStore } from 'recoil/common';
 import { iconPhoto } from 'images/icons';
 
 import { ProfilePhoto } from 'components/common';

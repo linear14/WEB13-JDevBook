@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { modalStateStore, profileState } from 'recoil/store';
+import { profileState } from 'recoil/store';
+import { modalStateStore } from 'recoil/common';
+
 import style from 'theme/style';
 
 import { ProfileEditModal } from 'components/ProfilePage';

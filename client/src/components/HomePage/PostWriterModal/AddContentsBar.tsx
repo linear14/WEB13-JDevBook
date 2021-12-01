@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { modalStateStore } from 'recoil/store';
+import { modalStateStore } from 'recoil/common';
 import { iconPhoto } from 'images/icons';
 
 const AddContentsBarWrap = styled.div`

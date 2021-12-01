@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-
-import fetchApi from 'api/fetch';
 
 import {
   userDataStates,
   postModalDataStates,
   solvedProblemState,
   groupListState,
-  myJoinedGroupState,
-  commonState
+  myJoinedGroupState
 } from 'recoil/store';
-import { useHistory } from 'react-router-dom';
+import { commonState } from 'recoil/common';
+
 import { IProblem } from 'types/problem';
 import { IGroup } from 'types/group';
+import fetchApi from 'api/fetch';
 
 const InitUserData = () => {
   const setUserdata = useSetRecoilState(userDataStates);

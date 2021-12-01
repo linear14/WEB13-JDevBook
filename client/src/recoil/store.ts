@@ -2,25 +2,10 @@ import socket from 'components/common/Socket';
 import { atom } from 'recoil';
 import { Socket } from 'socket.io-client';
 
-import { Alert, Page } from 'types/common';
 import { IGroup } from 'types/group';
 import { PostData } from 'types/post';
 import { SolvedRates, IProfile } from 'types/user';
 import { ISolvedProblem } from 'types/problem';
-
-export const modalStateStore = atom({
-  key: 'modalState',
-  default: {
-    searchUser: false,
-    post: {
-      writer: false,
-      inPhoto: false,
-      index: -1,
-      isEnroll: true
-    },
-    editProfile: false
-  }
-});
 
 export const userDataStates = atom({
   key: 'userData',
@@ -32,26 +17,6 @@ export const userDataStates = atom({
     bio: '' as string,
     login: false
     // CUD는 필요할 때 DB에서 쓰자.
-  }
-});
-
-export const isLoginfailStates = atom({
-  key: 'isLoginfail',
-  default: false as boolean
-});
-
-export const currentPageStates = atom({
-  key: 'currentPageState',
-  default: Page.LOGIN
-});
-
-export const rightModalStates = atom({
-  key: 'rightModalState',
-  default: {
-    rightModalFlag: false,
-    messageFlag: false,
-    alarmFlag: false,
-    selectorFlag: false
   }
 });
 
@@ -123,20 +88,6 @@ export const GroupNavState = atom({
   }
 });
 
-export const alertState = atom<Alert>({
-  key: 'alertState',
-  default: {
-    isAlert: false,
-    comment: '',
-    modalState: false
-  }
-});
-
-export const timeOutValueState = atom({
-  key: 'timeOutValueState',
-  default: 0
-});
-
 export const solvedProblemState = atom<ISolvedProblem[]>({
   key: 'solvedProblem',
   default: []
@@ -191,27 +142,7 @@ export const profileState = atom<IProfile>({
   }
 });
 
-export const loginState = atom({
-  key: 'loginState',
-  default: [] as string[]
-});
-
-export const alarmState = atom({
-  key: 'alarm',
-  default: 0 as number
-});
-
-export const themeState = atom<string>({
-  key: 'theme',
-  default: 'light'
-});
-
 export const usersNumState = atom<number>({
   key: 'number of usres',
   default: 0
-});
-
-export const commonState = atom<boolean>({
-  key: 'common',
-  default: false
 });

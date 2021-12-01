@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import {
-  modalStateStore,
-  userDataStates,
-  postModalDataStates
-} from 'recoil/store';
-import style from 'theme/style';
+import { userDataStates, postModalDataStates } from 'recoil/store';
+import { modalStateStore } from 'recoil/common';
 
+import style from 'theme/style';
 import useAlertModal from 'hooks/useAlertModal';
 
 const ModalContentsContainer = styled.div`

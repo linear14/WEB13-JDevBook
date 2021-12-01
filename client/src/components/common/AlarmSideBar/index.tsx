@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  rightModalStates,
-  usersocketStates,
-  userDataStates,
-  alarmState
-} from 'recoil/store';
+
+import { usersocketStates, userDataStates } from 'recoil/store';
+import { rightModalStates, alarmState } from 'recoil/common';
 
 import messageAudio from '../../../sounds/message-notify.mp3';
 import commentAudio from '../../../sounds/comment-notify.mp3';

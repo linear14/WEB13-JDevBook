@@ -4,22 +4,23 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import {
   isImgUploadingState,
-  modalStateStore,
   postListStore,
   postModalDataStates,
   uploadImgList,
   usersocketStates
 } from 'recoil/store';
+import { modalStateStore } from 'recoil/common';
+
 import fetchApi from 'api/fetch';
 import { PostAddData, PostUpdateData, PostData } from 'types/post';
+import useClosePostModal from 'hooks/useClosePostModal';
+import useAlertModal from 'hooks/useAlertModal';
 
 import ModalTitle from 'components/HomePage/PostWriterModal/ModalTitle';
 import PostInfo from 'components/HomePage/PostWriterModal/PostInfo';
 import ModalContents from 'components/HomePage/PostWriterModal/ModalContents';
 import AddContentsBar from 'components/HomePage/PostWriterModal/AddContentsBar';
-import ImgUploadModal from './ImgUploadModal';
-import useClosePostModal from 'hooks/useClosePostModal';
-import useAlertModal from 'hooks/useAlertModal';
+import ImgUploadModal from 'components/HomePage/PostWriterModal/ImgUploadModal';
 
 const PostWriterModalOverlay = styled.div<{ modalState: boolean }>`
   position: fixed;

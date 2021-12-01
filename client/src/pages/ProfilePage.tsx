@@ -3,12 +3,10 @@ import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle, css } from 'styled-components';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import {
-  currentPageStates,
-  imageViewerState,
-  profileState,
-  userDataStates
-} from 'recoil/store';
+import { imageViewerState, profileState, userDataStates } from 'recoil/store';
+import { currentPageStates } from 'recoil/common';
+
+import { Page } from 'types/common';
 
 import {
   InitUserData,
@@ -24,7 +22,6 @@ import {
   PostList,
   ProfileInfoBar
 } from 'components/ProfilePage';
-import { Page } from 'types/common';
 
 const GlobalStyle = createGlobalStyle`
   ${({}) => {

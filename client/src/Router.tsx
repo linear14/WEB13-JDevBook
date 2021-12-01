@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { userDataStates, isLoginfailStates } from 'recoil/store';
+import { userDataStates } from 'recoil/store';
+import { isLoginfailStates } from 'recoil/common';
 
 import {
   GroupPage,
@@ -13,6 +14,7 @@ import {
   LoadingWhitePage,
   GroupSelectPage
 } from 'pages';
+
 import { ChatSideBar, AlarmSideBar, LeftSideBar, Gnb } from 'components/common';
 
 const Router = () => {

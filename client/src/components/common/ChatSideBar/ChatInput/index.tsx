@@ -1,13 +1,13 @@
 import { Dispatch } from 'react';
 import styled from 'styled-components';
-
 import { useRecoilValue } from 'recoil';
-import { rightModalStates } from 'recoil/store';
 
-import useAlertModal from 'hooks/useAlertModal';
+import { rightModalStates } from 'recoil/common';
+
 import style from 'theme/style';
+import useAlertModal from 'hooks/useAlertModal';
 
-import SubmitBtn from '../SubmitBtn';
+import SubmitBtn from 'components/common/ChatSideBar/SubmitBtn';
 
 const ChatInputWrapper = styled.div<{
   rightModalFlag: boolean;

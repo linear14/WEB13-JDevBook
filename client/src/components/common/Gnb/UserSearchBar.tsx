@@ -2,10 +2,10 @@ import { useState, useRef, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import fetchApi from 'api/fetch';
-import { modalStateStore } from 'recoil/store';
-import { SearchedUser } from 'types/GNB';
+import { modalStateStore } from 'recoil/common';
 
+import fetchApi from 'api/fetch';
+import { SearchedUser } from 'types/GNB';
 import { IconSearch } from 'images/icons';
 
 const ExtendSearchBarAnimation = keyframes`

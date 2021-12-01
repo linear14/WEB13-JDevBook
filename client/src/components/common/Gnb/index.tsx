@@ -4,15 +4,18 @@ import { useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
 
 import {
-  rightModalStates,
   solvedProblemState,
   userDataStates,
   GroupNavState,
+  usersocketStates
+} from 'recoil/store';
+import {
+  rightModalStates,
   alarmState,
-  usersocketStates,
   themeState,
   commonState
-} from 'recoil/store';
+} from 'recoil/common';
+
 import fetchApi from 'api/fetch';
 import { RightModalProps } from 'types/GNB';
 import { GnbMessage, GnbAlarm, GnbLogout } from 'images/icons';

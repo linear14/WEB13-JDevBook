@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { modalStateStore, profileState } from 'recoil/store';
+import { profileState } from 'recoil/store';
+import { modalStateStore } from 'recoil/common';
+
 import style from 'theme/style';
-import useAlertModal from 'hooks/useAlertModal';
 import fetchApi from 'api/fetch';
+import useAlertModal from 'hooks/useAlertModal';
 
 const EditModalAnimation = keyframes`
   0% {

@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { GroupNavState, rightModalStates } from 'recoil/store';
+import { GroupNavState } from 'recoil/store';
+import { rightModalStates } from 'recoil/common';
+
 import style from 'theme/style';
 
 const GroupNavigationWrap = styled.div`

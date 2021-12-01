@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { alertState } from 'recoil/store';
+import { alertState } from 'recoil/common';
 
 const AlertModalWrap = styled.div<{ bgColor?: boolean; modalState: boolean }>`
   position: fixed;
