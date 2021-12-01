@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import { alertState } from 'recoil/store';
 
@@ -16,7 +16,7 @@ const AlertModalWrap = styled.div<{ bgColor?: boolean; modalState: boolean }>`
   border-radius: 8px;
   background-color: ${(props) =>
     props.bgColor ? props.theme.alert : props.theme.blue};
-  color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme.inColorBox};
 
   display: flex;
   justify-content: center;

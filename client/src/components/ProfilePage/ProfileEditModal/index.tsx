@@ -77,7 +77,8 @@ const StyledBtn = styled.div<{ saveBtn: boolean }>`
   border-radius: 8px;
   background-color: ${(props) =>
     props.saveBtn ? props.theme.green : props.theme.gray};
-  color: ${(props) => (props.saveBtn ? props.theme.white : props.theme.black)};
+  color: ${(props) =>
+    props.saveBtn ? props.theme.inColorBox : props.theme.black};
 
   display: flex;
   justify-content: center;

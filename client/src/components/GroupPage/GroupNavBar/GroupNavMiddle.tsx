@@ -22,7 +22,7 @@ const GroupJoinBtn = styled.div<{ joinedState: boolean }>`
   background-color: ${(props) =>
     props.joinedState ? props.theme.gray : props.theme.green};
   color: ${(props) =>
-    props.joinedState ? props.theme.black : props.theme.white};
+    props.joinedState ? props.theme.black : props.theme.inColorBox};
 
   display: flex;
   justify-content: center;

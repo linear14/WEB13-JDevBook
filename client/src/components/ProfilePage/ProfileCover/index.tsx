@@ -31,7 +31,7 @@ const CoverImageEditBtn = styled.div<{ mine: boolean }>`
 
   border-radius: 8px;
   background-color: ${(props) => props.theme.blue};
-  color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme.inColorBox};
 
   display: ${({ mine }) => (mine ? 'flex' : 'none')};
   justify-content: center;

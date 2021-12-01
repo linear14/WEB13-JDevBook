@@ -90,7 +90,7 @@ const GroupEnterBtn = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme.inColorBox};
   text-decoration: none;
 
   &:hover {

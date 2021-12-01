@@ -58,7 +58,7 @@ const InnerBarGraph = styled.span<{ solvedRate: number }>`
   border-radius: 40px;
   padding: 0 10px;
   box-sizing: border-box;
-  color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme.inColorBox};
   font-size: small;
   font-weight: 600;
   animation: ${(props) => GraphAnimation(props.solvedRate)} 1.5s 1;

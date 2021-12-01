@@ -18,7 +18,7 @@ const ProfileEditBtn = styled.div`
 
   border-radius: 8px;
   background-color: ${(props) => props.theme.green};
-  color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme.inColorBox};
 
   display: flex;
   justify-content: center;
