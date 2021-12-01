@@ -1,12 +1,13 @@
 import socket from 'components/common/Socket';
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 import { Socket } from 'socket.io-client';
 
 import { Alert, Page } from 'types/common';
 import { IGroup } from 'types/group';
 import { PostData } from 'types/post';
-import { SolvedRates, IProfile } from 'types/user';
-import { ISolvedProblem } from 'types/problem';
+import { SolvedRates, IProfile, IUserGroup, IUserWithSolved } from 'types/user';
+import { IProblem, ISolvedProblem } from 'types/problem';
+import fetchApi from 'api/fetch';
 
 export const modalStateStore = atom({
   key: 'modalState',
@@ -214,4 +215,35 @@ export const usersNumState = atom<number>({
 export const commonState = atom<boolean>({
   key: 'common',
   default: false
+});
+
+export const profileSolvedRate = selector({
+  key: 'profileSolvedRate',
+  get: async ({ get }) => {
+    const { idx, nickname } = get(profileState);
+    const rawJoinedGroups: IUserGroup[] = await fetchApi.getJoinedGroups(idx);
+    const rawSolvedProblems: IUserWithSolved[] =
+      await fetchApi.getSolvedProblems(nickname);
+    const rawTotalProblems: IProblem[] = await fetchApi.getJoinedProblems(idx);
+
+    const joinedGroups = rawJoinedGroups.map((cur) => cur.groupidx);
+    const solvedProblems =
+      rawSolvedProblems.length > 0
+        ? rawSolvedProblems[0].BTMUserProblemuseridx.map((cur) => ({
+            idx: cur.idx,
+            groupIdx: cur.groupidx
+          }))
+        : [];
+    const totalProblemsCount = rawTotalProblems.length || 0;
+
+    const solvedLength = solvedProblems.filter((item) =>
+      joinedGroups.includes(item.groupIdx)
+    ).length;
+
+    return joinedGroups.length === 0
+      ? -1
+      : totalProblemsCount === 0
+      ? 0
+      : Number(((solvedLength / totalProblemsCount) * 100).toFixed(1));
+  }
 });

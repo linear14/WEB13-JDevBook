@@ -16,7 +16,7 @@ const Container = styled.div`
     background: ${(props) => props.theme.skeleton};
 
     &:last-child {
-      margin-top: 8px;
+      margin-top: 12px;
     }
   }
 `;
@@ -24,8 +24,8 @@ const Container = styled.div`
 const FakeProfileBar = () => {
   return (
     <Container className="no-drag">
-      <div style={{ width: 300, height: 18 }}></div>
-      <div style={{ width: 300, height: 18 }}></div>
+      <div style={{ width: 120, height: 24 }}></div>
+      <div style={{ width: '100%', height: 25 }}></div>
     </Container>
   );
 };
