@@ -55,10 +55,8 @@ const PostList = () => {
     try {
       abortController.current = new AbortController();
       setFetching(true);
-      const fetchPosts = await fetchApi.getPosts(
-        abortController.current.signal
-      );
-      const fetchProblems = await fetchApi.getProblems(
+      const fetchPosts = fetchApi.getPosts(abortController.current.signal);
+      const fetchProblems = fetchApi.getProblems(
         null,
         abortController.current.signal
       );
