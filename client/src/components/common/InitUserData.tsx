@@ -40,7 +40,6 @@ const InitUserData = () => {
   useEffect(() => {
     (async () => {
       const { data, error } = await fetchApi.getuserData();
-      const fetchGroupList: IGroup[] = await fetchApi.getGroupList();
       if (error) {
         resetUserdata();
         resetCommonState();
@@ -50,6 +49,7 @@ const InitUserData = () => {
         history.push('/');
         alert('비정상 접근');
       } else {
+        const fetchGroupList: IGroup[] = await fetchApi.getGroupList();
         setUserdata({
           name: data.nickname,
           idx: data.idx,
