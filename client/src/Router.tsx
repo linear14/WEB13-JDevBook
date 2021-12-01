@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { userDataStates, isLoginfailStates } from 'recoil/store';
 
@@ -10,6 +10,7 @@ import {
   LoginPage,
   ProfilePage,
   IsLoginPage,
+  LoadingWhitePage,
   GroupSelectPage
 } from 'pages';
 import {
@@ -23,7 +24,7 @@ import {
 
 const Router = () => {
   const [login, setLogin] = useState(false);
-  const setLoginfail = useSetRecoilState(isLoginfailStates);
+  const [loginfail, setLoginfail] = useRecoilState(isLoginfailStates);
   const userdata = useRecoilValue(userDataStates);
   useEffect(() => {
     if (userdata.login === false) {
@@ -47,7 +48,17 @@ const Router = () => {
       <ChatSideBar />
       <AlarmSideBar />
       <Switch>
-        <Route path="/" exact component={LoginPage} />
+        <Route
+          path="/"
+          exact
+          render={(props) =>
+            loginfail ? (
+              <LoginPage />
+            ) : (
+              <LoadingWhitePage login={login} {...props} />
+            )
+          }
+        />
         <Route
           path="/home"
           exact

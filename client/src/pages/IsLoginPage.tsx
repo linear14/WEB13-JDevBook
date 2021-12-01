@@ -13,6 +13,7 @@ const Content = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
+  background-color: ${(props) => props.theme.lightgray};
 `;
 
 const loadingAnimation = keyframes`
