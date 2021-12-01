@@ -182,7 +182,7 @@ const Gnb = () => {
   const [alarmNum, setAlarmNum] = useRecoilState(alarmState);
   const [theme, setTheme] = useRecoilState(themeState);
   const socket = useRecoilValue(usersocketStates);
-  const [commonDisplay, setCommonDispaly] = useRecoilState(commonState);
+  const [commonDisplay, setCommonDisplay] = useRecoilState(commonState);
   const history = useHistory();
 
   const themeToggleHandler = (e: React.MouseEvent) => {
@@ -247,7 +247,7 @@ const Gnb = () => {
             ChangeFlag(rightModalState, setRightModalState, '');
             await fetchApi.logout();
             resetUserdata();
-            setCommonDispaly(false);
+            setCommonDisplay(false);
             resetSolvedProblemState();
             socket.emit('disconnect notify');
             history.push('/');
