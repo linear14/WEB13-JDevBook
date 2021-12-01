@@ -1,86 +1,25 @@
 import { CommentData } from 'types/comment';
-import {
-  PostData,
-  PostAddData,
-  PostUpdateData,
-  PostRequestOptions
-} from 'types/post';
 import { IProfile } from 'types/user';
 
+import { getLoginlink, isLogin } from 'api/fetch/login';
+import { logout } from 'api/fetch/logout';
+import { getuserData, searchUsers, getAllUsers } from 'api/fetch/users';
+import { getPosts, addPosts, updatePosts, deletePosts } from 'api/fetch/posts';
+
 const fetchApi = {
-  getLoginlink: async (): Promise<string> => {
-    const loginLinkRes: Response = await fetch('/oauth/login');
-    return await loginLinkRes.json();
-  },
-  getuserData: async () => {
-    // { data, error }
-    const userDataRes: Response = await fetch('/api/data');
-    return await userDataRes.json();
-  },
-  isLogin: async () => {
-    const response: Response = await fetch('/api/islogin');
-    return await response.json();
-  },
-  logout: async () => {
-    await fetch('/oauth/logout');
-  },
-  searchUsers: async (keyword: string) => {
-    const usersRes: Response = await fetch(`/api/users?keyword=${keyword}`);
-    return await usersRes.json();
-  },
+  getLoginlink,
+  isLogin,
 
-  getAllUsers: async () => {
-    const allusersRes: Response = await fetch('/api/allUsers');
-    return await allusersRes.json();
-  },
+  logout,
 
-  getPosts: async (
-    signal: AbortSignal | null = null,
-    option: Partial<PostRequestOptions> = {}
-  ): Promise<PostData[]> => {
-    const { lastIdx = -1, count = 10, username } = option;
-    const response = username
-      ? await fetch(
-          `/api/posts?username=${username}&lastIdx=${lastIdx}&count=${count}`,
-          { signal }
-        )
-      : await fetch(`/api/posts?lastIdx=${lastIdx}&count=${count}`, { signal });
-    const getPostsList = await response.json();
-    return getPostsList.map((cur: any) =>
-      cur.BTMLikepostidx.length === 0
-        ? { ...cur, likeFlag: false }
-        : { ...cur, likeFlag: true }
-    );
-  },
+  getuserData,
+  searchUsers,
+  getAllUsers,
 
-  addPosts: async (postData: PostAddData) => {
-    const response = await fetch(`/api/posts`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(postData)
-    });
-    return await response.json();
-  },
-
-  updatePosts: async (postIdx: number, postUpdateData: PostUpdateData) => {
-    const response = await fetch(`/api/posts/${postIdx}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(postUpdateData)
-    });
-    return await response.json();
-  },
-
-  deletePosts: async (postIdx: number) => {
-    const response = await fetch(`/api/posts/${postIdx}`, {
-      method: 'DELETE'
-    });
-    return await response.json();
-  },
+  getPosts,
+  addPosts,
+  updatePosts,
+  deletePosts,
 
   addLikePost: async (userIdx: number, postIdx: number) => {
     const response = await fetch(`/api/likes/${userIdx}/${postIdx}`, {
