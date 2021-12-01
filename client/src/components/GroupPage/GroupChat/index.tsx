@@ -86,7 +86,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
       setAllUsers(data);
       socket.off('get group users');
     });
-  }, [groupIdx, socket]);
+  }, []);
 
   useEffect(() => {
     setMessageList([]);
@@ -120,11 +120,11 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
         });
       }
     );
-  }, [socket, groupIdx, currentUserName]);
+  }, [socket, groupIdx]);
 
   useEffect(() => {
     return () => setGroupNavState({ ...groupNavState, groupChat: false });
-  }, [groupNavState, setGroupNavState]);
+  }, []);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
