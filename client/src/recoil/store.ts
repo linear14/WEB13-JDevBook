@@ -221,10 +221,15 @@ export const profileSolvedRate = selector({
   key: 'profileSolvedRate',
   get: async ({ get }) => {
     const { idx, nickname } = get(profileState);
-    const rawJoinedGroups: IUserGroup[] = await fetchApi.getJoinedGroups(idx);
-    const rawSolvedProblems: IUserWithSolved[] =
-      await fetchApi.getSolvedProblems(nickname);
-    const rawTotalProblems: IProblem[] = await fetchApi.getJoinedProblems(idx);
+    const [rawJoinedGroups, rawSolvedProblems, rawTotalProblems]: [
+      IUserGroup[],
+      IUserWithSolved[],
+      IProblem[]
+    ] = await Promise.all([
+      fetchApi.getJoinedGroups(idx),
+      fetchApi.getSolvedProblems(nickname),
+      fetchApi.getJoinedProblems(idx)
+    ]);
 
     const joinedGroups = rawJoinedGroups.map((cur) => cur.groupidx);
     const solvedProblems =
