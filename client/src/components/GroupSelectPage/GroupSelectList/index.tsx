@@ -41,11 +41,7 @@ const GroupSelectList = () => {
   }, []);
 
   return (
-    <GroupSelectListContainer
-      modalState={rightModalState}
-      fisrtFlag={fisrtFlag}
-      onAnimationEnd={firstEnd}
-    >
+    <GroupSelectListContainer modalState={rightModalState} fisrtFlag={fisrtFlag} onAnimationEnd={firstEnd}>
       {groupList.map((group) => (
         <GroupCard key={group.idx} group={group} />
       ))}

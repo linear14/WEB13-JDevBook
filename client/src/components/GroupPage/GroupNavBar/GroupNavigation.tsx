@@ -20,8 +20,7 @@ const NavigationBtn = styled.div<{ isActive: boolean }>`
 
   border-radius: ${(props) => (props.isActive ? `0` : `8px`)};
   border-bottom-style: solid;
-  border-bottom-color: ${(props) =>
-    props.isActive ? props.theme.green : props.theme.white};
+  border-bottom-color: ${(props) => (props.isActive ? props.theme.green : props.theme.white)};
   background-color: ${(props) => props.theme.white};
   color: ${(props) => props.theme.black};
 
@@ -36,8 +35,7 @@ const NavigationBtn = styled.div<{ isActive: boolean }>`
 
   &:hover {
     cursor: pointer;
-    background-color: ${(props) =>
-      props.isActive ? '' : props.theme.lightgray};
+    background-color: ${(props) => (props.isActive ? '' : props.theme.lightgray)};
   }
 
   &:active {
@@ -47,8 +45,7 @@ const NavigationBtn = styled.div<{ isActive: boolean }>`
 
 const GroupNavigation = () => {
   const [navState, setNavState] = useRecoilState(GroupNavState);
-  const [rightModalState, setRightModalState] =
-    useRecoilState(rightModalStates);
+  const [rightModalState, setRightModalState] = useRecoilState(rightModalStates);
 
   const selectAbout = (e: React.MouseEvent<HTMLDivElement>) => {
     setNavState({

@@ -57,8 +57,7 @@ const ProfileCover = () => {
   const alertMessage = useAlertModal();
 
   const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (userData.name !== profileData.nickname)
-      return alertMessage('프로필 소유자가 아닙니다.', true);
+    if (userData.name !== profileData.nickname) return alertMessage('프로필 소유자가 아닙니다.', true);
     if (imgEdit) return alertMessage('이미지 업로드 중입니다.', true);
     inputfile.current.click();
   };
@@ -115,23 +114,11 @@ const ProfileCover = () => {
   };
 
   return (
-    <ProfileCoverWrap
-      imgsrc={profileData.cover || defaultGroup}
-      className="no-drag"
-    >
-      <CoverImageEditBtn
-        mine={userData.name === profileData.nickname}
-        onClick={openFileModal}
-      >
+    <ProfileCoverWrap imgsrc={profileData.cover || defaultGroup} className="no-drag">
+      <CoverImageEditBtn mine={userData.name === profileData.nickname} onClick={openFileModal}>
         이미지 편집
       </CoverImageEditBtn>
-      <input
-        type="file"
-        accept="image/*"
-        ref={inputfile}
-        onChange={uploadOneFile}
-        style={{ display: 'none' }}
-      />
+      <input type="file" accept="image/*" ref={inputfile} onChange={uploadOneFile} style={{ display: 'none' }} />
     </ProfileCoverWrap>
   );
 };

@@ -4,12 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { usersocketStates } from 'recoil/store';
 import { modalStateStore } from 'recoil/common';
-import {
-  isImgUploadingState,
-  postListStore,
-  postModalDataStates,
-  uploadImgList
-} from 'recoil/post';
+import { isImgUploadingState, postListStore, postModalDataStates, uploadImgList } from 'recoil/post';
 
 import fetchApi from 'api/fetch';
 import { PostAddData, PostUpdateData, PostData } from 'types/post';
@@ -112,22 +107,14 @@ const PostWriterModal = () => {
    */
   const isEnrollMode = () => modalState.post.isEnroll;
   const alertSuccess = () => {
-    alertMessage(
-      `게시글이 성공적으로 ${isEnrollMode() ? '게시' : '수정'}되었습니다!`
-    );
+    alertMessage(`게시글이 성공적으로 ${isEnrollMode() ? '게시' : '수정'}되었습니다!`);
   };
   const alertFail = () => {
-    alertMessage(
-      `게시글이 알수없는 이유로 ${
-        isEnrollMode() ? '게시' : '수정'
-      }되지 않았습니다.`,
-      true
-    );
+    alertMessage(`게시글이 알수없는 이유로 ${isEnrollMode() ? '게시' : '수정'}되지 않았습니다.`, true);
   };
 
   const postDataToAPI = async () => {
-    if (isImgUploading > 0)
-      return alertMessage('이미지 업로드 중입니다. 잠시 후에 게시하세요', true);
+    if (isImgUploading > 0) return alertMessage('이미지 업로드 중입니다. 잠시 후에 게시하세요', true);
 
     if (postData.contents === '') {
       return alertMessage('내용이 없습니다. 내용을 입력하세요.', true);
@@ -160,9 +147,7 @@ const PostWriterModal = () => {
       const newPostList = isEnrollMode()
         ? [newPostIfExists, ...postList]
         : postList.map((post) =>
-            post.idx === postData.idx
-              ? ({ ...postData, picture1, picture2, picture3 } as PostData)
-              : post
+            post.idx === postData.idx ? ({ ...postData, picture1, picture2, picture3 } as PostData) : post
           );
 
       if (isEnrollMode() && !secret) {
@@ -182,14 +167,8 @@ const PostWriterModal = () => {
 
   return (
     <>
-      <PostWriterModalOverlay
-        modalState={modalState.post.writer}
-        onClick={modalClose}
-      />
-      <PostWriterModalInner
-        modalState={modalState.post.writer}
-        className="no-drag"
-      >
+      <PostWriterModalOverlay modalState={modalState.post.writer} onClick={modalClose} />
+      <PostWriterModalInner modalState={modalState.post.writer} className="no-drag">
         <ModalTitle />
         <Line />
         <PostInfo />

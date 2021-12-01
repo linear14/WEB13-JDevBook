@@ -59,13 +59,10 @@ const Comment = ({
 
       socket.emit('send number of comments notify', { postidx: postIdx });
       socket.off('get number of comments');
-      socket.on(
-        'get number of comments',
-        (data: { postidx: number; commentsNum: number }) => {
-          const { postidx, commentsNum } = data;
-          if (postIdx === postidx) setCommentsNum(commentsNum);
-        }
-      );
+      socket.on('get number of comments', (data: { postidx: number; commentsNum: number }) => {
+        const { postidx, commentsNum } = data;
+        if (postIdx === postidx) setCommentsNum(commentsNum);
+      });
 
       if (currentUserName !== nickname) {
         socket.emit('send alarm', {
@@ -89,9 +86,7 @@ const Comment = ({
           createdAt: data.createdAt
         })
       );
-      setCommentList((commentList: IComment[]) =>
-        commentList.concat(prevCommentsArray)
-      );
+      setCommentList((commentList: IComment[]) => commentList.concat(prevCommentsArray));
     };
 
     getPrevComments();

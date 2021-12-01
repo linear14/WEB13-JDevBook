@@ -98,9 +98,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
     });
 
     socket.on('get previous group chats', (filteredMsgs: string[]) => {
-      setMessageList((messageList: string[]) =>
-        messageList.concat(filteredMsgs)
-      );
+      setMessageList((messageList: string[]) => messageList.concat(filteredMsgs));
       socket.off('get previous group chats');
       document.querySelector('.group-chat-list')?.scrollBy({
         top: document.querySelector('.group-chat-list')?.scrollHeight,
@@ -109,19 +107,16 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
     });
 
     socket.off('receive group message');
-    socket.on(
-      'receive group message',
-      (data: { sender: string; groupidx: number; msg: string }) => {
-        const { groupidx, msg } = data;
-        if (groupidx === groupIdx) {
-          setMessageList((messageList: string[]) => messageList.concat(msg));
-        }
-        document.querySelector('.group-chat-list')?.scrollBy({
-          top: document.querySelector('.group-chat-list')?.scrollHeight,
-          behavior: 'smooth'
-        });
+    socket.on('receive group message', (data: { sender: string; groupidx: number; msg: string }) => {
+      const { groupidx, msg } = data;
+      if (groupidx === groupIdx) {
+        setMessageList((messageList: string[]) => messageList.concat(msg));
       }
-    );
+      document.querySelector('.group-chat-list')?.scrollBy({
+        top: document.querySelector('.group-chat-list')?.scrollHeight,
+        behavior: 'smooth'
+      });
+    });
   }, [socket, groupIdx]);
 
   useEffect(() => {

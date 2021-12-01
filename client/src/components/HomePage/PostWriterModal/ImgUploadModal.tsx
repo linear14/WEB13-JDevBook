@@ -189,8 +189,7 @@ const CloseOneImg = styled.div<{ imgsrc: string | undefined }>`
 const ImgUploadModal = () => {
   const [modalState, setModalState] = useRecoilState(modalStateStore);
   const [postData, setPostData] = useRecoilState(postModalDataStates);
-  const [isImgUploading, setIsImgUploading] =
-    useRecoilState(isImgUploadingState);
+  const [isImgUploading, setIsImgUploading] = useRecoilState(isImgUploadingState);
   const [imageViewerState, setImageViewerState] = useRecoilState(ivState);
   const [imgList, setImgList] = useRecoilState(uploadImgList);
   const alertMessage = useAlertModal();
@@ -209,19 +208,15 @@ const ImgUploadModal = () => {
   };
 
   const openFileModal = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (imgList.length >= 3)
-      return alertMessage('첨부 사진은 3장까지 가능합니다.', true);
-    if (isImgUploading > 0)
-      return alertMessage('이미지 업로드 중입니다.', true);
+    if (imgList.length >= 3) return alertMessage('첨부 사진은 3장까지 가능합니다.', true);
+    if (isImgUploading > 0) return alertMessage('이미지 업로드 중입니다.', true);
 
     inputfile.current.click();
   };
 
   const uploadOneFile = (filelist: FileList | null) => {
-    if (imgList.length >= 3)
-      return alertMessage('첨부 사진은 3장까지 가능합니다.', true);
-    if (isImgUploading > 0)
-      return alertMessage('이미지 업로드 중입니다.', true);
+    if (imgList.length >= 3) return alertMessage('첨부 사진은 3장까지 가능합니다.', true);
+    if (isImgUploading > 0) return alertMessage('이미지 업로드 중입니다.', true);
 
     const uploadNum = isImgUploading;
     setIsImgUploading(uploadNum + 1);
@@ -281,11 +276,7 @@ const ImgUploadModal = () => {
         <CloseOneImg imgsrc={imgList[v]} onClick={(e) => deleteOneImg(e, v)}>
           <IoClose size="20px" />
         </CloseOneImg>
-        <img
-          className="no-drag"
-          src={imgList[v] ?? ''}
-          onClick={imgPreviewBigger}
-        />
+        <img className="no-drag" src={imgList[v] ?? ''} onClick={imgPreviewBigger} />
       </div>
     ));
   };
@@ -307,11 +298,7 @@ const ImgUploadModal = () => {
     // 게시글 수정 시에 필요
     // 1,2,3 순서대로 채워지지만 코드가 그걸 알리가 없지...
     if (postData.picture3 !== null) {
-      setImgList([
-        postData.picture1 ?? '',
-        postData.picture2 ?? '',
-        postData.picture3
-      ]);
+      setImgList([postData.picture1 ?? '', postData.picture2 ?? '', postData.picture3]);
     } else if (postData.picture2 !== null) {
       setImgList([postData.picture1 ?? '', postData.picture2]);
     } else if (postData.picture1 !== null) {

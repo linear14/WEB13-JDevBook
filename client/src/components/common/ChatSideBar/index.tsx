@@ -38,10 +38,8 @@ const ChatSideBarContainer = styled.div<{
   height: calc(100% - 56px);
   z-index: 1;
 
-  visibility: ${(props) =>
-    props.rightModalFlag && props.messageFlag ? `` : `hidden`};
-  transition: ${(props) =>
-    props.rightModalFlag && props.messageFlag ? `` : `all .5s`};
+  visibility: ${(props) => (props.rightModalFlag && props.messageFlag ? `` : `hidden`)};
+  transition: ${(props) => (props.rightModalFlag && props.messageFlag ? `` : `all .5s`)};
 
   animation-name: ${(props) =>
     props.rightModalFlag && props.messageFlag
@@ -105,9 +103,7 @@ const ChatSideBar = () => {
       });
 
       socket.on('get previous chats', (filteredMsgs: string[]) => {
-        setMessageList((messageList: string[]) =>
-          messageList.concat(filteredMsgs)
-        );
+        setMessageList((messageList: string[]) => messageList.concat(filteredMsgs));
         socket.off('get previous chats');
         document.querySelector('.chat-list')?.scrollBy({
           top: document.querySelector('.chat-list')?.scrollHeight,
@@ -120,10 +116,7 @@ const ChatSideBar = () => {
       socket.off('receive message');
       socket.on('receive message', (data: ISocketMessage) => {
         const { sender, receiver, msg } = data;
-        if (
-          sender === currentUserName ||
-          (receiver === currentUserName && sender === chatReceiver)
-        ) {
+        if (sender === currentUserName || (receiver === currentUserName && sender === chatReceiver)) {
           setMessageList((messageList: string[]) => messageList.concat(msg));
         }
 
@@ -144,10 +137,7 @@ const ChatSideBar = () => {
   };
 
   return (
-    <ChatSideBarContainer
-      rightModalFlag={rightModalState.rightModalFlag}
-      messageFlag={rightModalState.messageFlag}
-    >
+    <ChatSideBarContainer rightModalFlag={rightModalState.rightModalFlag} messageFlag={rightModalState.messageFlag}>
       <CurrentUserTitle />
       <CurrentUser />
       <Divider />

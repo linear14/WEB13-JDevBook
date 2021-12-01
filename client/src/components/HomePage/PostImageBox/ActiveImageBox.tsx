@@ -46,13 +46,7 @@ const ActiveImageBox = (props: PostImagesInfo) => {
         });
       }}
     >
-      <ImageBox
-        className="no-drag"
-        src={urls[index]}
-        width={width}
-        height={height}
-        alt="게시글 이미지"
-      />
+      <ImageBox className="no-drag" src={urls[index]} width={width} height={height} alt="게시글 이미지" />
       <div />
     </HoverBox>
   );

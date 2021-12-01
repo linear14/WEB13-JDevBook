@@ -3,11 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { commonState } from 'recoil/common';
-import {
-  userDataStates,
-  myJoinedGroupState,
-  solvedProblemState
-} from 'recoil/user';
+import { userDataStates, myJoinedGroupState, solvedProblemState } from 'recoil/user';
 import { postModalDataStates } from 'recoil/post';
 import { groupListState } from 'recoil/group';
 
@@ -52,9 +48,7 @@ const InitUserData = () => {
           }))
         );
         if (groupList.length === 0) setGroupList(fetchGroupList);
-        setJoinedGroups(
-          data.BTMUserGroupuseridx.map((item: IGroup) => item.idx)
-        );
+        setJoinedGroups(data.BTMUserGroupuseridx.map((item: IGroup) => item.idx));
         setCommon(true);
 
         //socket.connect();

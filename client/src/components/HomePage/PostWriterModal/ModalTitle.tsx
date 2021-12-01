@@ -53,9 +53,7 @@ const ModalTitle = () => {
 
   return (
     <ModalTitleWrap>
-      <div>
-        {modalState.post.isEnroll ? '게시물 만들기' : '게시물 수정하기'}
-      </div>
+      <div>{modalState.post.isEnroll ? '게시물 만들기' : '게시물 수정하기'}</div>
       <CloseBtn onClick={() => closeModal()}>
         <IoClose size="28px" />
       </CloseBtn>

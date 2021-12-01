@@ -9,20 +9,9 @@ import { imageViewerState } from 'recoil/post';
 
 import { Page } from 'types/common';
 
-import {
-  InitUserData,
-  LoadingModal,
-  FakeSideBar,
-  FakeGnb
-} from 'components/common';
+import { InitUserData, LoadingModal, FakeSideBar, FakeGnb } from 'components/common';
 import { PostWriter, ImageViewer } from 'components/HomePage';
-import {
-  ProfileBar,
-  ProfileCover,
-  InitProfileData,
-  PostList,
-  ProfileInfoBar
-} from 'components/ProfilePage';
+import { ProfileBar, ProfileCover, InitProfileData, PostList, ProfileInfoBar } from 'components/ProfilePage';
 
 const GlobalStyle = createGlobalStyle`
   ${({}) => {
@@ -77,9 +66,7 @@ const PostContainer = styled.div`
   padding-left: 12px;
 `;
 
-const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
-  match
-}) => {
+const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({ match }) => {
   const userData = useRecoilValue(userDataStates);
   const profileData = useRecoilValue(profileState);
   const resetProfileData = useResetRecoilState(profileState);
@@ -104,9 +91,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
       <GlobalStyle />
       <InitUserData />
       <InitProfileData userName={match.params.username} />
-      <LoadingModal
-        modalState={profileData.idx === 0 || userData.name === ''}
-      />
+      <LoadingModal modalState={profileData.idx === 0 || userData.name === ''} />
       <FakeGnb />
       <PageLayout>
         <FakeSideBar />

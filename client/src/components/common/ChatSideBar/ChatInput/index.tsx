@@ -37,13 +37,7 @@ const ChatInputBox = styled.textarea`
   overflow: hidden;
 `;
 
-const ChatInput = ({
-  value,
-  setValue
-}: {
-  value: string;
-  setValue: Dispatch<string>;
-}) => {
+const ChatInput = ({ value, setValue }: { value: string; setValue: Dispatch<string> }) => {
   const alertMessage = useAlertModal();
   const rightModalState = useRecoilValue(rightModalStates);
 
@@ -61,17 +55,12 @@ const ChatInput = ({
   };
 
   return (
-    <ChatInputWrapper
-      rightModalFlag={rightModalState.rightModalFlag}
-      messageFlag={rightModalState.messageFlag}
-    >
+    <ChatInputWrapper rightModalFlag={rightModalState.rightModalFlag} messageFlag={rightModalState.messageFlag}>
       <ChatInputBox
         spellCheck="false"
         autoComplete="off"
         onKeyUp={contentsBytesCheck}
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-          setValue(e.target.value)
-        }
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)}
         onKeyPress={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
           if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();

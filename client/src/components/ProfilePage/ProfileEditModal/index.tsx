@@ -77,10 +77,8 @@ const StyledBtn = styled.div<{ saveBtn: boolean }>`
   margin: 0 ${style.margin.smallest};
 
   border-radius: 8px;
-  background-color: ${(props) =>
-    props.saveBtn ? props.theme.green : props.theme.gray};
-  color: ${(props) =>
-    props.saveBtn ? props.theme.inColorBox : props.theme.black};
+  background-color: ${(props) => (props.saveBtn ? props.theme.green : props.theme.gray)};
+  color: ${(props) => (props.saveBtn ? props.theme.inColorBox : props.theme.black)};
 
   display: flex;
   justify-content: center;
@@ -147,12 +145,7 @@ const ProfileEditModal = () => {
   return (
     <EditModalWrap modalState={modalState.editProfile}>
       <BioTitle>자기소개</BioTitle>
-      <BioArea
-        onChange={inputContents}
-        onKeyUp={bioLengthCheck}
-        value={bio}
-        placeholder="자기소개를 적어주세요."
-      />
+      <BioArea onChange={inputContents} onKeyUp={bioLengthCheck} value={bio} placeholder="자기소개를 적어주세요." />
       <BtnWrap>
         <StyledBtn onClick={saveBtnHandler} saveBtn={true}>
           저장

@@ -65,17 +65,12 @@ const ChatInput = ({
   };
 
   return (
-    <ChatInputWrapper
-      rightModalFlag={rightModalState.rightModalFlag}
-      messageFlag={rightModalState.messageFlag}
-    >
+    <ChatInputWrapper rightModalFlag={rightModalState.rightModalFlag} messageFlag={rightModalState.messageFlag}>
       <ChatInputBox
         spellCheck="false"
         autoComplete="off"
         onKeyUp={contentsBytesCheck}
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-          setValue(e.target.value)
-        }
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)}
         onKeyPress={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
           if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();

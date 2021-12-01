@@ -12,11 +12,7 @@ const SelectorSideBar = () => {
   const rightModalState = useRecoilValue(rightModalStates);
 
   if (rightModalState.rightModalFlag && rightModalState.selectorFlag) {
-    return (
-      <SelectorSideBarContainer>
-        This is SelectorSideBar
-      </SelectorSideBarContainer>
-    );
+    return <SelectorSideBarContainer>This is SelectorSideBar</SelectorSideBarContainer>;
   } else return null;
 };
 

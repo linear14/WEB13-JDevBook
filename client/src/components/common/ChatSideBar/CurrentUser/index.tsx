@@ -54,11 +54,7 @@ const LoginState = styled.div<{ user: string; loginStateArray: any }>`
   border-radius: 100%;
   margin-right: ${style.margin.small};
   ${(props) =>
-    `background-color: ${
-      props.loginStateArray?.includes(props.user)
-        ? props.theme.green
-        : props.theme.darkgray
-    };`}
+    `background-color: ${props.loginStateArray?.includes(props.user) ? props.theme.green : props.theme.darkgray};`}
 `;
 
 const CurrentUser = () => {
@@ -73,9 +69,7 @@ const CurrentUser = () => {
   useEffect(() => {
     const fetchJob = setTimeout(async () => {
       const users = await getData.getAllUsers();
-      const usersInfo = users.map(
-        (user: { idx: number; nickname: string }) => user.nickname
-      );
+      const usersInfo = users.map((user: { idx: number; nickname: string }) => user.nickname);
       setAllUsers(usersInfo);
       setUsersNum(usersInfo.length);
       return () => clearTimeout(fetchJob);
@@ -101,11 +95,7 @@ const CurrentUser = () => {
   }, [usersLoginState]);
 
   const UserList = allUsers.map((user: string, idx: number) => (
-    <CurrentUserBox
-      key={idx}
-      className="User"
-      onClick={() => setChatWith(user)}
-    >
+    <CurrentUserBox key={idx} className="User" onClick={() => setChatWith(user)}>
       <ClickableProfilePhoto userName={user} size={'30px'} />
       <LoginState user={user} loginStateArray={loginStateArray} />
       {user}

@@ -26,13 +26,7 @@ const CommentInput = styled.input`
   color: ${(props) => props.theme.black};
 `;
 
-const CommentInputBox = ({
-  value,
-  setValue
-}: {
-  value: string;
-  setValue: Dispatch<string>;
-}) => {
+const CommentInputBox = ({ value, setValue }: { value: string; setValue: Dispatch<string> }) => {
   const currentUserName = useRecoilValue(userDataStates).name;
 
   const alertMessage = useAlertModal();
@@ -55,9 +49,7 @@ const CommentInputBox = ({
         type="text"
         autoComplete="off"
         onKeyUp={contentsBytesCheck}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setValue(e.target.value)
-        }
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
         value={value}
         placeholder="댓글을 입력하세요..."
       />

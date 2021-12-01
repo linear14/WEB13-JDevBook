@@ -23,9 +23,7 @@ const GroupSelectTitle = () => {
   return (
     <GroupSelectTitleWrap className="no-drag">
       <Title>그룹 찾기</Title>
-      <Description>
-        원하는 그룹을 선택하고 다양한 문제풀이와 토론을 해 보세요!
-      </Description>
+      <Description>원하는 그룹을 선택하고 다양한 문제풀이와 토론을 해 보세요!</Description>
     </GroupSelectTitleWrap>
   );
 };

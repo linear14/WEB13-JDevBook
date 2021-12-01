@@ -5,10 +5,7 @@ import Gnb from 'components/common/Gnb';
 import FakeGnb from 'components/common/FakeComponents/FakeGnb';
 import LeftSideBar from 'components/common/LeftSideBar';
 import FakeSideBar from 'components/common/FakeComponents/FakeSideBar';
-import {
-  ProfilePhoto,
-  ClickableProfilePhoto
-} from 'components/common/ProfilePhoto';
+import { ProfilePhoto, ClickableProfilePhoto } from 'components/common/ProfilePhoto';
 import UserCard from 'components/common/Gnb/UserCard';
 import InitUserData from 'components/common/InitUserData';
 import AlertModal from 'components/common/AlertModal';

@@ -69,8 +69,7 @@ const AnimationIcon = styled.div<{ isLeft?: boolean; hidden: boolean }>`
 
   &:hover {
     background-color: ${(props) => props.theme.lightgray};
-    transform: ${({ isLeft }) =>
-      isLeft ? css`translateX(-8px)` : css`translateX(8px)`};
+    transform: ${({ isLeft }) => (isLeft ? css`translateX(-8px)` : css`translateX(8px)`)};
   }
 
   svg {
@@ -110,10 +109,7 @@ const ImageViewer = () => {
   const goNext = useCallback(() => {
     setImageViewerState((prev) => ({
       ...prev,
-      currentIdx:
-        prev.currentIdx !== prev.imageCount - 1
-          ? prev.currentIdx + 1
-          : prev.imageCount - 1
+      currentIdx: prev.currentIdx !== prev.imageCount - 1 ? prev.currentIdx + 1 : prev.imageCount - 1
     }));
   }, [setImageViewerState]);
 

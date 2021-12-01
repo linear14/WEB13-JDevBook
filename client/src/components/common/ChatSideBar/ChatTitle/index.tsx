@@ -22,10 +22,7 @@ const ChatTitle = () => {
   const chatReceiver = useRecoilValue(chatWith);
 
   return (
-    <ChatTitleContainer
-      rightModalFlag={rightModalState.rightModalFlag}
-      messageFlag={rightModalState.messageFlag}
-    >
+    <ChatTitleContainer rightModalFlag={rightModalState.rightModalFlag} messageFlag={rightModalState.messageFlag}>
       {chatReceiver ? chatReceiver + ' 에게 보내는 편지' : '채팅할 상대 선택'}
     </ChatTitleContainer>
   );

@@ -122,9 +122,7 @@ const UserSearchModal = () => {
         ) : searchResults.users.length === 0 ? (
           <p>결과 없음</p>
         ) : (
-          searchResults.users.map((result) => (
-            <UserCard key={result.idx} user={result} />
-          ))
+          searchResults.users.map((result) => <UserCard key={result.idx} user={result} />)
         )}
       </SearchModalBody>
     </UserSearchModalContainer>

@@ -14,8 +14,7 @@ const AlertModalWrap = styled.div<{ bgColor?: boolean; modalState: boolean }>`
   z-index: 7;
 
   border-radius: 8px;
-  background-color: ${(props) =>
-    props.bgColor ? props.theme.alert : props.theme.blue};
+  background-color: ${(props) => (props.bgColor ? props.theme.alert : props.theme.blue)};
   color: ${(props) => props.theme.inColorBox};
 
   display: flex;

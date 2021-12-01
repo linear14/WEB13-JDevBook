@@ -28,8 +28,7 @@ const SecretSelector = styled.div<{ isSecret: boolean }>`
   height: 30px;
   padding: 0 ${style.padding.small};
 
-  background-color: ${(props) =>
-    props.isSecret ? props.theme.green : props.theme.lightgray};
+  background-color: ${(props) => (props.isSecret ? props.theme.green : props.theme.lightgray)};
   color: ${(props) => (props.isSecret ? props.theme.white : props.theme.black)};
   border-radius: 5px;
 
@@ -39,8 +38,7 @@ const SecretSelector = styled.div<{ isSecret: boolean }>`
 
   &:hover {
     cursor: pointer;
-    background-color: ${(props) =>
-      props.isSecret ? props.theme.darkgreen : props.theme.gray};
+    background-color: ${(props) => (props.isSecret ? props.theme.darkgreen : props.theme.gray)};
   }
 
   &:active {
@@ -59,9 +57,7 @@ const PostInfo = () => {
   };
 
   useEffect(() => {
-    postData.secret
-      ? setSecretStr(' 🔒 나만 보기')
-      : setSecretStr(' 👨‍👨‍👧‍👧 전체 공개');
+    postData.secret ? setSecretStr(' 🔒 나만 보기') : setSecretStr(' 👨‍👨‍👧‍👧 전체 공개');
   }, [postData.secret]);
 
   return (

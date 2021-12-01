@@ -102,21 +102,12 @@ const UserSearchBar = ({
   }, [input]);
 
   return (
-    <UserSearchBarContainer
-      isFake={isFake}
-      onClick={() => setModalState({ ...modalState, searchUser: true })}
-    >
+    <UserSearchBarContainer isFake={isFake} onClick={() => setModalState({ ...modalState, searchUser: true })}>
       {isFake && <IconSearch />}
       {isFake ? (
         <input type="text" placeholder="사용자 검색" readOnly />
       ) : (
-        <input
-          type="text"
-          placeholder="사용자 검색"
-          value={input}
-          onChange={onChangeInput}
-          ref={inputBox}
-        />
+        <input type="text" placeholder="사용자 검색" value={input} onChange={onChangeInput} ref={inputBox} />
       )}
     </UserSearchBarContainer>
   );

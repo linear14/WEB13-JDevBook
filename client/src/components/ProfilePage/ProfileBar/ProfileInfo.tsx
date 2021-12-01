@@ -39,9 +39,7 @@ const ProfileInfo = () => {
       {modalState.editProfile ? (
         <ProfileEditModal />
       ) : (
-        <ProfileBio className="no-drag">
-          {profileData.bio || '자기소개를 입력해서 자신을 표현해보세요!'}
-        </ProfileBio>
+        <ProfileBio className="no-drag">{profileData.bio || '자기소개를 입력해서 자신을 표현해보세요!'}</ProfileBio>
       )}
     </ProfileInfoWrap>
   );
