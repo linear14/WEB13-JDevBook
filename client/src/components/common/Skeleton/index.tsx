@@ -1,5 +1,4 @@
-import React from 'react';
-import styled, { css, keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import FakeAnswerWrap from './FakeAnswerWrap';
 import FakeBody from './FakeBody';
 import FakeHeader from './FakeHeader';
@@ -24,13 +23,7 @@ const SkeletonContainer = styled.div<{ isProfile: boolean }>`
   animation: 0.3s ${OpacityAnimation};
 `;
 
-const Skeleton = ({
-  type = 'home',
-  isProfile = false
-}: {
-  type?: string;
-  isProfile?: boolean;
-}) => {
+const Skeleton = ({ type = 'home', isProfile = false }: { type?: string; isProfile?: boolean }) => {
   return (
     <SkeletonContainer isProfile={isProfile}>
       <FakeHeader type={type} />

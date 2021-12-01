@@ -1,24 +1,25 @@
 import styled from 'styled-components';
+import { useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
+
+import { currentPageStates } from 'recoil/common';
+
+import { Page } from 'types/common';
 
 import Greeter from 'components/LoginPage/Greeter';
 import LoginBox from 'components/LoginPage/LoginBox';
 import Footer from 'components/LoginPage/Footer';
-import { useSetRecoilState } from 'recoil';
-import { currentPageStates } from 'recoil/store';
-import { useEffect } from 'react';
-import { Page } from 'types/common';
 
-const LoginPageContainer = styled.div`
-`;
+const LoginPageContainer = styled.div``;
 
 const Content = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  text-align: center;  
+  text-align: center;
   width: 100vw;
   height: 100vh;
-  
+
   @media screen and (max-width: 880px) {
     display: block;
   }

@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { commonState } from 'recoil/store';
+import { commonState } from 'recoil/common';
 
 import GroupSideBar from 'components/common/LeftSideBar/GroupSideBar';
 import InfoSideBar from 'components/common/LeftSideBar/InfoSideBar';

@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { profileState } from 'recoil/store';
+import { profileState } from 'recoil/user';
+
+import fetchApi from 'api/fetch';
 import { ISolvedProblem, IProblem } from 'types/problem';
 import { IUserWithSolved, IUserGroup } from 'types/user';
-import fetchApi from 'api/fetch';
 
 const ProfileBarContainer = styled.div`
   width: 100%;
@@ -58,7 +59,7 @@ const InnerBarGraph = styled.span<{ solvedRate: number }>`
   border-radius: 40px;
   padding: 0 10px;
   box-sizing: border-box;
-  color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme.inColorBox};
   font-size: small;
   font-weight: 600;
   animation: ${(props) => GraphAnimation(props.solvedRate)} 1.5s 1;
@@ -73,9 +74,7 @@ const ProfileInfoBar = () => {
   const [solvedRate, setSolvedRate] = useState<number | null>(null);
 
   const getSolvedProblem = async () => {
-    const result: IUserWithSolved[] = await fetchApi.getSolvedProblems(
-      profileData.nickname
-    );
+    const result: IUserWithSolved[] = await fetchApi.getSolvedProblems(profileData.nickname);
     if (result.length > 0) {
       setSolvedProblem(
         result[0].BTMUserProblemuseridx.map((cur) => ({
@@ -89,9 +88,7 @@ const ProfileInfoBar = () => {
   };
 
   const getTotalProblemsCount = async () => {
-    const result: IProblem[] = await fetchApi.getJoinedProblems(
-      profileData.idx
-    );
+    const result: IProblem[] = await fetchApi.getJoinedProblems(profileData.idx);
     if (result.length > 0) {
       setTotalProblemsCount(result.length);
     } else {
@@ -100,9 +97,7 @@ const ProfileInfoBar = () => {
   };
 
   const getJoinedGroup = async () => {
-    const result: IUserGroup[] = await fetchApi.getJoinedGroups(
-      profileData.idx
-    );
+    const result: IUserGroup[] = await fetchApi.getJoinedGroups(profileData.idx);
     if (result.length > 0) {
       setJoinedGroups(result.map((cur) => cur.groupidx));
     } else {
@@ -111,12 +106,8 @@ const ProfileInfoBar = () => {
   };
 
   const getSolvedRate = () => {
-    const solvedLength = solvedProblem.filter((item) =>
-      joinedGroups?.includes(item.groupIdx)
-    ).length;
-    return totalProblemsCount === 0
-      ? 0
-      : Number(((solvedLength / totalProblemsCount) * 100).toFixed(1));
+    const solvedLength = solvedProblem.filter((item) => joinedGroups?.includes(item.groupIdx)).length;
+    return totalProblemsCount === 0 ? 0 : Number(((solvedLength / totalProblemsCount) * 100).toFixed(1));
   };
 
   const getData = async () => {
@@ -155,9 +146,7 @@ const ProfileInfoBar = () => {
       {joinedGroups && !isFetching && joinedGroups.length === 0 && <NoGroup />}
       {joinedGroups && joinedGroups.length > 0 && (
         <SolvedBarGraph>
-          <InnerBarGraph solvedRate={solvedRate || 0}>
-            {solvedRate}%
-          </InnerBarGraph>
+          <InnerBarGraph solvedRate={solvedRate || 0}>{solvedRate}%</InnerBarGraph>
         </SolvedBarGraph>
       )}
     </ProfileBarContainer>

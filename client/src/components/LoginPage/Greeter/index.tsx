@@ -53,16 +53,14 @@ const Greeter = () => {
   const textArray = 'JDevBook'.split('');
 
   return (
-    
-      <Wrapper className="no-drag" data-cy="Greeter">
-        <SubTitle>우리들의 공간</SubTitle>
-        <Content>
-          {textArray.map((item, index) => (
-            <span key={index}>{item}</span>
-          ))}
-        </Content>
-      </Wrapper>
-    
+    <Wrapper className="no-drag" data-cy="Greeter">
+      <SubTitle>우리들의 공간</SubTitle>
+      <Content>
+        {textArray.map((item, index) => (
+          <span key={index}>{item}</span>
+        ))}
+      </Content>
+    </Wrapper>
   );
 };
 

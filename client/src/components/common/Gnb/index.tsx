@@ -3,23 +3,18 @@ import styled, { css, keyframes } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
 
-import {
-  rightModalStates,
-  solvedProblemState,
-  userDataStates,
-  GroupNavState,
-  alarmState,
-  usersocketStates,
-  themeState,
-  commonState
-} from 'recoil/store';
+import { usersocketStates } from 'recoil/store';
+import { rightModalStates, alarmState, themeState, commonState } from 'recoil/common';
+import { userDataStates, solvedProblemState } from 'recoil/user';
+import { GroupNavState } from 'recoil/group';
+
 import fetchApi from 'api/fetch';
 import { RightModalProps } from 'types/GNB';
 import { GnbMessage, GnbAlarm, GnbLogout } from 'images/icons';
 
-import GnbLeftItems from './GnbLeftItems';
-import GnbCenterItems from './GnbCenterItems';
-import ProfileCard from './ProfileCard';
+import GnbLeftItems from 'components/common/Gnb/GnbLeftItems';
+import GnbCenterItems from 'components/common/Gnb/GnbCenterItems';
+import ProfileCard from 'components/common/Gnb/ProfileCard';
 
 const turnDark = keyframes`
   0%{
@@ -100,8 +95,7 @@ const ToggleBtn = styled.div<{ themeState: string }>`
   height: 20px;
 
   border-radius: 50%;
-  background-color: ${(props) =>
-    props.themeState === 'dark' ? props.theme.darkgray : props.theme.green};
+  background-color: ${(props) => (props.themeState === 'dark' ? props.theme.darkgray : props.theme.green)};
   animation: ${(props) =>
     props.themeState === 'dark'
       ? css`
@@ -175,8 +169,7 @@ const AlarmBadge = styled.div`
 const Gnb = () => {
   const [userdata, setUserdata] = useRecoilState(userDataStates);
   const resetSolvedProblemState = useResetRecoilState(solvedProblemState);
-  const [rightModalState, setRightModalState] =
-    useRecoilState(rightModalStates);
+  const [rightModalState, setRightModalState] = useRecoilState(rightModalStates);
   const [groupNavState, setGroupNavState] = useRecoilState(GroupNavState);
   const [alarmNum, setAlarmNum] = useRecoilState(alarmState);
   const [theme, setTheme] = useRecoilState(themeState);
@@ -191,13 +184,9 @@ const Gnb = () => {
   useEffect(() => {}, [alarmNum]);
 
   socket.off('get alarm');
-  socket.on(
-    'get alarm',
-    (data: { sender: string; receiver: string; type: string }) => {
-      if (data.receiver === userdata.name && data.sender !== userdata.name)
-        setAlarmNum(alarmNum + 1);
-    }
-  );
+  socket.on('get alarm', (data: { sender: string; receiver: string; type: string }) => {
+    if (data.receiver === userdata.name && data.sender !== userdata.name) setAlarmNum(alarmNum + 1);
+  });
 
   return (
     <GnbContainer commonState={commonDisplay} className="no-drag">
@@ -266,11 +255,7 @@ const Gnb = () => {
   );
 };
 
-function ChangeFlag(
-  rightModalState: RightModalProps,
-  setRightModalState: Dispatch<RightModalProps>,
-  e: string
-): void {
+function ChangeFlag(rightModalState: RightModalProps, setRightModalState: Dispatch<RightModalProps>, e: string): void {
   if (!rightModalState.rightModalFlag || !rightModalState[e]) {
     setRightModalState({
       rightModalFlag: true,

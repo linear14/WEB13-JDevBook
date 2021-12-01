@@ -16,15 +16,7 @@ const NewPostAlert = ({ reloadList }: { reloadList: () => void }) => {
     };
   });
 
-  return newPostCount > 0 ? (
-    <Alert
-      count={newPostCount}
-      setCount={setNewPostCount}
-      reloadList={reloadList}
-    />
-  ) : (
-    <></>
-  );
+  return newPostCount > 0 ? <Alert count={newPostCount} setCount={setNewPostCount} reloadList={reloadList} /> : <></>;
 };
 
 export default NewPostAlert;

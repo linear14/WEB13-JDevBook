@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { groupState } from 'recoil/store';
-import style from 'theme/style';
+import { groupState } from 'recoil/group';
+
 import fetchApi from 'api/fetch';
+import style from 'theme/style';
 
 const GroupNavTitleWrap = styled.div`
   padding-left: 40px;

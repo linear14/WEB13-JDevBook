@@ -2,9 +2,10 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
-import { GnbHome, GnbGroup, GnbHomeActive, GnbGroupActive } from 'images/icons';
-import { currentPageStates } from 'recoil/store';
+import { currentPageStates } from 'recoil/common';
+
 import { Page } from 'types/common';
+import { GnbHome, GnbGroup, GnbHomeActive, GnbGroupActive } from 'images/icons';
 
 const ItemContainer = styled.div`
   display: flex;

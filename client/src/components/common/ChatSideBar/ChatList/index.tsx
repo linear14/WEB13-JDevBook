@@ -1,23 +1,19 @@
 import styled from 'styled-components';
 
 import { useRecoilValue } from 'recoil';
-import { userDataStates } from 'recoil/store';
+import { userDataStates } from 'recoil/user';
 
 import { ClickableProfilePhoto } from 'components/common';
 import { IMessage, ISuccessiveMessage } from 'types/message';
 import style from 'theme/style';
 
 const MessageWrap = styled.div<IMessage>`
-  ${(props) =>
-    `text-align: ${
-      props.currentUserName === props.sender ? 'right;' : 'left;'
-    }`}
+  ${(props) => `text-align: ${props.currentUserName === props.sender ? 'right;' : 'left;'}`}
   width: inherit;
 `;
 
 const ReceiverDiv = styled.div<ISuccessiveMessage>`
-  display: ${(props) =>
-    props.receiver === props.sender || props.flag ? `none` : `flex`};
+  display: ${(props) => (props.receiver === props.sender || props.flag ? `none` : `flex`)};
   margin-top: ${style.margin.small};
 `;
 
@@ -34,14 +30,8 @@ const MessageText = styled.div<IMessage>`
   text-align: left;
   max-width: 150px;
 
-  color: ${(props) =>
-    props.currentUserName === props.sender
-      ? props.theme.white
-      : props.theme.black};
-  background-color: ${(props) =>
-    props.currentUserName === props.sender
-      ? props.theme.green
-      : props.theme.lightgray};
+  color: ${(props) => (props.currentUserName === props.sender ? props.theme.white : props.theme.black)};
+  background-color: ${(props) => (props.currentUserName === props.sender ? props.theme.green : props.theme.lightgray)};
 
   margin-top: ${style.margin.smallest};
   padding: ${style.padding.smallest} ${style.padding.normal};
@@ -70,22 +60,11 @@ const ChatListView = ({ messageList }: { messageList: string[] }) => {
 
   function ShowReceiverInfoFlag(idx: number, msg: string) {
     if (idx === 0) return msg.split(':')[0] === currentUserName ? true : false;
-    else
-      return msg.split(':')[0] === messageList[idx - 1].split(':')[0]
-        ? true
-        : false;
+    else return msg.split(':')[0] === messageList[idx - 1].split(':')[0] ? true : false;
   }
   const chatList = messageList.map((msg, idx) => (
-    <MessageWrap
-      key={idx}
-      currentUserName={currentUserName}
-      sender={msg.split(':')[0]}
-    >
-      <ReceiverDiv
-        receiver={msg.split(':')[0]}
-        sender={currentUserName}
-        flag={ShowReceiverInfoFlag(idx, msg)}
-      >
+    <MessageWrap key={idx} currentUserName={currentUserName} sender={msg.split(':')[0]}>
+      <ReceiverDiv receiver={msg.split(':')[0]} sender={currentUserName} flag={ShowReceiverInfoFlag(idx, msg)}>
         <ClickableProfilePhoto userName={msg.split(':')[0]} size={'30px'} />
         <ReceiverName>{msg.split(':')[0]}</ReceiverName>
       </ReceiverDiv>

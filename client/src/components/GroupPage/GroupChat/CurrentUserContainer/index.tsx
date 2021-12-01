@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-
 import { useRecoilValue } from 'recoil';
-import { loginState } from 'recoil/store';
+
+import { loginState } from 'recoil/common';
 
 import style from 'theme/style';
+
 import { ClickableProfilePhoto } from 'components/common';
 
 const CurrentUserWrapper = styled.div`
@@ -40,11 +41,7 @@ const LoginState = styled.div<{ user: string; loginStateArray: any }>`
   border-radius: 100%;
   margin-right: ${style.margin.small};
   ${(props) =>
-    `background-color: ${
-      props.loginStateArray?.includes(props.user)
-        ? props.theme.green
-        : props.theme.darkgray
-    };`}
+    `background-color: ${props.loginStateArray?.includes(props.user) ? props.theme.green : props.theme.darkgray};`}
 `;
 
 const CurrentUserContainer = ({ allUsers }: { allUsers: string[] }) => {

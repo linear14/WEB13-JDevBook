@@ -2,14 +2,15 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { userDataStates, usersocketStates } from 'recoil/store';
+import { usersocketStates } from 'recoil/store';
+import { userDataStates } from 'recoil/user';
+
 import style from 'theme/style';
 import { IComment } from 'types/comment';
-
 import fetchApi from 'api/fetch';
 
-import CommentListView from './CommentListView';
-import CommentInputBox from './CommentInputBox';
+import CommentListView from 'components/HomePage/Post/Comment/CommentListView';
+import CommentInputBox from 'components/HomePage/Post/Comment/CommentInputBox';
 
 const Animation = keyframes`
   0% { opacity: 0; }
@@ -58,13 +59,10 @@ const Comment = ({
 
       socket.emit('send number of comments notify', { postidx: postIdx });
       socket.off('get number of comments');
-      socket.on(
-        'get number of comments',
-        (data: { postidx: number; commentsNum: number }) => {
-          const { postidx, commentsNum } = data;
-          if (postIdx === postidx) setCommentsNum(commentsNum);
-        }
-      );
+      socket.on('get number of comments', (data: { postidx: number; commentsNum: number }) => {
+        const { postidx, commentsNum } = data;
+        if (postIdx === postidx) setCommentsNum(commentsNum);
+      });
 
       if (currentUserName !== nickname) {
         socket.emit('send alarm', {
@@ -88,9 +86,7 @@ const Comment = ({
           createdAt: data.createdAt
         })
       );
-      setCommentList((commentList: IComment[]) =>
-        commentList.concat(prevCommentsArray)
-      );
+      setCommentList((commentList: IComment[]) => commentList.concat(prevCommentsArray));
     };
 
     getPrevComments();

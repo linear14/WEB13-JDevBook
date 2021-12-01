@@ -1,19 +1,15 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import fetchApi from 'api/fetch';
+import { commonState } from 'recoil/common';
+import { userDataStates, myJoinedGroupState, solvedProblemState } from 'recoil/user';
+import { postModalDataStates } from 'recoil/post';
+import { groupListState } from 'recoil/group';
 
-import {
-  userDataStates,
-  postModalDataStates,
-  solvedProblemState,
-  groupListState,
-  myJoinedGroupState,
-  commonState
-} from 'recoil/store';
-import { useHistory } from 'react-router-dom';
 import { IProblem } from 'types/problem';
 import { IGroup } from 'types/group';
+import fetchApi from 'api/fetch';
 
 const InitUserData = () => {
   const setUserdata = useSetRecoilState(userDataStates);
@@ -52,9 +48,7 @@ const InitUserData = () => {
           }))
         );
         if (groupList.length === 0) setGroupList(fetchGroupList);
-        setJoinedGroups(
-          data.BTMUserGroupuseridx.map((item: IGroup) => item.idx)
-        );
+        setJoinedGroups(data.BTMUserGroupuseridx.map((item: IGroup) => item.idx));
         setCommon(true);
 
         //socket.connect();

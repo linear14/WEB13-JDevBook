@@ -3,23 +3,14 @@ import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle, css } from 'styled-components';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import { currentPageStates, groupState } from 'recoil/store';
+import { currentPageStates } from 'recoil/common';
+import { groupState } from 'recoil/group';
+
+import { Page } from 'types/common';
 import { defaultGroup } from 'images/groupimg';
 
-import {
-  InitUserData,
-  LoadingModal,
-  FakeSideBar,
-  FakeGnb
-} from 'components/common';
-import {
-  ProblemList,
-  GroupNavBar,
-  InitGroupData,
-  About,
-  GroupChat
-} from 'components/GroupPage';
-import { Page } from 'types/common';
+import { InitUserData, LoadingModal, FakeSideBar, FakeGnb } from 'components/common';
+import { ProblemList, GroupNavBar, InitGroupData, About, GroupChat } from 'components/GroupPage';
 
 const GlobalStyle = createGlobalStyle`
   ${({}) => {
@@ -61,9 +52,7 @@ const ContentsContainer = styled.div<{ contentsState: boolean }>`
   }
 `;
 
-const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({
-  match
-}) => {
+const GroupPage: React.FC<RouteComponentProps<{ groupidx: string }>> = ({ match }) => {
   const groupData = useRecoilValue(groupState);
   const resetGroupData = useResetRecoilState(groupState);
   const setCurrentPage = useSetRecoilState(currentPageStates);

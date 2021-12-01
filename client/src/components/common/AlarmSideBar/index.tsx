@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  rightModalStates,
-  usersocketStates,
-  userDataStates,
-  alarmState
-} from 'recoil/store';
+
+import { usersocketStates } from 'recoil/store';
+import { rightModalStates, alarmState } from 'recoil/common';
+import { userDataStates } from 'recoil/user';
 
 import messageAudio from '../../../sounds/message-notify.mp3';
 import commentAudio from '../../../sounds/comment-notify.mp3';
@@ -35,10 +33,8 @@ const AlarmSideBarContainer = styled.div<{
   width: 340px;
   height: calc(100% - 56px);
 
-  visibility: ${(props) =>
-    props.rightModalFlag && props.alarmFlag ? `` : `hidden`};
-  transition: ${(props) =>
-    props.rightModalFlag && props.alarmFlag ? `` : `all .5s`};
+  visibility: ${(props) => (props.rightModalFlag && props.alarmFlag ? `` : `hidden`)};
+  transition: ${(props) => (props.rightModalFlag && props.alarmFlag ? `` : `all .5s`)};
 
   animation-name: ${(props) =>
     props.rightModalFlag && props.alarmFlag
@@ -71,34 +67,21 @@ const AlarmSideBar = () => {
   const setAlarmNum = useSetRecoilState(alarmState);
 
   socket.off('get alarm info');
-  socket.on(
-    'get alarm info',
-    (data: {
-      sender: string;
-      receiver: string;
-      type: string;
-      text: string;
-    }) => {
-      if (
-        data.receiver === currentUserName &&
-        data.sender !== currentUserName
-      ) {
-        setAlarmList((alarmList: string[]) =>
-          alarmList.concat(`${data.sender}:${data.type}:${data.text}`)
-        );
-      }
-
-      if (data.receiver === currentUserName && data.type === 'post') {
-        const audio = new Audio(commentAudio);
-        audio.volume = 0.2;
-        audio.play();
-      } else if (data.receiver === currentUserName && data.type === 'chat') {
-        const audio = new Audio(messageAudio);
-        audio.volume = 0.2;
-        audio.play();
-      }
+  socket.on('get alarm info', (data: { sender: string; receiver: string; type: string; text: string }) => {
+    if (data.receiver === currentUserName && data.sender !== currentUserName) {
+      setAlarmList((alarmList: string[]) => alarmList.concat(`${data.sender}:${data.type}:${data.text}`));
     }
-  );
+
+    if (data.receiver === currentUserName && data.type === 'post') {
+      const audio = new Audio(commentAudio);
+      audio.volume = 0.2;
+      audio.play();
+    } else if (data.receiver === currentUserName && data.type === 'chat') {
+      const audio = new Audio(messageAudio);
+      audio.volume = 0.2;
+      audio.play();
+    }
+  });
 
   useEffect(() => {
     if (currentUserName !== '' && socket !== null) {
@@ -116,10 +99,7 @@ const AlarmSideBar = () => {
   }, [currentUserName]);
 
   return (
-    <AlarmSideBarContainer
-      rightModalFlag={rightModalState.rightModalFlag}
-      alarmFlag={rightModalState.alarmFlag}
-    >
+    <AlarmSideBarContainer rightModalFlag={rightModalState.rightModalFlag} alarmFlag={rightModalState.alarmFlag}>
       <AlarmListView alarmList={alarmList} />
     </AlarmSideBarContainer>
   );
