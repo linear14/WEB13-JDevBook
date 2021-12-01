@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { MdClose, MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import { useRecoilState } from 'recoil';

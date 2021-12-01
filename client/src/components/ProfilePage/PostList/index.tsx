@@ -71,10 +71,8 @@ const PostList = () => {
       abortControllerMap.current[nickname] = new AbortController();
       setFetching(true);
       const result = await fetchApi.getPosts(
-        lastIdx,
-        count,
-        nickname,
-        abortControllerMap.current[nickname].signal
+        abortControllerMap.current[nickname].signal,
+        { lastIdx, count, username: nickname }
       );
       if (result.length < count) {
         setHasMore(false);
