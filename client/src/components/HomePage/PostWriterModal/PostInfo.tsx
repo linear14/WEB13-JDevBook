@@ -29,7 +29,7 @@ const SecretSelector = styled.div<{ isSecret: boolean }>`
   padding: 0 ${style.padding.small};
 
   background-color: ${(props) => (props.isSecret ? props.theme.green : props.theme.lightgray)};
-  color: ${(props) => (props.isSecret ? props.theme.white : props.theme.black)};
+  color: ${(props) => (props.isSecret ? props.theme.inColorBox : props.theme.black)};
   border-radius: 5px;
 
   display: flex;
