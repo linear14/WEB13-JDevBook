@@ -1,6 +1,6 @@
 import { Op } from 'sequelize';
 
-import { PostAddData, PostUpdateData } from '../../types/interface';
+import { PostAddData, PostUpdateData } from '../../types';
 import db from '../../models';
 
 const getPosts = async (
