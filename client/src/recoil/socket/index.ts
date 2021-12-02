@@ -1,5 +1,7 @@
 import socket from 'components/common/Socket';
+
 import { atom } from 'recoil';
+
 import { Socket } from 'socket.io-client';
 
 export const usersocketStates = atom({

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { MdMoreHoriz } from 'react-icons/md';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { usersocketStates } from 'recoil/store';
+import { usersocketStates } from 'recoil/socket';
 import { modalStateStore } from 'recoil/common';
 import { userDataStates } from 'recoil/user';
 

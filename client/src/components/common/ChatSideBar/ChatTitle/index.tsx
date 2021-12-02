@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-
 import { useRecoilValue } from 'recoil';
-import { chatWith } from 'recoil/store';
+
+import { chatWith } from 'recoil/socket';
 import { rightModalStates } from 'recoil/common';
 
 import style from 'theme/style';

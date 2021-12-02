@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { usersocketStates } from 'recoil/store';
-import { Alert } from './Alert';
+
+import { usersocketStates } from 'recoil/socket';
+
+import { Alert } from 'components/common/NewPostAlert/Alert';
 
 const NewPostAlert = ({ reloadList }: { reloadList: () => void }) => {
   const socket = useRecoilValue(usersocketStates);

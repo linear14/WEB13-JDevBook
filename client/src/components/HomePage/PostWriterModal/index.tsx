@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { usersocketStates } from 'recoil/store';
+import { usersocketStates } from 'recoil/socket';
 import { modalStateStore } from 'recoil/common';
 import { isImgUploadingState, postListStore, postModalDataStates, uploadImgList } from 'recoil/post';
 

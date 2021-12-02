@@ -3,7 +3,7 @@ import styled, { css, keyframes } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
 
-import { usersocketStates } from 'recoil/store';
+import { usersocketStates } from 'recoil/socket';
 import { rightModalStates, alarmState, themeState, commonState } from 'recoil/common';
 import { userDataStates, solvedProblemState } from 'recoil/user';
 import { GroupNavState } from 'recoil/group';

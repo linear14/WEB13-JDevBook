@@ -2,7 +2,7 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { usersocketStates } from 'recoil/store';
+import { usersocketStates } from 'recoil/socket';
 import { userDataStates } from 'recoil/user';
 
 import style from 'theme/style';

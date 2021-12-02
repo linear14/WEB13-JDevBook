@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { usersocketStates } from 'recoil/store';
+import { usersocketStates } from 'recoil/socket';
 import { rightModalStates, alarmState } from 'recoil/common';
 import { userDataStates } from 'recoil/user';
 
