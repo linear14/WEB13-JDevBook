@@ -1,26 +1,16 @@
-import { useEffect, useState } from 'react';
-import {
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-  useSetRecoilState
-} from 'recoil';
-
-import fetchApi from 'api/fetch';
-
-import {
-  userDataStates,
-  postModalDataStates,
-  solvedProblemState,
-  groupListState,
-  myJoinedGroupState,
-  commonState,
-  rightModalStates,
-  usersocketStates
-} from 'recoil/store';
+import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+
+import { usersocketStates } from 'recoil/socket';
+import { commonState, rightModalStates } from 'recoil/common';
+import { userDataStates, myJoinedGroupState, solvedProblemState } from 'recoil/user';
+import { postModalDataStates } from 'recoil/post';
+import { groupListState } from 'recoil/group';
+
 import { IProblem } from 'types/problem';
 import { IGroup } from 'types/group';
+import fetchApi from 'api/fetch';
 
 const InitUserData = () => {
   const setUserdata = useSetRecoilState(userDataStates);
@@ -47,7 +37,7 @@ const InitUserData = () => {
         resetRightModalState();
         socket.emit('disconnect notify');
         history.push('/');
-        alert('비정상 접근');
+        alert('세션이 만료되었습니다. 다시 로그인 해주세요.');
       } else {
         const fetchGroupList: IGroup[] = await fetchApi.getGroupList();
         setUserdata({
@@ -70,9 +60,7 @@ const InitUserData = () => {
           }))
         );
         if (groupList.length === 0) setGroupList(fetchGroupList);
-        setJoinedGroups(
-          data.BTMUserGroupuseridx.map((item: IGroup) => item.idx)
-        );
+        setJoinedGroups(data.BTMUserGroupuseridx.map((item: IGroup) => item.idx));
         setCommon(true);
       }
     })();

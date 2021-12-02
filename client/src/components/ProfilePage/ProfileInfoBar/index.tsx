@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { profileSolvedRate } from 'recoil/store';
+import { profileSolvedRate } from 'recoil/user';
 
 const ProfileBarContainer = styled.div`
   width: 100%;
@@ -54,7 +54,7 @@ const InnerBarGraph = styled.span<{ solvedRate: number }>`
   border-radius: 40px;
   padding: 0 10px;
   box-sizing: border-box;
-  color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme.inColorBox};
   font-size: small;
   font-weight: 600;
   animation: ${(props) => GraphAnimation(props.solvedRate)} 1.5s 1;
@@ -69,9 +69,7 @@ const ProfileInfoBar = () => {
       {solvedRate === -1 && <NoGroup />}
       {solvedRate >= 0 && (
         <SolvedBarGraph>
-          <InnerBarGraph solvedRate={solvedRate || 0}>
-            {solvedRate}%
-          </InnerBarGraph>
+          <InnerBarGraph solvedRate={solvedRate || 0}>{solvedRate}%</InnerBarGraph>
         </SolvedBarGraph>
       )}
     </ProfileBarContainer>

@@ -10,9 +10,7 @@ const CurrentUserTitleWrapper = styled.div`
 `;
 
 const CurrentUserTitle = () => {
-  return (
-    <CurrentUserTitleWrapper>이 그룹에 가입한 유저</CurrentUserTitleWrapper>
-  );
+  return <CurrentUserTitleWrapper>이 그룹에 가입한 유저</CurrentUserTitleWrapper>;
 };
 
 export default CurrentUserTitle;

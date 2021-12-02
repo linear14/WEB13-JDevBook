@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled, { keyframes } from 'styled-components';
 
-import { isLoginfailStates } from 'recoil/store';
+import { isLoginfailStates } from 'recoil/common';
 import { mainLogo } from 'images';
 
 const Content = styled.div`
@@ -46,7 +46,6 @@ const IsLoginPage = () => {
 
   useEffect(() => {
     if (loginfail === true) {
-      alert('비정상적인 접근입니다.');
       history.push('/');
     }
   }, [loginfail]);

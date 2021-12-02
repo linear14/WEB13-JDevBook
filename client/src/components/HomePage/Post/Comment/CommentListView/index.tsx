@@ -13,8 +13,7 @@ const Animation = keyframes`
 const CommentsWrap = styled.div`
   display: flex;
   align-items: center;
-  padding: ${style.padding.small} ${style.padding.small} 0
-    ${style.padding.small};
+  padding: ${style.padding.small} ${style.padding.small} 0 ${style.padding.small};
 
   animation-name: ${Animation};
   animation-duration: 0.5s;
@@ -58,9 +57,7 @@ const CommentListView = ({ commentList }: { commentList: IComment[] }) => {
         <CommentContent>
           <CommentTitle>
             {comment.writer}
-            <CommentDate>
-              {textUtil.timeToString(comment.createdAt)}
-            </CommentDate>
+            <CommentDate>{textUtil.timeToString(comment.createdAt)}</CommentDate>
           </CommentTitle>
           <CommentText>{comment.text}</CommentText>
         </CommentContent>

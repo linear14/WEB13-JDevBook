@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { postListStore } from 'recoil/store';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+
+import { postListStore } from 'recoil/post';
 
 import fetchApi from 'api/fetch';
 import arrayUtil from 'utils/arrayUtil';
@@ -56,10 +57,7 @@ const PostList = () => {
       abortController.current = new AbortController();
       setFetching(true);
       const fetchPosts = fetchApi.getPosts(abortController.current.signal);
-      const fetchProblems = fetchApi.getProblems(
-        null,
-        abortController.current.signal
-      );
+      const fetchProblems = fetchApi.getProblems(null, abortController.current.signal);
       const result = await Promise.all([fetchPosts, fetchProblems]);
       if (result[0].length < 10) {
         setHasMore(false);
@@ -117,9 +115,7 @@ const PostList = () => {
 
   const getNextProblem = (idx: number) => {
     if (problemOrders.current.length * 5 <= idx) return null;
-    return idx % 5 === 4
-      ? problems[problemOrders.current[Math.floor(idx / 5)]]
-      : null;
+    return idx % 5 === 4 ? problems[problemOrders.current[Math.floor(idx / 5)]] : null;
   };
 
   const reloadList = () => {
@@ -140,13 +136,7 @@ const PostList = () => {
             return (
               <div key={idx}>
                 <Post key={posts[idx].idx} post={posts[idx]} />
-                {nextProblem && (
-                  <Problem
-                    key={`p${(nextProblem as any).idx}`}
-                    problem={nextProblem}
-                    isHome
-                  />
-                )}
+                {nextProblem && <Problem key={`p${(nextProblem as any).idx}`} problem={nextProblem} isHome />}
               </div>
             );
           })}

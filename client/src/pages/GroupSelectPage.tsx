@@ -1,11 +1,13 @@
+import { useEffect } from 'react';
 import styled, { createGlobalStyle, css } from 'styled-components';
+import { useSetRecoilState } from 'recoil';
+
+import { currentPageStates } from 'recoil/common';
+
+import { Page } from 'types/common';
 
 import { FakeSideBar, InitUserData, FakeGnb } from 'components/common';
 import { GroupSelectTitle, GroupSelectList } from 'components/GroupSelectPage';
-import { useSetRecoilState } from 'recoil';
-import { currentPageStates } from 'recoil/store';
-import { useEffect } from 'react';
-import { Page } from 'types/common';
 
 const GlobalStyle = createGlobalStyle`
   ${({}) => {

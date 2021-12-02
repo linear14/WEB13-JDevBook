@@ -6,12 +6,4 @@ import IsLoginPage from 'pages/IsLoginPage';
 import GroupSelectPage from 'pages/GroupSelectPage';
 import LoadingWhitePage from 'pages/LoadingWhitePage';
 
-export {
-  HomePage,
-  LoginPage,
-  GroupPage,
-  ProfilePage,
-  IsLoginPage,
-  LoadingWhitePage,
-  GroupSelectPage
-};
+export { HomePage, LoginPage, GroupPage, ProfilePage, IsLoginPage, LoadingWhitePage, GroupSelectPage };

@@ -1,6 +1,6 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { alertState, timeOutValueState } from 'recoil/store';
+import { alertState, timeOutValueState } from 'recoil/common';
 
 const useAlertModal = () => {
   const setAlertModal = useSetRecoilState(alertState);

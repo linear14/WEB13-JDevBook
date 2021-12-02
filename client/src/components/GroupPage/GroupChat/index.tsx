@@ -2,15 +2,17 @@ import { useState, useEffect, FormEvent } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { GroupNavState, userDataStates, usersocketStates } from 'recoil/store';
+import { usersocketStates } from 'recoil/socket';
+import { userDataStates } from 'recoil/user';
+import { GroupNavState } from 'recoil/group';
 
 import style from 'theme/style';
 
-import CurrentUserTitle from './CurrentUserTitle';
-import CurrentUserContainer from './CurrentUserContainer';
-import ChatTitle from './ChatTitle';
-import ChatListView from './ChatList';
-import ChatInput from './ChatInput';
+import CurrentUserTitle from 'components/GroupPage/GroupChat/CurrentUserTitle';
+import CurrentUserContainer from 'components/GroupPage/GroupChat/CurrentUserContainer';
+import ChatTitle from 'components/GroupPage/GroupChat/ChatTitle';
+import ChatListView from 'components/GroupPage/GroupChat/ChatList';
+import ChatInput from 'components/GroupPage/GroupChat/ChatInput';
 
 const OpenChatAnimation = keyframes`
   0% { opacity: 0; transform: translateX(100px); }
@@ -98,9 +100,7 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
     });
 
     socket.on('get previous group chats', (filteredMsgs: string[]) => {
-      setMessageList((messageList: string[]) =>
-        messageList.concat(filteredMsgs)
-      );
+      setMessageList((messageList: string[]) => messageList.concat(filteredMsgs));
       socket.off('get previous group chats');
       document.querySelector('.group-chat-list')?.scrollBy({
         top: document.querySelector('.group-chat-list')?.scrollHeight,
@@ -109,19 +109,16 @@ const GroupChat = ({ groupIdx }: { groupIdx: number }) => {
     });
 
     socket.off('receive group message');
-    socket.on(
-      'receive group message',
-      (data: { sender: string; groupidx: number; msg: string }) => {
-        const { groupidx, msg } = data;
-        if (groupidx === groupIdx) {
-          setMessageList((messageList: string[]) => messageList.concat(msg));
-        }
-        document.querySelector('.group-chat-list')?.scrollBy({
-          top: document.querySelector('.group-chat-list')?.scrollHeight,
-          behavior: 'smooth'
-        });
+    socket.on('receive group message', (data: { sender: string; groupidx: number; msg: string }) => {
+      const { groupidx, msg } = data;
+      if (groupidx === groupIdx) {
+        setMessageList((messageList: string[]) => messageList.concat(msg));
       }
-    );
+      document.querySelector('.group-chat-list')?.scrollBy({
+        top: document.querySelector('.group-chat-list')?.scrollHeight,
+        behavior: 'smooth'
+      });
+    });
   }, [socket, groupIdx]);
 
   useEffect(() => {

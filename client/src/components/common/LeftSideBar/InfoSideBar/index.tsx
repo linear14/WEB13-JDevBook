@@ -3,12 +3,8 @@ import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import {
-  solvedProblemState,
-  userDataStates,
-  rateState,
-  myJoinedGroupState
-} from 'recoil/store';
+import { userDataStates, solvedProblemState, rateState, myJoinedGroupState } from 'recoil/user';
+
 import fetchApi from 'api/fetch';
 import useResetProfile from 'hooks/useResetProfile';
 
@@ -80,11 +76,10 @@ const InnerBarGraph = styled.span<{ prevRate: number; solvedRate: number }>`
   border-radius: 40px;
   padding: 0 10px;
   box-sizing: border-box;
-  color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme.inColorBox};
   font-size: small;
   font-weight: 600;
-  animation: ${(props) => GraphAnimation(props.prevRate, props.solvedRate)} 1.5s
-    1;
+  animation: ${(props) => GraphAnimation(props.prevRate, props.solvedRate)} 1.5s 1;
 `;
 
 const InfoSideBar = () => {
@@ -103,12 +98,8 @@ const InfoSideBar = () => {
   };
 
   const getSolvedRate = useCallback(() => {
-    const solvedLength = solvedProblem.filter((item) =>
-      joinedGroups?.includes(item.groupIdx)
-    ).length;
-    return rate.totalProblemsCount === 0
-      ? 0
-      : Number(((solvedLength / rate.totalProblemsCount) * 100).toFixed(1));
+    const solvedLength = solvedProblem.filter((item) => joinedGroups?.includes(item.groupIdx)).length;
+    return rate.totalProblemsCount === 0 ? 0 : Number(((solvedLength / rate.totalProblemsCount) * 100).toFixed(1));
   }, [solvedProblem, rate.totalProblemsCount, joinedGroups]);
 
   useEffect(() => {
@@ -136,11 +127,7 @@ const InfoSideBar = () => {
       {joinedGroups && joinedGroups.length === 0 && <NoGroup />}
       {joinedGroups && joinedGroups.length > 0 && (
         <SolvedBarGraph>
-          <InnerBarGraph
-            prevRate={rate.prevRate}
-            solvedRate={rate.solvedRate}
-            onAnimationEnd={prevRateUpdate}
-          >
+          <InnerBarGraph prevRate={rate.prevRate} solvedRate={rate.solvedRate} onAnimationEnd={prevRateUpdate}>
             {rate.totalProblemsCount !== 0 && `${rate.solvedRate}%`}
           </InnerBarGraph>
         </SolvedBarGraph>

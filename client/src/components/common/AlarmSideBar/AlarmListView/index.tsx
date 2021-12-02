@@ -42,7 +42,7 @@ const AlarmListView = ({ alarmList }: { alarmList: string[] }) => {
       </AlarmBox>
     ))
     .reverse();
-    
+
   return <>{alarmListView}</>;
 };
 

@@ -11,19 +11,17 @@ const Box = styled.div`
   align-items: center;
   text-align: center;
 
-  width: 35vw;
-  height: 50%;
+  width: 400px;
+  height: 400px;
   background-color: #fafafa;
   border-radius: 50px;
 
   margin-right: 10vw;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 
   @media screen and (max-width: 880px) {
     margin-top: 50px;
-    width:90%;
-    margin-left:5%;
+    margin-right: 0;
   }
 `;
 
@@ -54,11 +52,7 @@ const LoginBox = () => {
       <Content>
         <MainLogo src={mainLogo} />
         <Text>개발자라면 Github 아이디는 가지고 계시죠?</Text>
-        <GithubLoginButton
-          onClick={async () =>
-            (window.location.href = await fetchApi.getLoginlink())
-          }
-        />
+        <GithubLoginButton onClick={async () => (window.location.href = await fetchApi.getLoginlink())} />
       </Content>
     </Box>
   );

@@ -2,10 +2,10 @@ import { useState, useRef, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import fetchApi from 'api/fetch';
-import { modalStateStore } from 'recoil/store';
-import { SearchedUser } from 'types/GNB';
+import { modalStateStore } from 'recoil/common';
 
+import fetchApi from 'api/fetch';
+import { SearchedUser } from 'types/GNB';
 import { IconSearch } from 'images/icons';
 
 const ExtendSearchBarAnimation = keyframes`
@@ -102,21 +102,12 @@ const UserSearchBar = ({
   }, [input]);
 
   return (
-    <UserSearchBarContainer
-      isFake={isFake}
-      onClick={() => setModalState({ ...modalState, searchUser: true })}
-    >
+    <UserSearchBarContainer isFake={isFake} onClick={() => setModalState({ ...modalState, searchUser: true })}>
       {isFake && <IconSearch />}
       {isFake ? (
         <input type="text" placeholder="사용자 검색" readOnly />
       ) : (
-        <input
-          type="text"
-          placeholder="사용자 검색"
-          value={input}
-          onChange={onChangeInput}
-          ref={inputBox}
-        />
+        <input type="text" placeholder="사용자 검색" value={input} onChange={onChangeInput} ref={inputBox} />
       )}
     </UserSearchBarContainer>
   );
