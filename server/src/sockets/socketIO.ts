@@ -1,17 +1,16 @@
 import { Socket, Server } from 'socket.io';
-import { IUserSocket } from '../types/interface';
 import chatSocket from './chatSocket';
 import groupChatSocket from './groupChatSocket';
 import commentSocket from './commentSocket';
 import alarmSocket from './alarmSocket';
 import postSocket from './postSocket';
+import { IUserSocket } from '../types';
 
 const UserObj: IUserSocket = {};
 
 const socketIO = (server: any) => {
   const io = new Server(server);
   io.on('connection', (socket: Socket) => {
-    // 유저 접속 부분
     socket.on(
       'login notify',
       async (userData: { socketId: string; userName: string }) => {

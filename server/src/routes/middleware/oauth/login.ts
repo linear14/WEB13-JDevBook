@@ -1,16 +1,16 @@
 import path from 'path';
 import dotenv from 'dotenv';
+dotenv.config({
+  path: path.resolve(__dirname, '../../../config/.env.development')
+});
+
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 import dbManager from '../../../service/dbManager';
-import { DBUser } from '../../../types/interface';
+import { DBUser } from '../../../types';
 const githubOauth = require('../../../service/githubOauth');
 const oauth = require('../../../config/oauth.json');
-
-dotenv.config({
-  path: path.resolve(__dirname, '../../../config/.env.development')
-});
 
 const clientURL: string = process.env.LOCAL_CLIENT ?? '/';
 
