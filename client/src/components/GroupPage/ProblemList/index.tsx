@@ -6,7 +6,7 @@ import fetchApi from 'api/fetch';
 
 import { Problem } from '..';
 import { IProblem } from 'types/problem';
-import { Skeleton } from 'components/common';
+import { FakePost } from 'components/common';
 import { GroupNavState, myJoinedGroupState } from 'recoil/store';
 
 const ProblemListContainer = styled.div<{ navState: boolean }>`
@@ -61,7 +61,7 @@ const ProblemList = ({ groupIdx }: { groupIdx: number }) => {
     return Array(count)
       .fill(undefined)
       .map((v, i) => {
-        return <Skeleton key={`s${i}`} type="problem" />;
+        return <FakePost key={`s${i}`} type="problem" />;
       });
   }, []);
 

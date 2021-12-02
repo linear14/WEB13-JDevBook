@@ -8,7 +8,7 @@ import arrayUtil from 'utils/arrayUtil';
 
 import { Post } from 'components/HomePage';
 import { Problem } from 'components/GroupPage';
-import { NewPostAlert, Skeleton } from 'components/common';
+import { NewPostAlert, FakePost } from 'components/common';
 
 const PostListContainer = styled.div`
   width: 680px;
@@ -55,10 +55,8 @@ const PostList = () => {
     try {
       abortController.current = new AbortController();
       setFetching(true);
-      const fetchPosts = await fetchApi.getPosts(
-        abortController.current.signal
-      );
-      const fetchProblems = await fetchApi.getProblems(
+      const fetchPosts = fetchApi.getPosts(abortController.current.signal);
+      const fetchProblems = fetchApi.getProblems(
         null,
         abortController.current.signal
       );
@@ -101,7 +99,7 @@ const PostList = () => {
     return Array(count)
       .fill(undefined)
       .map((v, i) => {
-        return <Skeleton key={`s${i}`} />;
+        return <FakePost key={`s${i}`} />;
       });
   };
 

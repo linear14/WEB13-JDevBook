@@ -12,7 +12,7 @@ import {
 import UserCard from 'components/common/Gnb/UserCard';
 import InitUserData from 'components/common/InitUserData';
 import AlertModal from 'components/common/AlertModal';
-import Skeleton from 'components/common/Skeleton';
+import { FakePost, FakeProfileBar } from 'components/common/Skeleton';
 import LoadingModal from 'components/common/LoadingModal';
 import NewPostAlert from 'components/common/NewPostAlert';
 
@@ -29,7 +29,8 @@ export {
   UserCard,
   InitUserData,
   AlertModal,
-  Skeleton,
+  FakePost,
+  FakeProfileBar,
   LoadingModal,
   NewPostAlert
 };

@@ -9,6 +9,7 @@ import {
 } from 'recoil/store';
 import fetchApi from 'api/fetch';
 import { PostData } from 'types/post';
+import useAlertModal from 'hooks/useAlertModal';
 
 const OptionModalContainer = styled.div`
   width: 240px;
@@ -47,6 +48,7 @@ const OptionModal = ({ post }: { post: PostData }) => {
   const [postList, setPostList] = useRecoilState(postListStore);
   const setPostData = useSetRecoilState(postModalDataStates);
   const resetModalState = useResetRecoilState(modalStateStore);
+  const alertMessage = useAlertModal();
 
   const modal = useRef<HTMLDivElement>(null);
   const closeModal = (e: any, force?: boolean) => {
@@ -81,6 +83,7 @@ const OptionModal = ({ post }: { post: PostData }) => {
     const postIdx = modalState.post.index;
     resetModalState();
     await fetchApi.deletePosts(postIdx);
+    alertMessage(`게시글이 성공적으로 삭제되었습니다!`);
     setPostList(postList.filter((item) => item.idx !== postIdx));
   };
 
