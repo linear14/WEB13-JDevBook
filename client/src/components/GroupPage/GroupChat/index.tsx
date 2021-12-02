@@ -33,6 +33,8 @@ const ChatSideBarContainer = styled.div<{ groupChatFlag: boolean }>`
   width: 340px;
   height: calc(100% - 56px);
 
+  will-change: transform, opacity;
+
   visibility: ${(props) => (props.groupChatFlag ? `` : `hidden`)};
   transition: ${(props) => (props.groupChatFlag ? `` : `all .5s`)};
   animation-name: ${(props) =>

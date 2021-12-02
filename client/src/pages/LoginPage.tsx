@@ -10,7 +10,17 @@ import Greeter from 'components/LoginPage/Greeter';
 import LoginBox from 'components/LoginPage/LoginBox';
 import Footer from 'components/LoginPage/Footer';
 
-const LoginPageContainer = styled.div``;
+const LoginPageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  min-height: 440px;
+  @media screen and (max-width: 880px) {
+    min-height: 640px;
+  }
+`;
 
 const Content = styled.div`
   display: flex;
@@ -18,10 +28,13 @@ const Content = styled.div`
   align-items: center;
   text-align: center;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 
   @media screen and (max-width: 880px) {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `;
 

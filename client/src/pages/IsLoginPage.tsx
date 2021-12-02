@@ -46,7 +46,6 @@ const IsLoginPage = () => {
 
   useEffect(() => {
     if (loginfail === true) {
-      alert('비정상적인 접근입니다.');
       history.push('/');
     }
   }, [loginfail]);

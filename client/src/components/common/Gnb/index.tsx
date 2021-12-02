@@ -167,14 +167,15 @@ const AlarmBadge = styled.div`
 `;
 
 const Gnb = () => {
-  const [userdata, setUserdata] = useRecoilState(userDataStates);
+  const userdata = useRecoilValue(userDataStates);
+  const resetUserdata = useResetRecoilState(userDataStates);
   const resetSolvedProblemState = useResetRecoilState(solvedProblemState);
   const [rightModalState, setRightModalState] = useRecoilState(rightModalStates);
   const [groupNavState, setGroupNavState] = useRecoilState(GroupNavState);
   const [alarmNum, setAlarmNum] = useRecoilState(alarmState);
   const [theme, setTheme] = useRecoilState(themeState);
   const socket = useRecoilValue(usersocketStates);
-  const [commonDisplay, setCommonDispaly] = useRecoilState(commonState);
+  const [commonDisplay, setCommonDisplay] = useRecoilState(commonState);
   const history = useHistory();
 
   const themeToggleHandler = (e: React.MouseEvent) => {
@@ -234,15 +235,8 @@ const Gnb = () => {
           onClick={async () => {
             ChangeFlag(rightModalState, setRightModalState, '');
             await fetchApi.logout();
-            setUserdata({
-              idx: -1,
-              name: '',
-              profile: '' as string,
-              cover: '' as string,
-              bio: '' as string,
-              login: false
-            });
-            setCommonDispaly(false);
+            resetUserdata();
+            setCommonDisplay(false);
             resetSolvedProblemState();
             socket.emit('disconnect notify');
             history.push('/');

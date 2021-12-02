@@ -40,6 +40,7 @@ const ChatSideBarContainer = styled.div<{
 
   visibility: ${(props) => (props.rightModalFlag && props.messageFlag ? `` : `hidden`)};
   transition: ${(props) => (props.rightModalFlag && props.messageFlag ? `` : `all .5s`)};
+  will-change: transform, opacity;
 
   animation-name: ${(props) =>
     props.rightModalFlag && props.messageFlag

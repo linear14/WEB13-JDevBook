@@ -11,8 +11,8 @@ const Box = styled.div`
   align-items: center;
   text-align: center;
 
-  width: 35vw;
-  height: 50%;
+  width: 400px;
+  height: 400px;
   background-color: #fafafa;
   border-radius: 50px;
 
@@ -21,8 +21,7 @@ const Box = styled.div`
 
   @media screen and (max-width: 880px) {
     margin-top: 50px;
-    width: 90%;
-    margin-left: 5%;
+    margin-right: 0;
   }
 `;
 

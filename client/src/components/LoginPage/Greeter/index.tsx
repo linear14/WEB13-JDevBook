@@ -7,6 +7,10 @@ const Wrapper = styled.span`
 
   margin-left: 10vw;
   font-size: 50px;
+
+  @media screen and (max-width: 880px) {
+    margin-left: 0;
+  }
 `;
 
 const SubTitle = styled.div`

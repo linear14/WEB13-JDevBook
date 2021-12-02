@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle, css } from 'styled-components';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
@@ -9,7 +9,7 @@ import { imageViewerState } from 'recoil/post';
 
 import { Page } from 'types/common';
 
-import { InitUserData, LoadingModal, FakeSideBar, FakeGnb } from 'components/common';
+import { InitUserData, LoadingModal, FakeSideBar, FakeGnb, FakeProfileBar } from 'components/common';
 import { PostWriter, ImageViewer } from 'components/HomePage';
 import { ProfileBar, ProfileCover, InitProfileData, PostList, ProfileInfoBar } from 'components/ProfilePage';
 
@@ -100,7 +100,9 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({ matc
           <ProfileBar />
           <InnerContainer>
             <InfoContainer>
-              <ProfileInfoBar />
+              <Suspense fallback={<FakeProfileBar />}>
+                <ProfileInfoBar />
+              </Suspense>
             </InfoContainer>
             <PostContainer>
               {myProfile ? <PostWriter /> : ''}

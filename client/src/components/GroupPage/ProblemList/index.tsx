@@ -9,7 +9,7 @@ import fetchApi from 'api/fetch';
 import { IProblem } from 'types/problem';
 
 import { Problem } from 'components/GroupPage';
-import { Skeleton } from 'components/common';
+import { FakePost } from 'components/common';
 
 const ProblemListContainer = styled.div<{ navState: boolean }>`
   width: 680px;
@@ -63,7 +63,7 @@ const ProblemList = ({ groupIdx }: { groupIdx: number }) => {
     return Array(count)
       .fill(undefined)
       .map((v, i) => {
-        return <Skeleton key={`s${i}`} type="problem" />;
+        return <FakePost key={`s${i}`} type="problem" />;
       });
   }, []);
 

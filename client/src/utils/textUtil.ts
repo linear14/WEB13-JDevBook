@@ -28,9 +28,6 @@ const textUtil = {
 
     const diff = nowTime - targetTime;
 
-    if (diff < 0) {
-      return 'Something wrong';
-    }
     if (diff < MINUTE) {
       return '방금 전';
     }

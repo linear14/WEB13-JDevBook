@@ -32,6 +32,9 @@ const AlarmSideBarContainer = styled.div<{
   flex-direction: column;
   width: 340px;
   height: calc(100% - 56px);
+  z-index: 1;
+
+  will-change: transform, opacity;
 
   visibility: ${(props) => (props.rightModalFlag && props.alarmFlag ? `` : `hidden`)};
   transition: ${(props) => (props.rightModalFlag && props.alarmFlag ? `` : `all .5s`)};
@@ -76,7 +79,7 @@ const AlarmSideBar = () => {
       const audio = new Audio(commentAudio);
       audio.volume = 0.2;
       audio.play();
-    } else if (data.receiver === currentUserName && data.type === 'chat') {
+    } else if (data.receiver === currentUserName && data.sender !== currentUserName && data.type === 'chat') {
       const audio = new Audio(messageAudio);
       audio.volume = 0.2;
       audio.play();
