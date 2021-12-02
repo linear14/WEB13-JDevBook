@@ -1,13 +1,14 @@
 import { Dispatch } from 'react';
 import styled from 'styled-components';
-
 import { useRecoilValue } from 'recoil';
-import { rightModalStates, userDataStates } from 'recoil/store';
 
-import useAlertModal from 'hooks/useAlertModal';
+import { rightModalStates } from 'recoil/common';
+import { userDataStates } from 'recoil/user';
+
 import style from 'theme/style';
+import useAlertModal from 'hooks/useAlertModal';
 
-import SubmitBtn from '../SubmitBtn';
+import SubmitBtn from 'components/GroupPage/GroupChat/SubmitBtn';
 
 const ChatInputWrapper = styled.div<{
   rightModalFlag: boolean;
@@ -64,17 +65,12 @@ const ChatInput = ({
   };
 
   return (
-    <ChatInputWrapper
-      rightModalFlag={rightModalState.rightModalFlag}
-      messageFlag={rightModalState.messageFlag}
-    >
+    <ChatInputWrapper rightModalFlag={rightModalState.rightModalFlag} messageFlag={rightModalState.messageFlag}>
       <ChatInputBox
         spellCheck="false"
         autoComplete="off"
         onKeyUp={contentsBytesCheck}
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-          setValue(e.target.value)
-        }
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)}
         onKeyPress={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
           if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();

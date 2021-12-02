@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 import dbManager from '../../../service/dbManager';
-import { CommentData } from '../../../types/interface';
+import { CommentData } from '../../../types';
 
 const comments = {
   get: async (req: Request, res: Response, next: NextFunction) => {

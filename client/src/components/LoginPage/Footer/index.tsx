@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 
 const Text = styled.div`
-  position: absolute;
-  bottom: 15px;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin-bottom: 20px;
   white-space: nowrap;
 
   @media screen and (max-width: 880px) {

@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { userDataStates, postModalDataStates } from 'recoil/store';
+import { userDataStates } from 'recoil/user';
+import { postModalDataStates } from 'recoil/post';
+
+import style from 'theme/style';
 
 import { ProfilePhoto } from 'components/common';
-import style from 'theme/style';
 
 const PostInfoWrap = styled.div`
   width: 100%;
@@ -26,9 +28,8 @@ const SecretSelector = styled.div<{ isSecret: boolean }>`
   height: 30px;
   padding: 0 ${style.padding.small};
 
-  background-color: ${(props) =>
-    props.isSecret ? props.theme.green : props.theme.lightgray};
-  color: ${(props) => (props.isSecret ? props.theme.white : props.theme.black)};
+  background-color: ${(props) => (props.isSecret ? props.theme.green : props.theme.lightgray)};
+  color: ${(props) => (props.isSecret ? props.theme.inColorBox : props.theme.black)};
   border-radius: 5px;
 
   display: flex;
@@ -37,8 +38,7 @@ const SecretSelector = styled.div<{ isSecret: boolean }>`
 
   &:hover {
     cursor: pointer;
-    background-color: ${(props) =>
-      props.isSecret ? props.theme.darkgreen : props.theme.gray};
+    background-color: ${(props) => (props.isSecret ? props.theme.darkgreen : props.theme.gray)};
   }
 
   &:active {
@@ -57,9 +57,7 @@ const PostInfo = () => {
   };
 
   useEffect(() => {
-    postData.secret
-      ? setSecretStr(' 🔒 나만 보기')
-      : setSecretStr(' 👨‍👨‍👧‍👧 전체 공개');
+    postData.secret ? setSecretStr(' 🔒 나만 보기') : setSecretStr(' 👨‍👨‍👧‍👧 전체 공개');
   }, [postData.secret]);
 
   return (

@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { userDataStates, isLoginfailStates } from 'recoil/store';
+import { userDataStates } from 'recoil/user';
+import { isLoginfailStates } from 'recoil/common';
 
 import {
   GroupPage,
@@ -13,7 +14,9 @@ import {
   LoadingWhitePage,
   GroupSelectPage
 } from 'pages';
+
 import { ChatSideBar, AlarmSideBar, LeftSideBar, Gnb } from 'components/common';
+import fetchApi from 'api/fetch';
 
 const Router = () => {
   const [login, setLogin] = useState(false);
@@ -23,13 +26,12 @@ const Router = () => {
     if (userdata.login === false) {
       // 새로고침해도 default가 false라 상관X, 로그인직후 userdata 변경시 막기용
       (async () => {
-        const isloginRes: Response = await fetch('/api/islogin');
-        const islogin: boolean = await isloginRes.json();
+        const islogin: boolean = await fetchApi.isLogin();
         setLogin(islogin);
         if (islogin === false) setLoginfail(true);
       })();
     }
-  }, [userdata, setLoginfail]);
+  }, [userdata]);
 
   return (
     <BrowserRouter>

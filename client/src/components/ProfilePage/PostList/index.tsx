@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { postListStore, profileState } from 'recoil/store';
-
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { useRecoilState, useRecoilValue } from 'recoil';
+
+import { postListStore } from 'recoil/post';
+import { profileState } from 'recoil/user';
 
 import fetchApi from 'api/fetch';
 
 import { Post } from 'components/HomePage';
-import { Skeleton } from 'components/common';
+import { FakePost } from 'components/common';
 
 const PostListContainer = styled.div`
   width: 532px;
@@ -70,10 +71,11 @@ const PostList = () => {
     try {
       abortControllerMap.current[nickname] = new AbortController();
       setFetching(true);
-      const result = await fetchApi.getPosts(
-        abortControllerMap.current[nickname].signal,
-        { lastIdx, count, username: nickname }
-      );
+      const result = await fetchApi.getPosts(abortControllerMap.current[nickname].signal, {
+        lastIdx,
+        count,
+        username: nickname
+      });
       if (result.length < count) {
         setHasMore(false);
       }
@@ -88,7 +90,7 @@ const PostList = () => {
     return Array(count)
       .fill(undefined)
       .map((v, i) => {
-        return <Skeleton key={`s${i}`} isProfile />;
+        return <FakePost key={`s${i}`} isProfile />;
       });
   };
 

@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { userDataStates, modalStateStore } from 'recoil/store';
+import { modalStateStore } from 'recoil/common';
+import { userDataStates } from 'recoil/user';
+
 import { iconPhoto } from 'images/icons';
 
 import { ProfilePhoto } from 'components/common';
@@ -114,9 +116,7 @@ const PostWriter = () => {
       <PostWriterBox className="no-drag">
         <InputWrap>
           <ProfilePhoto size="44px" userName={userdata.name} />
-          <ModalCallBtn onClick={postWriterModalOn}>
-            {userdata.name}님, 무슨 생각을 하고 계신가요?
-          </ModalCallBtn>
+          <ModalCallBtn onClick={postWriterModalOn}>{userdata.name}님, 무슨 생각을 하고 계신가요?</ModalCallBtn>
         </InputWrap>
         <Line />
         <ButtonsWrap>

@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 import dbManager from '../../../service/dbManager';
 import { pictureCheck } from '../../../service/pictureCheck';
-import { PostAddData, PostUpdateData } from '../../../types/interface';
+import { PostAddData, PostUpdateData } from '../../../types';
 
 const posts = {
   get: async (

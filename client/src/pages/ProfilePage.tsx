@@ -1,30 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import styled, { createGlobalStyle, css } from 'styled-components';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import {
-  currentPageStates,
-  imageViewerState,
-  profileState,
-  userDataStates
-} from 'recoil/store';
+import { currentPageStates } from 'recoil/common';
+import { userDataStates, profileState } from 'recoil/user';
+import { imageViewerState } from 'recoil/post';
 
-import {
-  InitUserData,
-  LoadingModal,
-  FakeSideBar,
-  FakeGnb
-} from 'components/common';
-import { PostWriter, ImageViewer } from 'components/HomePage';
-import {
-  ProfileBar,
-  ProfileCover,
-  InitProfileData,
-  PostList,
-  ProfileInfoBar
-} from 'components/ProfilePage';
 import { Page } from 'types/common';
+
+import { InitUserData, LoadingModal, FakeSideBar, FakeGnb, FakeProfileBar } from 'components/common';
+import { PostWriter, ImageViewer } from 'components/HomePage';
+import { ProfileBar, ProfileCover, InitProfileData, PostList, ProfileInfoBar } from 'components/ProfilePage';
 
 const GlobalStyle = createGlobalStyle`
   ${({}) => {
@@ -79,9 +66,7 @@ const PostContainer = styled.div`
   padding-left: 12px;
 `;
 
-const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
-  match
-}) => {
+const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({ match }) => {
   const userData = useRecoilValue(userDataStates);
   const profileData = useRecoilValue(profileState);
   const resetProfileData = useResetRecoilState(profileState);
@@ -106,9 +91,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
       <GlobalStyle />
       <InitUserData />
       <InitProfileData userName={match.params.username} />
-      <LoadingModal
-        modalState={profileData.idx === 0 || userData.name === ''}
-      />
+      <LoadingModal modalState={profileData.idx === 0 || userData.name === ''} />
       <FakeGnb />
       <PageLayout>
         <FakeSideBar />
@@ -117,7 +100,9 @@ const ProfilePage: React.FC<RouteComponentProps<{ username: string }>> = ({
           <ProfileBar />
           <InnerContainer>
             <InfoContainer>
-              <ProfileInfoBar />
+              <Suspense fallback={<FakeProfileBar />}>
+                <ProfileInfoBar />
+              </Suspense>
             </InfoContainer>
             <PostContainer>
               {myProfile ? <PostWriter /> : ''}

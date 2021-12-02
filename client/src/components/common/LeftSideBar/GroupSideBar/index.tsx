@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import {
-  groupListState,
-  myJoinedGroupState,
-  GroupNavState
-} from 'recoil/store';
+import { myJoinedGroupState } from 'recoil/user';
+import { groupListState, GroupNavState } from 'recoil/group';
+
 import { IconSearch } from 'images/icons';
 import { IGroup } from 'types/group';
 
-import JoinedGroupCard from './JoinedGroupCard';
+import JoinedGroupCard from 'components/common/LeftSideBar/GroupSideBar/JoinedGroupCard';
 
 const GroupSideBarContainer = styled.div`
   height: calc(100vh - 256px);
@@ -72,19 +70,13 @@ const GroupSideBar = () => {
   const [searchGroup, setSearchGroup] = useState<IGroup[]>([]);
 
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchGroup(
-      joinedGroup.filter((group) => group.title.includes(e.target.value))
-    );
+    setSearchGroup(joinedGroup.filter((group) => group.title.includes(e.target.value)));
   };
 
   useEffect(() => {
     if (joinedGroupIdx !== null) {
-      setJoinedGroup(
-        groupList.filter((group) => joinedGroupIdx.includes(group.idx))
-      );
-      setSearchGroup(
-        groupList.filter((group) => joinedGroupIdx.includes(group.idx))
-      );
+      setJoinedGroup(groupList.filter((group) => joinedGroupIdx.includes(group.idx)));
+      setSearchGroup(groupList.filter((group) => joinedGroupIdx.includes(group.idx)));
     }
   }, [joinedGroupIdx]);
 
@@ -94,9 +86,7 @@ const GroupSideBar = () => {
         <IconSearch />
         <input type="text" placeholder="그룹 검색" onChange={searchHandler} />
       </SearchBarWrap>
-      <GroupList
-        onClick={() => setGroupNavState({ ...groupNavState, groupChat: false })}
-      >
+      <GroupList onClick={() => setGroupNavState({ ...groupNavState, groupChat: false })}>
         {searchGroup.map((searchGroup, idx) => (
           <JoinedGroupCard key={idx} group={searchGroup} />
         ))}

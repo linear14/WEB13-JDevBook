@@ -1,22 +1,19 @@
 import { useState, useEffect, FormEvent } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-
 import { useRecoilValue } from 'recoil';
-import {
-  rightModalStates,
-  userDataStates,
-  usersocketStates,
-  chatWith
-} from 'recoil/store';
 
-import CurrentUser from './CurrentUser';
+import { usersocketStates, chatWith } from 'recoil/socket';
+import { userDataStates } from 'recoil/user';
+import { rightModalStates } from 'recoil/common';
+
 import style from 'theme/style';
 import { ISocketMessage } from 'types/message';
 
-import ChatListView from './ChatList';
-import CurrentUserTitle from './CurrentUserTitle';
-import ChatTitle from './ChatTitle';
-import ChatInput from './ChatInput';
+import CurrentUser from 'components/common/ChatSideBar/CurrentUser';
+import ChatListView from 'components/common/ChatSideBar/ChatList';
+import CurrentUserTitle from 'components/common/ChatSideBar/CurrentUserTitle';
+import ChatTitle from 'components/common/ChatSideBar/ChatTitle';
+import ChatInput from 'components/common/ChatSideBar/ChatInput';
 
 const OpenChatAnimation = keyframes`
   0% { opacity: 0; transform: translateX(100px); }
@@ -41,10 +38,9 @@ const ChatSideBarContainer = styled.div<{
   height: calc(100% - 56px);
   z-index: 1;
 
-  visibility: ${(props) =>
-    props.rightModalFlag && props.messageFlag ? `` : `hidden`};
-  transition: ${(props) =>
-    props.rightModalFlag && props.messageFlag ? `` : `all .5s`};
+  visibility: ${(props) => (props.rightModalFlag && props.messageFlag ? `` : `hidden`)};
+  transition: ${(props) => (props.rightModalFlag && props.messageFlag ? `` : `all .5s`)};
+  will-change: transform, opacity;
 
   animation-name: ${(props) =>
     props.rightModalFlag && props.messageFlag
@@ -108,9 +104,7 @@ const ChatSideBar = () => {
       });
 
       socket.on('get previous chats', (filteredMsgs: string[]) => {
-        setMessageList((messageList: string[]) =>
-          messageList.concat(filteredMsgs)
-        );
+        setMessageList((messageList: string[]) => messageList.concat(filteredMsgs));
         socket.off('get previous chats');
         document.querySelector('.chat-list')?.scrollBy({
           top: document.querySelector('.chat-list')?.scrollHeight,
@@ -123,10 +117,7 @@ const ChatSideBar = () => {
       socket.off('receive message');
       socket.on('receive message', (data: ISocketMessage) => {
         const { sender, receiver, msg } = data;
-        if (
-          sender === currentUserName ||
-          (receiver === currentUserName && sender === chatReceiver)
-        ) {
+        if (sender === currentUserName || (receiver === currentUserName && sender === chatReceiver)) {
           setMessageList((messageList: string[]) => messageList.concat(msg));
         }
 
@@ -147,10 +138,7 @@ const ChatSideBar = () => {
   };
 
   return (
-    <ChatSideBarContainer
-      rightModalFlag={rightModalState.rightModalFlag}
-      messageFlag={rightModalState.messageFlag}
-    >
+    <ChatSideBarContainer rightModalFlag={rightModalState.rightModalFlag} messageFlag={rightModalState.messageFlag}>
       <CurrentUserTitle />
       <CurrentUser />
       <Divider />

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-
 import { useRecoilValue } from 'recoil';
-import { rightModalStates, chatWith } from 'recoil/store';
+
+import { chatWith } from 'recoil/socket';
+import { rightModalStates } from 'recoil/common';
 
 import style from 'theme/style';
 
@@ -21,10 +22,7 @@ const ChatTitle = () => {
   const chatReceiver = useRecoilValue(chatWith);
 
   return (
-    <ChatTitleContainer
-      rightModalFlag={rightModalState.rightModalFlag}
-      messageFlag={rightModalState.messageFlag}
-    >
+    <ChatTitleContainer rightModalFlag={rightModalState.rightModalFlag} messageFlag={rightModalState.messageFlag}>
       {chatReceiver ? chatReceiver + ' 에게 보내는 편지' : '채팅할 상대 선택'}
     </ChatTitleContainer>
   );

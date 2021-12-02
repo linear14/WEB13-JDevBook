@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
-import { mainLogo } from 'images';
-import { modalStateStore } from 'recoil/store';
+import { modalStateStore } from 'recoil/common';
 
-import UserSearchBar from './UserSearchBar';
-import UserSearchModal from './UserSearchModal';
+import { mainLogo } from 'images';
+
+import UserSearchBar from 'components/common/Gnb/UserSearchBar';
+import UserSearchModal from 'components/common/Gnb/UserSearchModal';
 
 const MainLogo = styled(Link)`
   width: 40px;

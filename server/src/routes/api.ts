@@ -14,9 +14,9 @@ import {
 
 const router = express.Router();
 
-router.get('/data', isLogin.userData);
 router.get('/islogin', isLogin.check);
 
+router.get('/data', users.data);
 router.get('/users', users.search);
 router.get('/allUsers', users.all);
 

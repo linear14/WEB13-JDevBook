@@ -1,13 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import fetchApi from 'api/fetch';
+import { myJoinedGroupState } from 'recoil/user';
+import { GroupNavState } from 'recoil/group';
 
-import { Problem } from '..';
+import fetchApi from 'api/fetch';
 import { IProblem } from 'types/problem';
-import { Skeleton } from 'components/common';
-import { GroupNavState, myJoinedGroupState } from 'recoil/store';
+
+import { Problem } from 'components/GroupPage';
+import { FakePost } from 'components/common';
 
 const ProblemListContainer = styled.div<{ navState: boolean }>`
   width: 680px;
@@ -61,7 +63,7 @@ const ProblemList = ({ groupIdx }: { groupIdx: number }) => {
     return Array(count)
       .fill(undefined)
       .map((v, i) => {
-        return <Skeleton key={`s${i}`} type="problem" />;
+        return <FakePost key={`s${i}`} type="problem" />;
       });
   }, []);
 

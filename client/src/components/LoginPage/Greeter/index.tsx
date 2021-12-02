@@ -7,6 +7,10 @@ const Wrapper = styled.span`
 
   margin-left: 10vw;
   font-size: 50px;
+
+  @media screen and (max-width: 880px) {
+    margin-left: 0;
+  }
 `;
 
 const SubTitle = styled.div`
@@ -53,16 +57,14 @@ const Greeter = () => {
   const textArray = 'JDevBook'.split('');
 
   return (
-    
-      <Wrapper className="no-drag" data-cy="Greeter">
-        <SubTitle>우리들의 공간</SubTitle>
-        <Content>
-          {textArray.map((item, index) => (
-            <span key={index}>{item}</span>
-          ))}
-        </Content>
-      </Wrapper>
-    
+    <Wrapper className="no-drag" data-cy="Greeter">
+      <SubTitle>우리들의 공간</SubTitle>
+      <Content>
+        {textArray.map((item, index) => (
+          <span key={index}>{item}</span>
+        ))}
+      </Content>
+    </Wrapper>
   );
 };
 

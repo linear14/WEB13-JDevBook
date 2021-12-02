@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
+import { imageViewerState as ivState } from 'recoil/post';
+
 import { PostImagesInfo } from 'types/post';
-import { imageViewerState as ivState } from 'recoil/store';
 
 const HoverBox = styled.div`
   position: relative;
@@ -45,13 +46,7 @@ const ActiveImageBox = (props: PostImagesInfo) => {
         });
       }}
     >
-      <ImageBox
-        className="no-drag"
-        src={urls[index]}
-        width={width}
-        height={height}
-        alt="게시글 이미지"
-      />
+      <ImageBox className="no-drag" src={urls[index]} width={width} height={height} alt="게시글 이미지" />
       <div />
     </HoverBox>
   );

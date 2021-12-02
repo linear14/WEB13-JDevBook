@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+
+import { modalStateStore } from 'recoil/common';
 
 import { SearchedUser } from 'types/GNB';
-import { modalStateStore } from 'recoil/store';
 import useResetProfile from 'hooks/useResetProfile';
 
 import { ProfilePhoto } from 'components/common';

@@ -2,6 +2,7 @@ import AWS from 'aws-sdk';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
 import fs from 'fs';
+
 import { yyyymmdd } from './date';
 const storage = require('../config/objectstorage.json');
 
@@ -40,9 +41,9 @@ const limits = {
   fileSize: 1 * 1024 * 1024
 };
 
-export const upload = multer({ storage: storageS3, limits: limits });
+const upload = multer({ storage: storageS3, limits: limits });
 
-export const objectStorage = {
+const objectStorage = {
   makeBucket: async (bucket_name: string) => {
     await S3.createBucket({
       Bucket: bucket_name,
@@ -131,3 +132,5 @@ export const objectStorage = {
     }).promise();
   }
 };
+
+export { upload, objectStorage };
