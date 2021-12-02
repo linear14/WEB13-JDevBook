@@ -36,6 +36,8 @@ const AlarmSideBarContainer = styled.div<{
   height: calc(100% - 56px);
   z-index: 1;
 
+  will-change: transform, opacity;
+
   visibility: ${(props) =>
     props.rightModalFlag && props.alarmFlag ? `` : `hidden`};
   transition: ${(props) =>
