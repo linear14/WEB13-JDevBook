@@ -1,5 +1,7 @@
 # WEB13-JDevBook [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fboostcampwm-2021%2FWEB13-JDevBook%2Fhit-counter&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
+![JDevBook 배너](https://user-images.githubusercontent.com/87400617/144348628-706b6188-c182-4497-9487-f4f84b77ef5d.gif)
+
 ## 배포주소
 
 - https://www.jdevbook.kro.kr/
