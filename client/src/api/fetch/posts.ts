@@ -1,26 +1,16 @@
-import {
-  PostData,
-  PostAddData,
-  PostUpdateData,
-  PostRequestOptions
-} from 'types/post';
+import { PostData, PostAddData, PostUpdateData, PostRequestOptions } from 'types/post';
 
 const getPosts = async (
   signal: AbortSignal | null = null,
   option: Partial<PostRequestOptions> = {}
 ): Promise<PostData[]> => {
-  const { lastIdx = -1, count = 10, username } = option;
+  const { lastIdx = -1, count = 500, username } = option;
   const response = username
-    ? await fetch(
-        `/api/posts?username=${username}&lastIdx=${lastIdx}&count=${count}`,
-        { signal }
-      )
+    ? await fetch(`/api/posts?username=${username}&lastIdx=${lastIdx}&count=${count}`, { signal })
     : await fetch(`/api/posts?lastIdx=${lastIdx}&count=${count}`, { signal });
   const getPostsList = await response.json();
   return getPostsList.map((cur: any) =>
-    cur.BTMLikepostidx.length === 0
-      ? { ...cur, likeFlag: false }
-      : { ...cur, likeFlag: true }
+    cur.BTMLikepostidx.length === 0 ? { ...cur, likeFlag: false } : { ...cur, likeFlag: true }
   );
 };
 
