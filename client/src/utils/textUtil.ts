@@ -3,7 +3,7 @@ const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 const WEEK = 7 * DAY;
 
-const MONTH_NAME: string[] = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+const MONTH_NAME: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 
 const getConventionalHour = (hour: number): string => {
   if (hour < 12) {
@@ -41,12 +41,12 @@ const textUtil = {
       return `${Math.floor(diff / DAY)}일 전`;
     }
     if (target.getFullYear() !== now.getFullYear()) {
-      return `${MONTH_NAME[target.getMonth()]} ${target.getDate()}, ${target.getFullYear()}`;
+      return `${target.getFullYear()}년 ${MONTH_NAME[target.getMonth()]}월 ${target.getDate()}일`;
     } else {
-      return `${MONTH_NAME[target.getMonth()]} ${target.getDate()} at ${getConventionalHour(target.getHours())}:${target
+      return `${MONTH_NAME[target.getMonth()]}월 ${target.getDate()}일 ${target.getHours() < 12 ? '오전' : '오후'} ${getConventionalHour(target.getHours())}시 ${target
         .getMinutes()
         .toString()
-        .padStart(2, '0')} ${target.getHours() < 12 ? 'AM' : 'PM'}`;
+        .padStart(2, '0')}분`;
     }
   },
 
