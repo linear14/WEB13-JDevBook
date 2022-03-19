@@ -4,7 +4,7 @@
 
 ## 배포주소
 
-- https://www.jdevbook.kro.kr/
+- https://www.jdevbook.kro.kr/ (배포 중단)
 
 ## 📗 JDevBook 소개
 
